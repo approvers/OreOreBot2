@@ -1,0 +1,48 @@
+{
+  "name": "oreorebot2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "repository": "https://github.com/AliceCinderella/Alice.git",
+  "author": "merunno <merunno92@gmail.com>",
+  "scripts": {
+    "start": "node ./build/server/index.js",
+    "test": "ts-node ./src/server/index.ts",
+    "deploy": "node ./build/setup/index.js",
+    "compile": "tsc -p .",
+    "format": "prettier --write",
+    "eslint": "eslint --ignore-path .gitignore \"src/**/*.{js,ts}\"",
+    "eslint:fix": "eslint --ignore-path .gitignore \"src/**/*.{js,ts}\" --fix",
+    "fix": "yarn run format && npm run lint -- --fix",
+    "prepare": "husky install",
+    "lint-staged": "lint-staged",
+    "clean": "echo \"Build directory, Removed.\" && rm -rf build"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@discordjs/rest": "^0.2.0-canary.0",
+    "discord-api-types": "^0.26.1",
+    "discord.js": "^13.5.0",
+    "dotenv": "^10.0.0",
+    "husky": "^7.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
+    "eslint": "^7.12.1",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "lint-staged": "^12.1.4",
+    "prettier": "^2.5.1",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
+  }
+}
