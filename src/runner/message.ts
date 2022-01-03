@@ -1,6 +1,6 @@
 export type MessageEvent = 'CREATE' | 'UPDATE' | 'DELETE'
 
-export interface Responder<M> {
+export interface MessageEventResponder<M> {
   on(event: MessageEvent, message: M): Promise<void>
 }
 
@@ -25,9 +25,9 @@ export class MessageResponseRunner<M> {
     await Promise.all(this.responders.map((res) => res.on(event, message)))
   }
 
-  private responders: Responder<M>[] = []
+  private responders: MessageEventResponder<M>[] = []
 
-  addResponder(responder: Responder<M>) {
+  addResponder(responder: MessageEventResponder<M>) {
     this.responders.push(responder)
   }
 }
