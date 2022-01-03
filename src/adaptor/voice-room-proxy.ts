@@ -11,7 +11,6 @@ type ObserveExpectation = 'ChangingIntoFalsy' | 'ChangingIntoTruthy' | 'All';
  * @implements {VoiceRoomEventProvider<VoiceState>}
  */
 export class VoiceRoomProxy implements VoiceRoomEventProvider<VoiceState> {
-  // eslint-disable-next-line no-useless-constructor
   constructor(private readonly client: Client) {}
 
   private registerHandler(
