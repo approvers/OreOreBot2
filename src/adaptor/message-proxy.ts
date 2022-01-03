@@ -17,15 +17,15 @@ export class MessageProxy implements MessageEventProvider<Message> {
   }
 
   onMessageUpdate(handler: (message: Message) => Promise<void>): void {
-    this.client.on('messageUpdate', async (message) => {
-      handler(await message.fetch());
-    });
+    this.client.on('messageUpdate', async (message) =>
+      handler(await message.fetch())
+    );
   }
 
   onMessageDelete(handler: (message: Message) => Promise<void>): void {
-    const wrapper = async (message: Message | PartialMessage) => {
+    const wrapper = async (message: Message | PartialMessage) =>
       handler(await message.fetch());
-    };
+
     this.client.on('messageDelete', wrapper);
     this.client.on('messageDeleteBulk', async (messages) => {
       await Promise.all(messages.map(wrapper));
