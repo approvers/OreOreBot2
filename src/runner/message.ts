@@ -1,41 +1,33 @@
-import { Client, Message } from 'discord.js'
-
 export type MessageEvent = 'CREATE' | 'UPDATE' | 'DELETE'
 
-export interface Responder {
-  on(event: MessageEvent, message: Message): Promise<void>
+export interface Responder<M> {
+  on(event: MessageEvent, message: M): Promise<void>
 }
 
-export class MessageResponseRunner {
-  constructor(client: Client) {
-    client.on('messageCreate', (message) =>
-      this.triggerEvent('CREATE', message)
+export interface MessageEventProvider<M> {
+  onMessageCreate(handler: (message: M) => Promise<void>): void
+  onMessageUpdate(handler: (message: M) => Promise<void>): void
+  onMessageDelete(handler: (message: M) => Promise<void>): void
+}
+
+export class MessageResponseRunner<M> {
+  constructor(provider: MessageEventProvider<M>) {
+    provider.onMessageCreate((message) => this.triggerEvent('CREATE', message))
+    provider.onMessageDelete(async (message) =>
+      this.triggerEvent('DELETE', message)
     )
-    client.on('messageDelete', async (message) =>
-      this.triggerEvent('DELETE', await message.fetch())
-    )
-    client.on('messageDeleteBulk', async (messages) => {
-      await Promise.all(
-        messages.map(async (message) =>
-          this.triggerEvent('DELETE', await message.fetch())
-        )
-      )
-    })
-    client.on('messageUpdate', async (message) =>
-      this.triggerEvent('UPDATE', await message.fetch())
+    provider.onMessageUpdate(async (message) =>
+      this.triggerEvent('UPDATE', message)
     )
   }
 
-  private async triggerEvent(
-    event: MessageEvent,
-    message: Message
-  ): Promise<void> {
+  private async triggerEvent(event: MessageEvent, message: M): Promise<void> {
     await Promise.all(this.responders.map((res) => res.on(event, message)))
   }
 
-  private responders: Responder[] = []
+  private responders: Responder<M>[] = []
 
-  addResponder(responder: Responder) {
+  addResponder(responder: Responder<M>) {
     this.responders.push(responder)
   }
 }
