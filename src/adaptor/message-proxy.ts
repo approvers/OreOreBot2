@@ -1,6 +1,13 @@
 import { Client, Message, PartialMessage } from 'discord.js';
 import { MessageEventProvider } from '../runner';
 
+/**
+ * `Message` を受け渡す場合の `MessageEventProvider` を実装したクラス。
+ *
+ * @export
+ * @class MessageProxy
+ * @implements {MessageEventProvider<Message>}
+ */
 export class MessageProxy implements MessageEventProvider<Message> {
   // eslint-disable-next-line no-useless-constructor
   constructor(private readonly client: Client) {}

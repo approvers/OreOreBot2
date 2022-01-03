@@ -6,10 +6,24 @@ export type VoiceRoomEvent =
   | 'UNMUTE'
   | 'UNDEAFEN';
 
+/**
+ * `VoiceRoomResponseRunner` に登録する機能が実装するインターフェイス。`V` には discord.js の `VoiceState` などが入る。
+ *
+ * @export
+ * @interface VoiceRoomEventResponder
+ * @template V
+ */
 export interface VoiceRoomEventResponder<V> {
   on(event: VoiceRoomEvent, voiceState: V): Promise<void>;
 }
 
+/**
+ * `VoiceRoomResponseRunner` のためにボイスチャンネルに関するイベントハンドラの登録手段を提供する。
+ *
+ * @export
+ * @interface VoiceRoomEventProvider
+ * @template V
+ */
 export interface VoiceRoomEventProvider<V> {
   onJoin(handler: (voiceState: V) => Promise<void>): void;
   onLeave(handler: (voiceState: V) => Promise<void>): void;
@@ -19,6 +33,13 @@ export interface VoiceRoomEventProvider<V> {
   onUndeafen(handler: (voiceState: V) => Promise<void>): void;
 }
 
+/**
+ * ボイスチャンネルの変化に反応するタイプの機能を登録すると、`VoiceRoomEventProvider` からのイベントを `VoiceRoomEvent` 付きの形式に変換し、それに渡して実行する。
+ *
+ * @export
+ * @class VoiceRoomResponseRunner
+ * @template V
+ */
 export class VoiceRoomResponseRunner<V> {
   constructor(provider: VoiceRoomEventProvider<V>) {
     provider.onJoin((v) => this.triggerEvent('JOIN', v));

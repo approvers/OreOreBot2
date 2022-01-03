@@ -3,6 +3,13 @@ import { VoiceRoomEventProvider } from '../runner';
 
 type ObserveExpectation = 'ChangingIntoFalsy' | 'ChangingIntoTruthy' | 'All';
 
+/**
+ * `VoiceState` を受け渡す場合の `VoiceRoomEventProvider` を実装したクラス。
+ *
+ * @export
+ * @class VoiceRoomProxy
+ * @implements {VoiceRoomEventProvider<VoiceState>}
+ */
 export class VoiceRoomProxy implements VoiceRoomEventProvider<VoiceState> {
   // eslint-disable-next-line no-useless-constructor
   constructor(private readonly client: Client) {}

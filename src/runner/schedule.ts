@@ -1,9 +1,23 @@
 import { differenceInMilliseconds } from 'date-fns';
 
+/**
+ * `ScheduleRunner` に登録するイベントが実装するインターフェイス。戻り値は次に自身を再実行するまでのミリ秒数。`null` を返した場合は再実行されない。
+ *
+ * @export
+ * @interface MessageEventResponder
+ * @template M
+ */
 export interface ScheduleTask {
   (): Promise<number | null>;
 }
 
+/**
+ * 機能を指定ミリ秒後や特定時刻に実行する。特定間隔での再実行については `ScheduleTask` を参照。
+ *
+ * @export
+ * @class MessageResponseRunner
+ * @template M
+ */
 export class ScheduleRunner {
   private runningTasks = new Map<object, ReturnType<typeof setTimeout>>();
 
