@@ -13,12 +13,8 @@ export interface MessageEventProvider<M> {
 export class MessageResponseRunner<M> {
   constructor(provider: MessageEventProvider<M>) {
     provider.onMessageCreate((message) => this.triggerEvent('CREATE', message));
-    provider.onMessageDelete(async (message) =>
-      this.triggerEvent('DELETE', message)
-    );
-    provider.onMessageUpdate(async (message) =>
-      this.triggerEvent('UPDATE', message)
-    );
+    provider.onMessageDelete((message) => this.triggerEvent('DELETE', message));
+    provider.onMessageUpdate((message) => this.triggerEvent('UPDATE', message));
   }
 
   private async triggerEvent(event: MessageEvent, message: M): Promise<void> {
