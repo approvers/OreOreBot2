@@ -9,4 +9,4 @@ parserOptions:
   sourceType: module
 plugins:
   - '@typescript-eslint'
-rules: { 'space-before-function-paren': [0, 'always'] }
+rules: { 'space-before-function-paren': [0, 'always'], 'semi': [2, 'always'] }
