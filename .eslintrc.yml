@@ -1,12 +1,11 @@
 env:
-  browser: true
+  node: true
   es2021: true
 extends:
-  - standard
+  - 'eslint:recommended'
+  - 'plugin:@typescript-eslint/recommended'
 parser: '@typescript-eslint/parser'
 parserOptions:
-  ecmaVersion: 12
   sourceType: module
 plugins:
   - '@typescript-eslint'
-rules: { 'space-before-function-paren': [0, 'always'], 'semi': [2, 'always'] }
