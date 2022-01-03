@@ -1,7 +1,7 @@
-import { Client, VoiceState } from 'discord.js'
-import { VoiceRoomEventProvider } from '../runner'
+import { Client, VoiceState } from 'discord.js';
+import { VoiceRoomEventProvider } from '../runner';
 
-type ObserveExpectation = 'ChangingIntoFalsy' | 'ChangingIntoTruthy' | 'All'
+type ObserveExpectation = 'ChangingIntoFalsy' | 'ChangingIntoTruthy' | 'All';
 
 export class VoiceRoomProxy implements VoiceRoomEventProvider<VoiceState> {
   // eslint-disable-next-line no-useless-constructor
@@ -19,32 +19,32 @@ export class VoiceRoomProxy implements VoiceRoomEventProvider<VoiceState> {
           (expected === 'ChangingIntoTruthy' && !!newState[toObserve]) ||
           expected === 'All')
       ) {
-        await handler(newState)
+        await handler(newState);
       }
-    })
+    });
   }
 
   onJoin(handler: (voiceState: VoiceState) => Promise<void>): void {
-    this.registerHandler(handler, 'channelId', 'ChangingIntoTruthy')
+    this.registerHandler(handler, 'channelId', 'ChangingIntoTruthy');
   }
 
   onLeave(handler: (voiceState: VoiceState) => Promise<void>): void {
-    this.registerHandler(handler, 'channelId', 'ChangingIntoFalsy')
+    this.registerHandler(handler, 'channelId', 'ChangingIntoFalsy');
   }
 
   onMute(handler: (voiceState: VoiceState) => Promise<void>): void {
-    this.registerHandler(handler, 'mute', 'ChangingIntoTruthy')
+    this.registerHandler(handler, 'mute', 'ChangingIntoTruthy');
   }
 
   onDeafen(handler: (voiceState: VoiceState) => Promise<void>): void {
-    this.registerHandler(handler, 'deaf', 'ChangingIntoTruthy')
+    this.registerHandler(handler, 'deaf', 'ChangingIntoTruthy');
   }
 
   onUnmute(handler: (voiceState: VoiceState) => Promise<void>): void {
-    this.registerHandler(handler, 'mute', 'ChangingIntoFalsy')
+    this.registerHandler(handler, 'mute', 'ChangingIntoFalsy');
   }
 
   onUndeafen(handler: (voiceState: VoiceState) => Promise<void>): void {
-    this.registerHandler(handler, 'deaf', 'ChangingIntoFalsy')
+    this.registerHandler(handler, 'deaf', 'ChangingIntoFalsy');
   }
 }
