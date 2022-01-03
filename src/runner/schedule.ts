@@ -45,9 +45,11 @@ export class ScheduleRunner {
   }
 
   private startInner(key: object, task: ScheduleTask, timeout: number): void {
-    const id = setTimeout(async () => {
-      const newTimeout = await task();
-      this.onDidRun(key, task, newTimeout);
+    const id = setTimeout(() => {
+      void (async () => {
+        const newTimeout = await task();
+        this.onDidRun(key, task, newTimeout);
+      })();
     }, timeout);
     this.runningTasks.set(key, id);
   }

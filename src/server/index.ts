@@ -16,7 +16,7 @@ const client = new Client({
 /* 接続時にクライアントの情報を提供する */
 function readyLog(client: Client): void {
   const connectionClient = client.user;
-  const projectVersion = process.env.npm_package_version;
+  const projectVersion = process.env.npm_package_version ?? '不明';
   if (connectionClient == null) return;
   console.info('============');
   console.info('');

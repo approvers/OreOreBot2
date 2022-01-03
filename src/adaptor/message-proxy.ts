@@ -9,7 +9,6 @@ import { MessageEventProvider } from '../runner';
  * @implements {MessageEventProvider<Message>}
  */
 export class MessageProxy implements MessageEventProvider<Message> {
-  // eslint-disable-next-line no-useless-constructor
   constructor(private readonly client: Client) {}
 
   onMessageCreate(handler: (message: Message) => Promise<void>): void {
