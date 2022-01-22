@@ -1,14 +1,10 @@
 import { Client, Message, PartialMessage } from 'discord.js';
-import { ObservableMessage } from '.';
 import { MessageEventProvider } from '../runner';
 
 const compose =
   <A, B, C>(g: (b: B) => C, f: (a: A) => B): ((a: A) => C) =>
   (a) =>
     g(f(a));
-
-export const mapToObservableProxy = (message: Message): ObservableMessage =>
-  new ObservableMessage(message);
 
 /**
  * `Message` を受け渡す場合の `MessageEventProvider` を実装したクラス。
