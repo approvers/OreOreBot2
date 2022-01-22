@@ -1,5 +1,5 @@
-import { Client, Message, PartialMessage } from 'discord.js';
-import { MessageEventProvider } from '../runner';
+import type { Client, Message, PartialMessage } from 'discord.js';
+import type { MessageEventProvider } from '../runner';
 
 const compose =
   <A, B, C>(g: (b: B) => C, f: (a: A) => B): ((a: A) => C) =>

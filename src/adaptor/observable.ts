@@ -1,5 +1,5 @@
-import { Message } from 'discord.js';
-import { Observable } from '../service/mitetazo';
+import type { Message } from 'discord.js';
+import type { Observable } from '../service/mitetazo';
 
 export const observableMessage = (raw: Message): Observable => ({
   author: raw.author.username,
