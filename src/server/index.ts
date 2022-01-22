@@ -1,4 +1,7 @@
 import { Client, version } from 'discord.js';
+import { MessageProxy, mapToObservableProxy } from '../adaptor';
+import { MessageResponseRunner } from '../runner';
+import { Mitetazo } from '../service';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -32,6 +35,10 @@ function readyLog(client: Client): void {
 }
 
 client.login(token).catch(console.error);
+
+const proxy = new MessageProxy(client, mapToObservableProxy);
+const runner = new MessageResponseRunner(proxy);
+runner.addResponder(new Mitetazo());
 
 client.once('ready', () => {
   readyLog(client);
