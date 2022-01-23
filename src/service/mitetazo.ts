@@ -36,11 +36,11 @@ export interface Observable {
  * メッセージの削除を検知して、その内容と作者を復唱する。
  *
  * @export
- * @class Mitetazo
+ * @class DeletionRepeater
  * @implements {MessageEventResponder<M>}
  * @template M
  */
-export class Mitetazo<M extends Observable>
+export class DeletionRepeater<M extends Observable>
   implements MessageEventResponder<M>
 {
   async on(event: MessageEvent, message: M): Promise<void> {
