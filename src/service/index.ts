@@ -1,1 +1,1 @@
-export * from './mitetazo';
+export * from './deletion-repeater';
