@@ -1,16 +1,20 @@
 import { Client, version } from 'discord.js';
 import dotenv from 'dotenv';
+import { DiscordParticipant, VoiceRoomProxy } from '../adaptor';
+import { VoiceRoomResponseRunner } from '../runner';
+import { VoiceChannelParticipant, VoiceDiff } from './service/VoiceDiff';
 
 dotenv.config();
 const token = process.env.DISCORD_TOKEN;
-if (!token) {
+const mainChannelId = process.env.MAIN_CHANNEL_ID;
+if (!token || !mainChannelId) {
   throw new Error(
     'Error> Failed to start. You did not specify any environment variables.'
   );
 }
 
 const client = new Client({
-  intents: [0]
+  intents: ['GUILDS', 'GUILD_MESSAGES']
 });
 
 /* 接続時にクライアントの情報を提供する */
@@ -33,6 +37,17 @@ function readyLog(client: Client): void {
 
 client.login(token).catch(console.error);
 
-client.once('ready', () => {
+client.once('ready', async () => {
   readyLog(client);
+  await client.channels.fetch(mainChannelId).then((mainChannel) => {
+    if (!mainChannel || !mainChannel.isText()) {
+      throw new Error('メインのチャンネルが見つかりません。');
+    }
+    const provider = new VoiceRoomProxy<VoiceChannelParticipant>(
+      client,
+      (voicestate) => new DiscordParticipant(voicestate, mainChannel)
+    );
+    const runner = new VoiceRoomResponseRunner(provider);
+    runner.addResponder(new VoiceDiff());
+  });
 });
