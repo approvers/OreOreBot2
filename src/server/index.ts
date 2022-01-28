@@ -39,15 +39,14 @@ client.login(token).catch(console.error);
 
 client.once('ready', async () => {
   readyLog(client);
-  await client.channels.fetch(mainChannelId).then((mainChannel) => {
-    if (!mainChannel || !mainChannel.isText()) {
-      throw new Error('メインのチャンネルが見つかりません。');
-    }
-    const provider = new VoiceRoomProxy<VoiceChannelParticipant>(
-      client,
-      (voicestate) => new DiscordParticipant(voicestate, mainChannel)
-    );
-    const runner = new VoiceRoomResponseRunner(provider);
-    runner.addResponder(new VoiceDiff());
-  });
+  const mainChannel = await client.channels.fetch(mainChannelId);
+  if (!mainChannel || !mainChannel.isText()) {
+    throw new Error('メインのチャンネルが見つかりません。');
+  }
+  const provider = new VoiceRoomProxy<VoiceChannelParticipant>(
+    client,
+    (voicestate) => new DiscordParticipant(voicestate, mainChannel)
+  );
+  const runner = new VoiceRoomResponseRunner(provider);
+  runner.addResponder(new VoiceDiff());
 });
