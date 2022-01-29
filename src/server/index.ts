@@ -1,4 +1,7 @@
 import { Client, version } from 'discord.js';
+import { MessageProxy, observableMessage } from '../adaptor';
+import { MessageResponseRunner } from '../runner';
+import { allMessageEventResponder } from '../service';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -32,6 +35,10 @@ function readyLog(client: Client): void {
 }
 
 client.login(token).catch(console.error);
+
+const proxy = new MessageProxy(client, observableMessage);
+const runner = new MessageResponseRunner(proxy);
+runner.addResponder(allMessageEventResponder());
 
 client.once('ready', () => {
   readyLog(client);

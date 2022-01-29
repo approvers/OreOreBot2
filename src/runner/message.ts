@@ -11,6 +11,16 @@ export interface MessageEventResponder<M> {
   on(event: MessageEvent, message: M): Promise<void>;
 }
 
+export const composeMessageEventResponders = <M>(
+  ...responders: readonly MessageEventResponder<M>[]
+): MessageEventResponder<M> => ({
+  async on(event, message) {
+    await Promise.all(
+      responders.map((responder) => responder.on(event, message))
+    );
+  }
+});
+
 /**
  * `MessageResponseRunner` のためにメッセージに関するイベントハンドラの登録手段を提供する。
  *
