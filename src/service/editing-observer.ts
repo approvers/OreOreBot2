@@ -1,5 +1,5 @@
 import { diffLines } from 'diff';
-import type { MessageEvent, MessageEventResponder } from '../runner';
+import type { MessageUpdateEventResponder } from '../runner';
 
 /**
  * 監視するメッセージの抽象。
@@ -9,19 +9,12 @@ import type { MessageEvent, MessageEventResponder } from '../runner';
  */
 export interface EditingObservable {
   /**
-   * メッセージの編集前の文章。
+   * メッセージの文章。
    *
    * @type {string}
    * @memberof Observable
    */
-  readonly before: string;
-  /**
-   * メッセージの編集後の文章。
-   *
-   * @type {string}
-   * @memberof Observable
-   */
-  readonly after: string;
+  readonly content: string;
 
   /**
    * `message` のメッセージをこのメッセージと同じチャンネルに送信する。
@@ -51,18 +44,18 @@ const diffComposer = (before: string, after: string): string => {
 };
 
 export class EditingObserver
-  implements MessageEventResponder<EditingObservable>
+  implements MessageUpdateEventResponder<EditingObservable>
 {
-  async on(event: MessageEvent, message: EditingObservable): Promise<void> {
-    if (event !== 'UPDATE') {
-      return;
-    }
-    const { before, after } = message;
-    const composed = diffComposer(before, after);
+  async on(
+    _event: 'UPDATE',
+    before: EditingObservable,
+    after: EditingObservable
+  ): Promise<void> {
+    const composed = diffComposer(before.content, after.content);
     if (composed === '') {
       return;
     }
-    await message.sendToSameChannel(`見てたぞ
+    await after.sendToSameChannel(`見てたぞ
 \`\`\`diff
 ${composed}
 \`\`\``);

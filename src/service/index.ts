@@ -1,11 +1,12 @@
-import { DeletionObservable, DeletionRepeater } from './deletion-repeater';
-import { composeMessageEventResponders } from '../runner';
-import { EditingObservable, EditingObserver } from './editing-observer';
-
-type AllMessage = DeletionObservable & EditingObservable;
+import {
+  composeMessageEventResponders,
+  composeMessageUpdateEventResponders
+} from '../runner';
+import { DeletionRepeater } from './deletion-repeater';
+import { EditingObserver } from './editing-observer';
 
 export const allMessageEventResponder = () =>
-  composeMessageEventResponders<AllMessage>(
-    new DeletionRepeater(),
-    new EditingObserver()
-  );
+  composeMessageEventResponders(new DeletionRepeater());
+
+export const allMessageUpdateEventResponder = () =>
+  composeMessageUpdateEventResponders(new EditingObserver());
