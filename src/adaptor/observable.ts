@@ -1,6 +1,6 @@
 import type { Message } from 'discord.js';
 import type { DeletionObservable } from '../service/deletion-repeater';
-import type { EditingObservable } from '../service/editing-observer';
+import type { EditingObservable } from '../service/difference-detector';
 
 export const observableMessage = (
   raw: Message

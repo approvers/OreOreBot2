@@ -3,10 +3,10 @@ import {
   composeMessageUpdateEventResponders
 } from '../runner';
 import { DeletionRepeater } from './deletion-repeater';
-import { EditingObserver } from './editing-observer';
+import { DifferenceDetector } from './difference-detector';
 
 export const allMessageEventResponder = () =>
   composeMessageEventResponders(new DeletionRepeater());
 
 export const allMessageUpdateEventResponder = () =>
-  composeMessageUpdateEventResponders(new EditingObserver());
+  composeMessageUpdateEventResponders(new DifferenceDetector());
