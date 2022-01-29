@@ -7,7 +7,7 @@ import type { MessageEvent, MessageEventResponder } from '../runner';
  * @export
  * @interface Observable
  */
-export interface Observable {
+export interface EditingObservable {
   /**
    * メッセージの編集前の文章。
    *
@@ -50,8 +50,10 @@ const diffComposer = (before: string, after: string): string => {
   return composed;
 };
 
-export class EditingObserver implements MessageEventResponder<Observable> {
-  async on(event: MessageEvent, message: Observable): Promise<void> {
+export class EditingObserver
+  implements MessageEventResponder<EditingObservable>
+{
+  async on(event: MessageEvent, message: EditingObservable): Promise<void> {
     if (event !== 'UPDATE') {
       return;
     }
