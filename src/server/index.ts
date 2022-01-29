@@ -37,6 +37,8 @@ function readyLog(client: Client): void {
 
 client.login(token).catch(console.error);
 
+let runner: VoiceRoomResponseRunner<DiscordParticipant> | null = null;
+
 client.once('ready', async () => {
   readyLog(client);
   const mainChannel = await client.channels.fetch(mainChannelId);
@@ -47,6 +49,6 @@ client.once('ready', async () => {
     client,
     (voicestate) => new DiscordParticipant(voicestate, mainChannel)
   );
-  const runner = new VoiceRoomResponseRunner(provider);
+  runner = new VoiceRoomResponseRunner(provider);
   runner.addResponder(new VoiceDiff());
 });
