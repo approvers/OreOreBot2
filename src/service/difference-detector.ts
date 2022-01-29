@@ -30,14 +30,14 @@ const diffComposer = (before: string, after: string): string => {
   const changes = diffLines(before, after);
   let composed = '';
   for (const { value, added, removed } of changes) {
-    if (composed !== '') {
-      composed += '---------------------------------\n';
-    }
     if (removed) {
-      composed += `- ${value}`;
+      if (composed !== '') {
+        composed += '---------------------------------\n';
+      }
+      composed += `- ${value.trimEnd()}\n`;
     }
     if (added) {
-      composed += `+ ${value}`;
+      composed += `+ ${value.trimEnd()}\n`;
     }
   }
   return composed;
