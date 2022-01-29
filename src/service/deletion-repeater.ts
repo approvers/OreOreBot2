@@ -6,7 +6,7 @@ import type { MessageEvent, MessageEventResponder } from '../runner';
  * @export
  * @interface Observable
  */
-export interface Observable {
+export interface DeletionObservable {
   /**
    * メッセージの作成者。
    *
@@ -40,7 +40,7 @@ export interface Observable {
  * @implements {MessageEventResponder<M>}
  * @template M
  */
-export class DeletionRepeater<M extends Observable>
+export class DeletionRepeater<M extends DeletionObservable>
   implements MessageEventResponder<M>
 {
   async on(event: MessageEvent, message: M): Promise<void> {

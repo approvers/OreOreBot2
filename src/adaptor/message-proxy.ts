@@ -1,5 +1,8 @@
 import type { Client, Message, PartialMessage } from 'discord.js';
-import type { MessageEventProvider } from '../runner';
+import type {
+  MessageEventProvider,
+  MessageUpdateEventProvider
+} from '../runner';
 
 const compose =
   <A, B, C>(g: (b: B) => C, f: (a: A) => B): ((a: A) => C) =>
@@ -13,7 +16,9 @@ const compose =
  * @class MessageProxy
  * @implements {MessageEventProvider<Message>}
  */
-export class MessageProxy<M> implements MessageEventProvider<M> {
+export class MessageProxy<M>
+  implements MessageEventProvider<M>, MessageUpdateEventProvider<M>
+{
   constructor(
     private readonly client: Client,
     private readonly map: (message: Message) => M
@@ -23,10 +28,12 @@ export class MessageProxy<M> implements MessageEventProvider<M> {
     this.client.on('messageCreate', compose(handler, this.map));
   }
 
-  onMessageUpdate(handler: (message: M) => Promise<void>): void {
-    this.client.on('messageUpdate', async (message) =>
-      compose(handler, this.map)(await message.fetch())
-    );
+  onMessageUpdate(handler: (before: M, after: M) => Promise<void>): void {
+    this.client.on('messageUpdate', async (before, after) => {
+      const beforeMapped = this.map(await before.fetch());
+      const afterMapped = this.map(await after.fetch());
+      await handler(beforeMapped, afterMapped);
+    });
   }
 
   onMessageDelete(handler: (message: M) => Promise<void>): void {
