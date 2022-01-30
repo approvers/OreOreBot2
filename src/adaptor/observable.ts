@@ -1,4 +1,5 @@
 import type { Message, PartialMessage } from 'discord.js';
+import { Lifter, lifterFromMap } from '.';
 import type { Snowflake } from '../model/id';
 import type { DeletionObservable } from '../service/deletion-repeater';
 import type { EditingObservable } from '../service/difference-detector';
@@ -14,3 +15,7 @@ export const observableMessage = (
     await raw.channel.send(message);
   }
 });
+
+export const observableLifter: Lifter<
+  EditingObservable & DeletionObservable & TypoObservable
+> = lifterFromMap(observableMessage);
