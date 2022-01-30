@@ -1,4 +1,4 @@
-import { Client, version } from 'discord.js';
+import { Client, Intents, version } from 'discord.js';
 import { MessageProxy, observableMessage } from '../adaptor';
 import { MessageResponseRunner, MessageUpdateResponseRunner } from '../runner';
 import {
@@ -15,9 +15,14 @@ if (!token) {
   );
 }
 
-const client = new Client({
-  intents: [0]
-});
+const intents = new Intents();
+intents.add(
+  Intents.FLAGS.GUILDS, // GUILD_CREATE による初期化
+  Intents.FLAGS.GUILD_MESSAGES, // ほとんどのメッセージに反応する機能
+  Intents.FLAGS.GUILD_VOICE_STATES // VoiceDiff 機能
+);
+
+const client = new Client({ intents });
 
 /* 接続時にクライアントの情報を提供する */
 function readyLog(client: Client): void {
@@ -37,8 +42,6 @@ function readyLog(client: Client): void {
   console.info('============');
 }
 
-client.login(token).catch(console.error);
-
 const proxy = new MessageProxy(client, observableMessage);
 const runner = new MessageResponseRunner(proxy);
 runner.addResponder(allMessageEventResponder());
@@ -48,3 +51,5 @@ updateRunner.addResponder(allMessageUpdateEventResponder());
 client.once('ready', () => {
   readyLog(client);
 });
+
+client.login(token).catch(console.error);

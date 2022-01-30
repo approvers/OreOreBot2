@@ -9,6 +9,14 @@ const compose =
   (a) =>
     g(f(a));
 
+const execOnlyUserMessage =
+  (func: (message: Message | PartialMessage) => Promise<void>) =>
+  async (message: Message | PartialMessage) => {
+    if (!message.author?.bot) {
+      await func(message);
+    }
+  };
+
 /**
  * `Message` を受け渡す場合の `MessageEventProvider` を実装したクラス。
  *
@@ -21,24 +29,28 @@ export class MessageProxy<M>
 {
   constructor(
     private readonly client: Client,
-    private readonly map: (message: Message) => M
+    private readonly map: (message: Message | PartialMessage) => M
   ) {}
 
   onMessageCreate(handler: (message: M) => Promise<void>): void {
-    this.client.on('messageCreate', compose(handler, this.map));
+    this.client.on(
+      'messageCreate',
+      execOnlyUserMessage(compose(handler, this.map))
+    );
   }
 
   onMessageUpdate(handler: (before: M, after: M) => Promise<void>): void {
     this.client.on('messageUpdate', async (before, after) => {
-      const beforeMapped = this.map(await before.fetch());
-      const afterMapped = this.map(await after.fetch());
-      await handler(beforeMapped, afterMapped);
+      if (!after.author?.bot) {
+        const beforeMapped = this.map(before);
+        const afterMapped = this.map(await after.fetch());
+        await handler(beforeMapped, afterMapped);
+      }
     });
   }
 
   onMessageDelete(handler: (message: M) => Promise<void>): void {
-    const wrapper = async (message: Message | PartialMessage) =>
-      compose(handler, this.map)(await message.fetch());
+    const wrapper = execOnlyUserMessage(compose(handler, this.map));
 
     this.client.on('messageDelete', wrapper);
     this.client.on('messageDeleteBulk', async (messages) => {

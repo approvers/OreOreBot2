@@ -19,6 +19,9 @@ export class VoiceRoomProxy implements VoiceRoomEventProvider<VoiceState> {
     expected: ObserveExpectation
   ): void {
     this.client.on('voiceStateUpdate', async (oldState, newState) => {
+      if (oldState.member?.user.bot) {
+        return;
+      }
       if (
         oldState[toObserve] !== newState[toObserve] &&
         ((expected === 'ChangingIntoFalsy' && !newState[toObserve]) ||
