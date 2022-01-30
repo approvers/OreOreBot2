@@ -1,6 +1,7 @@
 import { addDays, setHours, setMinutes } from 'date-fns';
 import type { Snowflake } from '../model/id';
 import type {
+  Clock,
   MessageEvent,
   MessageEventResponder,
   ScheduleRunner,
@@ -62,22 +63,6 @@ export interface TypoRepository {
    * @memberof TypoRepository
    */
   clear(): Promise<void>;
-}
-
-/**
- * 時刻を扱う抽象。
- *
- * @export
- * @interface Clock
- */
-export interface Clock {
-  /**
-   * 現在時刻を取得する。
-   *
-   * @returns {Date}
-   * @memberof Clock
-   */
-  now(): Date;
 }
 
 /**

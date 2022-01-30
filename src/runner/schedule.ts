@@ -12,6 +12,22 @@ export interface ScheduleTask {
 }
 
 /**
+ * 時刻を扱う抽象。
+ *
+ * @export
+ * @interface Clock
+ */
+export interface Clock {
+  /**
+   * 現在時刻を取得する。
+   *
+   * @returns {Date}
+   * @memberof Clock
+   */
+  now(): Date;
+}
+
+/**
  * 機能を指定ミリ秒後や特定時刻に実行する。特定間隔での再実行については `ScheduleTask` を参照。
  *
  * @export
@@ -19,6 +35,8 @@ export interface ScheduleTask {
  * @template M
  */
 export class ScheduleRunner {
+  constructor(private readonly clock: Clock) {}
+
   private runningTasks = new Map<object, ReturnType<typeof setTimeout>>();
 
   killAll(): void {
@@ -29,7 +47,7 @@ export class ScheduleRunner {
   }
 
   runAfter(key: object, task: ScheduleTask, milliSeconds: number): void {
-    this.startInner(key, task, addMilliseconds(new Date(), milliSeconds));
+    this.startInner(key, task, addMilliseconds(this.clock.now(), milliSeconds));
   }
 
   runOnNextTime(key: object, task: ScheduleTask, time: Date): void {
@@ -50,7 +68,7 @@ export class ScheduleRunner {
         const newTimeout = await task();
         this.onDidRun(key, task, newTimeout);
       })();
-    }, differenceInMilliseconds(timeout, new Date()));
+    }, differenceInMilliseconds(timeout, this.clock.now()));
     this.runningTasks.set(key, id);
   }
 
