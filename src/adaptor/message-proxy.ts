@@ -9,6 +9,13 @@ const compose =
   (a) =>
     g(f(a));
 
+const execOnlyUserMessage =
+  (func: (message: Message) => Promise<void>) => async (message: Message) => {
+    if (!message.author.bot) {
+      await func(message);
+    }
+  };
+
 /**
  * `Message` を受け渡す場合の `MessageEventProvider` を実装したクラス。
  *
@@ -25,11 +32,17 @@ export class MessageProxy<M>
   ) {}
 
   onMessageCreate(handler: (message: M) => Promise<void>): void {
-    this.client.on('messageCreate', compose(handler, this.map));
+    this.client.on(
+      'messageCreate',
+      execOnlyUserMessage(compose(handler, this.map))
+    );
   }
 
   onMessageUpdate(handler: (before: M, after: M) => Promise<void>): void {
     this.client.on('messageUpdate', async (before, after) => {
+      if (before.author?.bot) {
+        return;
+      }
       const beforeMapped = this.map(await before.fetch());
       const afterMapped = this.map(await after.fetch());
       await handler(beforeMapped, afterMapped);
@@ -38,7 +51,7 @@ export class MessageProxy<M>
 
   onMessageDelete(handler: (message: M) => Promise<void>): void {
     const wrapper = async (message: Message | PartialMessage) =>
-      compose(handler, this.map)(await message.fetch());
+      execOnlyUserMessage(compose(handler, this.map))(await message.fetch());
 
     this.client.on('messageDelete', wrapper);
     this.client.on('messageDeleteBulk', async (messages) => {
