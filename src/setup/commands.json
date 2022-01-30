@@ -1,0 +1,57 @@
+{
+  "name": "roles",
+  "description": "Commands for roles.",
+  "options": [
+    {
+      "type": 1,
+      "name": "create",
+      "description": "Create a role. ",
+      "options": [
+        {
+          "name": "name",
+          "description": "Specify the name of the role to be created.",
+          "type": 3,
+          "required": true
+        },
+        {
+          "name": "target",
+          "description": "To whom to attach the created role.",
+          "type": 6,
+          "required": true
+        },
+        {
+          "name": "color",
+          "description": "Specify the color of the roll to be created. (The # can be on or off.)",
+          "type": 3,
+          "required": false
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "info",
+      "description": "Show role information.",
+      "options": [
+        {
+          "name": "target",
+          "description": "Specify the role to display.",
+          "type": 8,
+          "required": true
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "name": "delete",
+      "description": "Delete a role.",
+      "options": [
+        {
+          "name": "target",
+          "description": "Specify the role to delete.",
+          "type": 8,
+          "required": true
+        }
+      ]
+    }
+  ]
+}
