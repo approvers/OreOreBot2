@@ -41,7 +41,6 @@ export class MessageProxy<M>
 
   onMessageUpdate(handler: (before: M, after: M) => Promise<void>): void {
     this.client.on('messageUpdate', async (before, after) => {
-      console.dir(after);
       if (!after.author?.bot) {
         const beforeMapped = this.map(before);
         const afterMapped = this.map(await after.fetch());
