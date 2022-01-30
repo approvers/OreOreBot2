@@ -9,6 +9,7 @@
     "debug": "ts-node ./src/server/index.ts",
     "compile": "tsc -p .",
     "format": "prettier --write \"src/**/*.{js,ts}\"",
+    "check": "prettier --check \"src/**/*.{js,ts}\"",
     "eslint": "eslint --ignore-path .gitignore \"src/**/*.{js,ts}\"",
     "eslint:fix": "eslint --ignore-path .gitignore \"src/**/*.{js,ts}\" --fix",
     "fix": "yarn run format && npm run lint -- --fix",

@@ -1,0 +1,14 @@
+name: run prettier
+
+on: pull_request
+
+jobs:
+  run_prettier:
+    name: prettier
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install packages
+        run: yarn install
+      - name: Prettier#check
+        run: yarn run check
