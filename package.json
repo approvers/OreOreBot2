@@ -3,12 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "repository": "https://github.com/AliceCinderella/Alice.git",
+  "repository": "https://github.com/approvers/OreOreBot2",
   "author": "merunno <merunno92@gmail.com>",
   "scripts": {
-    "start": "node ./build/server/index.js",
-    "test": "ts-node ./src/server/index.ts",
-    "deploy": "node ./build/setup/index.js",
+    "debug": "ts-node ./src/server/index.ts",
     "compile": "tsc -p .",
     "format": "prettier --write \"src/**/*.{js,ts}\"",
     "check": "prettier --check \"src/**/*.{js,ts}\"",
@@ -16,8 +14,7 @@
     "eslint:fix": "eslint --ignore-path .gitignore \"src/**/*.{js,ts}\" --fix",
     "fix": "yarn run format && npm run lint -- --fix",
     "prepare": "husky install",
-    "lint-staged": "lint-staged",
-    "clean": "echo \"Build directory, Removed.\" && rm -rf build"
+    "lint-staged": "lint-staged"
   },
   "lint-staged": {
     "*.{js,ts}": [
