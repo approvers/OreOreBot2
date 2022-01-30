@@ -3,7 +3,7 @@ name: run prettier
 on: pull_request
 
 jobs:
-  run_eslint:
+  run_prettier:
     name: prettier
     runs-on: ubuntu-latest
     steps:
