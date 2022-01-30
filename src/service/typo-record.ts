@@ -7,7 +7,7 @@ import type {
   ScheduleRunner,
   ScheduleTask
 } from '../runner';
-import type { CommandMessage } from './command-observable';
+import type { CommandMessage } from './command-message';
 
 /**
  * 監視するメッセージの抽象。
