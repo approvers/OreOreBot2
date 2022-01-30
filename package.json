@@ -6,6 +6,7 @@
   "repository": "https://github.com/approvers/OreOreBot2",
   "author": "merunno <merunno92@gmail.com>",
   "scripts": {
+    "start": "node ./build/server/index.js",
     "debug": "ts-node ./src/server/index.ts",
     "compile": "tsc -p .",
     "format": "prettier --write \"src/**/*.{js,ts}\"",
