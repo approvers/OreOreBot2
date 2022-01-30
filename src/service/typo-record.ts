@@ -129,15 +129,12 @@ export class TypoReporter implements MessageEventResponder<CommandMessage> {
     if (args.length < 1 || args[0] !== 'typo') {
       return;
     }
-    const fields = (await this.repo.allTyposByDate(sender)).map(
-      (typo, index) => ({
-        name: index.toString(),
-        value: typo
-      })
-    );
+    const description = (await this.repo.allTyposByDate(sender))
+      .map((typo) => `- ${typo}`)
+      .join('\n');
     await message.reply({
       title: `† 今日の${sender}のtypo †`,
-      fields
+      description
     });
   }
 }
