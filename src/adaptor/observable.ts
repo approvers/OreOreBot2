@@ -8,7 +8,7 @@ import type { TypoObservable } from '../service/typo-record';
 export const observableMessage = (
   raw: Message | PartialMessage
 ): EditingObservable & DeletionObservable & TypoObservable => ({
-  id: (raw.author?.id || 'unknown') as Snowflake,
+  authorId: (raw.author?.id || 'unknown') as Snowflake,
   author: raw.author?.username || '名無し',
   content: raw.content || '',
   async sendToSameChannel(message: string): Promise<void> {

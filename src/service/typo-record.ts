@@ -22,7 +22,7 @@ export interface TypoObservable {
    * @type {string}
    * @memberof Observable
    */
-  readonly id: Snowflake;
+  readonly authorId: Snowflake;
   /**
    * メッセージの内容。
    *
@@ -79,7 +79,7 @@ export class TypoRecorder implements MessageEventResponder<TypoObservable> {
     if (event !== 'CREATE') {
       return;
     }
-    const { id, content } = message;
+    const { authorId: id, content } = message;
     if (!content.endsWith('だカス')) {
       return;
     }
