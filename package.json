@@ -11,6 +11,7 @@
     "deploy": "node ./build/setup/index.js",
     "compile": "tsc -p .",
     "format": "prettier --write",
+    "check": "prettier --check",
     "eslint": "eslint --ignore-path .gitignore \"src/**/*.{js,ts}\"",
     "eslint:fix": "eslint --ignore-path .gitignore \"src/**/*.{js,ts}\" --fix",
     "fix": "yarn run format && npm run lint -- --fix",
