@@ -8,6 +8,7 @@
   "scripts": {
     "start": "node ./build/server/index.js",
     "debug": "ts-node ./src/server/index.ts",
+    "deploy": "node ./build/setup/index.js",
     "compile": "tsc -p .",
     "format": "prettier --write \"src/**/*.{js,ts}\"",
     "check": "prettier --check \"src/**/*.{js,ts}\"",
