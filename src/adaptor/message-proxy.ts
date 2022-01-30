@@ -10,8 +10,9 @@ const compose =
     g(f(a));
 
 const execOnlyUserMessage =
-  (func: (message: Message) => Promise<void>) => async (message: Message) => {
-    if (!message.author.bot) {
+  (func: (message: Message | PartialMessage) => Promise<void>) =>
+  async (message: Message | PartialMessage) => {
+    if (!message.author?.bot) {
       await func(message);
     }
   };
@@ -28,7 +29,7 @@ export class MessageProxy<M>
 {
   constructor(
     private readonly client: Client,
-    private readonly map: (message: Message) => M
+    private readonly map: (message: Message | PartialMessage) => M
   ) {}
 
   onMessageCreate(handler: (message: M) => Promise<void>): void {
@@ -40,18 +41,17 @@ export class MessageProxy<M>
 
   onMessageUpdate(handler: (before: M, after: M) => Promise<void>): void {
     this.client.on('messageUpdate', async (before, after) => {
-      if (before.author?.bot) {
-        return;
+      console.dir(after);
+      if (!after.author?.bot) {
+        const beforeMapped = this.map(before);
+        const afterMapped = this.map(await after.fetch());
+        await handler(beforeMapped, afterMapped);
       }
-      const beforeMapped = this.map(await before.fetch());
-      const afterMapped = this.map(await after.fetch());
-      await handler(beforeMapped, afterMapped);
     });
   }
 
   onMessageDelete(handler: (message: M) => Promise<void>): void {
-    const wrapper = async (message: Message | PartialMessage) =>
-      execOnlyUserMessage(compose(handler, this.map))(await message.fetch());
+    const wrapper = execOnlyUserMessage(compose(handler, this.map));
 
     this.client.on('messageDelete', wrapper);
     this.client.on('messageDeleteBulk', async (messages) => {
