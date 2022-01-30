@@ -1,14 +1,30 @@
-import { differenceInMilliseconds } from 'date-fns';
+import { addMilliseconds, differenceInMilliseconds } from 'date-fns';
 
 /**
- * `ScheduleRunner` に登録するイベントが実装するインターフェイス。戻り値は次に自身を再実行するまでのミリ秒数。`null` を返した場合は再実行されない。
+ * `ScheduleRunner` に登録するイベントが実装するインターフェイス。戻り値は次に自身を再実行する時刻。`null` を返した場合は再実行されない。
  *
  * @export
  * @interface MessageEventResponder
  * @template M
  */
 export interface ScheduleTask {
-  (): Promise<number | null>;
+  (): Promise<Date | null>;
+}
+
+/**
+ * 時刻を扱う抽象。
+ *
+ * @export
+ * @interface Clock
+ */
+export interface Clock {
+  /**
+   * 現在時刻を取得する。
+   *
+   * @returns {Date}
+   * @memberof Clock
+   */
+  now(): Date;
 }
 
 /**
@@ -19,6 +35,8 @@ export interface ScheduleTask {
  * @template M
  */
 export class ScheduleRunner {
+  constructor(private readonly clock: Clock) {}
+
   private runningTasks = new Map<object, ReturnType<typeof setTimeout>>();
 
   killAll(): void {
@@ -29,11 +47,11 @@ export class ScheduleRunner {
   }
 
   runAfter(key: object, task: ScheduleTask, milliSeconds: number): void {
-    this.startInner(key, task, milliSeconds);
+    this.startInner(key, task, addMilliseconds(this.clock.now(), milliSeconds));
   }
 
   runOnNextTime(key: object, task: ScheduleTask, time: Date): void {
-    this.startInner(key, task, differenceInMilliseconds(new Date(), time));
+    this.startInner(key, task, time);
   }
 
   stop(key: object): void {
@@ -44,20 +62,20 @@ export class ScheduleRunner {
     }
   }
 
-  private startInner(key: object, task: ScheduleTask, timeout: number): void {
+  private startInner(key: object, task: ScheduleTask, timeout: Date): void {
     const id = setTimeout(() => {
       void (async () => {
         const newTimeout = await task();
         this.onDidRun(key, task, newTimeout);
       })();
-    }, timeout);
+    }, differenceInMilliseconds(timeout, this.clock.now()));
     this.runningTasks.set(key, id);
   }
 
   private onDidRun(
     key: object,
     task: ScheduleTask,
-    timeout: number | null
+    timeout: Date | null
   ): void {
     if (timeout === null) {
       this.runningTasks.delete(key);
