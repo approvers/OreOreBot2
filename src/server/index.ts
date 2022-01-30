@@ -16,7 +16,11 @@ if (!token) {
 }
 
 const intents = new Intents();
-intents.add(Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES);
+intents.add(
+  Intents.FLAGS.GUILDS, // GUILD_CREATE による初期化
+  Intents.FLAGS.GUILD_MESSAGES, // ほとんどのメッセージに反応する機能
+  Intents.FLAGS.GUILD_VOICE_STATES // VoiceDiff 機能
+);
 
 const client = new Client({ intents });
 
