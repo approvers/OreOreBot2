@@ -1,5 +1,5 @@
 import type { Message, PartialMessage } from 'discord.js';
-import { Lifter } from '.';
+import type { Lifter } from '.';
 import type { Snowflake } from '../model/id';
 import type { CommandMessage } from '../service/command-message';
 import { convertEmbed } from './embed-convert';
