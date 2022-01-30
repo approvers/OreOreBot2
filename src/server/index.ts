@@ -1,7 +1,20 @@
 import { Client, Intents, version } from 'discord.js';
-import { MessageProxy, observableMessage } from '../adaptor';
-import { MessageResponseRunner, MessageUpdateResponseRunner } from '../runner';
 import {
+  ActualClock,
+  InMemoryTypoRepository,
+  MessageProxy,
+  MessageUpdateProxy,
+  converterWithPrefix,
+  observableLifter,
+  observableMessage
+} from '../adaptor';
+import {
+  MessageResponseRunner,
+  MessageUpdateResponseRunner,
+  ScheduleRunner
+} from '../runner';
+import {
+  allCommandResponder,
   allMessageEventResponder,
   allMessageUpdateEventResponder
 } from '../service';
@@ -42,11 +55,27 @@ function readyLog(client: Client): void {
   console.info('============');
 }
 
-const proxy = new MessageProxy(client, observableMessage);
-const runner = new MessageResponseRunner(proxy);
-runner.addResponder(allMessageEventResponder());
-const updateRunner = new MessageUpdateResponseRunner(proxy);
+const typoRepo = new InMemoryTypoRepository();
+const clock = new ActualClock();
+
+const runner = new MessageResponseRunner(
+  new MessageProxy(client, observableLifter)
+);
+runner.addResponder(allMessageEventResponder(typoRepo));
+
+const updateRunner = new MessageUpdateResponseRunner(
+  new MessageUpdateProxy(client, observableMessage)
+);
 updateRunner.addResponder(allMessageUpdateEventResponder());
+
+const scheduleRunner = new ScheduleRunner(clock);
+
+const commandRunner = new MessageResponseRunner(
+  new MessageProxy(client, converterWithPrefix('!'))
+);
+commandRunner.addResponder(
+  allCommandResponder(typoRepo, clock, scheduleRunner)
+);
 
 client.once('ready', () => {
   readyLog(client);
