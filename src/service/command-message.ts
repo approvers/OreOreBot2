@@ -1,3 +1,4 @@
+import type { EmbedMessage } from '../model/embed-message';
 import type { Snowflake } from '../model/id';
 
 /**
@@ -30,5 +31,5 @@ export interface CommandMessage {
    * @type {readonly string[]}
    * @memberof CommandMessage
    */
-  reply(message: string): Promise<void>;
+  reply(message: EmbedMessage): Promise<void>;
 }
