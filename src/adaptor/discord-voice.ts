@@ -125,17 +125,18 @@ export class DiscordVoiceConnection<K extends string | number | symbol>
         console.error(error);
         this.destroy();
       }
-      if (shouldReconnect()) {
-        try {
-          const newConn = new DiscordVoiceConnection(
-            this.channel,
-            this.audioRecord
-          );
-          this.connection = newConn.connection;
-          this.player = newConn.player;
-        } catch (error) {
-          console.error(error);
-        }
+      if (!shouldReconnect()) {
+        return;
+      }
+      try {
+        const newConn = new DiscordVoiceConnection(
+          this.channel,
+          this.audioRecord
+        );
+        this.connection = newConn.connection;
+        this.player = newConn.player;
+      } catch (error) {
+        console.error(error);
       }
     };
   }
