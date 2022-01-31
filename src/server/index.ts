@@ -19,6 +19,7 @@ import {
   allMessageUpdateEventResponder
 } from '../service';
 import dotenv from 'dotenv';
+import { generateDependencyReport } from '@discordjs/voice';
 
 dotenv.config();
 const token = process.env.DISCORD_TOKEN;
@@ -51,6 +52,8 @@ function readyLog(client: Client): void {
   console.info('接続クライアントバージョン> ' + projectVersion);
   console.info('');
   console.info('discord.js バージョン> ' + version);
+  console.info('');
+  console.info(generateDependencyReport());
   console.info('');
   console.info('============');
 }
