@@ -129,7 +129,7 @@ export class DiscordVoiceConnection<K extends string | number | symbol>
             TIMEOUT_MS
           )
         ]);
-        // Succeed to reconnect.
+        // 再接続に成功。
         return;
       } catch (error) {
         console.error(error);
