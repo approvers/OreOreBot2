@@ -79,17 +79,7 @@ export class DiscordVoiceConnection<K extends string | number | symbol>
     });
   }
   play(key: K): void {
-    const resource = createAudioResource(this.audioRecord[key]);
-
-    this.player.once('error', (error) => {
-      console.error(
-        `Error> ${error.message} with resource:`,
-        error.resource.metadata
-      );
-    });
-
-    this.player.play(resource);
-    this.reserveToPlay();
+    this.playToEnd(key).catch(console.error);
   }
   private reserveToPlay() {
     const subscription = this.connection.subscribe(this.player);
