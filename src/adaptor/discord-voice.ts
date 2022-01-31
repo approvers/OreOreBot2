@@ -9,7 +9,7 @@ import {
   joinVoiceChannel
 } from '@discordjs/voice';
 import type { Client, VoiceBasedChannel } from 'discord.js';
-import { Snowflake } from '../model/id';
+import type { Snowflake } from '../model/id';
 import type {
   VoiceConnection,
   VoiceConnectionFactory
