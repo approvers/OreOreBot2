@@ -10,7 +10,7 @@ import { convertEmbed } from '../embed-convert';
 const getAuthorSnowflake = (message: RawMessage): Snowflake =>
   (message.author?.id || 'unknown') as Snowflake;
 
-export const observableMessage = (
+const observableMessage = (
   raw: RawMessage
 ): EditingObservable & DeletionObservable & TypoObservable => ({
   authorId: getAuthorSnowflake(raw),

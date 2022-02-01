@@ -2,11 +2,8 @@ import type { Message, PartialMessage } from 'discord.js';
 import type { EditingObservable } from '../../service/difference-detector';
 import type { MessageHandler } from '..';
 import { execOnlyUserMessage } from './bot-filter';
-import {
-  converterWithPrefix,
-  observableLifter,
-  observableMessage
-} from './message-convert';
+import { converterWithPrefix, observableLifter } from './message-convert';
+import { tupleLifter } from './tuple';
 
 export type RawMessage = Message | PartialMessage;
 
@@ -32,14 +29,11 @@ export const lifterForMessage = () =>
 export const lifterForCommand = (prefix: string) =>
   connectLifter(converterWithPrefix(prefix), execOnlyUserMessage);
 
-export const lifterForUpdateMessage =
-  (): Lifter<
-    [EditingObservable, EditingObservable],
-    [RawMessage, RawMessage]
-  > =>
-  (handler: MessageHandler<[EditingObservable, EditingObservable]>) =>
-  async ([before, after]: [RawMessage, RawMessage]) => {
-    if (!after.author?.bot) {
-      await handler([observableMessage(before), observableMessage(after)]);
-    }
-  };
+export const lifterForUpdateMessage = (): Lifter<
+  [EditingObservable, EditingObservable],
+  [RawMessage, RawMessage]
+> =>
+  connectLifter(
+    tupleLifter(observableLifter),
+    tupleLifter(execOnlyUserMessage)
+  );
