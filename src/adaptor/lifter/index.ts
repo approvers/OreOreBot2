@@ -1,6 +1,6 @@
 import type { Message, PartialMessage } from 'discord.js';
+import type { EditingObservable } from '../../service/difference-detector';
 import type { MessageHandler } from '..';
-import { EditingObservable } from '../../service/difference-detector';
 import { execOnlyUserMessage } from './bot-filter';
 import {
   converterWithPrefix,

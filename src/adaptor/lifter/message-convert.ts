@@ -1,11 +1,11 @@
-import { Lifter, RawMessage } from '.';
+import type { Lifter, RawMessage } from '.';
 import type { CommandMessage } from '../../service/command-message';
 import type { DeletionObservable } from '../../service/deletion-repeater';
 import type { EditingObservable } from '../../service/difference-detector';
-import { Snowflake } from '../../model/id';
+import type { MessageHandler } from '..';
+import type { Snowflake } from '../../model/id';
 import type { TypoObservable } from '../../service/typo-record';
 import { convertEmbed } from '../embed-convert';
-import { MessageHandler } from '..';
 
 const getAuthorSnowflake = (message: RawMessage): Snowflake =>
   (message.author?.id || 'unknown') as Snowflake;

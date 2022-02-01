@@ -1,9 +1,9 @@
-import type { Client } from 'discord.js';
-import { Lifter, RawMessage } from './lifter';
+import type { Lifter, RawMessage } from './lifter';
 import type {
   MessageEventProvider,
   MessageUpdateEventProvider
 } from '../runner';
+import type { Client } from 'discord.js';
 
 export type MessageHandler<M> = (message: M) => Promise<void>;
 
