@@ -1,13 +1,13 @@
 /*
-    /-> A1 -------> B1 -> B1*B1 -\
-  A1*A2     A -> B             B1*B2
-    \-> A2 -------> B2 -> B2*B2 -/
+    /-> A1 -------> B1 -\
+  A1*A2     A -> B    B1*B2
+    \-> A2 -------> B2 -/
 
   This will be transformed:
 
-        /- A1=> <----------- B1=> <- B1*B1=> <-\
-  A1*A2=>        B=> -> A=>                B1*B2=>
-        \- A2=> <----------- B2=> <- B2*B2=> <-/
+        /- A1=> <----------- B1=> <-\
+  A1*A2=>        B=> -> A=>    B1*B2=>
+        \- A2=> <----------- B2=> <-/
 */
 
 import type { Lifter } from '.';
@@ -20,28 +20,31 @@ const merge =
     await Promise.all([f1(first), f2(second)]);
   };
 
-// B1*B2=> -> B1*B1=>
-const pickFirst =
-  <B>(f: MessageHandler<[B, B]>) =>
-  ([first]: [B, B]) =>
-    f([first, first]);
-
-// B1*B2=> -> B2*B2=>
-const pickSecond =
-  <B>(f: MessageHandler<[B, B]>) =>
-  ([, second]: [B, B]) =>
-    f([second, second]);
-
-// B*B=> -> B=>
-const flatten =
-  <B>(f: MessageHandler<[B, B]>) =>
-  (b: B) =>
-    f([b, b]);
+// B1*B2=> -> B1=>*B2=>
+const split = <B>(
+  f: MessageHandler<[B, B]>
+): [MessageHandler<B>, MessageHandler<B>] => {
+  let firstB: B | undefined = undefined;
+  let secondB: B | undefined = undefined;
+  const set = async ([first, second]: [B, undefined] | [undefined, B]) => {
+    if (first) {
+      firstB = first;
+    }
+    if (second) {
+      secondB = second;
+    }
+    if (firstB && secondB) {
+      await f([firstB, secondB]);
+    }
+  };
+  const f1: MessageHandler<B> = async (first: B) => set([first, undefined]);
+  const f2: MessageHandler<B> = async (second: B) => set([undefined, second]);
+  return [f1, f2];
+};
 
 export const tupleLifter =
   <T, U>(lifter: Lifter<T, U>): Lifter<[T, T], [U, U]> =>
-  (handler) =>
-    merge(
-      lifter(flatten(pickFirst(handler))),
-      lifter(flatten(pickSecond(handler)))
-    );
+  (handler) => {
+    const [first, second] = split(handler);
+    return merge(lifter(first), lifter(second));
+  };
