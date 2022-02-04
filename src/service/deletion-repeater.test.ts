@@ -1,4 +1,3 @@
-import { assert } from 'console';
 import { DeletionRepeater } from './deletion-repeater';
 
 test('react to deleted message', async () => {
@@ -19,13 +18,11 @@ Wall Is Stop
 
 test('must not react', async () => {
   const responder = new DeletionRepeater();
+  const fn = jest.fn();
   await responder.on('CREATE', {
     author: 'Baba',
     content: 'Wall Is Not Stop',
-    sendToSameChannel: () => {
-      // must not be called
-      assert(false);
-      return Promise.resolve();
-    }
+    sendToSameChannel: fn
   });
+  expect(fn).not.toHaveBeenCalled();
 });
