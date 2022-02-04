@@ -1,4 +1,4 @@
-import type { Lifter, RawMessage } from './lifter';
+import type { Transformer, RawMessage } from './transformer';
 import type {
   MessageEventProvider,
   MessageUpdateEventProvider
@@ -17,15 +17,15 @@ export type MessageHandler<M> = (message: M) => Promise<void>;
 export class MessageProxy<M> implements MessageEventProvider<M> {
   constructor(
     private readonly client: Client,
-    private readonly lifter: Lifter<M, RawMessage>
+    private readonly transformer: Transformer<M, RawMessage>
   ) {}
 
   onMessageCreate(handler: MessageHandler<M>): void {
-    this.client.on('messageCreate', this.lifter(handler));
+    this.client.on('messageCreate', this.transformer(handler));
   }
 
   onMessageDelete(handler: MessageHandler<M>): void {
-    const wrapper = this.lifter(handler);
+    const wrapper = this.transformer(handler);
 
     this.client.on('messageDelete', wrapper);
     this.client.on('messageDeleteBulk', async (messages) => {
@@ -37,11 +37,11 @@ export class MessageProxy<M> implements MessageEventProvider<M> {
 export class MessageUpdateProxy<M> implements MessageUpdateEventProvider<M> {
   constructor(
     private readonly client: Client,
-    private readonly lifter: Lifter<[M, M], [RawMessage, RawMessage]>
+    private readonly transformer: Transformer<[M, M], [RawMessage, RawMessage]>
   ) {}
 
   onMessageUpdate(handler: (before: M, after: M) => Promise<void>): void {
-    const mapped = this.lifter((args) => handler(...args));
+    const mapped = this.transformer((args) => handler(...args));
     this.client.on('messageUpdate', (before, after) => mapped([before, after]));
   }
 }

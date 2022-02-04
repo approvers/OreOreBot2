@@ -2,9 +2,9 @@ import { Client, Intents, version } from 'discord.js';
 import {
   ActualClock,
   InMemoryTypoRepository,
-  lifterForCommand,
-  lifterForMessage,
-  lifterForUpdateMessage,
+  transformerForCommand,
+  transformerForMessage,
+  transformerForUpdateMessage,
   MessageProxy,
   MessageUpdateProxy
 } from '../adaptor';
@@ -62,19 +62,19 @@ const typoRepo = new InMemoryTypoRepository();
 const clock = new ActualClock();
 
 const runner = new MessageResponseRunner(
-  new MessageProxy(client, lifterForMessage())
+  new MessageProxy(client, transformerForMessage())
 );
 runner.addResponder(allMessageEventResponder(typoRepo));
 
 const updateRunner = new MessageUpdateResponseRunner(
-  new MessageUpdateProxy(client, lifterForUpdateMessage())
+  new MessageUpdateProxy(client, transformerForUpdateMessage())
 );
 updateRunner.addResponder(allMessageUpdateEventResponder());
 
 const scheduleRunner = new ScheduleRunner(clock);
 
 const commandRunner = new MessageResponseRunner(
-  new MessageProxy(client, lifterForCommand('!'))
+  new MessageProxy(client, transformerForCommand('!'))
 );
 commandRunner.addResponder(
   allCommandResponder(typoRepo, clock, scheduleRunner)

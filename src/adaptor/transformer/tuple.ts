@@ -10,7 +10,7 @@
         \- A2=> <----------- B2=> <-/
 */
 
-import type { Lifter } from '.';
+import type { Transformer } from '.';
 import type { MessageHandler } from '..';
 
 // A1=> -> A2=> -> A1*A2=>
@@ -42,9 +42,9 @@ const split = <B>(
   return [f1, f2];
 };
 
-export const tupleLifter =
-  <T, U>(lifter: Lifter<T, U>): Lifter<[T, T], [U, U]> =>
+export const tupleTransformer =
+  <T, U>(transformer: Transformer<T, U>): Transformer<[T, T], [U, U]> =>
   (handler) => {
     const [first, second] = split(handler);
-    return merge(lifter(first), lifter(second));
+    return merge(transformer(first), transformer(second));
   };

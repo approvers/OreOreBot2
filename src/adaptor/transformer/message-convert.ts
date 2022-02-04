@@ -1,4 +1,4 @@
-import type { Lifter, RawMessage } from '.';
+import type { Transformer, RawMessage } from '.';
 import type { CommandMessage } from '../../service/command-message';
 import type { DeletionObservable } from '../../service/deletion-repeater';
 import type { EditingObservable } from '../../service/difference-detector';
@@ -21,7 +21,7 @@ const observableMessage = (
   }
 });
 
-export const observableLifter: Lifter<
+export const observableTransformer: Transformer<
   EditingObservable & DeletionObservable & TypoObservable,
   RawMessage
 > = (handler) => (raw: RawMessage) => handler(observableMessage(raw));
@@ -29,7 +29,7 @@ export const observableLifter: Lifter<
 const SPACES = /\s+/;
 
 export const converterWithPrefix =
-  (prefix: string): Lifter<CommandMessage, RawMessage> =>
+  (prefix: string): Transformer<CommandMessage, RawMessage> =>
   (func: MessageHandler<CommandMessage>) =>
   async (message: RawMessage): Promise<void> => {
     if (!message.content?.trimStart().startsWith(prefix)) {
