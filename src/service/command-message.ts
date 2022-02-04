@@ -14,7 +14,15 @@ export interface CommandMessage {
    * @type {Snowflake}
    * @memberof CommandMessage
    */
-  sender: Snowflake;
+  senderId: Snowflake;
+
+  /**
+   * コマンドの送信者の名前。
+   *
+   * @type {string}
+   * @memberof CommandMessage
+   */
+  senderName: string;
 
   /**
    * コマンドの引数リスト。
