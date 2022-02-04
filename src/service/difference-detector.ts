@@ -57,7 +57,6 @@ export class DifferenceDetector
     }
     await after.sendToSameChannel(`見てたぞ
 \`\`\`diff
-${composed}
-\`\`\``);
+${composed}\`\`\``);
   }
 }
