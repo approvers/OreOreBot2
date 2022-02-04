@@ -38,6 +38,7 @@ export const converterWithPrefix =
     const args = message.content?.trim().slice(prefix.length).split(SPACES);
     const command: CommandMessage = {
       senderId: getAuthorSnowflake(message),
+      senderGuildId: message.guildId as Snowflake,
       senderName: message.author?.username ?? '名無し',
       args,
       async reply(embed) {

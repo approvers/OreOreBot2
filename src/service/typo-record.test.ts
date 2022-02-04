@@ -74,6 +74,7 @@ test('show all typos', async () => {
   const responder = new TypoReporter(db, clock, runner);
   await responder.on('CREATE', {
     senderId: '279614913129742338' as Snowflake,
+    senderGuildId: '683939861539192860' as Snowflake,
     senderName: 'Mikuroさいな',
     args: ['typo'],
     reply: (message) => {
@@ -97,12 +98,14 @@ test('must not reply', async () => {
   const fn = jest.fn();
   await responder.on('CREATE', {
     senderId: '279614913129742338' as Snowflake,
+    senderGuildId: '683939861539192860' as Snowflake,
     senderName: 'Mikuroさいな',
     args: ['typo', 'hoge'],
     reply: fn
   });
   await responder.on('DELETE', {
     senderId: '279614913129742338' as Snowflake,
+    senderGuildId: '683939861539192860' as Snowflake,
     senderName: 'Mikuroさいな',
     args: ['typo'],
     reply: fn
