@@ -83,7 +83,11 @@ export class TypoRecorder implements MessageEventResponder<TypoObservable> {
     if (!content.endsWith('だカス')) {
       return;
     }
-    await this.repo.addTypo(id, content.trim().slice(0, -3));
+    const sliced = content.trim().slice(0, -3);
+    if (sliced === '') {
+      return;
+    }
+    await this.repo.addTypo(id, sliced);
   }
 }
 
@@ -125,15 +129,15 @@ export class TypoReporter implements MessageEventResponder<CommandMessage> {
     if (event !== 'CREATE') {
       return;
     }
-    const { sender, args } = message;
-    if (args.length < 1 || args[0] !== 'typo') {
+    const { senderId, senderName, args } = message;
+    if (args.length !== 1 || args[0] !== 'typo') {
       return;
     }
-    const description = (await this.repo.allTyposByDate(sender))
+    const description = (await this.repo.allTyposByDate(senderId))
       .map((typo) => `- ${typo}`)
       .join('\n');
     await message.reply({
-      title: `† 今日の${sender}のtypo †`,
+      title: `† 今日の${senderName}のtypo †`,
       description
     });
   }
