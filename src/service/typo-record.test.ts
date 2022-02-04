@@ -1,7 +1,8 @@
 import EventEmitter from 'events';
-import { InMemoryTypoRepository } from '../adaptor';
+import { InMemoryTypoRepository, MockClock } from '../adaptor';
 import { Snowflake } from '../model/id';
-import { TypoRecorder, TypoRepository } from './typo-record';
+import { ScheduleRunner } from '../runner';
+import { TypoRecorder, TypoReporter, TypoRepository } from './typo-record';
 
 class MockRepository extends EventEmitter implements TypoRepository {
   private db = new InMemoryTypoRepository();
@@ -58,4 +59,55 @@ test('must not react', async () => {
     authorId: '279614913129742338' as Snowflake
   });
   expect(fn).not.toHaveBeenCalled();
+});
+
+test('show all typos', async () => {
+  const clock = new MockClock(new Date(0));
+  const db = new InMemoryTypoRepository();
+  await db.addTypo('279614913129742338' as Snowflake, 'foo');
+  await db.addTypo('279614913129742338' as Snowflake, 'hoge');
+  await db.addTypo('279614913129742338' as Snowflake, 'fuga');
+  await db.addTypo('000000000000000001' as Snowflake, 'null');
+
+  const runner = new ScheduleRunner(clock);
+
+  const responder = new TypoReporter(db, clock, runner);
+  await responder.on('CREATE', {
+    senderId: '279614913129742338' as Snowflake,
+    senderName: 'Mikuroさいな',
+    args: ['typo'],
+    reply: (message) => {
+      expect(message).toStrictEqual({
+        title: `† 今日のMikuroさいなのtypo †`,
+        description: '- foo\n- hoge\n- fuga'
+      });
+      return Promise.resolve();
+    }
+  });
+
+  runner.killAll();
+});
+
+test('must not reply', async () => {
+  const clock = new MockClock(new Date(0));
+  const db = new InMemoryTypoRepository();
+  const runner = new ScheduleRunner(clock);
+  const responder = new TypoReporter(db, clock, runner);
+
+  const fn = jest.fn();
+  await responder.on('CREATE', {
+    senderId: '279614913129742338' as Snowflake,
+    senderName: 'Mikuroさいな',
+    args: ['typo', 'hoge'],
+    reply: fn
+  });
+  await responder.on('DELETE', {
+    senderId: '279614913129742338' as Snowflake,
+    senderName: 'Mikuroさいな',
+    args: ['typo'],
+    reply: fn
+  });
+  expect(fn).not.toHaveBeenCalled();
+
+  runner.killAll();
 });
