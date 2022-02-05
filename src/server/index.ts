@@ -1,6 +1,7 @@
 import { Client, Intents, version } from 'discord.js';
 import {
   ActualClock,
+  DiscordVoiceConnectionFactory,
   InMemoryTypoRepository,
   transformerForCommand,
   transformerForMessage,
@@ -20,7 +21,6 @@ import {
 } from '../service';
 import dotenv from 'dotenv';
 import { generateDependencyReport } from '@discordjs/voice';
-import { DiscordVoiceConnectionFactory } from '../adaptor/discord-voice';
 import { AssetKey } from '../service/party';
 import { join } from 'path';
 
