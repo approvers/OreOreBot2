@@ -1,4 +1,5 @@
 import { addHours, getMinutes, setMinutes } from 'date-fns';
+import type { EmbedMessage } from '../model/embed-message';
 import type {
   Clock,
   MessageEvent,
@@ -10,6 +11,11 @@ import type {
   VoiceConnection,
   VoiceConnectionFactory
 } from './voice-connection';
+
+const partyStarting: EmbedMessage = {
+  title: 'パーティー Nigth',
+  description: 'хорошо、宴の始まりだ。'
+};
 
 const assetKeys = ['COFFIN_INTRO', 'COFFIN_DROP', 'KAKAPO'] as const;
 
@@ -117,6 +123,8 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
       message.senderId,
       message.senderGuildId
     );
+    connection.connect();
+    await message.reply(partyStarting);
     await connection.playToEnd(this.generateNextKey());
   }
 
@@ -151,6 +159,7 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
           return null;
         }
         this.connection.connect();
+        await message.reply(partyStarting);
         await this.connection.playToEnd(this.generateNextKey());
         this.connection.destroy();
         return this.nextTime(randomMinutes());
