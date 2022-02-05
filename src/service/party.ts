@@ -21,7 +21,15 @@ const assetKeys = ['COFFIN_INTRO', 'COFFIN_DROP', 'KAKAPO'] as const;
 
 export type AssetKey = typeof assetKeys[number];
 
-const randomMinutes = (): number => Math.floor(Math.random() * 60);
+export interface RandomMinutes {
+  /**
+   * 0 以上 59 以下の乱数を生成する。
+   *
+   * @return {*}  {number}
+   * @memberof RandomMinutes
+   */
+  (): number;
+}
 
 /**
  * `party` コマンドで押し掛けPartyする機能。
@@ -34,7 +42,8 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
   constructor(
     private readonly factory: VoiceConnectionFactory<AssetKey>,
     private readonly clock: Clock,
-    private readonly scheduleRunner: ScheduleRunner
+    private readonly scheduleRunner: ScheduleRunner,
+    private readonly random: RandomMinutes
   ) {}
 
   private nextMusicKey: AssetKey | null = null;
@@ -72,7 +81,7 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
           if (args.length === 3) {
             minutes = parseInt(args[2], 10) % 60;
           } else {
-            minutes = randomMinutes();
+            minutes = this.random();
           }
           this.startPartyAt(minutes, message);
           await message.reply({
@@ -163,9 +172,9 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
         await message.reply(partyStarting);
         await this.connection.playToEnd(this.generateNextKey());
         this.connection.destroy();
-        return this.nextTime(randomMinutes());
+        return this.nextTime(this.random());
       },
-      this.nextTime(randomMinutes())
+      this.nextTime(this.random())
     );
   }
 

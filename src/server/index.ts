@@ -88,7 +88,8 @@ commandRunner.addResponder(
       KAKAPO: join('assets', 'party', 'kakapo.mp3')
     }),
     clock,
-    scheduleRunner
+    scheduleRunner,
+    () => Math.floor(Math.random() * 60)
   )
 );
 
