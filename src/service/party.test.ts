@@ -1,9 +1,12 @@
 import EventEmitter from 'events';
 import { MockClock } from '../adaptor';
-import { Snowflake } from '../model/id';
+import type { Snowflake } from '../model/id';
 import { ScheduleRunner } from '../runner';
 import { AssetKey, PartyCommand } from './party';
-import { VoiceConnection, VoiceConnectionFactory } from './voice-connection';
+import type {
+  VoiceConnection,
+  VoiceConnectionFactory
+} from './voice-connection';
 
 class MockVoiceConnectionFactory implements VoiceConnectionFactory<AssetKey> {
   connectSameTo(): Promise<VoiceConnection<AssetKey>> {
