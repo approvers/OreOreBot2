@@ -19,9 +19,9 @@ import {
   allMessageEventResponder,
   allMessageUpdateEventResponder
 } from '../service';
+import type { AssetKey } from '../service/party';
 import dotenv from 'dotenv';
 import { generateDependencyReport } from '@discordjs/voice';
-import { AssetKey } from '../service/party';
 import { join } from 'path';
 
 dotenv.config();
