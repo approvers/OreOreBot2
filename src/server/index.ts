@@ -20,6 +20,9 @@ import {
 } from '../service';
 import dotenv from 'dotenv';
 import { generateDependencyReport } from '@discordjs/voice';
+import { DiscordVoiceConnectionFactory } from '../adaptor/discord-voice';
+import { AssetKey } from '../service/party';
+import { join } from 'path';
 
 dotenv.config();
 const token = process.env.DISCORD_TOKEN;
@@ -77,7 +80,16 @@ const commandRunner = new MessageResponseRunner(
   new MessageProxy(client, transformerForCommand('!'))
 );
 commandRunner.addResponder(
-  allCommandResponder(typoRepo, clock, scheduleRunner)
+  allCommandResponder(
+    typoRepo,
+    new DiscordVoiceConnectionFactory<AssetKey>(client, {
+      COFFIN_INTRO: join('assets', 'party', 'coffin-intro.mp3'),
+      COFFIN_DROP: join('assets', 'party', 'coffin-drop.mp3'),
+      KAKAPO: join('assets', 'party', 'kakapo.mp3')
+    }),
+    clock,
+    scheduleRunner
+  )
 );
 
 client.once('ready', () => {
