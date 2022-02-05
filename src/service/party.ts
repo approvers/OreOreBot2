@@ -1,4 +1,4 @@
-import { addHours, getMinutes, setMinutes } from 'date-fns';
+import { addHours, getMinutes, setMinutes, setSeconds } from 'date-fns';
 import type { EmbedMessage } from '../model/embed-message';
 import type {
   Clock,
@@ -143,7 +143,8 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
     if (minutes <= getMinutes(nextTime)) {
       nextTime = addHours(nextTime, 1);
     }
-    return setMinutes(nextTime, minutes);
+    nextTime = setMinutes(nextTime, minutes);
+    return setSeconds(nextTime, 0);
   }
 
   private startPartyAt(minutes: number, message: CommandMessage) {
