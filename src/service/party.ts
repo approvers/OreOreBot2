@@ -164,7 +164,7 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
       message.senderGuildId
     );
     this.scheduleRunner.runOnNextTime(
-      { key: 'party-once' },
+      { key: 'party-random' },
       async () => {
         if (!this.connection) {
           return null;
