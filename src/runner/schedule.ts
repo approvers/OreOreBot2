@@ -1,5 +1,4 @@
 import { addMilliseconds, differenceInMilliseconds } from 'date-fns';
-import { clearTimeout } from 'timers';
 
 /**
  * `ScheduleRunner` に登録するイベントが実装するインターフェイス。戻り値は次に自身を再実行する時刻。`null` を返した場合は再実行されない。
