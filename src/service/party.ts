@@ -55,15 +55,15 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
     switch (args[1]) {
       case 'disable':
         this.stopRandomized();
-        await message.reply({ title: 'ゲリラは無効化されました' });
+        await message.reply({ title: 'ゲリラを無効化しておいたよ。' });
         return;
       case 'enable':
         await this.activateRandomized(message);
-        await message.reply({ title: 'ゲリラは有効化されました' });
+        await message.reply({ title: 'ゲリラを有効化しておいたよ。' });
         return;
       case 'status':
         await message.reply({
-          title: `ゲリラは現在${this.connection ? '有効' : '無効'}です。`
+          title: `ゲリラは現在${this.connection ? '有効' : '無効'}だよ。`
         });
         return;
       case 'time':
@@ -76,7 +76,7 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
           }
           this.startPartyAt(minutes, message);
           await message.reply({
-            title: `次のゲリラ参加時刻を${minutes}分にしました`
+            title: `次のゲリラ参加時刻を${minutes}分にしたよ。`
           });
         }
         return;
@@ -85,22 +85,22 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
           const musicKey = args[2];
           if (!(assetKeys as readonly string[]).includes(musicKey)) {
             await message.reply({
-              title: 'BGMの設定に失敗しました',
-              description: `以下のいずれかを指定してください。\n${assetKeys
+              title: 'BGMを設定できなかった。',
+              description: `以下のいずれかを指定してね。\n${assetKeys
                 .map((key) => `- ${key}`)
                 .join('\n')}`
             });
             return;
           }
           this.nextMusicKey = musicKey as AssetKey;
-          await message.reply({ title: 'BGMを設定しました' });
+          await message.reply({ title: 'BGMを設定したよ。' });
         }
         return;
     }
     await message.reply({
       title: 'Party一葉ヘルプ',
       description: `
-引数無しで即座にPartyします。
+引数無しだと即座にPartyするよ。
 - \`enable\`/\`disable\`: ゲリラモードの有効/無効化
 - \`status\`: ゲリラモードの状態の確認
 - \`time\`: ゲリラモードの参加時刻を上書き指定
