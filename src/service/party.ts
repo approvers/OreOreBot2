@@ -126,6 +126,7 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
     connection.connect();
     await message.reply(partyStarting);
     await connection.playToEnd(this.generateNextKey());
+    connection.destroy();
   }
 
   private nextTime(minutes: number): Date {
