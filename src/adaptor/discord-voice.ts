@@ -79,7 +79,12 @@ export class DiscordVoiceConnection<K extends string | number | symbol>
   private reserveToPlay() {
     const subscription = this.connection?.subscribe(this.player);
     if (subscription) {
-      setTimeout(() => subscription.unsubscribe(), TIMEOUT_MS);
+      setTimeout(() => {
+        if (this.player.state.status === 'playing') {
+          return;
+        }
+        subscription.unsubscribe();
+      }, TIMEOUT_MS);
     }
   }
   pause(): void {
