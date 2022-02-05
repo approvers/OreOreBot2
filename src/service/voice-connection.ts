@@ -9,7 +9,7 @@ import type { Snowflake } from '../model/id';
  */
 export interface VoiceConnectionFactory<K> {
   /**
-   * `userId` のユーザが現在接続しているボイスチャンネルへ接続し `VoiceConnection` を作成する。
+   * `userId` のユーザが現在接続しているボイスチャンネルへ接続できる `VoiceConnection` を作成する。
    *
    * @param {Snowflake} userId 参照するユーザの ID。
    * @param {Snowflake} guildId 参照するユーザが所属するサーバの ID。
@@ -30,6 +30,19 @@ export interface VoiceConnectionFactory<K> {
  * @template K
  */
 export interface VoiceConnection<K> {
+  /**
+   * 接続を開始し、データを再生できるようにする。
+   *
+   * @memberof VoiceConnection
+   */
+  connect(): void;
+  /**
+   * 接続を破棄し、データを再生できないようにする。
+   *
+   * @memberof VoiceConnection
+   */
+  destroy(): void;
+
   /**
    * `key` のデータを非同期で再生する。
    *
@@ -57,12 +70,6 @@ export interface VoiceConnection<K> {
    * @memberof VoiceConnection
    */
   unpause(): void;
-  /**
-   * 接続を破棄し、データを再生できないようにする。
-   *
-   * @memberof VoiceConnection
-   */
-  destroy(): void;
 
   /**
    * 回復できない接続解除が発生した時に、同じチャンネルへ再接続するかどうかのハンドラを登録する。ボイスチャンネルが削除されたなど、必ず再接続できないこともある。
