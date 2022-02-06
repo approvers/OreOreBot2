@@ -63,6 +63,10 @@ export class ScheduleRunner {
   }
 
   private startInner(key: object, task: ScheduleTask, timeout: Date): void {
+    const old = this.runningTasks.get(key);
+    if (old) {
+      clearTimeout(old);
+    }
     const id = setTimeout(() => {
       void (async () => {
         const newTimeout = await task();

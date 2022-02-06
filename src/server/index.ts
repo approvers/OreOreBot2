@@ -1,10 +1,12 @@
 import { Client, Intents, version } from 'discord.js';
 import {
   ActualClock,
+  DiscordVoiceConnectionFactory,
   InMemoryTypoRepository,
   transformerForCommand,
   transformerForMessage,
   transformerForUpdateMessage,
+  MathRandomGenerator,
   MessageProxy,
   MessageUpdateProxy
 } from '../adaptor';
@@ -18,8 +20,10 @@ import {
   allMessageEventResponder,
   allMessageUpdateEventResponder
 } from '../service';
+import type { AssetKey } from '../service/party';
 import dotenv from 'dotenv';
 import { generateDependencyReport } from '@discordjs/voice';
+import { join } from 'path';
 
 dotenv.config();
 const token = process.env.DISCORD_TOKEN;
@@ -77,7 +81,17 @@ const commandRunner = new MessageResponseRunner(
   new MessageProxy(client, transformerForCommand('!'))
 );
 commandRunner.addResponder(
-  allCommandResponder(typoRepo, clock, scheduleRunner)
+  allCommandResponder(
+    typoRepo,
+    new DiscordVoiceConnectionFactory<AssetKey>(client, {
+      COFFIN_INTRO: join('assets', 'party', 'coffin-intro.mp3'),
+      COFFIN_DROP: join('assets', 'party', 'coffin-drop.mp3'),
+      KAKAPO: join('assets', 'party', 'kakapo.mp3')
+    }),
+    clock,
+    scheduleRunner,
+    new MathRandomGenerator()
+  )
 );
 
 client.once('ready', () => {

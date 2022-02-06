@@ -56,15 +56,10 @@ export class DiscordVoiceConnection<K extends string | number | symbol>
     private readonly channel: VoiceBasedChannel,
     private readonly audioRecord: Record<K, string>
   ) {
-    this.connection = joinVoiceChannel({
-      channelId: this.channel.id,
-      guildId: this.channel.guildId,
-      adapterCreator: this.channel.guild.voiceAdapterCreator
-    });
     this.player = createAudioPlayer();
   }
 
-  private connection: RawVoiceConnection;
+  private connection: RawVoiceConnection | null = null;
   private player: AudioPlayer;
 
   playToEnd(key: K): Promise<void> {
@@ -82,9 +77,14 @@ export class DiscordVoiceConnection<K extends string | number | symbol>
     this.playToEnd(key).catch(console.error);
   }
   private reserveToPlay() {
-    const subscription = this.connection.subscribe(this.player);
+    const subscription = this.connection?.subscribe(this.player);
     if (subscription) {
-      setTimeout(() => subscription.unsubscribe(), TIMEOUT_MS);
+      setTimeout(() => {
+        if (this.player.state.status === 'playing') {
+          return;
+        }
+        subscription.unsubscribe();
+      }, TIMEOUT_MS);
     }
   }
   pause(): void {
@@ -93,19 +93,30 @@ export class DiscordVoiceConnection<K extends string | number | symbol>
   unpause(): void {
     this.player.unpause();
   }
+
+  connect(): void {
+    this.connection = joinVoiceChannel({
+      channelId: this.channel.id,
+      guildId: this.channel.guildId,
+      adapterCreator: this.channel.guild.voiceAdapterCreator
+    });
+  }
   destroy(): void {
     this.player.stop();
-    this.connection.destroy();
+    this.connection?.destroy();
   }
 
   onDisconnected(shouldReconnect: () => boolean): void {
-    this.connection.on(
+    this.connection?.on(
       VoiceConnectionStatus.Disconnected,
       this.makeDisconnectionHandler(shouldReconnect)
     );
   }
   private makeDisconnectionHandler(shouldReconnect: () => boolean) {
     return async () => {
+      if (!this.connection) {
+        return;
+      }
       try {
         await Promise.race([
           entersState(
