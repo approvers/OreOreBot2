@@ -6,6 +6,7 @@ import {
   transformerForCommand,
   transformerForMessage,
   transformerForUpdateMessage,
+  MathRandomGenerator,
   MessageProxy,
   MessageUpdateProxy
 } from '../adaptor';
@@ -89,7 +90,7 @@ commandRunner.addResponder(
     }),
     clock,
     scheduleRunner,
-    () => Math.floor(Math.random() * 60)
+    new MathRandomGenerator()
   )
 );
 
