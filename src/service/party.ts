@@ -21,14 +21,25 @@ const assetKeys = ['COFFIN_INTRO', 'COFFIN_DROP', 'KAKAPO'] as const;
 
 export type AssetKey = typeof assetKeys[number];
 
-export interface RandomMinutes {
+export interface RandomGenerator {
   /**
    * 0 以上 59 以下の乱数を生成する。
    *
    * @return {*}  {number}
    * @memberof RandomMinutes
    */
-  (): number;
+  minutes(): number;
+
+  /**
+   * `array` からランダムな一要素を取り出す。
+   *
+   * @template T
+   * @param {readonly} array
+   * @param {*} T[]
+   * @return {*} {T}
+   * @memberof RandomGenerator
+   */
+  pick<T>(array: readonly T[]): T;
 }
 
 /**
@@ -43,7 +54,7 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
     private readonly factory: VoiceConnectionFactory<AssetKey>,
     private readonly clock: Clock,
     private readonly scheduleRunner: ScheduleRunner,
-    private readonly random: RandomMinutes
+    private readonly random: RandomGenerator
   ) {}
 
   private nextMusicKey: AssetKey | null = null;
@@ -81,7 +92,7 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
           if (args.length === 3) {
             minutes = parseInt(args[2], 10) % 60;
           } else {
-            minutes = this.random();
+            minutes = this.random.minutes();
           }
           this.startPartyAt(minutes, message);
           await message.reply({
@@ -124,7 +135,7 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
       this.nextMusicKey = null;
       return next;
     }
-    return [...assetKeys].sort(() => Math.random() * 2 - 1)[0];
+    return this.random.pick(assetKeys);
   }
 
   private async startPartyImmediately(message: CommandMessage): Promise<void> {
@@ -173,9 +184,9 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
         await message.reply(partyStarting);
         await this.connection.playToEnd(this.generateNextKey());
         this.connection.destroy();
-        return this.nextTime(this.random());
+        return this.nextTime(this.random.minutes());
       },
-      this.nextTime(this.random())
+      this.nextTime(this.random.minutes())
     );
   }
 

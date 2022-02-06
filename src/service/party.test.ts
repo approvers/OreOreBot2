@@ -2,7 +2,7 @@ import EventEmitter from 'events';
 import { MockClock } from '../adaptor';
 import type { Snowflake } from '../model/id';
 import { ScheduleRunner } from '../runner';
-import { AssetKey, PartyCommand } from './party';
+import { AssetKey, PartyCommand, RandomGenerator } from './party';
 import type {
   VoiceConnection,
   VoiceConnectionFactory
@@ -43,13 +43,16 @@ class MockVoiceConnection
   }
 }
 
-const constantRandom = () => 42;
+const randomGen: RandomGenerator = {
+  minutes: () => 42,
+  pick: ([first]) => first
+};
 
 test('show all typos', async () => {
   const factory = new MockVoiceConnectionFactory();
   const clock = new MockClock(new Date(0));
   const runner = new ScheduleRunner(clock);
-  const responder = new PartyCommand(factory, clock, runner, constantRandom);
+  const responder = new PartyCommand(factory, clock, runner, randomGen);
 
   await responder.on('CREATE', {
     senderId: '279614913129742338' as Snowflake,
@@ -169,7 +172,7 @@ test('must not reply', async () => {
   const factory = new MockVoiceConnectionFactory();
   const clock = new MockClock(new Date(0));
   const runner = new ScheduleRunner(clock);
-  const responder = new PartyCommand(factory, clock, runner, constantRandom);
+  const responder = new PartyCommand(factory, clock, runner, randomGen);
 
   const fn = jest.fn();
   await responder.on('CREATE', {

@@ -6,7 +6,7 @@ import {
 } from '../runner';
 import { DeletionObservable, DeletionRepeater } from './deletion-repeater';
 import { DifferenceDetector } from './difference-detector';
-import { AssetKey, PartyCommand, RandomMinutes } from './party';
+import { AssetKey, PartyCommand, RandomGenerator } from './party';
 import {
   TypoObservable,
   TypoRecorder,
@@ -29,7 +29,7 @@ export const allCommandResponder = (
   factory: VoiceConnectionFactory<AssetKey>,
   clock: Clock,
   scheduleRunner: ScheduleRunner,
-  randomMinutes: RandomMinutes
+  randomMinutes: RandomGenerator
 ) =>
   composeMessageEventResponders(
     new TypoReporter(repo, clock, scheduleRunner),
