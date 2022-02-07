@@ -25,6 +25,14 @@ export interface CommandMessage {
   senderGuildId: Snowflake;
 
   /**
+   * コマンドの送信者が接続しているボイスチャンネルの ID。
+   *
+   * @type {Snowflake}
+   * @memberof CommandMessage
+   */
+  senderVoiceChannelId: Snowflake | null;
+
+  /**
    * コマンドの送信者の名前。
    *
    * @type {string}

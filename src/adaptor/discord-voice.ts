@@ -25,18 +25,20 @@ export class DiscordVoiceConnectionFactory<K extends string | number | symbol>
     private readonly audioRecord: Record<K, string>
   ) {}
 
-  async connectSameTo(
-    userId: Snowflake,
-    guildId: Snowflake
+  async connectTo(
+    guildId: Snowflake,
+    roomId: Snowflake
   ): Promise<VoiceConnection<K>> {
     const guild =
       this.client.guilds.cache.get(guildId) ||
       (await this.client.guilds.fetch(guildId));
-    const member =
-      guild.members.cache.get(userId) || (await guild.members.fetch(userId));
-    const channel = member.voice.channel;
+    const channel =
+      guild.channels.cache.get(roomId) || (await guild.channels.fetch(roomId));
     if (!channel) {
       throw new Error('the user is not joined to voice channel');
+    }
+    if (!channel.isVoice()) {
+      throw new TypeError('the id is not an id for voice channel');
     }
     return new DiscordVoiceConnection(channel, this.audioRecord);
   }
