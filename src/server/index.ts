@@ -1,4 +1,3 @@
-import { Client, Intents, version } from 'discord.js';
 import {
   ActualClock,
   DiscordVoiceConnectionFactory,
@@ -12,6 +11,7 @@ import {
   MessageUpdateProxy,
   DiscordVoiceRoomController
 } from '../adaptor';
+import { Client, Intents, version } from 'discord.js';
 import {
   MessageResponseRunner,
   MessageUpdateResponseRunner,
@@ -23,10 +23,10 @@ import {
   allMessageUpdateEventResponder
 } from '../service';
 import type { AssetKey } from '../service/party';
+import type { KaereMusicKey } from '../service/kaere';
 import dotenv from 'dotenv';
 import { generateDependencyReport } from '@discordjs/voice';
 import { join } from 'path';
-import { KaereMusicKey } from '../service/kaere';
 
 dotenv.config();
 const token = process.env.DISCORD_TOKEN;
