@@ -57,3 +57,15 @@ export interface CommandMessage {
    */
   reply(message: EmbedMessage): Promise<void>;
 }
+
+export const createMockMessage = (
+  partial: Readonly<Partial<CommandMessage>>
+): CommandMessage => ({
+  senderId: '279614913129742338' as Snowflake,
+  senderGuildId: '683939861539192860' as Snowflake,
+  senderVoiceChannelId: '683939861539192865' as Snowflake,
+  senderName: 'Mikuroさいな',
+  args: [],
+  reply: () => Promise.resolve(),
+  ...partial
+});

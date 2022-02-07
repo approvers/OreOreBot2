@@ -2,6 +2,7 @@ import EventEmitter from 'events';
 import { InMemoryTypoRepository, MockClock } from '../adaptor';
 import { Snowflake } from '../model/id';
 import { ScheduleRunner } from '../runner';
+import { createMockMessage } from './command-message';
 import { TypoRecorder, TypoReporter, TypoRepository } from './typo-record';
 
 class MockRepository extends EventEmitter implements TypoRepository {
@@ -72,19 +73,19 @@ test('show all typos', async () => {
   const runner = new ScheduleRunner(clock);
 
   const responder = new TypoReporter(db, clock, runner);
-  await responder.on('CREATE', {
-    senderId: '279614913129742338' as Snowflake,
-    senderGuildId: '683939861539192860' as Snowflake,
-    senderName: 'Mikuroさいな',
-    args: ['typo'],
-    reply: (message) => {
-      expect(message).toStrictEqual({
-        title: `† 今日のMikuroさいなのtypo †`,
-        description: '- foo\n- hoge\n- fuga'
-      });
-      return Promise.resolve();
-    }
-  });
+  await responder.on(
+    'CREATE',
+    createMockMessage({
+      args: ['typo'],
+      reply: (message) => {
+        expect(message).toStrictEqual({
+          title: `† 今日のMikuroさいなのtypo †`,
+          description: '- foo\n- hoge\n- fuga'
+        });
+        return Promise.resolve();
+      }
+    })
+  );
 
   runner.killAll();
 });
@@ -96,20 +97,26 @@ test('must not reply', async () => {
   const responder = new TypoReporter(db, clock, runner);
 
   const fn = jest.fn();
-  await responder.on('CREATE', {
-    senderId: '279614913129742338' as Snowflake,
-    senderGuildId: '683939861539192860' as Snowflake,
-    senderName: 'Mikuroさいな',
-    args: ['typo', 'hoge'],
-    reply: fn
-  });
-  await responder.on('DELETE', {
-    senderId: '279614913129742338' as Snowflake,
-    senderGuildId: '683939861539192860' as Snowflake,
-    senderName: 'Mikuroさいな',
-    args: ['typo'],
-    reply: fn
-  });
+  await responder.on(
+    'CREATE',
+    createMockMessage({
+      senderId: '279614913129742338' as Snowflake,
+      senderGuildId: '683939861539192860' as Snowflake,
+      senderName: 'Mikuroさいな',
+      args: ['typo', 'hoge'],
+      reply: fn
+    })
+  );
+  await responder.on(
+    'DELETE',
+    createMockMessage({
+      senderId: '279614913129742338' as Snowflake,
+      senderGuildId: '683939861539192860' as Snowflake,
+      senderName: 'Mikuroさいな',
+      args: ['typo'],
+      reply: fn
+    })
+  );
   expect(fn).not.toHaveBeenCalled();
 
   runner.killAll();
