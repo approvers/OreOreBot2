@@ -1,47 +1,8 @@
 import { AssetKey, PartyCommand, RandomGenerator } from './party';
-import type {
-  VoiceConnection,
-  VoiceConnectionFactory
-} from './voice-connection';
-import EventEmitter from 'events';
 import { MockClock } from '../adaptor';
 import { ScheduleRunner } from '../runner';
 import { createMockMessage } from './command-message';
-
-class MockVoiceConnectionFactory implements VoiceConnectionFactory<AssetKey> {
-  connectTo(): Promise<VoiceConnection<AssetKey>> {
-    return Promise.resolve(new MockVoiceConnection());
-  }
-}
-
-class MockVoiceConnection
-  extends EventEmitter
-  implements VoiceConnection<AssetKey>
-{
-  connect(): void {
-    this.emit('CONNECT');
-  }
-  destroy(): void {
-    this.emit('DESTROY');
-  }
-
-  playToEnd(key: AssetKey): Promise<void> {
-    this.emit('PLAY_TO_END', key);
-    return Promise.resolve();
-  }
-  play(key: AssetKey): void {
-    this.emit('PLAY', key);
-  }
-  pause(): void {
-    this.emit('PAUSE');
-  }
-  unpause(): void {
-    this.emit('UNPAUSE');
-  }
-  onDisconnected(): void {
-    this.emit('REGISTER_ON_DISCONNECTED');
-  }
-}
+import { MockVoiceConnectionFactory } from '../adaptor/mock-voice';
 
 const randomGen: RandomGenerator = {
   minutes: () => 42,
@@ -49,7 +10,7 @@ const randomGen: RandomGenerator = {
 };
 
 test('use case of party', async () => {
-  const factory = new MockVoiceConnectionFactory();
+  const factory = new MockVoiceConnectionFactory<AssetKey>();
   const clock = new MockClock(new Date(0));
   const runner = new ScheduleRunner(clock);
   const responder = new PartyCommand(factory, clock, runner, randomGen);
