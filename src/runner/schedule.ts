@@ -37,7 +37,7 @@ export interface Clock {
 export class ScheduleRunner {
   constructor(private readonly clock: Clock) {}
 
-  private runningTasks = new Map<object, ReturnType<typeof setTimeout>>();
+  private runningTasks = new Map<unknown, ReturnType<typeof setTimeout>>();
 
   killAll(): void {
     for (const task of this.runningTasks.values()) {
@@ -46,15 +46,15 @@ export class ScheduleRunner {
     this.runningTasks.clear();
   }
 
-  runAfter(key: object, task: ScheduleTask, milliSeconds: number): void {
+  runAfter(key: unknown, task: ScheduleTask, milliSeconds: number): void {
     this.startInner(key, task, addMilliseconds(this.clock.now(), milliSeconds));
   }
 
-  runOnNextTime(key: object, task: ScheduleTask, time: Date): void {
+  runOnNextTime(key: unknown, task: ScheduleTask, time: Date): void {
     this.startInner(key, task, time);
   }
 
-  stop(key: object): void {
+  stop(key: unknown): void {
     const id = this.runningTasks.get(key);
     if (id !== undefined) {
       clearTimeout(id);
@@ -62,7 +62,7 @@ export class ScheduleRunner {
     }
   }
 
-  private startInner(key: object, task: ScheduleTask, timeout: Date): void {
+  private startInner(key: unknown, task: ScheduleTask, timeout: Date): void {
     const old = this.runningTasks.get(key);
     if (old) {
       clearTimeout(old);
@@ -77,7 +77,7 @@ export class ScheduleRunner {
   }
 
   private onDidRun(
-    key: object,
+    key: unknown,
     task: ScheduleTask,
     timeout: Date | null
   ): void {
