@@ -1,4 +1,4 @@
-import { addDays, isBefore, setHours, setMinutes } from 'date-fns';
+import { addDays, isBefore, setHours, setMinutes, setSeconds } from 'date-fns';
 import type { EmbedMessage } from '../model/embed-message';
 import type { Snowflake } from '../model/id';
 import { Reservation, ReservationTime } from '../model/reservation';
@@ -228,10 +228,9 @@ export class KaereCommand implements MessageEventResponder<CommandMessage> {
 
   private scheduleToStart(reservation: Reservation) {
     const now = this.clock.now();
-    let set = setMinutes(
-      setHours(now, reservation.time.hours),
-      reservation.time.minutes
-    );
+    let set = setHours(now, reservation.time.hours);
+    set = setMinutes(set, reservation.time.minutes);
+    set = setSeconds(set, 0);
     if (isBefore(set, now)) {
       set = addDays(set, 1);
     }
