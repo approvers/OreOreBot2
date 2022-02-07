@@ -8,8 +8,9 @@ import {
   entersState,
   joinVoiceChannel
 } from '@discordjs/voice';
-import type { Client, VoiceBasedChannel } from 'discord.js';
+import { Client, VoiceBasedChannel, Permissions } from 'discord.js';
 import type { Snowflake } from '../model/id';
+import type { VoiceRoomController } from '../service/kaere';
 import type {
   VoiceConnection,
   VoiceConnectionFactory
@@ -152,5 +153,31 @@ export class DiscordVoiceConnection<K extends string | number | symbol>
         console.error(error);
       }
     };
+  }
+}
+
+export class DiscordVoiceRoomController implements VoiceRoomController {
+  constructor(private readonly client: Client) {}
+
+  async disconnectAllUsersIn(
+    guildId: Snowflake,
+    roomId: Snowflake
+  ): Promise<void> {
+    const guild =
+      this.client.guilds.cache.get(guildId) ||
+      (await this.client.guilds.fetch(guildId));
+    if (!guild.me?.permissions.has(Permissions.FLAGS.MOVE_MEMBERS)) {
+      throw new Error('insufficient permission');
+    }
+    const room =
+      guild.channels.cache.get(roomId) || (await guild.channels.fetch(roomId));
+    if (!room?.isVoice()) {
+      throw new TypeError(`invalid room id: ${roomId}`);
+    }
+    await Promise.all(
+      room.members.map((member) =>
+        member.voice.disconnect('†***R.I.P.***† ***安らかに眠れ***')
+      )
+    );
   }
 }
