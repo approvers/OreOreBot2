@@ -2,7 +2,7 @@ import { AssetKey, PartyCommand, RandomGenerator } from './party';
 import { MockClock } from '../adaptor';
 import { ScheduleRunner } from '../runner';
 import { createMockMessage } from './command-message';
-import { MockVoiceConnectionFactory } from '../adaptor/mock-voice';
+import { MockVoiceConnectionFactory } from '../adaptor';
 
 const randomGen: RandomGenerator = {
   minutes: () => 42,
