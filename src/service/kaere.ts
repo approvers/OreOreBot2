@@ -237,6 +237,7 @@ export class KaereCommand implements MessageEventResponder<CommandMessage> {
     this.scheduleRunner.runOnNextTime(
       reservation.id,
       async () => {
+        await this.repo.cancel(reservation);
         await this.start(reservation.guildId, reservation.voiceRoomId);
         return null;
       },
