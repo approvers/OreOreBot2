@@ -2,13 +2,15 @@ import { Client, Intents, version } from 'discord.js';
 import {
   ActualClock,
   DiscordVoiceConnectionFactory,
+  InMemoryReservationRepository,
   InMemoryTypoRepository,
   transformerForCommand,
   transformerForMessage,
   transformerForUpdateMessage,
   MathRandomGenerator,
   MessageProxy,
-  MessageUpdateProxy
+  MessageUpdateProxy,
+  DiscordVoiceRoomController
 } from '../adaptor';
 import {
   MessageResponseRunner,
@@ -63,6 +65,7 @@ function readyLog(client: Client): void {
 }
 
 const typoRepo = new InMemoryTypoRepository();
+const reservationRepo = new InMemoryReservationRepository();
 const clock = new ActualClock();
 
 const runner = new MessageResponseRunner(
@@ -83,6 +86,7 @@ const commandRunner = new MessageResponseRunner(
 commandRunner.addResponder(
   allCommandResponder(
     typoRepo,
+    reservationRepo,
     new DiscordVoiceConnectionFactory<AssetKey>(client, {
       COFFIN_INTRO: join('assets', 'party', 'coffin-intro.mp3'),
       COFFIN_DROP: join('assets', 'party', 'coffin-drop.mp3'),
@@ -90,7 +94,8 @@ commandRunner.addResponder(
     }),
     clock,
     scheduleRunner,
-    new MathRandomGenerator()
+    new MathRandomGenerator(),
+    new DiscordVoiceRoomController(client)
   )
 );
 
