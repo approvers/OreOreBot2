@@ -157,6 +157,10 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
       roomId
     );
     this.connection.connect();
+    this.connection.onDisconnected(() => {
+      this.connection = null;
+      return false;
+    });
     await message.reply(partyStarting);
     await this.connection.playToEnd(this.generateNextKey());
     this.connection.destroy();

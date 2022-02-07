@@ -96,6 +96,10 @@ export class KaereCommand implements MessageEventResponder<CommandMessage> {
     this.doingKaere = true;
     const connection = await this.connectionFactory.connectTo(guildId, roomId);
     connection.connect();
+    connection.onDisconnected(() => {
+      this.doingKaere = false;
+      return false;
+    });
     await connection.playToEnd('NEROYO');
     if (this.bedModeEnabled) {
       try {
