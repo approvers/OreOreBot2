@@ -107,10 +107,16 @@ export class DiscordVoiceConnection<K extends string | number | symbol>
   destroy(): void {
     this.player.stop();
     this.connection?.destroy();
+    this.connection = null;
   }
 
   onDisconnected(shouldReconnect: () => boolean): void {
-    this.connection?.on(
+    if (!this.connection) {
+      throw new Error(
+        'You must invoke `connect` before to register disconnection handler'
+      );
+    }
+    this.connection.on(
       VoiceConnectionStatus.Disconnected,
       this.makeDisconnectionHandler(shouldReconnect)
     );
