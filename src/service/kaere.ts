@@ -210,7 +210,7 @@ export class KaereCommand implements MessageEventResponder<CommandMessage> {
           await message.reply({
             title: '現在の予約状況をお知らせするね。',
             description: reservations
-              .map((reservation) => reservation.time.intoJapanese())
+              .map((reservation) => `- ${reservation.time.intoJapanese()}`)
               .join('\n')
           });
         }
