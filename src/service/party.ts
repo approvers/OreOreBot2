@@ -59,6 +59,7 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
 
   private nextMusicKey: AssetKey | null = null;
   private connection: VoiceConnection<AssetKey> | null = null;
+  private randomizedEnabled = false;
 
   async on(event: MessageEvent, message: CommandMessage): Promise<void> {
     if (event !== 'CREATE') {
@@ -83,7 +84,7 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
         return;
       case 'status':
         await message.reply({
-          title: `ゲリラは現在${this.connection ? '有効' : '無効'}だよ。`
+          title: `ゲリラは現在${this.randomizedEnabled ? '有効' : '無効'}だよ。`
         });
         return;
       case 'time':
@@ -183,6 +184,7 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
   }
 
   private activateRandomized(message: CommandMessage) {
+    this.randomizedEnabled = true;
     this.scheduleRunner.runOnNextTime(
       'party-random',
       async () => {
@@ -195,5 +197,6 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
 
   private stopRandomized() {
     this.scheduleRunner.stop('party-random');
+    this.randomizedEnabled = false;
   }
 }
