@@ -16,7 +16,7 @@ import type {
   VoiceConnectionFactory
 } from '../service/voice-connection';
 
-const TIMEOUT_MS = 5000;
+const TIMEOUT_MS = 2500;
 
 export class DiscordVoiceConnectionFactory<K extends string | number | symbol>
   implements VoiceConnectionFactory<K>
