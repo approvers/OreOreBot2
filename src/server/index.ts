@@ -26,6 +26,7 @@ import type { AssetKey } from '../service/party';
 import dotenv from 'dotenv';
 import { generateDependencyReport } from '@discordjs/voice';
 import { join } from 'path';
+import { KaereMusicKey } from '../service/kaere';
 
 dotenv.config();
 const token = process.env.DISCORD_TOKEN;
@@ -87,10 +88,11 @@ commandRunner.addResponder(
   allCommandResponder(
     typoRepo,
     reservationRepo,
-    new DiscordVoiceConnectionFactory<AssetKey>(client, {
+    new DiscordVoiceConnectionFactory<AssetKey | KaereMusicKey>(client, {
       COFFIN_INTRO: join('assets', 'party', 'coffin-intro.mp3'),
       COFFIN_DROP: join('assets', 'party', 'coffin-drop.mp3'),
-      KAKAPO: join('assets', 'party', 'kakapo.mp3')
+      KAKAPO: join('assets', 'party', 'kakapo.mp3'),
+      NEROYO: join('assets', 'kaere', 'neroyo.mp3')
     }),
     clock,
     scheduleRunner,
