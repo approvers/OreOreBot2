@@ -185,14 +185,16 @@ export class KaereCommand implements MessageEventResponder<CommandMessage> {
           const reservation = await this.repo.reservationAt(time);
           if (!reservation) {
             await message.reply({
-              title: '予約にキャンセル失敗したよ。',
+              title: '予約キャンセルに失敗したよ。',
               description: `司令官、${time.hours}時${time.minutes}分には予約が入ってないよ。`
             });
             return;
           }
           this.scheduleRunner.stop(reservation.id);
+          await this.repo.cancel(reservation);
           await message.reply({
-            title: `${time.hours}時${time.minutes}分の予約はキャンセルしておくね。`
+            title: '予約キャンセルに成功したよ。',
+            description: `${time.hours}時${time.minutes}分の予約はキャンセルしておくね。`
           });
         }
         return;
