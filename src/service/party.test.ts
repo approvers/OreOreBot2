@@ -48,7 +48,7 @@ const randomGen: RandomGenerator = {
   pick: ([first]) => first
 };
 
-test('show all typos', async () => {
+test('use case of party', async () => {
   const factory = new MockVoiceConnectionFactory();
   const clock = new MockClock(new Date(0));
   const runner = new ScheduleRunner(clock);
