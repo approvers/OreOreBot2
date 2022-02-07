@@ -199,6 +199,22 @@ export class KaereCommand implements MessageEventResponder<CommandMessage> {
         }
         return;
       case 'list':
+        {
+          const reservations = await this.repo.all();
+          if (reservations.length === 0) {
+            await message.reply({
+              title: '今は誰も予約してないようだね。'
+            });
+            return;
+          }
+          await message.reply({
+            title: '現在の予約状況をお知らせするね。',
+            description: reservations
+              .map((reservation) => reservation.time)
+              .map((time) => `${time.hours}:${time.minutes}`)
+              .join('\n')
+          });
+        }
         return;
     }
     await message.reply({
