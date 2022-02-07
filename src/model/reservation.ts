@@ -26,6 +26,14 @@ export class ReservationTime {
     }
     return new ReservationTime(hours, minutes);
   }
+
+  intoJapanese(): string {
+    if (this.hours < 12) {
+      return `午前${this.hours}時${this.minutes}分`;
+    } else {
+      return `午後${this.hours - 12}時${this.minutes}分`;
+    }
+  }
 }
 
 const hasOwnProperty = <K extends PropertyKey>(

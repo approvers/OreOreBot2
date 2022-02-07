@@ -164,14 +164,14 @@ export class KaereCommand implements MessageEventResponder<CommandMessage> {
           if ((await this.repo.reserve(reservation)) === 'Err') {
             await message.reply({
               title: '予約に失敗したよ。',
-              description: `あれ、${time.hours}時${time.minutes}分にはもう予約が入ってるよ。`
+              description: `あれ、${time.intoJapanese()}にはもう予約が入ってるよ。`
             });
             return;
           }
           this.scheduleToStart(reservation);
           await message.reply({
             title: '予約に成功したよ。',
-            description: `${time.hours}時${time.minutes}分に予約を入れておくね。`
+            description: `${time.intoJapanese()}に予約を入れておくね。`
           });
         }
         return;
@@ -186,7 +186,7 @@ export class KaereCommand implements MessageEventResponder<CommandMessage> {
           if (!reservation) {
             await message.reply({
               title: '予約キャンセルに失敗したよ。',
-              description: `司令官、${time.hours}時${time.minutes}分には予約が入ってないよ。`
+              description: `司令官、${time.intoJapanese()}には予約が入ってないよ。`
             });
             return;
           }
@@ -194,7 +194,7 @@ export class KaereCommand implements MessageEventResponder<CommandMessage> {
           await this.repo.cancel(reservation);
           await message.reply({
             title: '予約キャンセルに成功したよ。',
-            description: `${time.hours}時${time.minutes}分の予約はキャンセルしておくね。`
+            description: `${time.intoJapanese()}の予約はキャンセルしておくね。`
           });
         }
         return;
@@ -210,8 +210,7 @@ export class KaereCommand implements MessageEventResponder<CommandMessage> {
           await message.reply({
             title: '現在の予約状況をお知らせするね。',
             description: reservations
-              .map((reservation) => reservation.time)
-              .map((time) => `${time.hours}:${time.minutes}`)
+              .map((reservation) => reservation.time.intoJapanese())
               .join('\n')
           });
         }
