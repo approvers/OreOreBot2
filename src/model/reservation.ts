@@ -2,10 +2,16 @@ import { nanoid } from 'nanoid';
 import type { Snowflake } from './id';
 
 declare const reservationIdNominal: unique symbol;
+/**
+ * 予約モデル `Reservation` どうしを識別する ID 文字列。
+ */
 export type ReservationId = string & { [reservationIdNominal]: never };
 
 const hoursMinutesRegex = /^(\d\d?):(\d\d?)$/;
 
+/**
+ * 予約の時刻を表すバリューオブジェクト。
+ */
 export class ReservationTime {
   constructor(public readonly hours: number, public readonly minutes: number) {
     if (!(0 <= hours && hours < 24 && 0 <= minutes && minutes < 60)) {
@@ -13,6 +19,12 @@ export class ReservationTime {
     }
   }
 
+  /**
+   * `HH:MM` 形式の文字列をパースして `ReservationTime` を作成する。
+   *
+   * @param hoursMinutes `HH:MM` 形式の文字列
+   * @returns {ReservationTime | null} パースした結果の `ReservationTime`、失敗した場合は null
+   */
   static fromHoursMinutes(hoursMinutes: string): ReservationTime | null {
     const result = hoursMinutesRegex.exec(hoursMinutes);
     if (!result) {
@@ -27,7 +39,12 @@ export class ReservationTime {
     return new ReservationTime(hours, minutes);
   }
 
-  intoJapanese(): string {
+  /**
+   * 時刻を日本語の形式の文字列に変換する。
+   *
+   * @returns {`午前${string}時${string}分` | `午後${string}時${string}分`}
+   */
+  intoJapanese(): `午前${string}時${string}分` | `午後${string}時${string}分` {
     if (this.hours < 12) {
       return `午前${this.hours}時${this.minutes}分`;
     } else {
@@ -44,6 +61,9 @@ const hasOwnProperty = <K extends PropertyKey>(
 const isObject = (x: unknown): x is object =>
   typeof x === 'object' && x !== null;
 
+/**
+ * 特定のボイスチャンネルへ参加する予約を表すモデル。
+ */
 export class Reservation {
   constructor(
     public readonly id: ReservationId,

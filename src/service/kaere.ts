@@ -13,16 +13,66 @@ import type { VoiceConnectionFactory } from './voice-connection';
 
 export type KaereMusicKey = 'NEROYO';
 
+/**
+ * ボイスチャンネル自体を操作できるコントローラーの抽象.
+ *
+ * @export
+ * @interface VoiceRoomController
+ */
 export interface VoiceRoomController {
+  /**
+   * そのボイスチャンネルからすべてのユーザーを切断させる.
+   *
+   * @param {Snowflake} guildId サーバの ID
+   * @param {Snowflake} roomId ボイスチャンネルの ID
+   * @returns {Promise<void>}
+   * @memberof VoiceRoomController
+   */
   disconnectAllUsersIn(guildId: Snowflake, roomId: Snowflake): Promise<void>;
 }
 
+/**
+ * 予約処理の成否を表す型。boolean だとどちらが成功か失敗か分かりづらいので導入した。
+ */
 export type ReservationResult = 'Ok' | 'Err';
 
+/**
+ * 予約 `Reservation` のモデルを永続化するクラスの抽象。
+ *
+ * @export
+ * @interface ReservationRepository
+ */
 export interface ReservationRepository {
+  /**
+   * すべての予約を取得する。
+   *
+   * @returns {Promise<readonly Reservation[]>} すべての予約
+   * @memberof ReservationRepository
+   */
   all(): Promise<readonly Reservation[]>;
+  /**
+   * 指定時刻の予約を取得する。
+   *
+   * @param time 取得する予約の時刻
+   * @returns {Promise<Reservation | null>} 指定時刻である予約、存在しない場合は `null`
+   * @memberof ReservationRepository
+   */
   reservationAt(time: ReservationTime): Promise<Reservation | null>;
+  /**
+   * 新しい予約を保存して永続化する。
+   *
+   * @param reservation 永続化する予約
+   * @returns {Promise<ReservationResult>} 保存に成功したかどうか。すでに同じ時刻の予約がある場合は失敗する。
+   * @memberof ReservationRepository
+   */
   reserve(reservation: Reservation): Promise<ReservationResult>;
+  /**
+   * 予約を取り消して永続化を解除する。
+   *
+   * @param reservation 永続化を解除する予約
+   * @returns {Promise<ReservationResult>} 解除に成功したかどうか。永続化されていない場合は失敗する。
+   * @memberof ReservationRepository
+   */
   cancel(reservation: Reservation): Promise<ReservationResult>;
 }
 
@@ -31,6 +81,13 @@ const timeFormatErrorMessage: EmbedMessage = {
   description: '`HH:MM` の形式で指定してくれないかな。'
 };
 
+/**
+ * `kaere` コマンドでボイスチャンネルの参加者に切断を促す機能。
+ *
+ * @export
+ * @class KaereCommand
+ * @implements {MessageEventResponder<CommandMessage>}
+ */
 export class KaereCommand implements MessageEventResponder<CommandMessage> {
   constructor(
     private readonly connectionFactory: VoiceConnectionFactory<KaereMusicKey>,
@@ -195,7 +252,13 @@ export class KaereCommand implements MessageEventResponder<CommandMessage> {
             return;
           }
           this.scheduleRunner.stop(reservation.id);
-          await this.repo.cancel(reservation);
+          if ((await this.repo.cancel(reservation)) === 'Err') {
+            await message.reply({
+              title: '予約キャンセルに失敗したよ。',
+              description: 'データベースに問題があったのかもしれない。'
+            });
+            return;
+          }
           await message.reply({
             title: '予約キャンセルに成功したよ。',
             description: `${time.intoJapanese()}の予約はキャンセルしておくね。`

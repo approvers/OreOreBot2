@@ -17,7 +17,7 @@ export interface CommandMessage {
   senderId: Snowflake;
 
   /**
-   * コマンドの送信者の所属サーバーの ID。
+   * コマンドの送信者の所属サーバの ID。
    *
    * @type {Snowflake}
    * @memberof CommandMessage

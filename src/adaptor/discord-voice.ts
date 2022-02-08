@@ -16,6 +16,9 @@ import type {
   VoiceConnectionFactory
 } from '../service/voice-connection';
 
+/**
+ * ボイスチャンネルへの接続が、復帰できない切断 (管理者の手で切断させられたなど) になったと判断するまでのミリ秒数。
+ */
 const TIMEOUT_MS = 2500;
 
 export class DiscordVoiceConnectionFactory<K extends string | number | symbol>
