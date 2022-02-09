@@ -35,8 +35,4 @@ export const transformerForCommand = (prefix: string) =>
 export const transformerForUpdateMessage = (): Transformer<
   [EditingObservable, EditingObservable],
   [RawMessage, RawMessage]
-> =>
-  connectTransformer(
-    tupleTransformer(observableTransformer),
-    tupleTransformer(botFilter)
-  );
+> => tupleTransformer(connectTransformer(observableTransformer, botFilter));

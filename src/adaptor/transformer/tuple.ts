@@ -35,6 +35,8 @@ const split = <B>(
     }
     if (firstB && secondB) {
       await f([firstB, secondB]);
+      firstB = undefined;
+      secondB = undefined;
     }
   };
   const f1: MessageHandler<B> = async (first: B) => set([first, undefined]);
