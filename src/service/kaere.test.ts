@@ -1,102 +1,42 @@
-import { AssetKey, PartyCommand, RandomGenerator } from './party';
+import { KaereCommand, KaereMusicKey } from './kaere';
+import {
+  InMemoryReservationRepository,
+  MockVoiceConnectionFactory
+} from '../adaptor';
 import { MockClock } from '../adaptor';
 import { ScheduleRunner } from '../runner';
 import { createMockMessage } from './command-message';
-import { MockVoiceConnectionFactory } from '../adaptor';
 
-const randomGen: RandomGenerator = {
-  minutes: () => 42,
-  pick: ([first]) => first
-};
-
-test('use case of party', async () => {
-  const factory = new MockVoiceConnectionFactory<AssetKey>();
+test('use case of kaere', async () => {
+  const fn = jest.fn();
+  const factory = new MockVoiceConnectionFactory<KaereMusicKey>();
   const clock = new MockClock(new Date(0));
   const runner = new ScheduleRunner(clock);
-  const responder = new PartyCommand(factory, clock, runner, randomGen);
-
-  await responder.on(
-    'CREATE',
-    createMockMessage({
-      args: ['party'],
-      reply: (message) => {
-        expect(message).toStrictEqual({
-          title: `パーティー Nigth`,
-          description: 'хорошо、宴の始まりだ。'
-        });
-        return Promise.resolve();
-      }
-    })
+  const repo = new InMemoryReservationRepository();
+  const responder = new KaereCommand(
+    factory,
+    {
+      disconnectAllUsersIn: fn
+    },
+    clock,
+    runner,
+    repo
   );
 
   await responder.on(
     'CREATE',
     createMockMessage({
-      args: ['party', 'status'],
-      reply: (message) => {
-        expect(message).toStrictEqual({
-          title: 'ゲリラは現在無効だよ。'
-        });
-        return Promise.resolve();
-      }
-    })
-  );
-  await responder.on(
-    'CREATE',
-    createMockMessage({
-      args: ['party', 'enable'],
-      reply: (message) => {
-        expect(message).toStrictEqual({
-          title: 'ゲリラを有効化しておいたよ。'
-        });
-        return Promise.resolve();
-      }
-    })
-  );
-  await responder.on(
-    'CREATE',
-    createMockMessage({
-      args: ['party', 'status'],
-      reply: (message) => {
-        expect(message).toStrictEqual({
-          title: 'ゲリラは現在有効だよ。'
-        });
-        return Promise.resolve();
-      }
-    })
-  );
-  await responder.on(
-    'CREATE',
-    createMockMessage({
-      args: ['party', 'disable'],
-      reply: (message) => {
-        expect(message).toStrictEqual({
-          title: 'ゲリラを無効化しておいたよ。'
-        });
-        return Promise.resolve();
-      }
-    })
-  );
-  await responder.on(
-    'CREATE',
-    createMockMessage({
-      args: ['party', 'status'],
-      reply: (message) => {
-        expect(message).toStrictEqual({
-          title: 'ゲリラは現在無効だよ。'
-        });
-        return Promise.resolve();
-      }
+      args: ['kaere']
     })
   );
 
   await responder.on(
     'CREATE',
     createMockMessage({
-      args: ['party', 'time'],
+      args: ['kaere', 'bed', 'status'],
       reply: (message) => {
         expect(message).toStrictEqual({
-          title: '次のゲリラ参加時刻を42分にしたよ。'
+          title: '強制切断モードは現在無効だよ。'
         });
         return Promise.resolve();
       }
@@ -105,10 +45,46 @@ test('use case of party', async () => {
   await responder.on(
     'CREATE',
     createMockMessage({
-      args: ['party', 'time', '36'],
+      args: ['kaere', 'bed', 'enable'],
       reply: (message) => {
         expect(message).toStrictEqual({
-          title: '次のゲリラ参加時刻を36分にしたよ。'
+          title: '強制切断モードを有効化したよ。'
+        });
+        return Promise.resolve();
+      }
+    })
+  );
+  await responder.on(
+    'CREATE',
+    createMockMessage({
+      args: ['kaere', 'bed', 'status'],
+      reply: (message) => {
+        expect(message).toStrictEqual({
+          title: '強制切断モードは現在有効だよ。'
+        });
+        return Promise.resolve();
+      }
+    })
+  );
+  await responder.on(
+    'CREATE',
+    createMockMessage({
+      args: ['kaere', 'bed', 'disable'],
+      reply: (message) => {
+        expect(message).toStrictEqual({
+          title: '強制切断モードを無効化したよ。'
+        });
+        return Promise.resolve();
+      }
+    })
+  );
+  await responder.on(
+    'CREATE',
+    createMockMessage({
+      args: ['kaere', 'bed', 'status'],
+      reply: (message) => {
+        expect(message).toStrictEqual({
+          title: '強制切断モードは現在無効だよ。'
         });
         return Promise.resolve();
       }
@@ -118,9 +94,50 @@ test('use case of party', async () => {
   await responder.on(
     'CREATE',
     createMockMessage({
-      args: ['party', 'set', '__UNKNOWN__'],
+      args: ['kaere', 'reserve', 'add', '01:0'],
       reply: (message) => {
-        expect(message.title).toStrictEqual('BGMを設定できなかった。');
+        expect(message).toStrictEqual({
+          title: '予約に成功したよ。',
+          description: '午前1時0分に予約を入れておくね。'
+        });
+        return Promise.resolve();
+      }
+    })
+  );
+  await responder.on(
+    'CREATE',
+    createMockMessage({
+      args: ['kaere', 'reserve', 'list'],
+      reply: (message) => {
+        expect(message).toStrictEqual({
+          title: '現在の予約状況をお知らせするね。',
+          description: '- 午前1時0分'
+        });
+        return Promise.resolve();
+      }
+    })
+  );
+  await responder.on(
+    'CREATE',
+    createMockMessage({
+      args: ['kaere', 'reserve', 'cancel', '1:00'],
+      reply: (message) => {
+        expect(message).toStrictEqual({
+          title: '予約キャンセルに成功したよ。',
+          description: '午前1時0分の予約はキャンセルしておくね。'
+        });
+        return Promise.resolve();
+      }
+    })
+  );
+  await responder.on(
+    'CREATE',
+    createMockMessage({
+      args: ['kaere', 'reserve', 'list'],
+      reply: (message) => {
+        expect(message).toStrictEqual({
+          title: '今は誰も予約してないようだね。'
+        });
         return Promise.resolve();
       }
     })
@@ -130,12 +147,21 @@ test('use case of party', async () => {
 });
 
 test('must not reply', async () => {
-  const factory = new MockVoiceConnectionFactory();
+  const fn = jest.fn();
+  const factory = new MockVoiceConnectionFactory<KaereMusicKey>();
   const clock = new MockClock(new Date(0));
   const runner = new ScheduleRunner(clock);
-  const responder = new PartyCommand(factory, clock, runner, randomGen);
+  const repo = new InMemoryReservationRepository();
+  const responder = new KaereCommand(
+    factory,
+    {
+      disconnectAllUsersIn: fn
+    },
+    clock,
+    runner,
+    repo
+  );
 
-  const fn = jest.fn();
   await responder.on(
     'CREATE',
     createMockMessage({
@@ -146,14 +172,14 @@ test('must not reply', async () => {
   await responder.on(
     'CREATE',
     createMockMessage({
-      args: ['partyichiyo'],
+      args: ['party'],
       reply: fn
     })
   );
   await responder.on(
     'DELETE',
     createMockMessage({
-      args: ['party'],
+      args: ['kaere'],
       reply: fn
     })
   );

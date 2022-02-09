@@ -9,17 +9,14 @@ import type { Snowflake } from '../model/id';
  */
 export interface VoiceConnectionFactory<K> {
   /**
-   * `userId` のユーザが現在接続しているボイスチャンネルへ接続できる `VoiceConnection` を作成する。
+   * 特定のボイスチャンネルへ接続できる `VoiceConnection` を作成する。
    *
-   * @param {Snowflake} userId 参照するユーザの ID。
-   * @param {Snowflake} guildId 参照するユーザが所属するサーバの ID。
+   * @param {Snowflake} guildId 接続するボイスチャンネルがあるサーバの ID。
+   * @param {Snowflake} roomId ボイスチャンネルの ID。
    * @returns {Promise<VoiceConnection<K>>}
    * @memberof VoiceConnectionFactory
    */
-  connectSameTo(
-    userId: Snowflake,
-    guildId: Snowflake
-  ): Promise<VoiceConnection<K>>;
+  connectTo(guildId: Snowflake, roomId: Snowflake): Promise<VoiceConnection<K>>;
 }
 
 /**

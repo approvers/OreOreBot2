@@ -39,6 +39,10 @@ export const converterWithPrefix =
     const command: CommandMessage = {
       senderId: getAuthorSnowflake(message),
       senderGuildId: message.guildId as Snowflake,
+      get senderVoiceChannelId(): Snowflake | null {
+        const id = message.member?.voice.channelId ?? null;
+        return id ? (id as Snowflake) : null;
+      },
       senderName: message.author?.username ?? '名無し',
       args,
       async reply(embed) {

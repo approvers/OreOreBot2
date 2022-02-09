@@ -6,6 +6,12 @@ import {
 } from '../runner';
 import { DeletionObservable, DeletionRepeater } from './deletion-repeater';
 import { DifferenceDetector } from './difference-detector';
+import {
+  KaereCommand,
+  KaereMusicKey,
+  ReservationRepository,
+  VoiceRoomController
+} from './kaere';
 import { AssetKey, PartyCommand, RandomGenerator } from './party';
 import {
   TypoObservable,
@@ -25,13 +31,22 @@ export const allMessageUpdateEventResponder = () =>
   composeMessageUpdateEventResponders(new DifferenceDetector());
 
 export const allCommandResponder = (
-  repo: TypoRepository,
-  factory: VoiceConnectionFactory<AssetKey>,
+  typoRepo: TypoRepository,
+  reservationRepo: ReservationRepository,
+  factory: VoiceConnectionFactory<AssetKey | KaereMusicKey>,
   clock: Clock,
   scheduleRunner: ScheduleRunner,
-  randomMinutes: RandomGenerator
+  randomMinutes: RandomGenerator,
+  roomController: VoiceRoomController
 ) =>
   composeMessageEventResponders(
-    new TypoReporter(repo, clock, scheduleRunner),
-    new PartyCommand(factory, clock, scheduleRunner, randomMinutes)
+    new TypoReporter(typoRepo, clock, scheduleRunner),
+    new PartyCommand(factory, clock, scheduleRunner, randomMinutes),
+    new KaereCommand(
+      factory,
+      roomController,
+      clock,
+      scheduleRunner,
+      reservationRepo
+    )
   );

@@ -1,15 +1,17 @@
-import { Client, Intents, version } from 'discord.js';
 import {
   ActualClock,
   DiscordVoiceConnectionFactory,
+  InMemoryReservationRepository,
   InMemoryTypoRepository,
   transformerForCommand,
   transformerForMessage,
   transformerForUpdateMessage,
   MathRandomGenerator,
   MessageProxy,
-  MessageUpdateProxy
+  MessageUpdateProxy,
+  DiscordVoiceRoomController
 } from '../adaptor';
+import { Client, Intents, version } from 'discord.js';
 import {
   MessageResponseRunner,
   MessageUpdateResponseRunner,
@@ -21,6 +23,7 @@ import {
   allMessageUpdateEventResponder
 } from '../service';
 import type { AssetKey } from '../service/party';
+import type { KaereMusicKey } from '../service/kaere';
 import dotenv from 'dotenv';
 import { generateDependencyReport } from '@discordjs/voice';
 import { join } from 'path';
@@ -63,6 +66,7 @@ function readyLog(client: Client): void {
 }
 
 const typoRepo = new InMemoryTypoRepository();
+const reservationRepo = new InMemoryReservationRepository();
 const clock = new ActualClock();
 
 const runner = new MessageResponseRunner(
@@ -83,14 +87,17 @@ const commandRunner = new MessageResponseRunner(
 commandRunner.addResponder(
   allCommandResponder(
     typoRepo,
-    new DiscordVoiceConnectionFactory<AssetKey>(client, {
+    reservationRepo,
+    new DiscordVoiceConnectionFactory<AssetKey | KaereMusicKey>(client, {
       COFFIN_INTRO: join('assets', 'party', 'coffin-intro.mp3'),
       COFFIN_DROP: join('assets', 'party', 'coffin-drop.mp3'),
-      KAKAPO: join('assets', 'party', 'kakapo.mp3')
+      KAKAPO: join('assets', 'party', 'kakapo.mp3'),
+      NEROYO: join('assets', 'kaere', 'neroyo.mp3')
     }),
     clock,
     scheduleRunner,
-    new MathRandomGenerator()
+    new MathRandomGenerator(),
+    new DiscordVoiceRoomController(client)
   )
 );
 

@@ -17,12 +17,20 @@ export interface CommandMessage {
   senderId: Snowflake;
 
   /**
-   * コマンドの送信者の所属サーバーの ID。
+   * コマンドの送信者の所属サーバの ID。
    *
    * @type {Snowflake}
    * @memberof CommandMessage
    */
   senderGuildId: Snowflake;
+
+  /**
+   * コマンドの送信者が接続しているボイスチャンネルの ID。
+   *
+   * @type {Snowflake}
+   * @memberof CommandMessage
+   */
+  senderVoiceChannelId: Snowflake | null;
 
   /**
    * コマンドの送信者の名前。
@@ -49,3 +57,15 @@ export interface CommandMessage {
    */
   reply(message: EmbedMessage): Promise<void>;
 }
+
+export const createMockMessage = (
+  partial: Readonly<Partial<CommandMessage>>
+): CommandMessage => ({
+  senderId: '279614913129742338' as Snowflake,
+  senderGuildId: '683939861539192860' as Snowflake,
+  senderVoiceChannelId: '683939861539192865' as Snowflake,
+  senderName: 'Mikuroさいな',
+  args: [],
+  reply: () => Promise.resolve(),
+  ...partial
+});

@@ -59,6 +59,7 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
 
   private nextMusicKey: AssetKey | null = null;
   private connection: VoiceConnection<AssetKey> | null = null;
+  private randomizedEnabled = false;
 
   async on(event: MessageEvent, message: CommandMessage): Promise<void> {
     if (event !== 'CREATE') {
@@ -78,12 +79,12 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
         await message.reply({ title: 'ゲリラを無効化しておいたよ。' });
         return;
       case 'enable':
-        await this.activateRandomized(message);
+        this.activateRandomized(message);
         await message.reply({ title: 'ゲリラを有効化しておいたよ。' });
         return;
       case 'status':
         await message.reply({
-          title: `ゲリラは現在${this.connection ? '有効' : '無効'}だよ。`
+          title: `ゲリラは現在${this.randomizedEnabled ? '有効' : '無効'}だよ。`
         });
         return;
       case 'time':
@@ -139,14 +140,31 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
   }
 
   private async startPartyImmediately(message: CommandMessage): Promise<void> {
-    const connection = await this.factory.connectSameTo(
-      message.senderId,
-      message.senderGuildId
+    if (this.connection) {
+      return;
+    }
+    const roomId = message.senderVoiceChannelId;
+    if (!roomId) {
+      await message.reply({
+        title: 'Party安全装置が作動したよ。',
+        description:
+          '起動した本人がボイスチャンネルに居ないのでキャンセルしておいた。悪く思わないでね。'
+      });
+      return;
+    }
+    this.connection = await this.factory.connectTo(
+      message.senderGuildId,
+      roomId
     );
-    connection.connect();
+    this.connection.connect();
+    this.connection.onDisconnected(() => {
+      this.connection = null;
+      return false;
+    });
     await message.reply(partyStarting);
-    await connection.playToEnd(this.generateNextKey());
-    connection.destroy();
+    await this.connection.playToEnd(this.generateNextKey());
+    this.connection.destroy();
+    this.connection = null;
   }
 
   private nextTime(minutes: number): Date {
@@ -169,21 +187,12 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
     );
   }
 
-  private async activateRandomized(message: CommandMessage): Promise<void> {
-    this.connection = await this.factory.connectSameTo(
-      message.senderId,
-      message.senderGuildId
-    );
+  private activateRandomized(message: CommandMessage) {
+    this.randomizedEnabled = true;
     this.scheduleRunner.runOnNextTime(
-      { key: 'party-random' },
+      'party-random',
       async () => {
-        if (!this.connection) {
-          return null;
-        }
-        this.connection.connect();
-        await message.reply(partyStarting);
-        await this.connection.playToEnd(this.generateNextKey());
-        this.connection.destroy();
+        await this.startPartyImmediately(message);
         return this.nextTime(this.random.minutes());
       },
       this.nextTime(this.random.minutes())
@@ -191,10 +200,7 @@ export class PartyCommand implements MessageEventResponder<CommandMessage> {
   }
 
   private stopRandomized() {
-    if (!this.connection) {
-      return;
-    }
-    this.connection.destroy();
-    this.connection = null;
+    this.scheduleRunner.stop('party-random');
+    this.randomizedEnabled = false;
   }
 }

@@ -8,14 +8,18 @@ import {
   entersState,
   joinVoiceChannel
 } from '@discordjs/voice';
-import type { Client, VoiceBasedChannel } from 'discord.js';
+import { Client, VoiceBasedChannel, Permissions } from 'discord.js';
 import type { Snowflake } from '../model/id';
+import type { VoiceRoomController } from '../service/kaere';
 import type {
   VoiceConnection,
   VoiceConnectionFactory
 } from '../service/voice-connection';
 
-const TIMEOUT_MS = 5000;
+/**
+ * ボイスチャンネルへの接続が、復帰できない切断 (管理者の手で切断させられたなど) になったと判断するまでのミリ秒数。
+ */
+const TIMEOUT_MS = 2500;
 
 export class DiscordVoiceConnectionFactory<K extends string | number | symbol>
   implements VoiceConnectionFactory<K>
@@ -25,18 +29,20 @@ export class DiscordVoiceConnectionFactory<K extends string | number | symbol>
     private readonly audioRecord: Record<K, string>
   ) {}
 
-  async connectSameTo(
-    userId: Snowflake,
-    guildId: Snowflake
+  async connectTo(
+    guildId: Snowflake,
+    roomId: Snowflake
   ): Promise<VoiceConnection<K>> {
     const guild =
       this.client.guilds.cache.get(guildId) ||
       (await this.client.guilds.fetch(guildId));
-    const member =
-      guild.members.cache.get(userId) || (await guild.members.fetch(userId));
-    const channel = member.voice.channel;
+    const channel =
+      guild.channels.cache.get(roomId) || (await guild.channels.fetch(roomId));
     if (!channel) {
       throw new Error('the user is not joined to voice channel');
+    }
+    if (!channel.isVoice()) {
+      throw new TypeError('the id is not an id for voice channel');
     }
     return new DiscordVoiceConnection(channel, this.audioRecord);
   }
@@ -104,10 +110,16 @@ export class DiscordVoiceConnection<K extends string | number | symbol>
   destroy(): void {
     this.player.stop();
     this.connection?.destroy();
+    this.connection = null;
   }
 
   onDisconnected(shouldReconnect: () => boolean): void {
-    this.connection?.on(
+    if (!this.connection) {
+      throw new Error(
+        'You must invoke `connect` before to register disconnection handler'
+      );
+    }
+    this.connection.on(
       VoiceConnectionStatus.Disconnected,
       this.makeDisconnectionHandler(shouldReconnect)
     );
@@ -150,5 +162,31 @@ export class DiscordVoiceConnection<K extends string | number | symbol>
         console.error(error);
       }
     };
+  }
+}
+
+export class DiscordVoiceRoomController implements VoiceRoomController {
+  constructor(private readonly client: Client) {}
+
+  async disconnectAllUsersIn(
+    guildId: Snowflake,
+    roomId: Snowflake
+  ): Promise<void> {
+    const guild =
+      this.client.guilds.cache.get(guildId) ||
+      (await this.client.guilds.fetch(guildId));
+    if (!guild.me?.permissions.has(Permissions.FLAGS.MOVE_MEMBERS)) {
+      throw new Error('insufficient permission');
+    }
+    const room =
+      guild.channels.cache.get(roomId) || (await guild.channels.fetch(roomId));
+    if (!room?.isVoice()) {
+      throw new TypeError(`invalid room id: ${roomId}`);
+    }
+    await Promise.all(
+      room.members.map((member) =>
+        member.voice.disconnect('†***R.I.P.***† ***安らかに眠れ***')
+      )
+    );
   }
 }
