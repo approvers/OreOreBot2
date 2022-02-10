@@ -61,5 +61,30 @@ poka
       }
     }
   );
+
+  await responder.on(
+    'UPDATE',
+    {
+      content: `山陰に無い店
+松屋
+やよい軒
+ロッテリア ロイヤルホスト`,
+      sendToSameChannel: fn
+    },
+    {
+      content: `山陰に無い店
+松屋
+やよい軒
+ロッテリア ロイヤルホスト
+サイゼリヤ(鳥取にはある)`,
+      sendToSameChannel: (message) => {
+        expect(message).toEqual(`見てたぞ
+\`\`\`diff
++ サイゼリヤ(鳥取にはある)
+\`\`\``);
+        return Promise.resolve();
+      }
+    }
+  );
   expect(fn).not.toHaveBeenCalled();
 });
