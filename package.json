@@ -7,6 +7,7 @@
   "author": "merunno <merunno92@gmail.com>",
   "scripts": {
     "start": "node ./build/server/index.js",
+    "setup": "pm2 start ./build/server/index.js --name OreOreBot2",
     "debug": "ts-node ./src/server/index.ts",
     "compile": "tsc -p .",
     "format": "prettier --write \"src/**/*.{js,ts}\"",
@@ -35,6 +36,7 @@
     "dotenv": "^10.0.0",
     "husky": "^7.0.4",
     "nanoid": "^3.2.0",
+    "pm2": "^5.1.2",
     "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
