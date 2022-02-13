@@ -7,6 +7,7 @@
   "author": "merunno <merunno92@gmail.com>",
   "scripts": {
     "start": "node ./build/server/index.js",
+    "setup": "pm2 start ./build/server/index.js --name OreOreBot2",
     "debug": "ts-node ./src/server/index.ts",
     "compile": "tsc -p .",
     "format": "prettier --write \"src/**/*.{js,ts}\"",
@@ -46,6 +47,7 @@
     "eslint-config-prettier": "^8.3.0",
     "jest": "^27.4.7",
     "lint-staged": "^12.1.4",
+    "pm2": "^5.1.2",
     "prettier": "^2.5.1",
     "ts-jest": "^27.1.3",
     "ts-node": "^10.4.0",
