@@ -1,5 +1,6 @@
 import {
   ActualClock,
+  DiscordOutput,
   DiscordParticipant,
   DiscordVoiceConnectionFactory,
   InMemoryReservationRepository,
@@ -20,7 +21,7 @@ import {
   ScheduleRunner,
   VoiceRoomResponseRunner
 } from '../runner';
-import { VoiceChannelParticipant, VoiceDiff } from './service/VoiceDiff';
+import { VoiceChannelParticipant, VoiceDiff } from '../service/voice-diff';
 import {
   allCommandResponder,
   allMessageEventResponder,
@@ -106,20 +107,17 @@ commandRunner.addResponder(
   )
 );
 
-let runner: VoiceRoomResponseRunner<DiscordParticipant> | null = null;
+const provider = new VoiceRoomProxy<VoiceChannelParticipant>(
+  client,
+  (voiceState) => new DiscordParticipant(voiceState)
+);
+const voiceRunner = new VoiceRoomResponseRunner(provider);
+voiceRunner.addResponder(
+  new VoiceDiff(new DiscordOutput(client, mainChannelId))
+);
 
-client.once('ready', async () => {
+client.once('ready', () => {
   readyLog(client);
-  const mainChannel = await client.channels.fetch(mainChannelId);
-  if (!mainChannel || !mainChannel.isText()) {
-    throw new Error('メインのチャンネルが見つかりません。');
-  }
-  const provider = new VoiceRoomProxy<VoiceChannelParticipant>(
-    client,
-    (voicestate) => new DiscordParticipant(voicestate, mainChannel)
-  );
-  runner = new VoiceRoomResponseRunner(provider);
-  runner.addResponder(new VoiceDiff());
 });
 
 client.login(token).catch(console.error);

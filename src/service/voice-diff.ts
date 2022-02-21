@@ -1,24 +1,30 @@
-import { VoiceRoomEvent, VoiceRoomEventResponder } from '../../runner';
-import { EmbedMessage } from '../../model/EmbedMessage';
+import { VoiceRoomEvent, VoiceRoomEventResponder } from '../runner';
+import { EmbedMessage } from '../model/EmbedMessage';
 
 export interface VoiceChannelParticipant {
-  sendEmbed(embed: EmbedMessage): Promise<void>;
   userName: string;
   userAvatar: string;
   channelName: string;
 }
 
+export interface StandardOutput {
+  sendEmbed(embed: EmbedMessage): Promise<void>;
+}
+
 export class VoiceDiff
   implements VoiceRoomEventResponder<VoiceChannelParticipant>
 {
+  constructor(private readonly stdout: StandardOutput) {}
+
   async on(
     event: VoiceRoomEvent,
     voiceState: VoiceChannelParticipant
   ): Promise<void> {
+    console.dir(voiceState);
     if (event === 'JOIN') {
       // VoiceChannel 入室時
       const { userName, userAvatar, channelName } = voiceState;
-      await voiceState.sendEmbed({
+      await this.stdout.sendEmbed({
         title: userName + 'が' + channelName + 'に入りました',
         description: '何かが始まる予感がする。',
         color: 0x1e63e9,
@@ -29,7 +35,7 @@ export class VoiceDiff
     if (event === 'LEAVE') {
       // VoiceChannel 退出時
       const { userName, userAvatar, channelName } = voiceState;
-      await voiceState.sendEmbed({
+      await this.stdout.sendEmbed({
         title: userName + 'が' + channelName + 'から抜けました',
         description: 'あいつは良い奴だったよ...',
         color: 0x1e63e9,

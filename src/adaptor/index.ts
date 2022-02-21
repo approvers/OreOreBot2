@@ -9,3 +9,4 @@ export * from './random';
 export * from './transformer';
 export * from './voice-room-proxy';
 export * from './discord-participant';
+export * from './discord-output';
