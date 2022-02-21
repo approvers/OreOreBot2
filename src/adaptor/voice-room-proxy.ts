@@ -22,7 +22,6 @@ export class VoiceRoomProxy<V> implements VoiceRoomEventProvider<V> {
     expected: ObserveExpectation
   ): void {
     this.client.on('voiceStateUpdate', async (oldState, newState) => {
-      console.dir(newState);
       if (oldState.member?.user.bot) {
         return;
       }

@@ -20,7 +20,6 @@ export class VoiceDiff
     event: VoiceRoomEvent,
     voiceState: VoiceChannelParticipant
   ): Promise<void> {
-    console.dir(voiceState);
     if (event === 'JOIN') {
       // VoiceChannel 入室時
       const { userName, userAvatar, channelName } = voiceState;
