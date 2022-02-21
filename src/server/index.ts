@@ -1,8 +1,36 @@
-import { Client, version } from 'discord.js';
-import dotenv from 'dotenv';
-import { DiscordParticipant, VoiceRoomProxy } from '../adaptor';
-import { VoiceRoomResponseRunner } from '../runner';
+import {
+  ActualClock,
+  DiscordParticipant,
+  DiscordVoiceConnectionFactory,
+  InMemoryReservationRepository,
+  InMemoryTypoRepository,
+  transformerForCommand,
+  transformerForMessage,
+  transformerForUpdateMessage,
+  MathRandomGenerator,
+  MessageProxy,
+  MessageUpdateProxy,
+  DiscordVoiceRoomController,
+  VoiceRoomProxy
+} from '../adaptor';
+import { Client, Intents, version } from 'discord.js';
+import {
+  MessageResponseRunner,
+  MessageUpdateResponseRunner,
+  ScheduleRunner,
+  VoiceRoomResponseRunner
+} from '../runner';
 import { VoiceChannelParticipant, VoiceDiff } from './service/VoiceDiff';
+import {
+  allCommandResponder,
+  allMessageEventResponder,
+  allMessageUpdateEventResponder
+} from '../service';
+import type { AssetKey } from '../service/party';
+import type { KaereMusicKey } from '../service/kaere';
+import dotenv from 'dotenv';
+import { generateDependencyReport } from '@discordjs/voice';
+import { join } from 'path';
 
 dotenv.config();
 const token = process.env.DISCORD_TOKEN;
@@ -13,9 +41,14 @@ if (!token || !mainChannelId) {
   );
 }
 
-const client = new Client({
-  intents: ['GUILDS', 'GUILD_MESSAGES']
-});
+const intents = new Intents();
+intents.add(
+  Intents.FLAGS.GUILDS, // GUILD_CREATE による初期化
+  Intents.FLAGS.GUILD_MESSAGES, // ほとんどのメッセージに反応する機能
+  Intents.FLAGS.GUILD_VOICE_STATES // VoiceDiff 機能
+);
+
+const client = new Client({ intents });
 
 /* 接続時にクライアントの情報を提供する */
 function readyLog(client: Client): void {
@@ -32,10 +65,46 @@ function readyLog(client: Client): void {
   console.info('');
   console.info('discord.js バージョン> ' + version);
   console.info('');
+  console.info(generateDependencyReport());
+  console.info('');
   console.info('============');
 }
 
-client.login(token).catch(console.error);
+const typoRepo = new InMemoryTypoRepository();
+const reservationRepo = new InMemoryReservationRepository();
+const clock = new ActualClock();
+
+const runner = new MessageResponseRunner(
+  new MessageProxy(client, transformerForMessage())
+);
+runner.addResponder(allMessageEventResponder(typoRepo));
+
+const updateRunner = new MessageUpdateResponseRunner(
+  new MessageUpdateProxy(client, transformerForUpdateMessage())
+);
+updateRunner.addResponder(allMessageUpdateEventResponder());
+
+const scheduleRunner = new ScheduleRunner(clock);
+
+const commandRunner = new MessageResponseRunner(
+  new MessageProxy(client, transformerForCommand('!'))
+);
+commandRunner.addResponder(
+  allCommandResponder(
+    typoRepo,
+    reservationRepo,
+    new DiscordVoiceConnectionFactory<AssetKey | KaereMusicKey>(client, {
+      COFFIN_INTRO: join('assets', 'party', 'coffin-intro.mp3'),
+      COFFIN_DROP: join('assets', 'party', 'coffin-drop.mp3'),
+      KAKAPO: join('assets', 'party', 'kakapo.mp3'),
+      NEROYO: join('assets', 'kaere', 'neroyo.mp3')
+    }),
+    clock,
+    scheduleRunner,
+    new MathRandomGenerator(),
+    new DiscordVoiceRoomController(client)
+  )
+);
 
 let runner: VoiceRoomResponseRunner<DiscordParticipant> | null = null;
 
@@ -52,3 +121,5 @@ client.once('ready', async () => {
   runner = new VoiceRoomResponseRunner(provider);
   runner.addResponder(new VoiceDiff());
 });
+
+client.login(token).catch(console.error);
