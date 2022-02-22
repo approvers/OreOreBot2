@@ -118,3 +118,6 @@ dist
 
 # ts
 build/
+
+# WebStorm
+.idea/
