@@ -20,9 +20,9 @@
 ## 環境構築
 
 ```shell
-$ git clone https://github.com/approvers/OreOreBot2.git
-$ yarn compile
-$ yarn start
+git clone https://github.com/approvers/OreOreBot2.git
+yarn compile
+yarn start
 ```
 (`.env` で環境変数を指定してください。)
 
