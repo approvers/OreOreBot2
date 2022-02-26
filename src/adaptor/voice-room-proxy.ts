@@ -10,11 +10,14 @@ type ObserveExpectation = 'ChangingIntoFalsy' | 'ChangingIntoTruthy' | 'All';
  * @class VoiceRoomProxy
  * @implements {VoiceRoomEventProvider<VoiceState>}
  */
-export class VoiceRoomProxy implements VoiceRoomEventProvider<VoiceState> {
-  constructor(private readonly client: Client) {}
+export class VoiceRoomProxy<V> implements VoiceRoomEventProvider<V> {
+  constructor(
+    private readonly client: Client,
+    private readonly map: (voiceState: VoiceState) => V
+  ) {}
 
   private registerHandler(
-    handler: (v: VoiceState) => Promise<void>,
+    handler: (v: V) => Promise<void>,
     toObserve: keyof VoiceState,
     expected: ObserveExpectation
   ): void {
@@ -28,32 +31,32 @@ export class VoiceRoomProxy implements VoiceRoomEventProvider<VoiceState> {
           (expected === 'ChangingIntoTruthy' && !!newState[toObserve]) ||
           expected === 'All')
       ) {
-        await handler(newState);
+        await handler(this.map(newState));
       }
     });
   }
 
-  onJoin(handler: (voiceState: VoiceState) => Promise<void>): void {
+  onJoin(handler: (voiceState: V) => Promise<void>): void {
     this.registerHandler(handler, 'channelId', 'ChangingIntoTruthy');
   }
 
-  onLeave(handler: (voiceState: VoiceState) => Promise<void>): void {
+  onLeave(handler: (voiceState: V) => Promise<void>): void {
     this.registerHandler(handler, 'channelId', 'ChangingIntoFalsy');
   }
 
-  onMute(handler: (voiceState: VoiceState) => Promise<void>): void {
+  onMute(handler: (voiceState: V) => Promise<void>): void {
     this.registerHandler(handler, 'mute', 'ChangingIntoTruthy');
   }
 
-  onDeafen(handler: (voiceState: VoiceState) => Promise<void>): void {
+  onDeafen(handler: (voiceState: V) => Promise<void>): void {
     this.registerHandler(handler, 'deaf', 'ChangingIntoTruthy');
   }
 
-  onUnmute(handler: (voiceState: VoiceState) => Promise<void>): void {
+  onUnmute(handler: (voiceState: V) => Promise<void>): void {
     this.registerHandler(handler, 'mute', 'ChangingIntoFalsy');
   }
 
-  onUndeafen(handler: (voiceState: VoiceState) => Promise<void>): void {
+  onUndeafen(handler: (voiceState: V) => Promise<void>): void {
     this.registerHandler(handler, 'deaf', 'ChangingIntoFalsy');
   }
 }

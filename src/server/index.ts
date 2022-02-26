@@ -1,5 +1,7 @@
 import {
   ActualClock,
+  DiscordOutput,
+  DiscordParticipant,
   DiscordVoiceConnectionFactory,
   InMemoryReservationRepository,
   InMemoryTypoRepository,
@@ -9,14 +11,17 @@ import {
   MathRandomGenerator,
   MessageProxy,
   MessageUpdateProxy,
-  DiscordVoiceRoomController
+  DiscordVoiceRoomController,
+  VoiceRoomProxy
 } from '../adaptor';
 import { Client, Intents, version } from 'discord.js';
 import {
   MessageResponseRunner,
   MessageUpdateResponseRunner,
-  ScheduleRunner
+  ScheduleRunner,
+  VoiceRoomResponseRunner
 } from '../runner';
+import { VoiceChannelParticipant, VoiceDiff } from '../service/voice-diff';
 import {
   allCommandResponder,
   allMessageEventResponder,
@@ -30,7 +35,8 @@ import { join } from 'path';
 
 dotenv.config();
 const token = process.env.DISCORD_TOKEN;
-if (!token) {
+const mainChannelId = process.env.MAIN_CHANNEL_ID;
+if (!token || !mainChannelId) {
   throw new Error(
     'Error> Failed to start. You did not specify any environment variables.'
   );
@@ -99,6 +105,15 @@ commandRunner.addResponder(
     new MathRandomGenerator(),
     new DiscordVoiceRoomController(client)
   )
+);
+
+const provider = new VoiceRoomProxy<VoiceChannelParticipant>(
+  client,
+  (voiceState) => new DiscordParticipant(voiceState)
+);
+const voiceRunner = new VoiceRoomResponseRunner(provider);
+voiceRunner.addResponder(
+  new VoiceDiff(new DiscordOutput(client, mainChannelId))
 );
 
 client.once('ready', () => {
