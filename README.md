@@ -24,7 +24,7 @@ git clone https://github.com/approvers/OreOreBot2.git
 yarn compile
 yarn start
 ```
-(`.env` で環境変数を指定してください。)
+(環境変数を指定してください。`.env` でも指定できます。)
 
 ## 環境変数
 
