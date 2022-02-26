@@ -1,5 +1,5 @@
 import { Client, MessageEmbed } from 'discord.js';
-import type { EmbedMessage } from '../model/EmbedMessage';
+import type { EmbedMessage } from '../model/embed-message';
 import type { StandardOutput } from '../service/voice-diff';
 
 export class DiscordOutput implements StandardOutput {
