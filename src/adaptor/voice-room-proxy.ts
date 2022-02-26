@@ -31,7 +31,13 @@ export class VoiceRoomProxy<V> implements VoiceRoomEventProvider<V> {
           (expected === 'ChangingIntoTruthy' && !!newState[toObserve]) ||
           expected === 'All')
       ) {
-        await handler(this.map(newState));
+        let vcState: VoiceState;
+        if (expected === 'ChangingIntoFalsy') {
+          vcState = oldState;
+        } else {
+          vcState = newState;
+        }
+        await handler(this.map(vcState));
       }
     });
   }
