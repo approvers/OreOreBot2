@@ -71,10 +71,10 @@ export class JudgementCommand implements MessageEventResponder<CommandMessage> {
       description: `1 / ${count} WJ`
     });
 
-    for (let i = 0; i < count - 2; ++i) {
+    for (let i = 2; i < count; ++i) {
       await sent.edit({
         title: JUDGEMENT_TITLE,
-        description: `${i + 1} / ${count} WJ`
+        description: `${i} / ${count} WJ`
       });
       await this.rng.sleep();
     }
@@ -96,12 +96,12 @@ export class JudgementCommand implements MessageEventResponder<CommandMessage> {
     });
 
     const errorFromStart = errorFromStartArg == '-all';
-    const errorAt = errorFromStart ? 0 : this.rng.uniform(0, count);
+    const errorAt = errorFromStart ? 1 : this.rng.uniform(1, count + 1);
 
-    for (let i = 0; i < count - 2; ++i) {
+    for (let i = 2; i < count; ++i) {
       await sent.edit({
         title: JUDGEMENT_TITLE,
-        description: `${i + 1} / ${count} ${errorAt < i ? result : 'WJ'}`
+        description: `${i} / ${count} ${errorAt <= i ? result : 'WJ'}`
       });
       await this.rng.sleep();
     }
