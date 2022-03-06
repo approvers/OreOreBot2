@@ -17,113 +17,131 @@ test('use case of party', async () => {
 
   await responder.on(
     'CREATE',
-    createMockMessage({
-      args: ['party'],
-      reply: (message) => {
+    createMockMessage(
+      {
+        args: ['party']
+      },
+      (message) => {
         expect(message).toStrictEqual({
           title: `パーティー Nigth`,
           description: 'хорошо、宴の始まりだ。'
         });
         return Promise.resolve();
       }
-    })
+    )
   );
 
   await responder.on(
     'CREATE',
-    createMockMessage({
-      args: ['party', 'status'],
-      reply: (message) => {
+    createMockMessage(
+      {
+        args: ['party', 'status']
+      },
+      (message) => {
         expect(message).toStrictEqual({
           title: 'ゲリラは現在無効だよ。'
         });
         return Promise.resolve();
       }
-    })
+    )
   );
   await responder.on(
     'CREATE',
-    createMockMessage({
-      args: ['party', 'enable'],
-      reply: (message) => {
+    createMockMessage(
+      {
+        args: ['party', 'enable']
+      },
+      (message) => {
         expect(message).toStrictEqual({
           title: 'ゲリラを有効化しておいたよ。'
         });
         return Promise.resolve();
       }
-    })
+    )
   );
   await responder.on(
     'CREATE',
-    createMockMessage({
-      args: ['party', 'status'],
-      reply: (message) => {
+    createMockMessage(
+      {
+        args: ['party', 'status']
+      },
+      (message) => {
         expect(message).toStrictEqual({
           title: 'ゲリラは現在有効だよ。'
         });
         return Promise.resolve();
       }
-    })
+    )
   );
   await responder.on(
     'CREATE',
-    createMockMessage({
-      args: ['party', 'disable'],
-      reply: (message) => {
+    createMockMessage(
+      {
+        args: ['party', 'disable']
+      },
+      (message) => {
         expect(message).toStrictEqual({
           title: 'ゲリラを無効化しておいたよ。'
         });
         return Promise.resolve();
       }
-    })
+    )
   );
   await responder.on(
     'CREATE',
-    createMockMessage({
-      args: ['party', 'status'],
-      reply: (message) => {
+    createMockMessage(
+      {
+        args: ['party', 'status']
+      },
+      (message) => {
         expect(message).toStrictEqual({
           title: 'ゲリラは現在無効だよ。'
         });
         return Promise.resolve();
       }
-    })
+    )
   );
 
   await responder.on(
     'CREATE',
-    createMockMessage({
-      args: ['party', 'time'],
-      reply: (message) => {
+    createMockMessage(
+      {
+        args: ['party', 'time']
+      },
+      (message) => {
         expect(message).toStrictEqual({
           title: '次のゲリラ参加時刻を42分にしたよ。'
         });
         return Promise.resolve();
       }
-    })
+    )
   );
   await responder.on(
     'CREATE',
-    createMockMessage({
-      args: ['party', 'time', '36'],
-      reply: (message) => {
+    createMockMessage(
+      {
+        args: ['party', 'time', '36']
+      },
+      (message) => {
         expect(message).toStrictEqual({
           title: '次のゲリラ参加時刻を36分にしたよ。'
         });
         return Promise.resolve();
       }
-    })
+    )
   );
 
   await responder.on(
     'CREATE',
-    createMockMessage({
-      args: ['party', 'set', '__UNKNOWN__'],
-      reply: (message) => {
+    createMockMessage(
+      {
+        args: ['party', 'set', '__UNKNOWN__']
+      },
+      (message) => {
         expect(message.title).toStrictEqual('BGMを設定できなかった。');
         return Promise.resolve();
       }
-    })
+    )
   );
 
   runner.killAll();
@@ -139,22 +157,19 @@ test('must not reply', async () => {
   await responder.on(
     'CREATE',
     createMockMessage({
-      args: ['typo'],
-      reply: fn
+      args: ['typo']
     })
   );
   await responder.on(
     'CREATE',
     createMockMessage({
-      args: ['partyichiyo'],
-      reply: fn
+      args: ['partyichiyo']
     })
   );
   await responder.on(
     'DELETE',
     createMockMessage({
-      args: ['party'],
-      reply: fn
+      args: ['party']
     })
   );
   expect(fn).not.toHaveBeenCalled();

@@ -75,16 +75,18 @@ test('show all typos', async () => {
   const responder = new TypoReporter(db, clock, runner);
   await responder.on(
     'CREATE',
-    createMockMessage({
-      args: ['typo'],
-      reply: (message) => {
+    createMockMessage(
+      {
+        args: ['typo']
+      },
+      (message) => {
         expect(message).toStrictEqual({
           title: `† 今日のMikuroさいなのtypo †`,
           description: '- foo\n- hoge\n- fuga'
         });
         return Promise.resolve();
       }
-    })
+    )
   );
 
   runner.killAll();

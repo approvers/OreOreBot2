@@ -55,17 +55,33 @@ export interface CommandMessage {
    * @type {readonly string[]}
    * @memberof CommandMessage
    */
-  reply(message: EmbedMessage): Promise<void>;
+  reply(message: EmbedMessage): Promise<SentMessage>;
+}
+
+/**
+ * すでに送信したメッセージ.
+ */
+export interface SentMessage {
+  edit(newMessage: EmbedMessage): Promise<void>;
 }
 
 export const createMockMessage = (
-  partial: Readonly<Partial<CommandMessage>>
+  partial: Readonly<Partial<CommandMessage>>,
+  reply?: (message: EmbedMessage) => Promise<SentMessage | void>
 ): CommandMessage => ({
   senderId: '279614913129742338' as Snowflake,
   senderGuildId: '683939861539192860' as Snowflake,
   senderVoiceChannelId: '683939861539192865' as Snowflake,
   senderName: 'Mikuroさいな',
   args: [],
-  reply: () => Promise.resolve(),
+  reply: reply
+    ? async (mes) =>
+        (await reply(mes)) || {
+          edit: () => Promise.resolve()
+        }
+    : () =>
+        Promise.resolve({
+          edit: () => Promise.resolve()
+        }),
   ...partial
 });
