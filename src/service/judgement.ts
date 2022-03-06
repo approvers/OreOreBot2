@@ -1,13 +1,41 @@
 import type { MessageEvent, MessageEventResponder } from '../runner';
 import type { CommandMessage } from './command-message';
 
+/**
+ * `JudgementCommand` のための乱数生成器。
+ *
+ * @export
+ * @interface RandomGenerator
+ */
 export interface RandomGenerator {
+  /**
+   * ランダムに少しの間だけ待ってから解決する `Promise` を返す。
+   *
+   * @returns {Promise<void>}
+   * @memberof RandomGenerator
+   */
   sleep(): Promise<void>;
+
+  /**
+   * `from` 以上 `to` 未満の一様にランダムな整数を返す。
+   *
+   * @param {number} from
+   * @param {number} to
+   * @returns {number}
+   * @memberof RandomGenerator
+   */
   uniform(from: number, to: number): number;
 }
 
 const JUDGEMENT_TITLE = '***†HARACHO ONLINE JUDGEMENT SYSTEM†***';
 
+/**
+ * `judge` コマンドで競技プログラミングの判定をシミュレートする。
+ *
+ * @export
+ * @class JudgementCommand
+ * @implements {MessageEventResponder<CommandMessage>}
+ */
 export class JudgementCommand implements MessageEventResponder<CommandMessage> {
   constructor(private readonly rng: RandomGenerator) {}
 
@@ -52,7 +80,7 @@ export class JudgementCommand implements MessageEventResponder<CommandMessage> {
     }
     await sent.edit({
       title: JUDGEMENT_TITLE,
-      description: 'AC'
+      description: `${count} / ${count} AC`
     });
   }
 
@@ -79,7 +107,7 @@ export class JudgementCommand implements MessageEventResponder<CommandMessage> {
     }
     await sent.edit({
       title: JUDGEMENT_TITLE,
-      description: result
+      description: `${count} / ${count} ${result}`
     });
   }
 }
