@@ -18,21 +18,21 @@ test('use case of jd', async () => {
       (embed) => {
         expect(embed).toStrictEqual({
           title: '***†HARACHO ONLINE JUDGEMENT SYSTEM†***',
-          description: '1 / 5 WJ'
+          description: '0 / 5 WJ'
         });
         return Promise.resolve({ edit: fn });
       }
     )
   );
 
-  expect(fn).toBeCalledTimes(4);
-  for (let i = 0; i < 3; ++i) {
+  expect(fn).toBeCalledTimes(5);
+  for (let i = 0; i < 4; ++i) {
     expect(fn.mock.calls[i][0]).toStrictEqual({
       title: '***†HARACHO ONLINE JUDGEMENT SYSTEM†***',
-      description: `${i + 2} / 5 WJ`
+      description: `${i + 1} / 5 WJ`
     });
   }
-  expect(fn.mock.calls[3][0]).toStrictEqual({
+  expect(fn.mock.calls[4][0]).toStrictEqual({
     title: '***†HARACHO ONLINE JUDGEMENT SYSTEM†***',
     description: `5 / 5 AC`
   });
@@ -54,7 +54,7 @@ test('use case of judge', async () => {
       (embed) => {
         expect(embed).toStrictEqual({
           title: '***†HARACHO ONLINE JUDGEMENT SYSTEM†***',
-          description: '1 / 1 WJ'
+          description: '0 / 1 WJ'
         });
         return Promise.resolve({ edit: fn });
       }

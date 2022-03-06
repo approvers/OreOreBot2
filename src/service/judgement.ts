@@ -68,10 +68,10 @@ export class JudgementCommand implements MessageEventResponder<CommandMessage> {
   private async accept(message: CommandMessage, count: number) {
     const sent = await message.reply({
       title: JUDGEMENT_TITLE,
-      description: `1 / ${count} WJ`
+      description: `0 / ${count} WJ`
     });
 
-    for (let i = 2; i < count; ++i) {
+    for (let i = 1; i <= count - 1; ++i) {
       await sent.edit({
         title: JUDGEMENT_TITLE,
         description: `${i} / ${count} WJ`
@@ -92,13 +92,13 @@ export class JudgementCommand implements MessageEventResponder<CommandMessage> {
   ) {
     const sent = await message.reply({
       title: JUDGEMENT_TITLE,
-      description: `1 / ${count} WJ`
+      description: `0 / ${count} WJ`
     });
 
     const errorFromStart = errorFromStartArg == '-all';
     const errorAt = errorFromStart ? 1 : this.rng.uniform(1, count + 1);
 
-    for (let i = 2; i < count; ++i) {
+    for (let i = 1; i <= count - 1; ++i) {
       await sent.edit({
         title: JUDGEMENT_TITLE,
         description: `${i} / ${count} ${errorAt <= i ? result : 'WJ'}`
