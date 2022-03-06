@@ -6,13 +6,14 @@ import {
 } from '../runner';
 import { DeletionObservable, DeletionRepeater } from './deletion-repeater';
 import { DifferenceDetector } from './difference-detector';
+import { JudgementCommand, RandomGenerator } from './judgement';
 import {
   KaereCommand,
   KaereMusicKey,
   ReservationRepository,
   VoiceRoomController
 } from './kaere';
-import { AssetKey, PartyCommand, RandomGenerator } from './party';
+import { AssetKey, PartyCommand, RandomGenerator as PartyRng } from './party';
 import {
   TypoObservable,
   TypoRecorder,
@@ -36,17 +37,18 @@ export const allCommandResponder = (
   factory: VoiceConnectionFactory<AssetKey | KaereMusicKey>,
   clock: Clock,
   scheduleRunner: ScheduleRunner,
-  randomMinutes: RandomGenerator,
+  random: PartyRng & RandomGenerator,
   roomController: VoiceRoomController
 ) =>
   composeMessageEventResponders(
     new TypoReporter(typoRepo, clock, scheduleRunner),
-    new PartyCommand(factory, clock, scheduleRunner, randomMinutes),
+    new PartyCommand(factory, clock, scheduleRunner, random),
     new KaereCommand(
       factory,
       roomController,
       clock,
       scheduleRunner,
       reservationRepo
-    )
+    ),
+    new JudgementCommand(random)
   );
