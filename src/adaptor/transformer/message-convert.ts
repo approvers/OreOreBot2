@@ -46,7 +46,12 @@ export const converterWithPrefix =
       senderName: message.author?.username ?? '名無し',
       args,
       async reply(embed) {
-        await message.reply({ embeds: [convertEmbed(embed)] });
+        const mes = await message.reply({ embeds: [convertEmbed(embed)] });
+        return {
+          edit: async (embed) => {
+            await mes.edit({ embeds: [convertEmbed(embed)] });
+          }
+        };
       }
     };
     await func(command);
