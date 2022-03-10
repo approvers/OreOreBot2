@@ -6,7 +6,7 @@ import type { MessageHandler } from '..';
 import type { Snowflake } from '../../model/id';
 import type { TypoObservable } from '../../service/typo-record';
 import { convertEmbed } from '../embed-convert';
-import { BoldItalicCop } from '../../service/bold-italic-cop';
+import type { BoldItalicCop } from '../../service/bold-italic-cop';
 
 const getAuthorSnowflake = (message: RawMessage): Snowflake =>
   (message.author?.id || 'unknown') as Snowflake;
