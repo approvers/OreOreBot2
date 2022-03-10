@@ -6,23 +6,27 @@ import type { MessageHandler } from '..';
 import type { Snowflake } from '../../model/id';
 import type { TypoObservable } from '../../service/typo-record';
 import { convertEmbed } from '../embed-convert';
+import type { BoldItalicCop } from '../../service/bold-italic-cop';
 
 const getAuthorSnowflake = (message: RawMessage): Snowflake =>
   (message.author?.id || 'unknown') as Snowflake;
 
 const observableMessage = (
   raw: RawMessage
-): EditingObservable & DeletionObservable & TypoObservable => ({
+): EditingObservable & DeletionObservable & TypoObservable & BoldItalicCop => ({
   authorId: getAuthorSnowflake(raw),
   author: raw.author?.username || '名無し',
   content: raw.content || '',
   async sendToSameChannel(message: string): Promise<void> {
     await raw.channel.send(message);
+  },
+  async replyMessage(message): Promise<void> {
+    await raw.reply(message);
   }
 });
 
 export const observableTransformer: Transformer<
-  EditingObservable & DeletionObservable & TypoObservable,
+  EditingObservable & DeletionObservable & TypoObservable & BoldItalicCop,
   RawMessage
 > = (handler) => (raw: RawMessage) => handler(observableMessage(raw));
 
