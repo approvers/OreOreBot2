@@ -55,3 +55,13 @@ test('bold', async () => {
   });
   expect(fn).not.toHaveBeenCalled();
 });
+
+test('delete case', async () => {
+  const responder = new BoldItalicCopReporter();
+  const fn = jest.fn();
+  await responder.on('DELETE', {
+    content: '***hoge***',
+    replyMessage: fn
+  });
+  expect(fn).not.toHaveBeenCalled();
+});
