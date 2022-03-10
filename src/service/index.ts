@@ -21,11 +21,15 @@ import {
   TypoRepository
 } from './typo-record';
 import type { VoiceConnectionFactory } from './voice-connection';
+import { BoldItalicCop, BoldItalicCopReporter } from './bold-italic-cop';
 
 export const allMessageEventResponder = (repo: TypoRepository) =>
-  composeMessageEventResponders<DeletionObservable & TypoObservable>(
+  composeMessageEventResponders<
+    DeletionObservable & TypoObservable & BoldItalicCop
+  >(
     new DeletionRepeater(),
-    new TypoRecorder(repo)
+    new TypoRecorder(repo),
+    new BoldItalicCopReporter()
   );
 
 export const allMessageUpdateEventResponder = () =>
