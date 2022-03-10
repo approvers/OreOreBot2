@@ -1,7 +1,7 @@
 import { MessageEvent } from '../runner';
 import { MessageEventResponder } from '../runner';
 
-const regex = /\*\*\*/g;
+const boldItalic = /\*\*\*/g;
 
 export interface BoldItalicCop {
   /**
@@ -24,7 +24,7 @@ export class BoldItalicCopReporter
 {
   async on(event: MessageEvent, message: BoldItalicCop): Promise<void> {
     if (event !== 'CREATE') return;
-    const boldItalicSize = message.content.match(regex);
+    const boldItalicSize = message.content.match(boldItalic);
     if (!boldItalicSize) return;
     if (boldItalicSize.length >= 2) {
       await message.replyMessage({
