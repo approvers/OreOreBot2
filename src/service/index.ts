@@ -22,6 +22,7 @@ import {
 } from './typo-record';
 import type { VoiceConnectionFactory } from './voice-connection';
 import { BoldItalicCop, BoldItalicCopReporter } from './bold-italic-cop';
+import { Hukueki } from './hukueki';
 
 export const allMessageEventResponder = (repo: TypoRepository) =>
   composeMessageEventResponders<
@@ -54,5 +55,6 @@ export const allCommandResponder = (
       scheduleRunner,
       reservationRepo
     ),
-    new JudgementCommand(random)
+    new JudgementCommand(random),
+    new Hukueki()
   );
