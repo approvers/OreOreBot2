@@ -1,5 +1,5 @@
-import { MessageEvent, MessageEventResponder } from '../runner';
-import { CommandMessage } from './command-message';
+import type { MessageEvent, MessageEventResponder } from '../runner';
+import type { CommandMessage } from './command-message';
 
 export class Hukueki implements MessageEventResponder<CommandMessage> {
   async on(event: MessageEvent, message: CommandMessage): Promise<void> {
