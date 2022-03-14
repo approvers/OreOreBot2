@@ -10,8 +10,8 @@
         \- A2=> <----------- B2=> <-/
 */
 
-import type { Transformer } from '.';
 import type { MessageHandler } from '..';
+import type { Transformer } from '.';
 
 // A1=> -> A2=> -> A1*A2=>
 const merge =

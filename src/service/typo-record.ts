@@ -1,5 +1,3 @@
-import { addDays, setHours, setMinutes } from 'date-fns';
-import type { Snowflake } from '../model/id';
 import type {
   Clock,
   MessageEvent,
@@ -7,7 +5,9 @@ import type {
   ScheduleRunner,
   ScheduleTask
 } from '../runner';
+import { addDays, setHours, setMinutes } from 'date-fns';
 import type { CommandMessage } from './command-message';
+import type { Snowflake } from '../model/id';
 
 /**
  * 監視するメッセージの抽象。

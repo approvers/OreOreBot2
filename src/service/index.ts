@@ -1,3 +1,5 @@
+import { AssetKey, PartyCommand, RandomGenerator as PartyRng } from './party';
+import { BoldItalicCop, BoldItalicCopReporter } from './bold-italic-cop';
 import {
   Clock,
   ScheduleRunner,
@@ -5,7 +7,6 @@ import {
   composeMessageUpdateEventResponders
 } from '../runner';
 import { DeletionObservable, DeletionRepeater } from './deletion-repeater';
-import { DifferenceDetector } from './difference-detector';
 import { JudgementCommand, RandomGenerator } from './judgement';
 import {
   KaereCommand,
@@ -13,16 +14,15 @@ import {
   ReservationRepository,
   VoiceRoomController
 } from './kaere';
-import { AssetKey, PartyCommand, RandomGenerator as PartyRng } from './party';
 import {
   TypoObservable,
   TypoRecorder,
   TypoReporter,
   TypoRepository
 } from './typo-record';
-import type { VoiceConnectionFactory } from './voice-connection';
-import { BoldItalicCop, BoldItalicCopReporter } from './bold-italic-cop';
+import { DifferenceDetector } from './difference-detector';
 import { Hukueki } from './hukueki';
+import type { VoiceConnectionFactory } from './voice-connection';
 
 export const allMessageEventResponder = (repo: TypoRepository) =>
   composeMessageEventResponders<

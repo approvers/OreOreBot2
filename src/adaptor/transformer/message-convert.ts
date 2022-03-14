@@ -1,4 +1,5 @@
-import type { Transformer, RawMessage } from '.';
+import type { RawMessage, Transformer } from '.';
+import type { BoldItalicCop } from '../../service/bold-italic-cop';
 import type { CommandMessage } from '../../service/command-message';
 import type { DeletionObservable } from '../../service/deletion-repeater';
 import type { EditingObservable } from '../../service/difference-detector';
@@ -6,7 +7,6 @@ import type { MessageHandler } from '..';
 import type { Snowflake } from '../../model/id';
 import type { TypoObservable } from '../../service/typo-record';
 import { convertEmbed } from '../embed-convert';
-import type { BoldItalicCop } from '../../service/bold-italic-cop';
 
 const getAuthorSnowflake = (message: RawMessage): Snowflake =>
   (message.author?.id || 'unknown') as Snowflake;

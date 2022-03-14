@@ -1,4 +1,4 @@
-import type { Transformer, RawMessage } from '.';
+import type { RawMessage, Transformer } from '.';
 
 export const botFilter: Transformer<RawMessage, RawMessage> =
   (func: (message: RawMessage) => Promise<void>) =>

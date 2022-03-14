@@ -1,6 +1,6 @@
 import { EmbedMessage } from '../model/embed-message';
-import { createMockMessage } from './command-message';
 import { JudgementCommand } from './judgement';
+import { createMockMessage } from './command-message';
 
 test('use case of jd', async () => {
   const responder = new JudgementCommand({

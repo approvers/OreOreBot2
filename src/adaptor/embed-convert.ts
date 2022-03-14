@@ -1,5 +1,5 @@
-import { MessageEmbed } from 'discord.js';
 import type { EmbedMessage } from '../model/embed-message';
+import { MessageEmbed } from 'discord.js';
 
 export const convertEmbed = ({
   author,
