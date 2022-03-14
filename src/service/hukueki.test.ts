@@ -61,13 +61,20 @@ test('use case of dousureba', async () => {
 
 test('args null', async () => {
   const responder = new Hukueki();
-  const fn = jest.fn();
   await responder.on(
     'CREATE',
-    createMockMessage({
-      args: ['dousureba'],
-      reply: fn
-    })
+    createMockMessage(
+      {
+        args: ['hukueki']
+      },
+      (message) => {
+        expect(message).toStrictEqual({
+          title: '服役できなかった。',
+          description: '引数が不足してるみたいだ。'
+        });
+        return Promise.resolve();
+      }
+    )
   );
 });
 
