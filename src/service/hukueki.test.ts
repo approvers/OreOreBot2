@@ -59,6 +59,25 @@ test('use case of dousureba', async () => {
   );
 });
 
+test('args space', async () => {
+  const responder = new Hukueki();
+  await responder.on(
+    'CREATE',
+    createMockMessage(
+      {
+        args: ['lolicon', 'こるく', 'にえっちを申し込む'],
+        senderName: 'める'
+      },
+      (message) => {
+        expect(message).toStrictEqual({
+          description: `だから僕はこるく にえっちを申し込むを辞めた - める (Music Video)`
+        });
+        return Promise.resolve();
+      }
+    )
+  );
+});
+
 test('args null', async () => {
   const responder = new Hukueki();
   await responder.on(
