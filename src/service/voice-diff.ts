@@ -1,14 +1,10 @@
 import { VoiceRoomEvent, VoiceRoomEventResponder } from '../runner';
-import { EmbedMessage } from '../model/embed-message';
+import type { StandardOutput } from './output';
 
 export interface VoiceChannelParticipant {
   userName: string;
   userAvatar: string;
   channelName: string;
-}
-
-export interface StandardOutput {
-  sendEmbed(embed: EmbedMessage): Promise<void>;
 }
 
 export class VoiceDiff
