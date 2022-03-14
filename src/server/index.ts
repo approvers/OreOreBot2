@@ -25,22 +25,26 @@ import { VoiceChannelParticipant, VoiceDiff } from '../service/voice-diff';
 import {
   allCommandResponder,
   allMessageEventResponder,
-  allMessageUpdateEventResponder
+  allMessageUpdateEventResponder,
+  allRoleResponder
 } from '../service';
 import type { AssetKey } from '../service/party';
 import type { KaereMusicKey } from '../service/kaere';
 import dotenv from 'dotenv';
 import { generateDependencyReport } from '@discordjs/voice';
 import { join } from 'path';
+import { RoleResponseRunner } from '../runner/role';
+import { roleProxy } from '../adaptor/role-proxy';
+import { DiscordRoleManager } from '../adaptor/discord-role';
+import { extractEnv } from './extract-env';
+import { Snowflake } from '../model/id';
 
 dotenv.config();
-const token = process.env.DISCORD_TOKEN;
-const mainChannelId = process.env.MAIN_CHANNEL_ID;
-if (!token || !mainChannelId) {
-  throw new Error(
-    'Error> Failed to start. You did not specify any environment variables.'
-  );
-}
+const {
+  DISCORD_TOKEN: token,
+  MAIN_CHANNEL_ID: mainChannelId,
+  GUILD_ID
+} = extractEnv(['DISCORD_TOKEN', 'MAIN_CHANNEL_ID', 'GUILD_ID']);
 
 const intents = new Intents();
 intents.add(
@@ -112,9 +116,21 @@ const provider = new VoiceRoomProxy<VoiceChannelParticipant>(
   (voiceState) => new DiscordParticipant(voiceState)
 );
 const voiceRunner = new VoiceRoomResponseRunner(provider);
-voiceRunner.addResponder(
-  new VoiceDiff(new DiscordOutput(client, mainChannelId))
+const output = new DiscordOutput(client, mainChannelId);
+voiceRunner.addResponder(new VoiceDiff(output));
+
+// ほとんど変わらないことが予想され環境変数で管理する必要性が薄いので、ハードコードした。
+const KAWAEMON_ID = '391857452360007680' as Snowflake;
+
+const roleRunner = new RoleResponseRunner();
+roleRunner.addResponder(
+  allRoleResponder(
+    KAWAEMON_ID,
+    new DiscordRoleManager(client, GUILD_ID as Snowflake),
+    output
+  )
 );
+roleProxy(client, roleRunner);
 
 client.once('ready', () => {
   readyLog(client);
