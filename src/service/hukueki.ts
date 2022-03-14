@@ -7,7 +7,8 @@ export class Hukueki implements MessageEventResponder<CommandMessage> {
     const { args } = message;
     if (args.length < 1) return;
 
-    const [kind, arg] = args;
+    const [kind, ...remainings] = args;
+    const messageArgs = remainings.join(' ');
 
     switch (kind) {
       /**
@@ -16,7 +17,7 @@ export class Hukueki implements MessageEventResponder<CommandMessage> {
        * 困らないでよ
        */
       case 'hukueki': {
-        if (!arg) {
+        if (!messageArgs) {
           await message.reply({
             title: '服役できなかった。',
             description: '引数が不足してるみたいだ。'
@@ -26,7 +27,7 @@ export class Hukueki implements MessageEventResponder<CommandMessage> {
 
         const hukuekiContext =
           'ねぇ、将来何してるだろうね\n' +
-          arg +
+          messageArgs +
           'はしてないといいね\n' +
           '困らないでよ';
 
@@ -37,7 +38,7 @@ export class Hukueki implements MessageEventResponder<CommandMessage> {
        * だから僕はロリコンを辞めた - こるく (Music Video)
        */
       case 'lolicon': {
-        if (!arg) {
+        if (!messageArgs) {
           await message.reply({
             title: 'こるくはロリコンをやめられなかった。',
             description: '引数が不足してるみたいだ。'
@@ -46,7 +47,7 @@ export class Hukueki implements MessageEventResponder<CommandMessage> {
         }
 
         await message.reply({
-          description: `だから僕は${arg}を辞めた - ${message.senderName} (Music Video)`
+          description: `だから僕は${messageArgs}を辞めた - ${message.senderName} (Music Video)`
         });
         break;
       }
@@ -54,7 +55,7 @@ export class Hukueki implements MessageEventResponder<CommandMessage> {
        * 限界みたいな鯖に住んでる菱形はどうすりゃいいですか？
        */
       case 'dousureba': {
-        if (!arg) {
+        if (!messageArgs) {
           await message.reply({
             title: 'どうしようもない。',
             description: '引数が不足してるみたいだ。'
@@ -63,7 +64,7 @@ export class Hukueki implements MessageEventResponder<CommandMessage> {
         }
 
         await message.reply({
-          description: `限界みたいな鯖に住んでる${arg}はどうすりゃいいですか？`
+          description: `限界みたいな鯖に住んでる${messageArgs}はどうすりゃいいですか？`
         });
         break;
       }
