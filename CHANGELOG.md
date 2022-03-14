@@ -2,6 +2,17 @@
 
 樋口一葉も進化する
 
+----
+
+## 1.2.0
+
+### feat
+
+- 服役の追加 ([#50](https://github.com/approvers/OreOreBot2/pull/50)) **By merunno** 
+    - `!hukueki`
+    - `!lolicon`
+    - `!dousureba`
+
 ## 1.1.0
 
 ### feat
@@ -12,4 +23,4 @@
 
 ### bug fix
 
-- VC退出時にVoiceChannelの名前が `null` 担ってしまう問題の修正 ([#31](https://github.com/approvers/OreOreBot2/pull/39)) **By merunno**
+- VC退出時にVoiceChannelの名前が `null` になってしまう問題の修正 ([#31](https://github.com/approvers/OreOreBot2/pull/39)) **By merunno**
