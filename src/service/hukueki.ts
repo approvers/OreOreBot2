@@ -7,19 +7,18 @@ export class Hukueki implements MessageEventResponder<CommandMessage> {
     const { args } = message;
     if (args.length < 1) return;
 
-    switch (args[0]) {
+    const [kind, arg] = args;
+
+    switch (kind) {
       /**
        * ねぇ、将来何してるだろうね
        * 服役はしてないと良いね
        * 困らないでよ
        */
       case 'hukueki': {
-        const hukuekiArgs = args[1];
-        if (!hukuekiArgs) return;
-
         const hukuekiContext =
           'ねぇ、将来何してるだろうね\n' +
-          hukuekiArgs +
+          arg +
           'はしてないといいね\n' +
           '困らないでよ';
 
@@ -30,10 +29,8 @@ export class Hukueki implements MessageEventResponder<CommandMessage> {
        * だから僕はロリコンを辞めた - こるく (Music Video)
        */
       case 'lolicon': {
-        const loliconArgs = args[1];
-        if (!loliconArgs) return;
         await message.reply({
-          description: `だから僕は${loliconArgs}を辞めた - ${message.senderName} (Music Video)`
+          description: `だから僕は${arg}を辞めた - ${message.senderName} (Music Video)`
         });
         break;
       }
@@ -41,10 +38,8 @@ export class Hukueki implements MessageEventResponder<CommandMessage> {
        * 限界みたいな鯖に住んでる菱形はどうすりゃいいですか？
        */
       case 'dousureba': {
-        const dousurebaArgs = args[1];
-        if (!dousurebaArgs) return;
         await message.reply({
-          description: `限界みたいな鯖に住んでる${dousurebaArgs}はどうすりゃいいですか？`
+          description: `限界みたいな鯖に住んでる${arg}はどうすりゃいいですか？`
         });
         break;
       }
