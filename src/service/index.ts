@@ -23,6 +23,10 @@ import {
 import type { VoiceConnectionFactory } from './voice-connection';
 import { BoldItalicCop, BoldItalicCopReporter } from './bold-italic-cop';
 import { Hukueki } from './hukueki';
+import type { StandardOutput } from './output';
+import { composeRoleEventResponders } from '../runner/role';
+import { KawaemonHasAllRoles, RoleManager } from './kawaemon-has-all-roles';
+import type { Snowflake } from '../model/id';
 
 export const allMessageEventResponder = (repo: TypoRepository) =>
   composeMessageEventResponders<
@@ -57,4 +61,13 @@ export const allCommandResponder = (
     ),
     new JudgementCommand(random),
     new Hukueki()
+  );
+
+export const allRoleResponder = (
+  kawaemonId: Snowflake,
+  roleManager: RoleManager,
+  output: StandardOutput
+) =>
+  composeRoleEventResponders(
+    new KawaemonHasAllRoles(kawaemonId, roleManager, output)
   );
