@@ -70,3 +70,15 @@ test('args null', async () => {
     })
   );
 });
+
+test('delete message', async () => {
+  const responder = new Hukueki();
+  const fn = jest.fn();
+  await responder.on(
+    'DELETE',
+    createMockMessage({
+      args: ['hukueki', 'こるく'],
+      reply: fn
+    })
+  );
+});
