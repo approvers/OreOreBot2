@@ -21,7 +21,7 @@ import {
   ScheduleRunner,
   VoiceRoomResponseRunner
 } from '../runner';
-import { VoiceChannelParticipant, VoiceDiff } from '../service/voice-diff';
+import { type VoiceChannelParticipant, VoiceDiff } from '../service/voice-diff';
 import {
   allCommandResponder,
   allMessageEventResponder,

@@ -1,5 +1,5 @@
-import { VoiceRoomEvent, VoiceRoomEventResponder } from '../runner';
-import { EmbedMessage } from '../model/embed-message';
+import type { VoiceRoomEvent, VoiceRoomEventResponder } from '../runner';
+import type { EmbedMessage } from '../model/embed-message';
 
 export interface VoiceChannelParticipant {
   userName: string;

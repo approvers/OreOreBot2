@@ -1,14 +1,14 @@
 import {
-  AudioPlayer,
+  type AudioPlayer,
   AudioPlayerStatus,
-  VoiceConnection as RawVoiceConnection,
+  type VoiceConnection as RawVoiceConnection,
   VoiceConnectionStatus,
   createAudioPlayer,
   createAudioResource,
   entersState,
   joinVoiceChannel
 } from '@discordjs/voice';
-import { Client, Permissions, VoiceBasedChannel } from 'discord.js';
+import { type Client, Permissions, type VoiceBasedChannel } from 'discord.js';
 import type {
   VoiceConnection,
   VoiceConnectionFactory

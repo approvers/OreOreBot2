@@ -1,24 +1,28 @@
-import { AssetKey, PartyCommand, RandomGenerator as PartyRng } from './party';
-import { BoldItalicCop, BoldItalicCopReporter } from './bold-italic-cop';
 import {
-  Clock,
+  type AssetKey,
+  PartyCommand,
+  type RandomGenerator as PartyRng
+} from './party';
+import { type BoldItalicCop, BoldItalicCopReporter } from './bold-italic-cop';
+import {
+  type Clock,
   ScheduleRunner,
   composeMessageEventResponders,
   composeMessageUpdateEventResponders
 } from '../runner';
-import { DeletionObservable, DeletionRepeater } from './deletion-repeater';
-import { JudgementCommand, RandomGenerator } from './judgement';
+import { type DeletionObservable, DeletionRepeater } from './deletion-repeater';
+import { JudgementCommand, type RandomGenerator } from './judgement';
 import {
   KaereCommand,
-  KaereMusicKey,
-  ReservationRepository,
-  VoiceRoomController
+  type KaereMusicKey,
+  type ReservationRepository,
+  type VoiceRoomController
 } from './kaere';
 import {
-  TypoObservable,
+  type TypoObservable,
   TypoRecorder,
   TypoReporter,
-  TypoRepository
+  type TypoRepository
 } from './typo-record';
 import { DifferenceDetector } from './difference-detector';
 import { Hukueki } from './hukueki';

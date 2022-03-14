@@ -1,5 +1,5 @@
-import { RandomGenerator as JudgementRng } from '../service/judgement';
-import { RandomGenerator as PartyRng } from '../service/party';
+import type { RandomGenerator as JudgementRng } from '../service/judgement';
+import type { RandomGenerator as PartyRng } from '../service/party';
 
 export class MathRandomGenerator implements PartyRng, JudgementRng {
   minutes(): number {

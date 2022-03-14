@@ -1,4 +1,4 @@
-import { EmbedMessage } from '../model/embed-message';
+import type { EmbedMessage } from '../model/embed-message';
 import { JudgementCommand } from './judgement';
 import { createMockMessage } from './command-message';
 

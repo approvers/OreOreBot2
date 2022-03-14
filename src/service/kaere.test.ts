@@ -2,7 +2,7 @@ import {
   InMemoryReservationRepository,
   MockVoiceConnectionFactory
 } from '../adaptor';
-import { KaereCommand, KaereMusicKey } from './kaere';
+import { KaereCommand, type KaereMusicKey } from './kaere';
 import { MockClock } from '../adaptor';
 import { ScheduleRunner } from '../runner';
 import { createMockMessage } from './command-message';

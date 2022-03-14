@@ -1,4 +1,4 @@
-import { AssetKey, PartyCommand, RandomGenerator } from './party';
+import { type AssetKey, PartyCommand, type RandomGenerator } from './party';
 import { MockClock } from '../adaptor';
 import { MockVoiceConnectionFactory } from '../adaptor';
 import { ScheduleRunner } from '../runner';
