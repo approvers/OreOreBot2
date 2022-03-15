@@ -41,19 +41,20 @@ export class HelpCommand implements CommandResponder {
     commandName,
     argsFormat
   }: Readonly<HelpInfo>): { name: string; value: string } {
-    const argsDecrptions = argsFormat
-      .map(({ name, description, defaultValue }, index) => {
-        const argPattern =
-          defaultValue === undefined
-            ? `<${name}>`
-            : `[${name}=${defaultValue}]`;
-        return `${index + 1}. \`${argPattern}\` ${description}`;
-      })
+    const patternsWithDesc: [string, string][] = argsFormat.map(
+      ({ name, description, defaultValue }) => [
+        defaultValue === undefined ? `<${name}>` : `[${name}=${defaultValue}]`,
+        description
+      ]
+    );
+    const argsDecrptions = patternsWithDesc
+      .map(([argPattern, description]) => `\`${argPattern}\`: ${description}`)
       .join('\n');
+    const patterns = patternsWithDesc.map(([pattern]) => pattern);
     return {
       name: title,
       value: `${description}
-\`${commandName.join('`, `')}\`
+\`${commandName.join('/')}${['', ...patterns].join(' ')}\`
 ${argsDecrptions}`
     };
   }
