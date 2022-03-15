@@ -1,12 +1,11 @@
+import type { Clock, MessageEvent, ScheduleRunner } from '../runner';
 import type {
-  Clock,
-  MessageEvent,
-  MessageEventResponder,
-  ScheduleRunner
-} from '../runner';
+  CommandMessage,
+  CommandResponder,
+  HelpInfo
+} from './command-message';
 import { Reservation, ReservationTime } from '../model/reservation';
 import { addDays, isBefore, setHours, setMinutes, setSeconds } from 'date-fns';
-import type { CommandMessage } from './command-message';
 import type { EmbedMessage } from '../model/embed-message';
 import type { Snowflake } from '../model/id';
 import type { VoiceConnectionFactory } from './voice-connection';
@@ -88,7 +87,21 @@ const timeFormatErrorMessage: EmbedMessage = {
  * @class KaereCommand
  * @implements {MessageEventResponder<CommandMessage>}
  */
-export class KaereCommand implements MessageEventResponder<CommandMessage> {
+export class KaereCommand implements CommandResponder {
+  help: Readonly<HelpInfo> = {
+    title: 'Kaere一葉',
+    description:
+      'VC内の人類に就寝を促すよ。引数なしで即起動。どの方式でもコマンド発行者がVCに居ないと動かないよ',
+    commandName: ['kaere'],
+    argsFormat: [
+      {
+        name: 'モード',
+        description:
+          '`bed` または `reserve` を指定して、サブコマンドを続けてね。詳しいヘルプは `kaere help` まで'
+      }
+    ]
+  };
+
   constructor(
     private readonly connectionFactory: VoiceConnectionFactory<KaereMusicKey>,
     private readonly controller: VoiceRoomController,

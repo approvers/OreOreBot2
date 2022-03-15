@@ -1,5 +1,9 @@
-import type { MessageEvent, MessageEventResponder } from '../runner';
-import type { CommandMessage } from './command-message';
+import type {
+  CommandMessage,
+  CommandResponder,
+  HelpInfo
+} from './command-message';
+import type { MessageEvent } from '../runner';
 
 /**
  * `JudgementCommand` のための乱数生成器。
@@ -36,7 +40,25 @@ const JUDGEMENT_TITLE = '***†HARACHO ONLINE JUDGEMENT SYSTEM†***';
  * @class JudgementCommand
  * @implements {MessageEventResponder<CommandMessage>}
  */
-export class JudgementCommand implements MessageEventResponder<CommandMessage> {
+export class JudgementCommand implements CommandResponder {
+  help: Readonly<HelpInfo> = {
+    title: JUDGEMENT_TITLE,
+    description: 'プログラムが適格かどうか判定してあげるよ',
+    commandName: ['jd', 'judge'],
+    argsFormat: [
+      {
+        name: 'テストケースの数',
+        description: '判定のアニメーションに使うテストケースの数',
+        defaultValue: '5'
+      },
+      {
+        name: '判定結果',
+        description: 'アニメーション終了後の判定',
+        defaultValue: 'AC'
+      }
+    ]
+  };
+
   constructor(private readonly rng: RandomGenerator) {}
 
   async on(event: MessageEvent, message: CommandMessage): Promise<void> {

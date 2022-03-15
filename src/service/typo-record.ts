@@ -5,8 +5,12 @@ import type {
   ScheduleRunner,
   ScheduleTask
 } from '../runner';
+import type {
+  CommandMessage,
+  CommandResponder,
+  HelpInfo
+} from './command-message';
 import { addDays, setHours, setMinutes } from 'date-fns';
-import type { CommandMessage } from './command-message';
 import type { Snowflake } from '../model/id';
 
 /**
@@ -112,7 +116,14 @@ const typoRecordResetTask =
  * @class TypoReporter
  * @implements {MessageEventResponder<CommandMessage>}
  */
-export class TypoReporter implements MessageEventResponder<CommandMessage> {
+export class TypoReporter implements CommandResponder {
+  help: Readonly<HelpInfo> = {
+    title: '今日のTypo',
+    description: '「〜だカス」をTypoとして一日間記録するよ',
+    commandName: ['typo'],
+    argsFormat: []
+  };
+
   constructor(
     private readonly repo: TypoRepository,
     clock: Clock,
