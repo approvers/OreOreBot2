@@ -6,10 +6,12 @@ import {
 import { type BoldItalicCop, BoldItalicCopReporter } from './bold-italic-cop';
 import {
   type Clock,
+  type MessageResponseRunner,
   ScheduleRunner,
   composeMessageEventResponders,
   composeMessageUpdateEventResponders
 } from '../runner';
+import type { CommandMessage, CommandResponder } from './command-message';
 import { type DeletionObservable, DeletionRepeater } from './deletion-repeater';
 import { JudgementCommand, type RandomGenerator } from './judgement';
 import {
@@ -25,6 +27,7 @@ import {
   type TypoRepository
 } from './typo-record';
 import { DifferenceDetector } from './difference-detector';
+import { HelpCommand } from './help';
 import { Hukueki } from './hukueki';
 import type { VoiceConnectionFactory } from './voice-connection';
 
@@ -40,16 +43,17 @@ export const allMessageEventResponder = (repo: TypoRepository) =>
 export const allMessageUpdateEventResponder = () =>
   composeMessageUpdateEventResponders(new DifferenceDetector());
 
-export const allCommandResponder = (
+export const registerAllCommandResponder = (
   typoRepo: TypoRepository,
   reservationRepo: ReservationRepository,
   factory: VoiceConnectionFactory<AssetKey | KaereMusicKey>,
   clock: Clock,
   scheduleRunner: ScheduleRunner,
   random: PartyRng & RandomGenerator,
-  roomController: VoiceRoomController
-) =>
-  composeMessageEventResponders(
+  roomController: VoiceRoomController,
+  commandRunner: MessageResponseRunner<CommandMessage, CommandResponder>
+) => {
+  const allResponders = [
     new TypoReporter(typoRepo, clock, scheduleRunner),
     new PartyCommand(factory, clock, scheduleRunner, random),
     new KaereCommand(
@@ -60,5 +64,10 @@ export const allCommandResponder = (
       reservationRepo
     ),
     new JudgementCommand(random),
-    new Hukueki()
-  );
+    new Hukueki(),
+    new HelpCommand(commandRunner)
+  ];
+  for (const responder of allResponders) {
+    commandRunner.addResponder(responder);
+  }
+};

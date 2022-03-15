@@ -15,6 +15,10 @@ import {
   transformerForUpdateMessage
 } from '../adaptor';
 import { Client, Intents, version } from 'discord.js';
+import type {
+  CommandMessage,
+  CommandResponder
+} from '../service/command-message';
 import {
   MessageResponseRunner,
   MessageUpdateResponseRunner,
@@ -23,9 +27,9 @@ import {
 } from '../runner';
 import { type VoiceChannelParticipant, VoiceDiff } from '../service/voice-diff';
 import {
-  allCommandResponder,
   allMessageEventResponder,
-  allMessageUpdateEventResponder
+  allMessageUpdateEventResponder,
+  registerAllCommandResponder
 } from '../service';
 import type { AssetKey } from '../service/party';
 import type { KaereMusicKey } from '../service/kaere';
@@ -87,24 +91,24 @@ updateRunner.addResponder(allMessageUpdateEventResponder());
 
 const scheduleRunner = new ScheduleRunner(clock);
 
-const commandRunner = new MessageResponseRunner(
-  new MessageProxy(client, transformerForCommand('!'))
-);
-commandRunner.addResponder(
-  allCommandResponder(
-    typoRepo,
-    reservationRepo,
-    new DiscordVoiceConnectionFactory<AssetKey | KaereMusicKey>(client, {
-      COFFIN_INTRO: join('assets', 'party', 'coffin-intro.mp3'),
-      COFFIN_DROP: join('assets', 'party', 'coffin-drop.mp3'),
-      KAKAPO: join('assets', 'party', 'kakapo.mp3'),
-      NEROYO: join('assets', 'kaere', 'neroyo.mp3')
-    }),
-    clock,
-    scheduleRunner,
-    new MathRandomGenerator(),
-    new DiscordVoiceRoomController(client)
-  )
+const commandRunner: MessageResponseRunner<CommandMessage, CommandResponder> =
+  new MessageResponseRunner(
+    new MessageProxy(client, transformerForCommand('!'))
+  );
+registerAllCommandResponder(
+  typoRepo,
+  reservationRepo,
+  new DiscordVoiceConnectionFactory<AssetKey | KaereMusicKey>(client, {
+    COFFIN_INTRO: join('assets', 'party', 'coffin-intro.mp3'),
+    COFFIN_DROP: join('assets', 'party', 'coffin-drop.mp3'),
+    KAKAPO: join('assets', 'party', 'kakapo.mp3'),
+    NEROYO: join('assets', 'kaere', 'neroyo.mp3')
+  }),
+  clock,
+  scheduleRunner,
+  new MathRandomGenerator(),
+  new DiscordVoiceRoomController(client),
+  commandRunner
 );
 
 const provider = new VoiceRoomProxy<VoiceChannelParticipant>(

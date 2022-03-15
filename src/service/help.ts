@@ -1,0 +1,60 @@
+import type {
+  CommandMessage,
+  CommandResponder,
+  HelpInfo
+} from './command-message';
+import type { MessageEvent, MessageResponseRunner } from '../runner';
+import { EmbedMessageField } from '../model/embed-message';
+
+export class HelpCommand implements CommandResponder {
+  help: Readonly<HelpInfo> = {
+    title: 'はらちょヘルプ',
+    description: 'こんな機能が搭載されてるよ',
+    commandName: ['help'],
+    argsFormat: []
+  };
+
+  constructor(
+    private readonly runner: MessageResponseRunner<
+      CommandMessage,
+      CommandResponder
+    >
+  ) {}
+
+  async on(event: MessageEvent, message: CommandMessage): Promise<void> {
+    const { args } = message;
+    if (event !== 'CREATE' || args[0] !== 'help') {
+      return;
+    }
+    const helps = this.runner
+      .getResponders()
+      .map((responder) => responder.help);
+    const fields: EmbedMessageField[] = helps.map((help) =>
+      this.buildField(help)
+    );
+    await message.reply({ fields });
+  }
+
+  private buildField({
+    title,
+    description,
+    commandName,
+    argsFormat
+  }: Readonly<HelpInfo>): { name: string; value: string } {
+    const argsDecrptions = argsFormat
+      .map(({ name, description, defaultValue }, index) => {
+        const argPattern =
+          defaultValue === undefined
+            ? `<${name}>`
+            : `[${name}=${defaultValue}]`;
+        return `${index + 1}. \`${argPattern}\` ${description}`;
+      })
+      .join('\n');
+    return {
+      name: title,
+      value: `${description}
+\`${commandName.join('`, `')}\`
+${argsDecrptions}`
+    };
+  }
+}
