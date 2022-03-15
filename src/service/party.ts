@@ -1,15 +1,14 @@
+import type { Clock, MessageEvent, ScheduleRunner } from '../runner';
 import type {
-  Clock,
-  MessageEvent,
-  MessageEventResponder,
-  ScheduleRunner
-} from '../runner';
+  CommandMessage,
+  CommandResponder,
+  HelpInfo
+} from './command-message';
 import type {
   VoiceConnection,
   VoiceConnectionFactory
 } from './voice-connection';
 import { addHours, getMinutes, setMinutes, setSeconds } from 'date-fns';
-import type { CommandMessage } from './command-message';
 import type { EmbedMessage } from '../model/embed-message';
 
 const partyStarting: EmbedMessage = {
@@ -49,7 +48,17 @@ export interface RandomGenerator {
  * @class PartyCommand
  * @implements {MessageEventResponder<CommandMessage>}
  */
-export class PartyCommand implements MessageEventResponder<CommandMessage> {
+export class PartyCommand implements CommandResponder {
+  help: Readonly<HelpInfo> = {
+    title: 'Party一葉',
+    description:
+      'VC内の人類に押しかけてPartyを開くよ。引数なしで即起動。どの方式でもコマンド発行者がVCに居ないと動かないよ',
+    commandName: ['party'],
+    argsFormat: [
+      { name: 'サブコマンド', description: '詳しくは `party help` まで' }
+    ]
+  };
+
   constructor(
     private readonly factory: VoiceConnectionFactory<AssetKey>,
     private readonly clock: Clock,

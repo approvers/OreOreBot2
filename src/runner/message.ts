@@ -40,7 +40,10 @@ export interface MessageEventProvider<M> {
  * @class MessageResponseRunner
  * @template M
  */
-export class MessageResponseRunner<M> {
+export class MessageResponseRunner<
+  M,
+  R extends MessageEventResponder<M> = MessageEventResponder<M>
+> {
   constructor(provider: MessageEventProvider<M>) {
     provider.onMessageCreate((message) => this.triggerEvent('CREATE', message));
     provider.onMessageDelete((message) => this.triggerEvent('DELETE', message));
@@ -50,10 +53,14 @@ export class MessageResponseRunner<M> {
     await Promise.all(this.responders.map((res) => res.on(event, message)));
   }
 
-  private responders: MessageEventResponder<M>[] = [];
+  private responders: R[] = [];
 
-  addResponder(responder: MessageEventResponder<M>) {
+  addResponder(responder: R) {
     this.responders.push(responder);
+  }
+
+  getResponders(): readonly R[] {
+    return this.responders;
   }
 }
 
