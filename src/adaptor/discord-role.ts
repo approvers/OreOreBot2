@@ -1,6 +1,6 @@
-import { Client } from 'discord.js';
-import { Snowflake } from '../model/id';
-import { RoleManager } from '../service/kawaemon-has-all-roles';
+import type { Client } from 'discord.js';
+import type { RoleManager } from '../service/kawaemon-has-all-roles';
+import type { Snowflake } from '../model/id';
 
 export class DiscordRoleManager implements RoleManager {
   constructor(
