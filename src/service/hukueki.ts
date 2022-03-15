@@ -1,7 +1,23 @@
-import type { MessageEvent, MessageEventResponder } from '../runner';
-import type { CommandMessage } from './command-message';
+import type {
+  CommandMessage,
+  CommandResponder,
+  HelpInfo
+} from './command-message';
+import type { MessageEvent } from '../runner';
 
-export class Hukueki implements MessageEventResponder<CommandMessage> {
+export class Hukueki implements CommandResponder {
+  help: Readonly<HelpInfo> = {
+    title: '服役/ロリコン/ぬきたし構文',
+    description: '何これ……引数のテキストを構文にはめ込むみたいだよ',
+    commandName: ['hukueki', 'lolicon', 'dousureba'],
+    argsFormat: [
+      {
+        name: 'テキスト',
+        description: '構文にはめ込む文章'
+      }
+    ]
+  };
+
   async on(event: MessageEvent, message: CommandMessage): Promise<void> {
     if (event !== 'CREATE') return;
     const { args } = message;
