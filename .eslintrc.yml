@@ -2,14 +2,16 @@ env:
   node: true
   es2021: true
 extends:
-  - 'eslint:recommended'
-  - 'plugin:@typescript-eslint/recommended'
-  - 'plugin:@typescript-eslint/recommended-requiring-type-checking'
-  - 'prettier'
-parser: '@typescript-eslint/parser'
+  - "eslint:recommended"
+  - "plugin:@typescript-eslint/recommended"
+  - "plugin:@typescript-eslint/recommended-requiring-type-checking"
+  - "prettier"
+parser: "@typescript-eslint/parser"
 parserOptions:
   sourceType: module
   project:
-    - './tsconfig.json'
+    - "./tsconfig.json"
 plugins:
-  - '@typescript-eslint'
+  - "@typescript-eslint"
+rules:
+  "sort-imports": "error"

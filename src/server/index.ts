@@ -3,16 +3,16 @@ import {
   DiscordOutput,
   DiscordParticipant,
   DiscordVoiceConnectionFactory,
+  DiscordVoiceRoomController,
   InMemoryReservationRepository,
   InMemoryTypoRepository,
-  transformerForCommand,
-  transformerForMessage,
-  transformerForUpdateMessage,
   MathRandomGenerator,
   MessageProxy,
   MessageUpdateProxy,
-  DiscordVoiceRoomController,
-  VoiceRoomProxy
+  VoiceRoomProxy,
+  transformerForCommand,
+  transformerForMessage,
+  transformerForUpdateMessage
 } from '../adaptor';
 import { Client, Intents, version } from 'discord.js';
 import {
@@ -21,7 +21,7 @@ import {
   ScheduleRunner,
   VoiceRoomResponseRunner
 } from '../runner';
-import { VoiceChannelParticipant, VoiceDiff } from '../service/voice-diff';
+import { type VoiceChannelParticipant, VoiceDiff } from '../service/voice-diff';
 import {
   allCommandResponder,
   allMessageEventResponder,

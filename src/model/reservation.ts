@@ -1,5 +1,5 @@
-import { nanoid } from 'nanoid';
 import type { Snowflake } from './id';
+import { nanoid } from 'nanoid';
 
 declare const reservationIdNominal: unique symbol;
 /**

@@ -1,4 +1,4 @@
-import { Client, MessageEmbed } from 'discord.js';
+import { type Client, MessageEmbed } from 'discord.js';
 import type { EmbedMessage } from '../model/embed-message';
 import type { StandardOutput } from '../service/voice-diff';
 

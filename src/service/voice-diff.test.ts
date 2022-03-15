@@ -1,4 +1,4 @@
-import { StandardOutput, VoiceDiff } from './voice-diff';
+import { type StandardOutput, VoiceDiff } from './voice-diff';
 
 test('use case of VoiceDiff', async () => {
   const outputJoin: StandardOutput = {
