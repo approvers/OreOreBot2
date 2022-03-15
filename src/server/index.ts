@@ -3,16 +3,16 @@ import {
   DiscordOutput,
   DiscordParticipant,
   DiscordVoiceConnectionFactory,
+  DiscordVoiceRoomController,
   InMemoryReservationRepository,
   InMemoryTypoRepository,
-  transformerForCommand,
-  transformerForMessage,
-  transformerForUpdateMessage,
   MathRandomGenerator,
   MessageProxy,
   MessageUpdateProxy,
-  DiscordVoiceRoomController,
-  VoiceRoomProxy
+  VoiceRoomProxy,
+  transformerForCommand,
+  transformerForMessage,
+  transformerForUpdateMessage
 } from '../adaptor';
 import { Client, Intents, version } from 'discord.js';
 import {
@@ -21,7 +21,7 @@ import {
   ScheduleRunner,
   VoiceRoomResponseRunner
 } from '../runner';
-import { VoiceChannelParticipant, VoiceDiff } from '../service/voice-diff';
+import { type VoiceChannelParticipant, VoiceDiff } from '../service/voice-diff';
 import {
   allCommandResponder,
   allMessageEventResponder,
@@ -29,15 +29,15 @@ import {
   allRoleResponder
 } from '../service';
 import type { AssetKey } from '../service/party';
+import { DiscordRoleManager } from '../adaptor/discord-role';
 import type { KaereMusicKey } from '../service/kaere';
+import { RoleResponseRunner } from '../runner/role';
+import { Snowflake } from '../model/id';
 import dotenv from 'dotenv';
+import { extractEnv } from './extract-env';
 import { generateDependencyReport } from '@discordjs/voice';
 import { join } from 'path';
-import { RoleResponseRunner } from '../runner/role';
 import { roleProxy } from '../adaptor/role-proxy';
-import { DiscordRoleManager } from '../adaptor/discord-role';
-import { extractEnv } from './extract-env';
-import { Snowflake } from '../model/id';
 
 dotenv.config();
 const {

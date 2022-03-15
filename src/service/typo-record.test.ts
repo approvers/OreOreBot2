@@ -1,9 +1,9 @@
-import EventEmitter from 'events';
 import { InMemoryTypoRepository, MockClock } from '../adaptor';
-import { Snowflake } from '../model/id';
+import { TypoRecorder, TypoReporter, type TypoRepository } from './typo-record';
+import EventEmitter from 'events';
 import { ScheduleRunner } from '../runner';
+import type { Snowflake } from '../model/id';
 import { createMockMessage } from './command-message';
-import { TypoRecorder, TypoReporter, TypoRepository } from './typo-record';
 
 class MockRepository extends EventEmitter implements TypoRepository {
   private db = new InMemoryTypoRepository();

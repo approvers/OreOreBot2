@@ -1,20 +1,20 @@
 import {
-  AudioPlayer,
+  type AudioPlayer,
   AudioPlayerStatus,
-  VoiceConnection as RawVoiceConnection,
+  type VoiceConnection as RawVoiceConnection,
   VoiceConnectionStatus,
   createAudioPlayer,
   createAudioResource,
   entersState,
   joinVoiceChannel
 } from '@discordjs/voice';
-import { Client, VoiceBasedChannel, Permissions } from 'discord.js';
-import type { Snowflake } from '../model/id';
-import type { VoiceRoomController } from '../service/kaere';
+import { type Client, Permissions, type VoiceBasedChannel } from 'discord.js';
 import type {
   VoiceConnection,
   VoiceConnectionFactory
 } from '../service/voice-connection';
+import type { Snowflake } from '../model/id';
+import type { VoiceRoomController } from '../service/kaere';
 
 /**
  * ボイスチャンネルへの接続が、復帰できない切断 (管理者の手で切断させられたなど) になったと判断するまでのミリ秒数。

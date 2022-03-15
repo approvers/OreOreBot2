@@ -1,5 +1,5 @@
-import { Client, VoiceState } from 'discord.js';
-import { VoiceRoomEventProvider } from '../runner';
+import type { Client, VoiceState } from 'discord.js';
+import type { VoiceRoomEventProvider } from '../runner';
 
 type ObserveExpectation = 'ChangingIntoFalsy' | 'ChangingIntoTruthy' | 'All';
 

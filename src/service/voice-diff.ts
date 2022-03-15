@@ -1,4 +1,4 @@
-import { VoiceRoomEvent, VoiceRoomEventResponder } from '../runner';
+import type { VoiceRoomEvent, VoiceRoomEventResponder } from '../runner';
 import type { StandardOutput } from './output';
 
 export interface VoiceChannelParticipant {

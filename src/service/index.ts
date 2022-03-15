@@ -1,32 +1,36 @@
 import {
-  Clock,
+  type AssetKey,
+  PartyCommand,
+  type RandomGenerator as PartyRng
+} from './party';
+import { type BoldItalicCop, BoldItalicCopReporter } from './bold-italic-cop';
+import {
+  type Clock,
   ScheduleRunner,
   composeMessageEventResponders,
   composeMessageUpdateEventResponders
 } from '../runner';
-import { DeletionObservable, DeletionRepeater } from './deletion-repeater';
-import { DifferenceDetector } from './difference-detector';
-import { JudgementCommand, RandomGenerator } from './judgement';
+import { type DeletionObservable, DeletionRepeater } from './deletion-repeater';
+import { JudgementCommand, type RandomGenerator } from './judgement';
 import {
   KaereCommand,
-  KaereMusicKey,
-  ReservationRepository,
-  VoiceRoomController
+  type KaereMusicKey,
+  type ReservationRepository,
+  type VoiceRoomController
 } from './kaere';
-import { AssetKey, PartyCommand, RandomGenerator as PartyRng } from './party';
+import { KawaemonHasAllRoles, RoleManager } from './kawaemon-has-all-roles';
 import {
-  TypoObservable,
+  type TypoObservable,
   TypoRecorder,
   TypoReporter,
-  TypoRepository
+  type TypoRepository
 } from './typo-record';
-import type { VoiceConnectionFactory } from './voice-connection';
-import { BoldItalicCop, BoldItalicCopReporter } from './bold-italic-cop';
+import { DifferenceDetector } from './difference-detector';
 import { Hukueki } from './hukueki';
-import type { StandardOutput } from './output';
-import { composeRoleEventResponders } from '../runner/role';
-import { KawaemonHasAllRoles, RoleManager } from './kawaemon-has-all-roles';
 import type { Snowflake } from '../model/id';
+import type { StandardOutput } from './output';
+import type { VoiceConnectionFactory } from './voice-connection';
+import { composeRoleEventResponders } from '../runner/role';
 
 export const allMessageEventResponder = (repo: TypoRepository) =>
   composeMessageEventResponders<
