@@ -4,7 +4,7 @@ import type {
   HelpInfo
 } from './command-message';
 import type { MessageEvent, MessageResponseRunner } from '../runner';
-import { EmbedMessageField } from '../model/embed-message';
+import type { EmbedMessageField } from '../model/embed-message';
 
 export class HelpCommand implements CommandResponder {
   help: Readonly<HelpInfo> = {
