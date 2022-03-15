@@ -10,7 +10,7 @@ export class HelpCommand implements CommandResponder {
   help: Readonly<HelpInfo> = {
     title: 'はらちょヘルプ',
     description: 'こんな機能が搭載されてるよ',
-    commandName: ['help'],
+    commandName: ['help', 'h'],
     argsFormat: []
   };
 
@@ -23,7 +23,7 @@ export class HelpCommand implements CommandResponder {
 
   async on(event: MessageEvent, message: CommandMessage): Promise<void> {
     const { args } = message;
-    if (event !== 'CREATE' || args[0] !== 'help') {
+    if (event !== 'CREATE' || !this.help.commandName.includes(args[0])) {
       return;
     }
     const helps = this.runner
