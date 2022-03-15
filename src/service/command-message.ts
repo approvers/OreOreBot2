@@ -1,4 +1,5 @@
 import type { EmbedMessage } from '../model/embed-message';
+import type { MessageEventResponder } from '../runner';
 import type { Snowflake } from '../model/id';
 
 /**
@@ -64,6 +65,21 @@ export interface CommandMessage {
 export interface SentMessage {
   edit(newMessage: EmbedMessage): Promise<void>;
 }
+
+export interface HelpInfo {
+  title: string;
+  description: string;
+  commandName: string[];
+  argsFormat: {
+    name: string;
+    description: string;
+    defaultValue?: string;
+  }[];
+}
+
+export type CommandResponder = MessageEventResponder<CommandMessage> & {
+  help: Readonly<HelpInfo>;
+};
 
 export const createMockMessage = (
   partial: Readonly<Partial<CommandMessage>>,
