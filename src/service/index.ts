@@ -20,6 +20,7 @@ import {
   type ReservationRepository,
   type VoiceRoomController
 } from './kaere';
+import { KawaemonHasAllRoles, RoleManager } from './kawaemon-has-all-roles';
 import {
   type TypoObservable,
   TypoRecorder,
@@ -29,7 +30,10 @@ import {
 import { DifferenceDetector } from './difference-detector';
 import { HelpCommand } from './help';
 import { Hukueki } from './hukueki';
+import type { Snowflake } from '../model/id';
+import type { StandardOutput } from './output';
 import type { VoiceConnectionFactory } from './voice-connection';
+import { composeRoleEventResponders } from '../runner/role';
 
 export const allMessageEventResponder = (repo: TypoRepository) =>
   composeMessageEventResponders<
@@ -71,3 +75,12 @@ export const registerAllCommandResponder = (
     commandRunner.addResponder(responder);
   }
 };
+
+export const allRoleResponder = (
+  kawaemonId: Snowflake,
+  roleManager: RoleManager,
+  output: StandardOutput
+) =>
+  composeRoleEventResponders(
+    new KawaemonHasAllRoles(kawaemonId, roleManager, output)
+  );
