@@ -6,11 +6,11 @@
 
 ## 1.3.0
 
-## feat
+### feat
 
 - 新規ロールが作成された場合、かわえもんに自動でつけとく機能の追加 ([#48](https://github.com/approvers/OreOreBot2/pull/48))
 
-## change
+### change
 
 - 服役時の第一引数にスペースがあってもちゃんとちゃんと服役できるようになりました。 ([#53](https://github.com/approvers/OreOreBot2/pull/53))
 
