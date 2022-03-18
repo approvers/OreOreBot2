@@ -4,7 +4,6 @@ import type { StandardOutput } from './output';
 
 export interface NewRole {
   roleId: Snowflake;
-  name: string;
 }
 
 export interface RoleManager {
@@ -25,7 +24,7 @@ export class KawaemonHasAllRoles implements RoleEventResponder<NewRole> {
     await this.manager.addRole(this.kawaemonId, role.roleId);
     await this.output.sendEmbed({
       title: '***Kawaemon has given a new role***',
-      description: `「${role.name}」をかわえもんにもつけといたよ。`
+      description: `<@&${role.roleId}>をかわえもんにもつけといたよ。`
     });
   }
 }

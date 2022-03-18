@@ -14,13 +14,12 @@ test('kawaemon get a new role', async () => {
   );
 
   await responder.on('CREATE', {
-    roleId: newRoleId,
-    name: 'UBオヂサン'
+    roleId: newRoleId
   });
 
   expect(addRole).toHaveBeenCalledWith(KAWAEMON_ID, newRoleId);
   expect(sendEmbed).toHaveBeenCalledWith({
     title: '***Kawaemon has given a new role***',
-    description: `「UBオヂサン」をかわえもんにもつけといたよ。`
+    description: `<@&18475613045613281703151>をかわえもんにもつけといたよ。`
   });
 });
