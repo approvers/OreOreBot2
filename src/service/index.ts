@@ -21,6 +21,7 @@ import {
   type VoiceRoomController
 } from './kaere';
 import { KawaemonHasAllRoles, RoleManager } from './kawaemon-has-all-roles';
+import { KokuseiChousa, MemberStats } from './kokusei-chousa';
 import {
   type TypoObservable,
   TypoRecorder,
@@ -55,7 +56,8 @@ export const registerAllCommandResponder = (
   scheduleRunner: ScheduleRunner,
   random: PartyRng & RandomGenerator,
   roomController: VoiceRoomController,
-  commandRunner: MessageResponseRunner<CommandMessage, CommandResponder>
+  commandRunner: MessageResponseRunner<CommandMessage, CommandResponder>,
+  stats: MemberStats
 ) => {
   const allResponders = [
     new TypoReporter(typoRepo, clock, scheduleRunner),
@@ -69,7 +71,8 @@ export const registerAllCommandResponder = (
     ),
     new JudgementCommand(random),
     new Hukueki(),
-    new HelpCommand(commandRunner)
+    new HelpCommand(commandRunner),
+    new KokuseiChousa(stats)
   ];
   for (const responder of allResponders) {
     commandRunner.addResponder(responder);
