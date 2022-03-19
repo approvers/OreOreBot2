@@ -27,7 +27,7 @@ export function extractEnv<K extends readonly string[]>(
     // for-of だとなぜか `key` の型がおかしくなる
     const key: K[number] = keys[i];
     // `keys` から一個ずつ取り出して
-    if (process.env[key] !== undefined) {
+    if (process.env[key] !== undefined && process.env[key] !== '') {
       // 存在したらそれに設定
       env[key] = process.env[key];
     } else if (defaults && defaults[key] !== undefined) {
