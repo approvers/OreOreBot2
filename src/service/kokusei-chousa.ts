@@ -9,16 +9,18 @@ export interface MemberStats {
 export class KokuseiChousa implements CommandResponder {
   help: Readonly<HelpInfo> = {
     title: '国勢調査',
-    description:
-      '限界開発鯖の通常ユーザー、Botユーザーの数とBot率を算出するよ。',
-    commandName: ['kokusei'],
+    description: '限界開発鯖の人類の数、Botの数とBot率を算出するよ。',
+    commandName: ['kokusei', 'kokusei-chousa'],
     argsFormat: []
   };
 
   constructor(private readonly stats: MemberStats) {}
 
   async on(event: MessageEvent, message: CommandMessage): Promise<void> {
-    if (event !== 'CREATE' || message.args[0] !== 'kokusei') {
+    if (
+      event !== 'CREATE' ||
+      !this.help.commandName.includes(message.args[0])
+    ) {
       return;
     }
 
