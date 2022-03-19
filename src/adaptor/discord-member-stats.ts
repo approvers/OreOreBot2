@@ -3,7 +3,10 @@ import type { MemberStats } from '../service/kokusei-chousa';
 import type { Snowflake } from '../model/id';
 
 export class DiscordMemberStats implements MemberStats {
-  constructor(private client: Client, private readonly guildId: Snowflake) {}
+  constructor(
+    private readonly client: Client,
+    private readonly guildId: Snowflake
+  ) {}
 
   async allMemberCount(): Promise<number> {
     const guild = await this.client.guilds.fetch(this.guildId);
