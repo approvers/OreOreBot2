@@ -10,6 +10,10 @@
 
 - 限界開発鯖の人類の数とBotの数、Bot率を表示する **国勢調査機能** の追加 ([#66](https://github.com/approvers/OreOreBot2/pull/66))
 
+## change
+
+- `.env` の指定を空にした際、無いものとして扱うように変更 ([#65](https://github.com/approvers/OreOreBot2/pull/65))
+
 ## 1.3.0
 
 ### feat
