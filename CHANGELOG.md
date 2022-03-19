@@ -4,6 +4,12 @@
 
 ----
 
+## 1.4.0
+
+## feat
+
+- 限界開発鯖の人類の数とBotの数、Bot率を表示する **国勢調査機能** の追加 ([#66](https://github.com/approvers/OreOreBot2/pull/66))
+
 ## 1.3.0
 
 ### feat
