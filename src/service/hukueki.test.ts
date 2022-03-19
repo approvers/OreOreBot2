@@ -107,4 +107,5 @@ test('delete message', async () => {
       reply: fn
     })
   );
+  expect(fn).not.toHaveBeenCalled();
 });
