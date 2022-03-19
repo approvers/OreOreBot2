@@ -33,6 +33,7 @@ import {
   registerAllCommandResponder
 } from '../service';
 import type { AssetKey } from '../service/party';
+import { DiscordMemberStats } from '../adaptor/discord-member-stats';
 import { DiscordRoleManager } from '../adaptor/discord-role';
 import type { KaereMusicKey } from '../service/kaere';
 import { RoleResponseRunner } from '../runner/role';
@@ -112,7 +113,8 @@ registerAllCommandResponder(
   scheduleRunner,
   new MathRandomGenerator(),
   new DiscordVoiceRoomController(client),
-  commandRunner
+  commandRunner,
+  new DiscordMemberStats(client, GUILD_ID as Snowflake)
 );
 
 const provider = new VoiceRoomProxy<VoiceChannelParticipant>(
