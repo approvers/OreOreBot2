@@ -9,10 +9,12 @@
 # the `language` matrix defined below to confirm you have the correct set of
 # supported CodeQL languages.
 #
-name: "CodeQL"
+name: run codeql analysis
 
 on:
   push:
+    paths-ignore:
+      - '**.md'
   pull_request:
   schedule:
     - cron: '34 5 * * 1'

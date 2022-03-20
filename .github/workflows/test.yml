@@ -1,6 +1,9 @@
 name: run jest
 
-on: pull_request
+on:
+  pull_request:
+    paths-ignore:
+      - '**.md'
 
 jobs:
   run_jest:
