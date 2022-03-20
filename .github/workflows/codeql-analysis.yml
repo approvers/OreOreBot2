@@ -16,6 +16,8 @@ on:
     paths-ignore:
       - '**.md'
   pull_request:
+    paths-ignore:
+      - '**.md'
   schedule:
     - cron: '34 5 * * 1'
 
