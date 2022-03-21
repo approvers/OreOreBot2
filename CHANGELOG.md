@@ -4,6 +4,14 @@
 
 ----
 
+## 1.5.0
+
+## feat
+
+- タコピー構文の追加。(`!wakaranai`) ([#73](https://github.com/approvers/OreOreBot2/pull/73))
+> かわえもん「渡してない単位、渡して？」
+> 教員 「わ、わからないっピ.......」
+
 ## 1.4.0
 
 ## feat
