@@ -94,7 +94,7 @@ export class Hukueki implements CommandResponder {
         }
 
         await message.reply({
-          description: `教員「${messageArgs}」\n${message.senderName}「わ、わからないっピ.......」`
+          description: `教員「${messageArgs}、出して」\n${message.senderName}「わ、わからないっピ.......」`
         });
         break;
       }
