@@ -87,14 +87,14 @@ export class Hukueki implements CommandResponder {
       case 'wakaranai': {
         if (!messageArgs) {
           await message.reply({
-            title: '(引数が)わ、わかんないっピ.......',
+            title: '(引数が)わ、わからないっピ.......',
             description: '引数が不足してるみたいだ。'
           });
           return;
         }
 
         await message.reply({
-          description: `教員「${messageArgs}、出して」\n${message.senderName}「わ、わかんないっピ.......」`
+          description: `教員「${messageArgs}、出して」\n${message.senderName}「わ、わからないっピ.......」`
         });
         break;
       }

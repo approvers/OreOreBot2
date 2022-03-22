@@ -54,7 +54,13 @@ export class VoiceRoomResponseRunner<V> {
     event: VoiceRoomEvent,
     voiceState: V
   ): Promise<void> {
-    await Promise.all(this.responders.map((res) => res.on(event, voiceState)));
+    try {
+      await Promise.all(
+        this.responders.map((res) => res.on(event, voiceState))
+      );
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   private responders: VoiceRoomEventResponder<V>[] = [];
