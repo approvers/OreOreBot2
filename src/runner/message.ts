@@ -50,7 +50,11 @@ export class MessageResponseRunner<
   }
 
   private async triggerEvent(event: MessageEvent, message: M): Promise<void> {
-    await Promise.all(this.responders.map((res) => res.on(event, message)));
+    try {
+      await Promise.all(this.responders.map((res) => res.on(event, message)));
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   private responders: R[] = [];
@@ -109,9 +113,13 @@ export class MessageUpdateResponseRunner<M> {
   }
 
   private async triggerEvent([before, after]: [M, M]): Promise<void> {
-    await Promise.all(
-      this.responders.map((res) => res.on('UPDATE', before, after))
-    );
+    try {
+      await Promise.all(
+        this.responders.map((res) => res.on('UPDATE', before, after))
+      );
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   private responders: MessageUpdateEventResponder<M>[] = [];
