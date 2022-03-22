@@ -69,7 +69,10 @@ export class ScheduleRunner {
     }
     const id = setTimeout(() => {
       void (async () => {
-        const newTimeout = await task();
+        const newTimeout = await task().catch((e) => {
+          console.error(e);
+          return null;
+        });
         this.onDidRun(key, task, newTimeout);
       })();
     }, differenceInMilliseconds(timeout, this.clock.now()));
