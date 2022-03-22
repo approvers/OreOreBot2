@@ -14,7 +14,11 @@ export const composeRoleEventResponders = <R>(
 
 export class RoleResponseRunner<R> {
   async triggerEvent(event: RoleEvent, role: R): Promise<void> {
-    await Promise.all(this.responder.map((res) => res.on(event, role)));
+    try {
+      await Promise.all(this.responder.map((res) => res.on(event, role)));
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   private responder: RoleEventResponder<R>[] = [];
