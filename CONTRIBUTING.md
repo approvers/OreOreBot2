@@ -20,17 +20,6 @@ $ git clone https://github.com/approvers/OreOreBot2.git
 $ git checkout -b <branch-name>
 ```
 
-ブランチ名の指定は以下の規定を守ってください。
-
-`<type>/<description>`
-
-* `<type>` は、このプロジェクトの貢献の種類を表します。
-    * `feature`: 新機能や機能の変更
-    * `fix`: 不具合の修正
-    * `docs`: 文書の変更・追加
-* `<description>` は、このプロジェクトの貢献の説明を表します。
-* 例: `feature/voice-chat-diff`
-
 4. 開発を行います。
 
 ```
