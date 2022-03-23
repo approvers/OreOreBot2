@@ -26,7 +26,7 @@ $ git checkout -b <branch-name>
 
 * `<type>` は、このプロジェクトの貢献の種類を表します。
     * `feature`: 新機能や機能の変更
-    * `bugfix`: 不具合の修正
+    * `fix`: 不具合の修正
     * `docs`: 文書の変更・追加
 * `<description>` は、このプロジェクトの貢献の説明を表します。
 * 例: `feature/voice-chat-diff`
