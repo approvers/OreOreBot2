@@ -1,4 +1,11 @@
 # OreOreBot2 (新生はらちょ)
+[![Release](https://github.com/approvers/OreOreBot2/actions/workflows/release.yml/badge.svg)](https://github.com/approvers/OreOreBot2/actions/workflows/release.yml)
+[![run codeql analysis](https://github.com/approvers/OreOreBot2/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/approvers/OreOreBot2/actions/workflows/codeql-analysis.yml)
+[![run eslint](https://github.com/approvers/OreOreBot2/actions/workflows/eslint.yml/badge.svg)](https://github.com/approvers/OreOreBot2/actions/workflows/eslint.yml)
+[![run jest](https://github.com/approvers/OreOreBot2/actions/workflows/test.yml/badge.svg)](https://github.com/approvers/OreOreBot2/actions/workflows/test.yml)
+[![run prettier](https://github.com/approvers/OreOreBot2/actions/workflows/prettier.yml/badge.svg)](https://github.com/approvers/OreOreBot2/actions/workflows/prettier.yml)
+
+----
 
 限界開発鯖を代表するBOT [はらちょ](https://github.com/approvers/OreOreBot) を TypeScript+discord.js で作り直し。
 
