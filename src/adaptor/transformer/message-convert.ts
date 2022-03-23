@@ -11,6 +11,8 @@ import { convertEmbed } from '../embed-convert';
 const getAuthorSnowflake = (message: RawMessage): Snowflake =>
   (message.author?.id || 'unknown') as Snowflake;
 
+const CONTENT_LEN_LIMIT = 2000;
+
 const observableMessage = (
   raw: RawMessage
 ): EditingObservable & DeletionObservable & TypoObservable & BoldItalicCop => ({
@@ -18,7 +20,9 @@ const observableMessage = (
   author: raw.author?.username || '名無し',
   content: raw.content || '',
   async sendToSameChannel(message: string): Promise<void> {
-    await raw.channel.send(message);
+    if (message.length <= CONTENT_LEN_LIMIT) {
+      await raw.channel.send(message);
+    }
   },
   async replyMessage(message): Promise<void> {
     await raw.reply(message);
