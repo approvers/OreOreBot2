@@ -14,6 +14,11 @@ export class Hukueki implements CommandResponder {
       {
         name: 'テキスト',
         description: '構文にはめ込む文章'
+      },
+      {
+        name: '(タコピー構文のみ) -f オプション',
+        description:
+          '教員と自分の名前の位置を反対にします。\n([idea: フライさん](https://github.com/approvers/OreOreBot2/issues/90))'
       }
     ]
   };
