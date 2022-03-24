@@ -25,6 +25,14 @@
   - [初代はらちょぶっ殺しプロジェクト](https://github.com/approvers/OreOreBot2/milestone/1) の開始です。
   - これも Go と同じく、途中で永久凍結するところでしたが、 [雪](https://github.com/YukiYuigishi) が初代はらちょを殺した罪で死刑が確定したことで、作り直しが加速することになり、 2022/02/27 ついに最初の [初代はらちょぶっ殺しプロジェクト](https://github.com/approvers/OreOreBot2/milestone/1) が終了しました。
 
+## 機能の追加・改善
+
+機能の追加や改善などがありましたら [Issue](https://github.com/approvers/OreOreBot2/issues/new) から新規Issueを作成してください。
+
+もちろん [自分で作成してPRを送ってくれても、いいんですよ (ちらっ)](./CONTRIBUTING.md)
+
+限界開発鯖だし、はらちょなので、どんなふざけた機能でも大歓迎です。
+
 ## 貢献
 
 はらちょの開発への参加は大歓迎です!
