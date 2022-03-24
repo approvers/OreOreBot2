@@ -15,16 +15,15 @@ TypeScript で作り直すプロジェクトです。
 git checkout -b <branch-name>
 ```
 
-4. 開発を行います。
+4. 開発を行い、その内容を GitHub へアップロードします。
 
 ```sh
 git add <file-name>
 git commit -m "hoge"
 git push
-...
 ```
 
-5. 開発が終了したら GitHub からで新規 pull request を作成してください。
+5. 開発が終了したら GitHub から当リポジトリの `main` ブランチへ新規 pull request を作成してください。
 6. 当プロジェクト コントリビューターによるレビュー・GitHub Actions によるテストなどが行われた後、マージが可能になります。
 
 ## テストについて

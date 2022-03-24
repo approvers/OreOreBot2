@@ -39,7 +39,7 @@
 
 貢献に関する規定などは [CONTRIBUTING.md](./CONTRIBUTING.md) をご覧ください。
 
-(開発に関する質問は [Issue](https://github.com/approvers/OreOreBot2/issues) か 限界開発鯖内 プロジェクトカテゴリー [`#新生はらちょ`](https://discordapp.com/channels/683939861539192860/947208529561927710) までどうぞ。)
+(開発に関する質問は [Issue](https://github.com/approvers/OreOreBot2/issues) か 限界開発鯖内 プロジェクトチャンネル [`#新生はらちょ`](https://discordapp.com/channels/683939861539192860/947208529561927710) までどうぞ。)
 
 ## 環境構築
 
