@@ -23,7 +23,7 @@
 - Go での再実装も計画されましたが、結局完了することはなく、永久凍結することになります。
 - 2021/12/19, discord.py の開発停止や Discord API v6, v7 の廃止による **はらちょの Gateway API 切断問題(2022 年問題)(クソデカ主語)** を解決すべく、新生はらちょが作られることになりました。
   - [初代はらちょぶっ殺しプロジェクト](https://github.com/approvers/OreOreBot2/milestone/1) の開始です。
-  - これも Go と同じく、途中で永久凍結するところでしたが、 [雪](https://github.com/YukiYuigishi) ~~容疑者~~ が初代はらちょを殺した罪で死刑が確定したことで、作り直しが加速することになり、 2022/02/27 ついに最初の [初代はらちょぶっ殺しプロジェクト](https://github.com/approvers/OreOreBot2/milestone/1) が終了しました。
+  - これも Go と同じく、途中で永久凍結するところでしたが、 [雪](https://github.com/YukiYuigishi) が初代はらちょを殺した罪で死刑が確定したことで、作り直しが加速することになり、 2022/02/27 ついに最初の [初代はらちょぶっ殺しプロジェクト](https://github.com/approvers/OreOreBot2/milestone/1) が終了しました。
 
 ## 貢献
 
