@@ -15,7 +15,7 @@ TypeScript で作り直すプロジェクトです。
 git checkout -b <branch-name>
 ```
 
-4. 開発を行います。
+4. 開発を行い、その内容を GitHub へアップロードします。
 
 ```sh
 git add <file-name>
