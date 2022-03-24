@@ -27,9 +27,9 @@
 
 ## 機能の追加・改善
 
-機能の追加や改善などがありましたら [Issue](https://github.com/approvers/OreOreBot2/issues/new) から新規Issueを作成してください。
+機能の追加や改善などがありましたら [Issue](https://github.com/approvers/OreOreBot2/issues/new) から新規 Issue を作成してください。
 
-もちろん [自分で作成してPRを送ってくれても、いいんですよ (ちらっ)](./CONTRIBUTING.md)
+もちろん [自分で作成して PR を送ってくれても、いいんですよ (ちらっ)](./CONTRIBUTING.md)
 
 限界開発鯖だし、はらちょなので、どんなふざけた機能でも大歓迎です。
 
