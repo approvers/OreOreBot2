@@ -1,0 +1,13 @@
+name: run jest
+
+on:
+  pull_request:
+    paths:
+      - "**.md"
+
+jobs:
+  run_jest:
+    name: jest
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "No test required" '
