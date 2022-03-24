@@ -64,10 +64,7 @@ test('use case of hukueki', async () => {
 
 ## コミットメッセージ
 
-コミットメッセージを書く際は **Conventional Commit** に従ってください。
-
-- [Conventional Commit](https://conventionalcommits.org/)
-  - [Conventional Commit - Japanese](https://conventionalcommits.org/ja/)
+コミットメッセージを書く際は [**Conventional Commit**](https://conventionalcommits.org/ja/) に従ってください。
 
 > Conventional Commits の仕様はコミットメッセージのための軽量の規約です。 明示的なコミット履歴を作成するための簡単なルールを提供します。この規則に従うことで自動化ツールの導入を簡単にします。 コミットメッセージで機能追加・修正・破壊的変更などを説明することで、この規約は SemVer と協調動作します。
 > 引用: [Conventional Commits](https://conventionalcommits.org/ja/)
