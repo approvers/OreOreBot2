@@ -19,6 +19,7 @@ git checkout -b <branch-name>
 
 ```sh
 git add <file-name>
+git commit -m "hoge"
 git push
 ...
 ```
