@@ -22,7 +22,7 @@ git add <file-name>
 git push
 ```
 
-5. 開発が終了したら GitHub からで新規 pull request を作成してください。
+5. 開発が終了したら GitHub から当リポジトリの `main` ブランチへ新規 pull request を作成してください。
 6. 当プロジェクト コントリビューターによるレビュー・GitHub Actions によるテストなどが行われた後、マージが可能になります。
 
 ## テストについて
