@@ -20,7 +20,6 @@ git checkout -b <branch-name>
 ```sh
 git add <file-name>
 git push
-...
 ```
 
 5. 開発が終了したら GitHub からで新規 pull request を作成してください。
