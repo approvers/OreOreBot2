@@ -96,16 +96,16 @@ export class Hukueki implements CommandResponder {
       case 'takopi': {
         if (!messageArgs) {
           await message.reply({
-            title: '(引数が)わ、わからないっピ.......',
+            title: '(引数が)わ わかんないっピ...',
             description: '引数が不足してるみたいだ。'
           });
           return;
         }
 
-        let takopiContext = `教員「${messageArgs}、出して」\n${message.senderName}「わ、わからないっピ.......」`;
+        let takopiContext = `教員「${messageArgs}、出して」\n${message.senderName}「わ わかんないっピ...」`;
 
         if (messageArgs.match(`-f`)) {
-          takopiContext = `${message.senderName}「${messageArgs}、出して」\n教員「わ、わからないっピ.......」`;
+          takopiContext = `${message.senderName}「${messageArgs}、出して」\n教員「わ わかんないっピ...」`;
         }
 
         await message.reply({
