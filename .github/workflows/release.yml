@@ -25,7 +25,7 @@ jobs:
           output: CHANGELOG.md
 
       - name: Format CHANGELOG
-        run: prettier --write CHANGELOG.md
+        run: yarn prettier --write CHANGELOG.md
 
       - name: Commit CHANGELOG.md
         uses: stefanzweifel/git-auto-commit-action@v4
