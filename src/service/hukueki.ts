@@ -89,7 +89,11 @@ export class Hukueki implements CommandResponder {
         });
         break;
       }
-      case 'wakaranai': {
+      /**
+       * 教員「課題，出して」
+       * しずか「わ、わからないっピ…」
+       */
+      case 'takopi': {
         if (!messageArgs) {
           await message.reply({
             title: '(引数が)わ、わからないっピ.......',
