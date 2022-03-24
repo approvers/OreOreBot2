@@ -2,18 +2,13 @@
 
 ## このプロジェクトについて
 
-[README.md](./README.md) にあるように、このプロジェクトは限界開発鯖の Bot [【はらちょ】](https://github.com/approvers/OreOreBot) を discord.js +
+限界開発鯖の Bot [【はらちょ】](https://github.com/approvers/OreOreBot) を discord.js +
 TypeScript で作り直すプロジェクトです。
 
 ## 貢献の流れ
 
 1. 当リポジトリをフォークしてください。
 2. リポジトリをクローンしてください。
-
-```
-$ git clone https://github.com/approvers/OreOreBot2.git
-```
-
 3. ディレクトリを開き、ブランチをチェックアウトしてください。
 
 ```
