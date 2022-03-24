@@ -11,15 +11,15 @@ TypeScript で作り直すプロジェクトです。
 2. リポジトリをクローンしてください。
 3. ディレクトリを開き、ブランチをチェックアウトしてください。
 
-```
-$ git checkout -b <branch-name>
+```sh
+git checkout -b <branch-name>
 ```
 
 4. 開発を行います。
 
-```
-$ git add <file-name>
-$ git push
+```sh
+git add <file-name>
+git push
 ...
 ```
 
