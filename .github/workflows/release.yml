@@ -18,12 +18,14 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Update CHANGELOG
-        id: changelog
-        uses: Requarks/changelog-action@v1
+      - name: Generate release CHANGELOG
+        uses: heinrichreimer/github-changelog-generator-action@v2.3
         with:
-          token: ${{ github.token }}
-          tag: ${{ github.ref_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          output: CHANGELOG.md
+
+      - name: Format CHANGELOG
+        run: prettier --write CHANGELOG.md
 
       - name: Commit CHANGELOG.md
         uses: stefanzweifel/git-auto-commit-action@v4
