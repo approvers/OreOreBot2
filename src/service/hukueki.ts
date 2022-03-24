@@ -102,8 +102,14 @@ export class Hukueki implements CommandResponder {
           return;
         }
 
+        let takopiContext = `教員「${messageArgs}、出して」\n${message.senderName}「わ、わからないっピ.......」`;
+
+        if (messageArgs.match(`-f`)) {
+          takopiContext = `${message.senderName}「${messageArgs}、出して」\n教員「わ、わからないっピ.......」`;
+        }
+
         await message.reply({
-          description: `教員「${messageArgs}、出して」\n${message.senderName}「わ、わからないっピ.......」`
+          description: takopiContext
         });
         break;
       }
