@@ -37,6 +37,7 @@ export class KokuseiChousa implements CommandResponder {
 
     const botMemberCount = await this.stats.botMemberCount();
     const allMemberCount = await this.stats.allMemberCount();
+    const peopleCount = allMemberCount - botMemberCount;
     const botRate = (botMemberCount / allMemberCount) * 100;
 
     await message.reply({
@@ -47,8 +48,13 @@ export class KokuseiChousa implements CommandResponder {
           value: `${allMemberCount}人`,
           inline: true
         },
+        {
+          name: '人間の数',
+          value: `${peopleCount}人`,
+          inline: true
+        },
         { name: 'Bot数', value: `${botMemberCount}人`, inline: true },
-        { name: 'Bot率', value: botRate.toFixed(3) + '%', inline: true }
+        { name: 'Bot率', value: botRate.toFixed(3) + '%' }
       ]
     });
   }
