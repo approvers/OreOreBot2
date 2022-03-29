@@ -53,7 +53,7 @@ export class KokuseiChousa implements CommandResponder {
           value: `${peopleCount}人`,
           inline: true
         },
-        { name: 'Bot数', value: `${botMemberCount}人`, inline: true },
+        { name: 'Botの数', value: `${botMemberCount}人`, inline: true },
         { name: 'Bot率', value: botRate.toFixed(3) + '%' }
       ]
     });
