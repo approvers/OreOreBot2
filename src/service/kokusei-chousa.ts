@@ -44,12 +44,12 @@ export class KokuseiChousa implements CommandResponder {
       title: '***†只今の限界開発鯖の人口†***',
       fields: [
         {
-          name: '人類の数',
+          name: '人間+Bot',
           value: `${allMemberCount}人`,
           inline: true
         },
         {
-          name: '人間の数',
+          name: '人類の数',
           value: `${peopleCount}人`,
           inline: true
         },

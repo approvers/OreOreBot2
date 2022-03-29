@@ -21,12 +21,12 @@ test('use case of kokusei-chousa', async () => {
           title: '***†只今の限界開発鯖の人口†***',
           fields: [
             {
-              name: '人類の数',
+              name: '人間+Bot',
               value: `150人`,
               inline: true
             },
             {
-              name: '人間の数',
+              name: '人類の数',
               value: '100人',
               inline: true
             },
