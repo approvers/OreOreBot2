@@ -59,18 +59,18 @@ test('use case of dousureba', async () => {
   );
 });
 
-test('use case of wakaranai', async () => {
+test('use case of takopi', async () => {
   const responder = new Hukueki();
   await responder.on(
     'CREATE',
     createMockMessage(
       {
-        args: ['wakaranai', 'こるく'],
+        args: ['takopi', 'こるく'],
         senderName: 'りにあ'
       },
       (message) => {
         expect(message).toStrictEqual({
-          description: `教員「こるく、出して」\nりにあ「わ、わからないっピ.......」`
+          description: `教員「こるく、出して」\nりにあ「わ、わかんないっピ.......」`
         });
         return Promise.resolve();
       }
