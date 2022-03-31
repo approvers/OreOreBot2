@@ -29,7 +29,8 @@ export class Hukueki implements CommandResponder {
     if (args.length < 1) return;
 
     const [kind, ...remainings] = args;
-    const messageArgs = remainings.join(' ');
+    const messageArgs = remainings.filter((x) => !x.startsWith('-')).join(' ');
+    const options = remainings.filter((x) => x.startsWith('-'));
 
     switch (kind) {
       /**
@@ -104,7 +105,7 @@ export class Hukueki implements CommandResponder {
 
         let takopiContext = `教員「${messageArgs}、出して」\n${message.senderName}「わ わかんないっピ...」`;
 
-        if (messageArgs.match(`-f`)) {
+        if (options.includes('-f')) {
           takopiContext = `${message.senderName}「${messageArgs}、出して」\n教員「わ わかんないっピ...」`;
         }
 
