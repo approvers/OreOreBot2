@@ -92,12 +92,12 @@ export class Hukueki implements CommandResponder {
       }
       /**
        * 教員「課題，出して」
-       * しずか「わ、わからないっピ....」
+       * しずか「わ、わかんないっピ.......」
        */
       case 'takopi': {
         if (!messageArgs) {
           await message.reply({
-            title: '(引数が)わ、わからないっピ....',
+            title: '(引数が)わ、わかんないっピ.......',
             description: '引数が不足してるみたいだ。'
           });
           return;
@@ -120,6 +120,6 @@ function optionRail(
   message: CommandMessage
 ) {
   if (options.includes('-f'))
-    return `${message.senderName}「${messageArgs}、出して」\n教員「わ、わからないっピ....」`;
-  return `教員「${messageArgs}、出して」\n${message.senderName}「わ、わからないっピ....」`;
+    return `${message.senderName}「${messageArgs}、出して」\n教員「わ、わかんないっピ.......」`;
+  return `教員「${messageArgs}、出して」\n${message.senderName}「わ、わかんないっピ.......」`;
 }
