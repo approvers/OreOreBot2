@@ -4,7 +4,7 @@ import { createMockMessage } from './command-message';
 test('use case of kokusei-chousa', async () => {
   const responder = new KokuseiChousa({
     allMemberCount(): Promise<number> {
-      return Promise.resolve(100);
+      return Promise.resolve(150);
     },
     botMemberCount(): Promise<number> {
       return Promise.resolve(50);
@@ -21,12 +21,17 @@ test('use case of kokusei-chousa', async () => {
           title: '***†只今の限界開発鯖の人口†***',
           fields: [
             {
-              name: '人類の数',
-              value: `100人`,
+              name: '人間+Bot',
+              value: `150人`,
               inline: true
             },
-            { name: 'Bot数', value: `50人`, inline: true },
-            { name: 'Bot率', value: '50.000%', inline: true }
+            {
+              name: '人類の数',
+              value: '100人',
+              inline: true
+            },
+            { name: 'Botの数', value: `50人`, inline: true },
+            { name: 'Bot率', value: '33.333%' }
           ]
         });
         return Promise.resolve();
