@@ -37,18 +37,24 @@ export class KokuseiChousa implements CommandResponder {
 
     const botMemberCount = await this.stats.botMemberCount();
     const allMemberCount = await this.stats.allMemberCount();
+    const peopleCount = allMemberCount - botMemberCount;
     const botRate = (botMemberCount / allMemberCount) * 100;
 
     await message.reply({
       title: '***†只今の限界開発鯖の人口†***',
       fields: [
         {
-          name: '人類の数',
+          name: '人間+Bot',
           value: `${allMemberCount}人`,
           inline: true
         },
-        { name: 'Bot数', value: `${botMemberCount}人`, inline: true },
-        { name: 'Bot率', value: botRate.toFixed(3) + '%', inline: true }
+        {
+          name: '人類の数',
+          value: `${peopleCount}人`,
+          inline: true
+        },
+        { name: 'Botの数', value: `${botMemberCount}人`, inline: true },
+        { name: 'Bot率', value: botRate.toFixed(3) + '%' }
       ]
     });
   }
