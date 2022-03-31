@@ -16,7 +16,12 @@ const partyStarting: EmbedMessage = {
   description: 'хорошо、宴の始まりだ。'
 };
 
-const assetKeys = ['COFFIN_INTRO', 'COFFIN_DROP', 'KAKAPO'] as const;
+const assetKeys = [
+  'COFFIN_INTRO',
+  'COFFIN_DROP',
+  'KAKAPO',
+  'KAKUSIN_DAISUKE'
+] as const;
 
 export type AssetKey = typeof assetKeys[number];
 
