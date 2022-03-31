@@ -78,6 +78,25 @@ test('use case of takopi', async () => {
   );
 });
 
+test('use case of takopi (-f)', async () => {
+  const responder = new Hukueki();
+  await responder.on(
+    'CREATE',
+    createMockMessage(
+      {
+        args: ['takopi', '-f', 'こるく'],
+        senderName: 'りにあ'
+      },
+      (message) => {
+        expect(message).toStrictEqual({
+          description: `りにあ「こるく、出して」\n教員「わ、わかんないっピ.......」`
+        });
+        return Promise.resolve();
+      }
+    )
+  );
+});
+
 test('args space', async () => {
   const responder = new Hukueki();
   await responder.on(
