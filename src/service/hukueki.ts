@@ -103,14 +103,8 @@ export class Hukueki implements CommandResponder {
           return;
         }
 
-        let takopiContext = `教員「${messageArgs}、出して」\n${message.senderName}「わ わかんないっピ...」`;
-
-        if (options.includes('-f')) {
-          takopiContext = `${message.senderName}「${messageArgs}、出して」\n教員「わ わかんないっピ...」`;
-        }
-
         await message.reply({
-          description: takopiContext
+          description: optionRail(messageArgs, options, message)
         });
         break;
       }
@@ -118,4 +112,14 @@ export class Hukueki implements CommandResponder {
         return;
     }
   }
+}
+
+function optionRail(
+  messageArgs: string,
+  options: string[],
+  message: CommandMessage
+) {
+  if (options.includes('-f'))
+    return `${message.senderName}「${messageArgs}、出して」\n教員「わ わかんないっピ...」`;
+  return `教員「${messageArgs}、出して」\n${message.senderName}「わ わかんないっピ...」`;
 }
