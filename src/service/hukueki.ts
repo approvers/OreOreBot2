@@ -9,8 +9,13 @@ export class Hukueki implements CommandResponder {
   help: Readonly<HelpInfo> = {
     title: '服役/ロリコン/ぬきたし構文/タコピー構文',
     description: '何これ……引数のテキストを構文にはめ込むみたいだよ',
-    commandName: ['hukueki', 'lolicon', 'dousureba', 'wakaranai'],
+    commandName: ['hukueki', 'lolicon', 'dousureba', 'takopi'],
     argsFormat: [
+      {
+        name: '(タコピー構文のみ) -f',
+        description:
+          '教員と自分の名前の位置を反対にします。([idea: フライさん](https://github.com/approvers/OreOreBot2/issues/90))'
+      },
       {
         name: 'テキスト',
         description: '構文にはめ込む文章'
@@ -24,7 +29,8 @@ export class Hukueki implements CommandResponder {
     if (args.length < 1) return;
 
     const [kind, ...remainings] = args;
-    const messageArgs = remainings.join(' ');
+    const messageArgs = remainings.filter((x) => !x.startsWith('-')).join(' ');
+    const options = remainings.filter((x) => x.startsWith('-'));
 
     switch (kind) {
       /**
@@ -84,17 +90,21 @@ export class Hukueki implements CommandResponder {
         });
         break;
       }
-      case 'wakaranai': {
+      /**
+       * 教員「課題，出して」
+       * しずか「わ、わかんないっピ.......」
+       */
+      case 'takopi': {
         if (!messageArgs) {
           await message.reply({
-            title: '(引数が)わ、わからないっピ.......',
+            title: '(引数が)わ、わかんないっピ.......',
             description: '引数が不足してるみたいだ。'
           });
           return;
         }
 
         await message.reply({
-          description: `教員「${messageArgs}、出して」\n${message.senderName}「わ、わからないっピ.......」`
+          description: optionRail(messageArgs, options, message)
         });
         break;
       }
@@ -102,4 +112,14 @@ export class Hukueki implements CommandResponder {
         return;
     }
   }
+}
+
+function optionRail(
+  messageArgs: string,
+  options: string[],
+  message: CommandMessage
+) {
+  if (options.includes('-f'))
+    return `${message.senderName}「${messageArgs}、出して」\n教員「わ、わかんないっピ.......」`;
+  return `教員「${messageArgs}、出して」\n${message.senderName}「わ、わかんないっピ.......」`;
 }
