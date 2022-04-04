@@ -104,7 +104,7 @@ export class Hukueki implements CommandResponder {
         }
 
         await message.reply({
-          description: optionRail(messageArgs, options, message)
+          description: takopiContext(messageArgs, options, message)
         });
         break;
       }
@@ -114,7 +114,7 @@ export class Hukueki implements CommandResponder {
   }
 }
 
-function optionRail(
+function takopiContext(
   messageArgs: string,
   options: string[],
   message: CommandMessage
