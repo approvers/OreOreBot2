@@ -67,3 +67,70 @@ test('use case of judge', async () => {
     description: `1 / 1 WA`
   });
 });
+
+test('max number of cases', async () => {
+  const responder = new JudgementCommand({
+    sleep: () => Promise.resolve(),
+    uniform: () => 1
+  });
+
+  await responder.on(
+    'CREATE',
+    createMockMessage(
+      {
+        args: ['jd', '1']
+      },
+      (embed) => {
+        expect(embed).toStrictEqual({
+          title: '***†HARACHO ONLINE JUDGEMENT SYSTEM†***',
+          description: '0 / 1 WJ'
+        });
+        return Promise.resolve({ edit: () => Promise.resolve() });
+      }
+    )
+  );
+  await responder.on(
+    'CREATE',
+    createMockMessage(
+      {
+        args: ['jd', '64']
+      },
+      (embed) => {
+        expect(embed).toStrictEqual({
+          title: '***†HARACHO ONLINE JUDGEMENT SYSTEM†***',
+          description: '0 / 64 WJ'
+        });
+        return Promise.resolve({ edit: () => Promise.resolve() });
+      }
+    )
+  );
+
+  await responder.on(
+    'CREATE',
+    createMockMessage(
+      {
+        args: ['jd', '0']
+      },
+      (embed) => {
+        expect(embed).toStrictEqual({
+          title: '回数の指定が 1 以上 64 以下の整数じゃないよ。'
+        });
+        return Promise.resolve({ edit: () => Promise.resolve() });
+      }
+    )
+  );
+  await responder.on(
+    'CREATE',
+    createMockMessage(
+      {
+        args: ['jd', '65']
+      },
+      (embed) => {
+        expect(embed).toStrictEqual({
+          title: '回数の指定が 1 以上 64 以下の整数じゃないよ。'
+        });
+        return Promise.resolve({ edit: () => Promise.resolve() });
+      }
+    )
+  );
+});
