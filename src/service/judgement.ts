@@ -48,7 +48,7 @@ export class JudgementCommand implements CommandResponder {
     argsFormat: [
       {
         name: 'テストケースの数',
-        description: '判定のアニメーションに使うテストケースの数',
+        description: '判定のアニメーションに使うテストケースの数、最大値は 64',
         defaultValue: '5'
       },
       {
@@ -72,9 +72,9 @@ export class JudgementCommand implements CommandResponder {
       return;
     }
     const count = parseInt(countArg, 10);
-    if (Number.isNaN(count) || count <= 0) {
+    if (Number.isNaN(count) || count <= 0 || 64 < count) {
       await message.reply({
-        title: '回数の指定が正の整数じゃないよ。'
+        title: '回数の指定が 1 以上 64 以下の整数じゃないよ。'
       });
       return;
     }
