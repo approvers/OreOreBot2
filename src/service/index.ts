@@ -9,7 +9,8 @@ import {
   type MessageResponseRunner,
   ScheduleRunner,
   composeMessageEventResponders,
-  composeMessageUpdateEventResponders
+  composeMessageUpdateEventResponders,
+  composeRoleEventResponders
 } from '../runner';
 import type { CommandMessage, CommandResponder } from './command-message';
 import { type DeletionObservable, DeletionRepeater } from './deletion-repeater';
@@ -34,7 +35,6 @@ import { Hukueki } from './hukueki';
 import type { Snowflake } from '../model/id';
 import type { StandardOutput } from './output';
 import type { VoiceConnectionFactory } from './voice-connection';
-import { composeRoleEventResponders } from '../runner';
 
 export const allMessageEventResponder = (repo: TypoRepository) =>
   composeMessageEventResponders<
