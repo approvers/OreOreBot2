@@ -1,4 +1,4 @@
-import type { RoleEvent, RoleEventResponder } from '../runner/role';
+import type { RoleEvent, RoleEventResponder } from '../runner';
 import type { Snowflake } from '../model/id';
 import type { StandardOutput } from './output';
 
