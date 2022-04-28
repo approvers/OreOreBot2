@@ -34,7 +34,7 @@ import { Hukueki } from './hukueki';
 import type { Snowflake } from '../model/id';
 import type { StandardOutput } from './output';
 import type { VoiceConnectionFactory } from './voice-connection';
-import { composeRoleEventResponders } from '../runner/role';
+import { composeRoleEventResponders } from '../runner';
 
 export const allMessageEventResponder = (repo: TypoRepository) =>
   composeMessageEventResponders<

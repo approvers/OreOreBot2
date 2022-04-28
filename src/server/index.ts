@@ -36,7 +36,7 @@ import type { AssetKey } from '../service/party';
 import { DiscordMemberStats } from '../adaptor/discord-member-stats';
 import { DiscordRoleManager } from '../adaptor/discord-role';
 import type { KaereMusicKey } from '../service/kaere';
-import { RoleResponseRunner } from '../runner/role';
+import { RoleResponseRunner } from '../runner';
 import { Snowflake } from '../model/id';
 import dotenv from 'dotenv';
 import { extractEnv } from './extract-env';
