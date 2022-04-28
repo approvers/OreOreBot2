@@ -1,5 +1,4 @@
-import type { MessageEvent } from '../runner';
-import type { MessageEventResponder } from '../runner';
+import type { MessageEvent, MessageEventResponder } from '../runner';
 
 const boldItalic = /\*\*\*/g;
 

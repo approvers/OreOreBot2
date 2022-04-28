@@ -28,7 +28,7 @@ git push
 
 ## コーティング規約
 
-- ファイル名を `kabeb-case` にしてください。
+- ファイル名を `kebab-case` にしてください。
 
 ## テストについて
 
@@ -64,7 +64,7 @@ test('use case of hukueki', async () => {
 });
 ```
 
-詳しくは [Jest のドキュメント](https://jestjs.io/ja/docs) をご覧ください。
+詳しくは [Jest のドキュメント](https://jestjs.io/ja/docs/getting-started) をご覧ください。
 
 ## コミットメッセージ
 
