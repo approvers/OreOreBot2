@@ -22,6 +22,7 @@ import type {
 import {
   MessageResponseRunner,
   MessageUpdateResponseRunner,
+  RoleResponseRunner,
   ScheduleRunner,
   VoiceRoomResponseRunner
 } from '../runner';
@@ -36,7 +37,6 @@ import type { AssetKey } from '../service/party';
 import { DiscordMemberStats } from '../adaptor/discord-member-stats';
 import { DiscordRoleManager } from '../adaptor/discord-role';
 import type { KaereMusicKey } from '../service/kaere';
-import { RoleResponseRunner } from '../runner/role';
 import { Snowflake } from '../model/id';
 import dotenv from 'dotenv';
 import { extractEnv } from './extract-env';
