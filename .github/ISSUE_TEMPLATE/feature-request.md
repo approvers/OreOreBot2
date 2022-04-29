@@ -1,7 +1,7 @@
 ---
 name: Feature-request
 about: 機能要望のIssueを作成します。
-title: ''
+title: 'feat: '
 labels: enhancement
 assignees: ''
 ---
