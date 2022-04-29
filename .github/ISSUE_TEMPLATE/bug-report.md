@@ -4,7 +4,6 @@ about: バグ報告のIssueを作成します。
 title: ''
 labels: bug
 assignees: ''
-
 ---
 
 **Describe the bug (説明)**
@@ -18,7 +17,7 @@ assignees: ''
 **Client Information (クライアント情報)**
 
 - OS:
-- Client[e.g. Stable, Canary]: 
+- Client[e.g. Stable, Canary]:
 - Version: <!-- Discordの設定画面から確認できます -->
 
 **Additional context (追加情報)**

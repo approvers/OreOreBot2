@@ -4,7 +4,6 @@ about: 機能要望のIssueを作成します。
 title: ''
 labels: enhancement
 assignees: ''
-
 ---
 
 **Describe the solution you'd like (要望の内容)**
