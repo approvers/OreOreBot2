@@ -14,7 +14,7 @@
     "check": "prettier --check \"**/*.{js,ts,md}\"",
     "eslint": "eslint --ignore-path .gitignore \"**/*.{js,ts,md}\"",
     "eslint:fix": "eslint --ignore-path .gitignore \"**/*.{js,ts,md}\" --fix",
-    "fix": "yarn run format && npm run lint -- --fix",
+    "fix": "yarn run format && yarn run eslint:fix",
     "test": "jest",
     "prepare": "husky install",
     "lint-staged": "lint-staged"
