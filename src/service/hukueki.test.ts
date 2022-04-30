@@ -134,7 +134,7 @@ test('args space', async () => {
   );
 });
 
-test('args null', async () => {
+test('args null (hukueki)', async () => {
   const responder = new Hukueki();
   await responder.on(
     'CREATE',
@@ -146,6 +146,83 @@ test('args null', async () => {
         expect(message).toStrictEqual({
           title: '服役できなかった。',
           description: '引数が不足してるみたいだ。'
+        });
+        return Promise.resolve();
+      }
+    )
+  );
+});
+
+test('args null (lolicon)', async () => {
+  const responder = new Hukueki();
+  await responder.on(
+    'CREATE',
+    createMockMessage(
+      {
+        args: ['lolicon']
+      },
+      (message) => {
+        expect(message).toStrictEqual({
+          title: 'こるくはロリコンをやめられなかった。',
+          description: '引数が不足してるみたいだ。'
+        });
+        return Promise.resolve();
+      }
+    )
+  );
+});
+
+test('args null (dousureba)', async () => {
+  const responder = new Hukueki();
+  await responder.on(
+    'CREATE',
+    createMockMessage(
+      {
+        args: ['dousureba']
+      },
+      (message) => {
+        expect(message).toStrictEqual({
+          title: 'どうしようもない。',
+          description: '引数が不足してるみたいだ。'
+        });
+        return Promise.resolve();
+      }
+    )
+  );
+});
+
+test('args null (takopi)', async () => {
+  const responder = new Hukueki();
+  await responder.on(
+    'CREATE',
+    createMockMessage(
+      {
+        args: ['takopi']
+      },
+      (message) => {
+        expect(message).toStrictEqual({
+          title: '(引数が)わ、わかんないっピ.......',
+          description: '引数が不足してるみたいだ。'
+        });
+        return Promise.resolve();
+      }
+    )
+  );
+});
+
+test('args null (n)', async () => {
+  const responder = new Hukueki();
+  await responder.on(
+    'CREATE',
+    createMockMessage(
+      {
+        args: ['n']
+      },
+      (message) => {
+        expect(message).toStrictEqual({
+          title: 'Nった',
+          description:
+            '引数が不足してるみたいだ。このままだと <@521958252280545280> みたいに留年しちゃう....'
         });
         return Promise.resolve();
       }
