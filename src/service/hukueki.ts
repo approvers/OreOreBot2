@@ -7,7 +7,7 @@ import type { MessageEvent } from '../runner';
 
 export class Hukueki implements CommandResponder {
   help: Readonly<HelpInfo> = {
-    title: '服役/ロリコン/ぬきたし構文/タコピー構文',
+    title: '服役/ロリコン/ぬきたし構文/タコピー構文/えぬ構文',
     description: '何これ……引数のテキストを構文にはめ込むみたいだよ',
     commandName: ['hukueki', 'lolicon', 'dousureba', 'takopi'],
     argsFormat: [
