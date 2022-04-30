@@ -16,6 +16,7 @@
     "eslint:fix": "eslint --ignore-path .gitignore \"**/*.{js,ts,md}\" --fix",
     "fix": "yarn run format && yarn run eslint:fix",
     "test": "jest",
+    "coverage": "jest --coverage --coverageDirectory='coverage'",
     "prepare": "husky install",
     "lint-staged": "lint-staged"
   },
