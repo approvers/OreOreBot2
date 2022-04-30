@@ -97,6 +97,24 @@ test('use case of takopi (-f)', async () => {
   );
 });
 
+test('use case of n', async () => {
+  const responder = new Hukueki();
+  await responder.on(
+    'CREATE',
+    createMockMessage(
+      {
+        args: ['n', 'テスト前に課題もやらないで原神して']
+      },
+      (message) => {
+        expect(message).toStrictEqual({
+          description: `テスト前に課題もやらないで原神しててNった`
+        });
+        return Promise.resolve();
+      }
+    )
+  );
+});
+
 test('args space', async () => {
   const responder = new Hukueki();
   await responder.on(
