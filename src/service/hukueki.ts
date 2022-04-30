@@ -7,9 +7,9 @@ import type { MessageEvent } from '../runner';
 
 export class Hukueki implements CommandResponder {
   help: Readonly<HelpInfo> = {
-    title: '服役/ロリコン/ぬきたし構文/タコピー構文',
+    title: '服役/ロリコン/ぬきたし構文/タコピー構文/えぬ構文',
     description: '何これ……引数のテキストを構文にはめ込むみたいだよ',
-    commandName: ['hukueki', 'lolicon', 'dousureba', 'takopi'],
+    commandName: ['hukueki', 'lolicon', 'dousureba', 'takopi', 'n'],
     argsFormat: [
       {
         name: '(タコピー構文のみ) -f',
@@ -105,6 +105,24 @@ export class Hukueki implements CommandResponder {
 
         await message.reply({
           description: optionRail(messageArgs, options, message)
+        });
+        break;
+      }
+      /**
+       * テスト前日に原神しててNった
+       */
+      case 'n': {
+        if (!messageArgs) {
+          await message.reply({
+            title: 'Nった',
+            description:
+              '引数が不足してるみたいだ。このままだと <@521958252280545280> みたいに留年しちゃう....'
+          });
+          return;
+        }
+
+        await message.reply({
+          description: `${messageArgs}てNった`
         });
         break;
       }
