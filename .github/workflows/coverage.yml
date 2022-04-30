@@ -1,0 +1,27 @@
+name: Code coverage
+
+on:
+  pull_request:
+    branches: ["main"]
+  push:
+    branches: ["main"]
+  pull_request:
+
+jobs:
+  coverage:
+    name: Send code coverage report
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Install packages
+        run: yarn install --frozen-lockfile
+      - name: Generate code coverage report
+        run: yarn run coverage
+
+      - uses: codecov/codecov-action@v2
+        with:
+          files: ./coverage/clover.xml
+          flags: unittests
+          fail_ci_if_error: true
+          verbose: true
