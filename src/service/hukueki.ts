@@ -108,6 +108,19 @@ export class Hukueki implements CommandResponder {
         });
         break;
       }
+      /**
+       * テスト前日に原神しててNった
+       */
+      case 'n': {
+        if (!messageArgs) {
+          await message.reply({
+            title: 'Nった',
+            description:
+              '引数が不足してるみたいだ。このままだとえぬさんみたいに留年しちゃう....'
+          });
+        }
+        break;
+      }
       default:
         return;
     }
