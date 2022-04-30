@@ -107,7 +107,7 @@ test('use case of n', async () => {
       },
       (message) => {
         expect(message).toStrictEqual({
-          description: `てNった`
+          description: `テスト前に課題もやらないで原神しててNった`
         });
         return Promise.resolve();
       }
