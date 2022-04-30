@@ -41,6 +41,12 @@
 
 (開発に関する質問は [Issue](https://github.com/approvers/OreOreBot2/issues) か 限界開発鯖内 プロジェクトチャンネル [`#新生はらちょ`](https://discordapp.com/channels/683939861539192860/947208529561927710) までどうぞ。)
 
+## OreOreBot2 Discussion
+
+OreOreBot2 の [Discussions](https://github.com/approvers/OreOreBot2/discussions) では開発の議論などを行っています。
+
+- [Discussion の使い方](https://github.com/approvers/OreOreBot2/discussions/147)
+
 ## 環境構築
 
 ```shell
