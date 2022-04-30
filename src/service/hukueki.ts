@@ -122,7 +122,7 @@ export class Hukueki implements CommandResponder {
         }
 
         await message.reply({
-          description: `${messageArgs}てNった`
+          description: `${messageArgs}Nった`
         });
         break;
       }
