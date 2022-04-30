@@ -9,7 +9,7 @@ export class Hukueki implements CommandResponder {
   help: Readonly<HelpInfo> = {
     title: '服役/ロリコン/ぬきたし構文/タコピー構文/えぬ構文',
     description: '何これ……引数のテキストを構文にはめ込むみたいだよ',
-    commandName: ['hukueki', 'lolicon', 'dousureba', 'takopi'],
+    commandName: ['hukueki', 'lolicon', 'dousureba', 'takopi', 'n'],
     argsFormat: [
       {
         name: '(タコピー構文のみ) -f',
@@ -118,11 +118,11 @@ export class Hukueki implements CommandResponder {
             description:
               '引数が不足してるみたいだ。このままだと <@521958252280545280> みたいに留年しちゃう....'
           });
-
-          await message.reply({
-            description: `${messageArgs}てNった`
-          });
         }
+
+        await message.reply({
+          description: `${messageArgs}てNった`
+        });
         break;
       }
       default:
