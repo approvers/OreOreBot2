@@ -29,7 +29,7 @@
 
 機能の追加や改善などがありましたら [Issue](https://github.com/approvers/OreOreBot2/issues/new) から新規 Issue を作成してください。
 
-もちろん [自分で作成して PR を送ってくれても、いいんですよ (ちらっ)](./CONTRIBUTING.md)
+もちろん [自分で作成して PR を送ってくれても、いいんですよ (ちらっ)](.github/CONTRIBUTING.md)
 
 限界開発鯖だし、はらちょなので、どんなふざけた機能でも大歓迎です。
 
@@ -37,7 +37,7 @@
 
 はらちょの開発への参加は大歓迎です!
 
-貢献に関する規定などは [CONTRIBUTING.md](./CONTRIBUTING.md) をご覧ください。
+貢献に関する規定などは [CONTRIBUTING.md](.github/CONTRIBUTING.md) をご覧ください。
 
 (開発に関する質問は [Issue](https://github.com/approvers/OreOreBot2/issues) か 限界開発鯖内 プロジェクトチャンネル [`#新生はらちょ`](https://discordapp.com/channels/683939861539192860/947208529561927710) までどうぞ。)
 

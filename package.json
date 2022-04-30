@@ -14,7 +14,7 @@
     "check": "prettier --check \"**/*.{js,ts,md}\"",
     "eslint": "eslint --ignore-path .gitignore \"**/*.{js,ts,md}\"",
     "eslint:fix": "eslint --ignore-path .gitignore \"**/*.{js,ts,md}\" --fix",
-    "fix": "yarn run format && npm run lint -- --fix",
+    "fix": "yarn run format && yarn run eslint:fix",
     "test": "jest",
     "prepare": "husky install",
     "lint-staged": "lint-staged"
@@ -44,9 +44,9 @@
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
-    "@types/node": "^17.0.21",
+    "@types/node": "^17.0.30",
     "@typescript-eslint/eslint-plugin": "^5.21.0",
-    "@typescript-eslint/parser": "^5.15.0",
+    "@typescript-eslint/parser": "^5.21.0",
     "eslint": "^8.14.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-markdown": "^2.2.1",
@@ -56,6 +56,6 @@
     "prettier": "^2.6.2",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
-    "typescript": "^4.6.3"
+    "typescript": "^4.6.4"
   }
 }
