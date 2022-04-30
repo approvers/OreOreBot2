@@ -118,6 +118,7 @@ export class Hukueki implements CommandResponder {
             description:
               '引数が不足してるみたいだ。このままだと <@521958252280545280> みたいに留年しちゃう....'
           });
+          return;
         }
 
         await message.reply({
