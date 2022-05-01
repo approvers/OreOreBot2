@@ -43,6 +43,7 @@ test('serialize reservation', () => {
 });
 
 test('deserialize reservation', () => {
+  expect(Reservation.deserialize('0')).toBeNull();
   expect(Reservation.deserialize('[]')).toBeNull();
   expect(
     Reservation.deserialize(
