@@ -103,7 +103,7 @@ test('use case of n', async () => {
     'CREATE',
     createMockMessage(
       {
-        args: ['n', 'テスト前に課題もやらないで原神して']
+        args: ['n', 'テスト前に課題もやらないで原神してて']
       },
       (message) => {
         expect(message).toStrictEqual({
