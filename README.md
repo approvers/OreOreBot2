@@ -39,8 +39,8 @@
 
 貢献に関する規定などは [CONTRIBUTING.md](.github/CONTRIBUTING.md) をご覧ください。
 
-(開発に関する質問は **限界開発鯖内 プロジェクトチャンネル [`#新生はらちょ`](https://discordapp.com/channels/683939861539192860/947208529561927710)
-または [Discussions](https://github.com/approvers/OreOreBot2/discussions)** までどうぞ。)
+開発に関する質問は **限界開発鯖内 プロジェクトチャンネル [`#新生はらちょ`](https://discordapp.com/channels/683939861539192860/947208529561927710)
+または [Discussions](https://github.com/approvers/OreOreBot2/discussions)** までどうぞ。
 
 ### OreOreBot2 Discussion
 
