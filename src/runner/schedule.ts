@@ -1,4 +1,4 @@
-import { addMilliseconds, differenceInMilliseconds } from 'date-fns';
+import { addMilliseconds, isAfter } from 'date-fns';
 
 /**
  * `ScheduleRunner` に登録するイベントが実装するインターフェイス。戻り値は次に自身を再実行する時刻。`null` を返した場合は再実行されない。
@@ -27,6 +27,8 @@ export interface Clock {
   now(): Date;
 }
 
+const CONSUMPTION_INTERVAL = 100;
+
 /**
  * 機能を指定ミリ秒後や特定時刻に実行する。特定間隔での再実行については `ScheduleTask` を参照。
  *
@@ -35,59 +37,50 @@ export interface Clock {
  * @template M
  */
 export class ScheduleRunner {
-  constructor(private readonly clock: Clock) {}
+  constructor(private readonly clock: Clock) {
+    this.taskConsumerId = setInterval(() => {
+      const neededExe = this.extractTaskNeededExe();
+      for (const [key, task] of neededExe) {
+        void task()
+          .catch((e) => {
+            console.error(e);
+            return null;
+          })
+          .then(
+            (nextTime) => nextTime && this.queue.set(key, [task, nextTime])
+          );
+        this.queue.delete(key);
+      }
+    }, CONSUMPTION_INTERVAL);
+  }
 
-  private runningTasks = new Map<unknown, ReturnType<typeof setTimeout>>();
+  private taskConsumerId: NodeJS.Timer;
+  private queue = new Map<unknown, [ScheduleTask, Date]>();
 
   killAll(): void {
-    for (const task of this.runningTasks.values()) {
-      clearTimeout(task);
-    }
-    this.runningTasks.clear();
+    clearInterval(this.taskConsumerId);
+    this.queue.clear();
   }
 
   runAfter(key: unknown, task: ScheduleTask, milliSeconds: number): void {
-    this.startInner(key, task, addMilliseconds(this.clock.now(), milliSeconds));
+    this.queue.set(key, [
+      task,
+      addMilliseconds(this.clock.now(), milliSeconds)
+    ]);
   }
 
   runOnNextTime(key: unknown, task: ScheduleTask, time: Date): void {
-    this.startInner(key, task, time);
+    this.queue.set(key, [task, time]);
   }
 
   stop(key: unknown): void {
-    const id = this.runningTasks.get(key);
-    if (id !== undefined) {
-      clearTimeout(id);
-      this.runningTasks.delete(key);
-    }
+    this.queue.delete(key);
   }
 
-  private startInner(key: unknown, task: ScheduleTask, timeout: Date): void {
-    const old = this.runningTasks.get(key);
-    if (old) {
-      clearTimeout(old);
-    }
-    const id = setTimeout(() => {
-      void (async () => {
-        const newTimeout = await task().catch((e) => {
-          console.error(e);
-          return null;
-        });
-        this.onDidRun(key, task, newTimeout);
-      })();
-    }, differenceInMilliseconds(timeout, this.clock.now()));
-    this.runningTasks.set(key, id);
-  }
-
-  private onDidRun(
-    key: unknown,
-    task: ScheduleTask,
-    timeout: Date | null
-  ): void {
-    if (timeout === null) {
-      this.runningTasks.delete(key);
-    } else {
-      this.startInner(key, task, timeout);
-    }
+  private extractTaskNeededExe(): [unknown, ScheduleTask][] {
+    const now = this.clock.now();
+    return [...this.queue.entries()]
+      .filter(([, [, start]]) => isAfter(now, start))
+      .map(([key, [task]]) => [key, task]);
   }
 }
