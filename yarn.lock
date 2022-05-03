@@ -834,10 +834,10 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@^27.4.1":
-  version "27.4.1"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-27.4.1.tgz#185cbe2926eaaf9662d340cc02e548ce9e11ab6d"
-  integrity sha512-23iPJADSmicDVrWk+HT58LMJtzLAnB2AgIzplQuq/bSrGaxCrlvRFjGbXmamnnk/mAmCdLStiGqggu28ocUyiw==
+"@types/jest@^27.5.0":
+  version "27.5.0"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-27.5.0.tgz#e04ed1824ca6b1dd0438997ba60f99a7405d4c7b"
+  integrity sha512-9RBFx7r4k+msyj/arpfaa0WOOEcaAZNmN+j80KFbFCoSqCJGHTz7YMAMGQW9Xmqm5w6l5c25vbSjMwlikJi5+g==
   dependencies:
     jest-matcher-utils "^27.0.0"
     pretty-format "^27.0.0"
@@ -3613,10 +3613,10 @@ mute-stream@~0.0.4:
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
   integrity sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
 
-nanoid@^3.3.3:
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.3.tgz#fd8e8b7aa761fe807dba2d1b98fb7241bb724a25"
-  integrity sha512-p1sjXuopFs0xg+fPASzQ28agW1oHD7xDsd9Xkf3T15H3c/cifrFHVwrh74PdoklAPi+i7MdRsE47vm2r6JoB+w==
+nanoid@^3.3.4:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
+  integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==
 
 natural-compare@^1.4.0:
   version "1.4.0"
