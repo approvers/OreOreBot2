@@ -164,7 +164,7 @@ export class PartyCommand implements CommandResponder {
         description:
           '起動した本人がボイスチャンネルに居ないのでキャンセルしておいた。悪く思わないでね。'
       });
-      return;
+      throw new Error('suspended party ichiyo for safety');
     }
     this.connection = await this.factory.connectTo(
       message.senderGuildId,
