@@ -42,12 +42,13 @@ export class SheriffCommand implements CommandResponder {
     if (event !== 'CREATE') {
       return;
     }
-    const channel = message.senderChannelId;
+
     const [commandName] = message.args;
     if (!this.help.commandName.includes(commandName)) {
       return;
     }
 
+    const channel = message.senderChannelId;
     await this.sheriff.executeMessage(channel, 50);
   }
 }
