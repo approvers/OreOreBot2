@@ -116,3 +116,27 @@ docs: correct spelling of CHANGELOG
 ```
 
 詳しくは [Conventional Commits](https://conventionalcommits.org/) を参照してください。
+
+## Issue
+
+不具合報告や機能の要望、立案を行う際は [Issue](https://github.com/approvers/OreOreBot2/issues/new/choose) を利用してください。
+
+OreOreBot2 では Issue Template を用意しています。
+
+- [Bug-report](https://github.com/approvers/OreOreBot2/issues/new?assignees=&labels=bug&template=bug-report.md&title=)
+  - OreOreBot2 の不具合を報告する際に使用してください。
+- [Feature-request](https://github.com/approvers/OreOreBot2/issues/new?assignees=&labels=enhancement&template=feature-request.md&title=feat%3A+)
+  - OreOreBot2 の新機能立案などを行う際に使用してください。
+- [Custom-Issue](https://github.com/approvers/OreOreBot2/issues/new?assignees=&labels=&template=custom-issue.md&title=)
+  - 上記に当てはまらない内容の Issue を立てたいときに使用してください。
+  - 完全カスタマイズの Issue を作る際もこれを使用してください。
+- [Discord](https://support.discord.com/hc/ja/requests/new?ticket_form_id=360006586013)
+  - Discord の不具合は言わずもがな **Discord 運営チーム**　に報告してください。
+
+## Pull Request
+
+- Pull Request のタイトルは Conventional Commit の型を使用して作成してください。
+  - 例: `feat: えぬ留年構文ジェネレータの実装`, `fix: えぬが留年しない問題の修正`
+- Pull Request 作成時は Issue と同様テンプレートが用意されているので詳細情報の記載をお願いします。
+- draft などぜひ有効活用してください。
+  - 一度作成しても Assign の欄に `Still in progress? Convert to draft` とわかりにくいですがこれを利用することで途中からでも draft に設定できます。
