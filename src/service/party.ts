@@ -206,7 +206,12 @@ export class PartyCommand implements CommandResponder {
     this.scheduleRunner.runOnNextTime(
       'party-random',
       async () => {
-        await this.startPartyImmediately(message);
+        try {
+          await this.startPartyImmediately(message);
+        } catch (e) {
+          this.randomizedEnabled = false;
+          throw e;
+        }
         return this.nextTime(this.random.minutes());
       },
       this.nextTime(this.random.minutes())
