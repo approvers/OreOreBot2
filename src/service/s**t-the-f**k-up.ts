@@ -4,7 +4,7 @@ import type {
   HelpInfo
 } from './command-message';
 import type { MessageEvent } from '../runner';
-import { Snowflake } from '../model/id';
+import type { Snowflake } from '../model/id';
 
 /**
  * 'SheriffCommandのための削除機能。
