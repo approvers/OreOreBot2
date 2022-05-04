@@ -154,8 +154,7 @@ test('clear typos on next day', async () => {
   const nextDay = addDays(now, 1);
   const nextDay6 = setHours(nextDay, 6);
   clock.placeholder = setMinutes(nextDay6, 1);
-
-  await new Promise((resolve) => setTimeout(resolve, 100));
+  runner.consume();
 
   await responder.on(
     'CREATE',

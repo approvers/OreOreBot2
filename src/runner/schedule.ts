@@ -39,23 +39,25 @@ const CONSUMPTION_INTERVAL = 100;
 export class ScheduleRunner {
   constructor(private readonly clock: Clock) {
     this.taskConsumerId = setInterval(() => {
-      const neededExe = this.extractTaskNeededExe();
-      for (const [key, task] of neededExe) {
-        void task()
-          .catch((e) => {
-            console.error(e);
-            return null;
-          })
-          .then(
-            (nextTime) => nextTime && this.queue.set(key, [task, nextTime])
-          );
-        this.queue.delete(key);
-      }
+      this.consume();
     }, CONSUMPTION_INTERVAL);
   }
 
   private taskConsumerId: NodeJS.Timer;
   private queue = new Map<unknown, [ScheduleTask, Date]>();
+
+  consume() {
+    const neededExe = this.extractTaskNeededExe();
+    for (const [key, task] of neededExe) {
+      void task()
+        .catch((e) => {
+          console.error(e);
+          return null;
+        })
+        .then((nextTime) => nextTime && this.queue.set(key, [task, nextTime]));
+      this.queue.delete(key);
+    }
+  }
 
   killAll(): void {
     clearInterval(this.taskConsumerId);
