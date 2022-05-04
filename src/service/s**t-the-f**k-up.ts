@@ -48,7 +48,6 @@ export class SheriffCommand implements CommandResponder {
       return;
     }
 
-    //haracho deletion
     await this.sheriff.executeMessage(channel, 50);
   }
 }
