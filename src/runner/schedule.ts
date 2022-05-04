@@ -46,6 +46,9 @@ export class ScheduleRunner {
   private taskConsumerId: NodeJS.Timer;
   private queue = new Map<unknown, [ScheduleTask, Date]>();
 
+  /**
+   * 登録したタスクのうち指定時刻になったものを実行する。時計の時刻を急に進めた場合などに用いる。
+   */
   consume() {
     const neededExe = this.extractTaskNeededExe();
     for (const [key, task] of neededExe) {
@@ -59,11 +62,21 @@ export class ScheduleRunner {
     }
   }
 
+  /**
+   * すべての実行を停止する。テスト終了時などに用いる。
+   */
   killAll(): void {
     clearInterval(this.taskConsumerId);
     this.queue.clear();
   }
 
+  /**
+   * 現在からミリ秒指定で一定時間後にタスクを実行するように登録する。
+   *
+   * @param key あとで登録したタスクを停止させるときに用いるキーのオブジェクト
+   * @param task 実行したいタスク
+   * @param milliSeconds 現在から何ミリ秒経過した時に実行するのか
+   */
   runAfter(key: unknown, task: ScheduleTask, milliSeconds: number): void {
     this.queue.set(key, [
       task,
@@ -71,10 +84,22 @@ export class ScheduleRunner {
     ]);
   }
 
+  /**
+   * 特定時刻にタスクを実行するように登録する。
+   *
+   * @param key あとで登録したタスクを停止させるときに用いるキーのオブジェクト
+   * @param task 実行したいタスク
+   * @param time いつ実行するのか
+   */
   runOnNextTime(key: unknown, task: ScheduleTask, time: Date): void {
     this.queue.set(key, [task, time]);
   }
 
+  /**
+   * タスクの実行登録を解除する。このキーに登録されていない場合は何も起こらない。
+   *
+   * @param key 実行を登録したときのキーのオブジェクト
+   */
   stop(key: unknown): void {
     this.queue.delete(key);
   }
