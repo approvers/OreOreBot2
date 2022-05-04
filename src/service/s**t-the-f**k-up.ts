@@ -6,7 +6,19 @@ import type {
 import type { MessageEvent } from '../runner';
 import { Snowflake } from '../model/id';
 
+/**
+ * 'SheriffCommandのための削除機能。
+ *
+ * @export
+ * @interface Sheriff
+ */
 export interface Sheriff {
+  /**
+   * 'channel' 内の 'historyRange' 件のメッセージ中の自身のメッセージを削除する。
+   *
+   * @param {Snowflake} channel
+   * @param {number} historyRange
+   */
   executeMessage(channel: Snowflake, historyRange: number): Promise<void>;
 }
 /**
