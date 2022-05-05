@@ -64,7 +64,7 @@ jobs:
     - name: Check CodeQL Analysis Config
       uses: github/codeql-action/init@v2
       with:
-        config-file: ./github/codeql/codeql-config.yml
+        config-file: ./.github/codeql/codeql-config.yml
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
