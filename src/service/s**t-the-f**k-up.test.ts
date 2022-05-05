@@ -1,13 +1,10 @@
 import { type Sheriff, SheriffCommand } from './s**t-the-f**k-up';
+import { type Snowflake } from "../model/id";
 import { createMockMessage } from './command-message';
 
 test('use case of stfu', async () => {
-  const sheriff: Sheriff = {
-    executeMessage(channel, historyRange) {
-      console.log(channel, historyRange);
-      return Promise.resolve();
-    }
-  };
+  const executeMessage = jest.fn<Promise<void>, [Snowflake, number]>(() => Promise.resolve());
+  const sheriff: Sheriff = { executeMessage };
   const responder = new SheriffCommand(sheriff);
   const fn = jest.fn();
   await responder.on(
@@ -19,6 +16,7 @@ test('use case of stfu', async () => {
   );
 
   expect(fn).not.toHaveBeenCalled();
+  expect(executeMessage).not.toHaveBeenCalledWith('711127633810817026' as Snowflake, 50);
 });
 
 test('delete message', async () => {
