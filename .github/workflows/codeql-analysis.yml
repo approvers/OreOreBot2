@@ -61,7 +61,10 @@ jobs:
     #   make bootstrap
     #   make release
 
+    - name: Check CodeQL Analysis Config
+      uses: github/codeql-action/init@v2
+      with:
+        config-file: ./github/codeql/codeql-config.yml
+
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
-      with:
-        config-file: ./.github/codeql/codeql-config.yml
