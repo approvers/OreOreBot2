@@ -13,8 +13,6 @@ name: run codeql analysis
 
 on:
   push:
-    paths-ignore:
-      - '**.md'
   pull_request:
     paths-ignore:
       - '**.md'
