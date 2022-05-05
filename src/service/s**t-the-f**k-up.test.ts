@@ -25,12 +25,10 @@ test('use case of stfu', async () => {
 });
 
 test('delete message', async () => {
-  const sheriff: Sheriff = {
-    executeMessage(channel, historyRange) {
-      console.log(channel, historyRange);
-      return Promise.resolve();
-    }
-  };
+  const executeMessage = jest.fn<Promise<void>, [Snowflake, number]>(() =>
+    Promise.resolve()
+  );
+  const sheriff: Sheriff = { executeMessage };
   const responder = new SheriffCommand(sheriff);
   const fn = jest.fn();
   await responder.on(
@@ -45,12 +43,10 @@ test('delete message', async () => {
 });
 
 test('other command', async () => {
-  const sheriff: Sheriff = {
-    executeMessage(channel, historyRange) {
-      console.log(channel, historyRange);
-      return Promise.resolve();
-    }
-  };
+  const executeMessage = jest.fn<Promise<void>, [Snowflake, number]>(() =>
+    Promise.resolve()
+  );
+  const sheriff: Sheriff = { executeMessage };
   const responder = new SheriffCommand(sheriff);
   const fn = jest.fn();
   await responder.on(
