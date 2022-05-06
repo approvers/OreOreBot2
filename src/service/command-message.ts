@@ -26,6 +26,14 @@ export interface CommandMessage {
   senderGuildId: Snowflake;
 
   /**
+   * コマンドの送信者が発信したチャンネルのID。
+   *
+   * @type {Snowflake}
+   * @memberOf CommandMessage
+   */
+  senderChannelId: Snowflake;
+
+  /**
    * コマンドの送信者が接続しているボイスチャンネルの ID。
    *
    * @type {Snowflake}
@@ -87,6 +95,7 @@ export const createMockMessage = (
 ): CommandMessage => ({
   senderId: '279614913129742338' as Snowflake,
   senderGuildId: '683939861539192860' as Snowflake,
+  senderChannelId: '711127633810817026' as Snowflake,
   senderVoiceChannelId: '683939861539192865' as Snowflake,
   senderName: 'Mikuroさいな',
   args: [],
