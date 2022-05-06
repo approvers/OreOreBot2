@@ -12,13 +12,13 @@ test('use case of stfu', async () => {
   await responder.on(
     'CREATE',
     createMockMessage({
-      args: ['sftu'],
+      args: ['stfu'],
       reply: fn
     })
   );
 
   expect(fn).not.toHaveBeenCalled();
-  expect(executeMessage).not.toHaveBeenCalledWith(
+  expect(executeMessage).toHaveBeenCalledWith(
     '711127633810817026' as Snowflake,
     50
   );
@@ -34,7 +34,7 @@ test('delete message', async () => {
   await responder.on(
     'DELETE',
     createMockMessage({
-      args: ['sftu'],
+      args: ['stfu'],
       reply: fn
     })
   );
