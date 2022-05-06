@@ -18,7 +18,9 @@ export class DiscordSheriff implements Sheriff {
 
     const messages = await channel.messages.fetch({ limit: historyRange });
 
-    const targetMessage = messages.get(harachoId);
+    const targetMessage = messages.find(
+      (message) => message.author.id === harachoId
+    );
     if (!targetMessage) return;
     await targetMessage.delete();
   }
