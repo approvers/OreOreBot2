@@ -13,7 +13,11 @@ name: run codeql analysis
 
 on:
   push:
+    branches:
+     - main
   pull_request:
+    branches:
+     - main
   schedule:
     - cron: '34 5 * * 1'
 
