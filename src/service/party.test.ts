@@ -1,8 +1,9 @@
 import { type AssetKey, PartyCommand, type RandomGenerator } from './party';
+import { SentMessage, createMockMessage } from './command-message';
+import type { EmbedMessage } from '../model/embed-message';
 import { MockClock } from '../adaptor';
 import { MockVoiceConnectionFactory } from '../adaptor';
 import { ScheduleRunner } from '../runner';
-import { createMockMessage } from './command-message';
 
 const randomGen: RandomGenerator = {
   minutes: () => 42,
@@ -172,6 +173,45 @@ test('must not reply', async () => {
       args: ['party']
     })
   );
+  expect(fn).not.toHaveBeenCalled();
+
+  runner.killAll();
+});
+
+test('party enable but must cancel', async () => {
+  const factory = new MockVoiceConnectionFactory();
+  const clock = new MockClock(new Date(0));
+  const runner = new ScheduleRunner(clock);
+  const responder = new PartyCommand(factory, clock, runner, randomGen);
+
+  const fn = jest.fn();
+  const reply = jest.fn<Promise<SentMessage>, [EmbedMessage]>(() =>
+    Promise.resolve({ edit: fn })
+  );
+  await responder.on(
+    'CREATE',
+    createMockMessage({
+      args: ['party', 'enable'],
+      reply,
+      senderVoiceChannelId: null
+    })
+  );
+  const nextTriggerMs = (randomGen.minutes() + 1) * 60 * 1000;
+  clock.placeholder = new Date(nextTriggerMs);
+  runner.consume();
+  const oneHoursAgo = (randomGen.minutes() + 61) * 60 * 1000;
+  clock.placeholder = new Date(oneHoursAgo);
+  runner.consume();
+
+  expect(reply).toHaveBeenNthCalledWith(1, {
+    title: 'ゲリラを有効化しておいたよ。'
+  });
+  expect(reply).toHaveBeenNthCalledWith(2, {
+    title: 'Party安全装置が作動したよ。',
+    description:
+      '起動した本人がボイスチャンネルに居ないのでキャンセルしておいた。悪く思わないでね。'
+  });
+  expect(reply).toHaveBeenCalledTimes(2);
   expect(fn).not.toHaveBeenCalled();
 
   runner.killAll();
