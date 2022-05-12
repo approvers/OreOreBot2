@@ -196,14 +196,18 @@ test('party enable but must cancel', async () => {
       senderVoiceChannelId: null
     })
   );
-  // change time of clock
-  expect(reply).toHaveBeenCalledWith({
+  const nextTriggerMs = (randomGen.minutes() + 1) * 60 * 1000;
+  clock.placeholder = new Date(nextTriggerMs);
+  runner.consume();
+
+  expect(reply).toHaveBeenNthCalledWith(1, {
+    title: 'ゲリラを有効化しておいたよ。'
+  });
+  expect(reply).toHaveBeenNthCalledWith(2, {
     title: 'Party安全装置が作動したよ。',
     description:
       '起動した本人がボイスチャンネルに居ないのでキャンセルしておいた。悪く思わないでね。'
   });
-  // change time of clock again
-  expect(reply).toBeCalledTimes(1);
   expect(fn).not.toHaveBeenCalled();
 
   runner.killAll();
