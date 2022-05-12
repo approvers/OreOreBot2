@@ -153,9 +153,11 @@ export class PartyCommand implements CommandResponder {
     return this.random.pick(assetKeys);
   }
 
-  private async startPartyImmediately(message: CommandMessage): Promise<void> {
+  private async startPartyImmediately(
+    message: CommandMessage
+  ): Promise<'BREAK' | 'CONTINUE'> {
     if (this.connection) {
-      return;
+      return 'BREAK';
     }
     const roomId = message.senderVoiceChannelId;
     if (!roomId) {
@@ -164,7 +166,7 @@ export class PartyCommand implements CommandResponder {
         description:
           '起動した本人がボイスチャンネルに居ないのでキャンセルしておいた。悪く思わないでね。'
       });
-      throw new Error('suspended party ichiyo for safety');
+      return 'BREAK';
     }
     this.connection = await this.factory.connectTo(
       message.senderGuildId,
@@ -179,6 +181,7 @@ export class PartyCommand implements CommandResponder {
     await this.connection.playToEnd(this.generateNextKey());
     this.connection.destroy();
     this.connection = null;
+    return 'CONTINUE';
   }
 
   private nextTime(minutes: number): Date {
@@ -206,11 +209,9 @@ export class PartyCommand implements CommandResponder {
     this.scheduleRunner.runOnNextTime(
       'party-random',
       async () => {
-        try {
-          await this.startPartyImmediately(message);
-        } catch (e) {
+        if ((await this.startPartyImmediately(message)) === 'BREAK') {
           this.randomizedEnabled = false;
-          throw e;
+          return null;
         }
         return this.nextTime(this.random.minutes());
       },
