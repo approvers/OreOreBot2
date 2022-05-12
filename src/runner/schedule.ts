@@ -54,7 +54,7 @@ export class ScheduleRunner {
     for (const [key, task] of neededExe) {
       void task()
         .catch((e) => {
-          console.info(e);
+          console.error(e);
           return null;
         })
         .then((nextTime) => nextTime && this.queue.set(key, [task, nextTime]));
