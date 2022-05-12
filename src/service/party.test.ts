@@ -199,6 +199,9 @@ test('party enable but must cancel', async () => {
   const nextTriggerMs = (randomGen.minutes() + 1) * 60 * 1000;
   clock.placeholder = new Date(nextTriggerMs);
   runner.consume();
+  const oneHoursAgo = (randomGen.minutes() + 61) * 60 * 1000;
+  clock.placeholder = new Date(oneHoursAgo);
+  runner.consume();
 
   expect(reply).toHaveBeenNthCalledWith(1, {
     title: 'ゲリラを有効化しておいたよ。'
@@ -208,6 +211,7 @@ test('party enable but must cancel', async () => {
     description:
       '起動した本人がボイスチャンネルに居ないのでキャンセルしておいた。悪く思わないでね。'
   });
+  expect(reply).toHaveBeenCalledTimes(2);
   expect(fn).not.toHaveBeenCalled();
 
   runner.killAll();
