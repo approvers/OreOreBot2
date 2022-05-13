@@ -23,7 +23,7 @@ import {
 } from './kaere';
 import { KawaemonHasAllRoles, RoleManager } from './kawaemon-has-all-roles';
 import { KokuseiChousa, MemberStats } from './kokusei-chousa';
-import { Sheriff, SheriffCommand } from './s**t-the-f**k-up';
+import { Sheriff, SheriffCommand } from './stfu';
 import {
   type TypoObservable,
   TypoRecorder,
