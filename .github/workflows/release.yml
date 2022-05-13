@@ -1,5 +1,8 @@
 name: Release
 on:
+  push:
+    tags:
+      - "v*.*.*"
   schedule:
     #        +---------------- minute (0 - 59)
     #        | +------------- hour (0 - 23)
