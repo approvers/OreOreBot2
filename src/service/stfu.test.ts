@@ -1,4 +1,4 @@
-import { type Sheriff, SheriffCommand } from './s**t-the-f**k-up';
+import { type Sheriff, SheriffCommand } from './stfu';
 import { type Snowflake } from '../model/id';
 import { createMockMessage } from './command-message';
 

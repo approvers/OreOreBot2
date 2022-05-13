@@ -1,5 +1,5 @@
 import type { Client } from 'discord.js';
-import type { Sheriff } from '../service/s**t-the-f**k-up';
+import type { Sheriff } from '../service/stfu';
 import type { Snowflake } from '../model/id';
 
 export class DiscordSheriff implements Sheriff {
