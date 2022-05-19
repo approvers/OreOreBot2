@@ -66,3 +66,5 @@
   color: '#bfd4f2'
 - name: 'Priority*Medium'
   color: '#1D76DB'
+- name: '👀 needs review 👀'
+  color: '#E99695'
