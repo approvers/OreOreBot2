@@ -1,7 +1,7 @@
 ---
 name: Bug-report
 about: バグ報告のIssueを作成します。
-title: ''
+title: 'bug: '
 labels: bug
 assignees: ''
 ---
