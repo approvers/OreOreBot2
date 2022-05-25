@@ -32,7 +32,7 @@ import {
 } from './typo-record';
 import { DifferenceDetector } from './difference-detector';
 import { HelpCommand } from './help';
-import { Hukueki } from './hukueki';
+import { Meme } from './meme';
 import type { Snowflake } from '../model/id';
 import type { StandardOutput } from './output';
 import type { VoiceConnectionFactory } from './voice-connection';
@@ -72,7 +72,7 @@ export const registerAllCommandResponder = (
       reservationRepo
     ),
     new JudgementCommand(random),
-    new Hukueki(),
+    new Meme(),
     new HelpCommand(commandRunner),
     new KokuseiChousa(stats),
     new SheriffCommand(sheriff)

@@ -1,8 +1,8 @@
-import { Hukueki } from './hukueki';
+import { Meme } from './meme';
 import { createMockMessage } from './command-message';
 
 test('use case of hukueki', async () => {
-  const responder = new Hukueki();
+  const responder = new Meme();
   await responder.on(
     'CREATE',
     createMockMessage(
@@ -23,7 +23,7 @@ test('use case of hukueki', async () => {
 });
 
 test('use case of lolicon', async () => {
-  const responder = new Hukueki();
+  const responder = new Meme();
   await responder.on(
     'CREATE',
     createMockMessage(
@@ -42,7 +42,7 @@ test('use case of lolicon', async () => {
 });
 
 test('use case of dousureba', async () => {
-  const responder = new Hukueki();
+  const responder = new Meme();
   await responder.on(
     'CREATE',
     createMockMessage(
@@ -60,7 +60,7 @@ test('use case of dousureba', async () => {
 });
 
 test('use case of takopi', async () => {
-  const responder = new Hukueki();
+  const responder = new Meme();
   await responder.on(
     'CREATE',
     createMockMessage(
@@ -79,7 +79,7 @@ test('use case of takopi', async () => {
 });
 
 test('use case of takopi (-f)', async () => {
-  const responder = new Hukueki();
+  const responder = new Meme();
   await responder.on(
     'CREATE',
     createMockMessage(
@@ -98,7 +98,7 @@ test('use case of takopi (-f)', async () => {
 });
 
 test('use case of n', async () => {
-  const responder = new Hukueki();
+  const responder = new Meme();
   await responder.on(
     'CREATE',
     createMockMessage(
@@ -116,7 +116,7 @@ test('use case of n', async () => {
 });
 
 test('args space', async () => {
-  const responder = new Hukueki();
+  const responder = new Meme();
   await responder.on(
     'CREATE',
     createMockMessage(
@@ -135,7 +135,7 @@ test('args space', async () => {
 });
 
 test('args null (hukueki)', async () => {
-  const responder = new Hukueki();
+  const responder = new Meme();
   await responder.on(
     'CREATE',
     createMockMessage(
@@ -144,8 +144,8 @@ test('args null (hukueki)', async () => {
       },
       (message) => {
         expect(message).toStrictEqual({
-          title: '服役できなかった。',
-          description: '引数が不足してるみたいだ。'
+          description: '服役できなかった。',
+          title: '引数が不足してるみたいだ。'
         });
         return Promise.resolve();
       }
@@ -154,7 +154,7 @@ test('args null (hukueki)', async () => {
 });
 
 test('args null (lolicon)', async () => {
-  const responder = new Hukueki();
+  const responder = new Meme();
   await responder.on(
     'CREATE',
     createMockMessage(
@@ -163,8 +163,8 @@ test('args null (lolicon)', async () => {
       },
       (message) => {
         expect(message).toStrictEqual({
-          title: 'こるくはロリコンをやめられなかった。',
-          description: '引数が不足してるみたいだ。'
+          description: 'こるくはロリコンをやめられなかった。',
+          title: '引数が不足してるみたいだ。'
         });
         return Promise.resolve();
       }
@@ -173,7 +173,7 @@ test('args null (lolicon)', async () => {
 });
 
 test('args null (dousureba)', async () => {
-  const responder = new Hukueki();
+  const responder = new Meme();
   await responder.on(
     'CREATE',
     createMockMessage(
@@ -182,8 +182,8 @@ test('args null (dousureba)', async () => {
       },
       (message) => {
         expect(message).toStrictEqual({
-          title: 'どうしようもない。',
-          description: '引数が不足してるみたいだ。'
+          description: 'どうしようもない。',
+          title: '引数が不足してるみたいだ。'
         });
         return Promise.resolve();
       }
@@ -192,7 +192,7 @@ test('args null (dousureba)', async () => {
 });
 
 test('args null (takopi)', async () => {
-  const responder = new Hukueki();
+  const responder = new Meme();
   await responder.on(
     'CREATE',
     createMockMessage(
@@ -201,8 +201,8 @@ test('args null (takopi)', async () => {
       },
       (message) => {
         expect(message).toStrictEqual({
-          title: '(引数が)わ、わかんないっピ.......',
-          description: '引数が不足してるみたいだ。'
+          description: '(引数が)わ、わかんないっピ.......',
+          title: '引数が不足してるみたいだ。'
         });
         return Promise.resolve();
       }
@@ -211,7 +211,7 @@ test('args null (takopi)', async () => {
 });
 
 test('args null (n)', async () => {
-  const responder = new Hukueki();
+  const responder = new Meme();
   await responder.on(
     'CREATE',
     createMockMessage(
@@ -220,9 +220,9 @@ test('args null (n)', async () => {
       },
       (message) => {
         expect(message).toStrictEqual({
-          title: 'Nった',
+          title: '引数が不足してるみたいだ。',
           description:
-            '引数が不足してるみたいだ。このままだと <@521958252280545280> みたいに留年しちゃう....'
+            'このままだと <@521958252280545280> みたいに留年しちゃう....'
         });
         return Promise.resolve();
       }
@@ -231,7 +231,7 @@ test('args null (n)', async () => {
 });
 
 test('delete message', async () => {
-  const responder = new Hukueki();
+  const responder = new Meme();
   const fn = jest.fn();
   await responder.on(
     'DELETE',
