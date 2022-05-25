@@ -9,11 +9,13 @@ test('use case of stfu', async () => {
   const sheriff: Sheriff = { executeMessage };
   const responder = new SheriffCommand(sheriff);
   const fn = jest.fn();
+  const react = jest.fn<Promise<void>, [string]>(() => Promise.resolve());
   await responder.on(
     'CREATE',
     createMockMessage({
       args: ['stfu'],
-      reply: fn
+      reply: fn,
+      react
     })
   );
 
@@ -22,6 +24,7 @@ test('use case of stfu', async () => {
     '711127633810817026' as Snowflake,
     50
   );
+  expect(react).toHaveBeenCalledWith('👌');
 });
 
 test('delete message', async () => {
