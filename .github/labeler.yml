@@ -1,53 +1,53 @@
 workflows:
   - .github/workflows/:.yml
 
-Type:Bold-Italic警察:
+type:Bold-Italic警察:
   - src/service/bold-italic-cop.ts
   - src/service/bold-italic-cop.test.ts
 
-Type:Delete Diff:
+type:Delete Diff:
   - src/service/deletion-repeater.ts
   - src/service/deletion-repeater.test.ts
 
-Type:Edit Diff:
+type:Edit Diff:
   - src/service/difference-detector.ts
   - src/service/difference-detector.test.ts
 
-Type:help:
+type:help:
   - src/service/help.ts
 
-Type:Judgement:
+type:Judgement:
   - src/service/judgement.ts
   - src/service/judgement.test.ts
 
-Type:Kaere:
+type:Kaere:
   - src/service/kaere.ts
   - src/service/kaere.test.ts
 
-Type:Kawae Role:
+type:Kawae Role:
   - src/service/kaere.ts
   - src/service/kaere.test.ts
 
-Type:Party:
+type:Party:
   - src/service/party.ts
   - src/service/party.test.ts
 
-Type:Typo Record:
+type:typo Record:
   - src/service/typo-record.ts
   - src/service/typo-record.test.ts
 
-Type:Voice Diff:
+type:Voice Diff:
   - src/service/voice-diff.ts
   - src/service/voice-diff.test.ts
 
-Type:はらちょ粛清:
+type:はらちょ粛清:
   - src/service/stfu.ts
   - src/service/stfu.test.ts
 
-Type:国勢調査:
+type:国勢調査:
   - src/service/kokusei-chousa.ts
   - src/service/kokusei-chousa.test.ts
 
-Type:服役:
+type:服役:
   - src/service/hukueki.ts
   - src/service/hukueki.test.ts
