@@ -57,6 +57,9 @@ export const converterWithPrefix =
             await mes.edit({ embeds: [convertEmbed(embed)] });
           }
         };
+      },
+      async react(emoji) {
+        await message.react(emoji);
       }
     };
     await func(command);
