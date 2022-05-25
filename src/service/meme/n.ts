@@ -2,7 +2,7 @@ import type { MemeTemplate } from '../../model/meme-template';
 
 export const n: MemeTemplate<never, never> = {
   commandNames: ['n'],
-  description: '',
+  description: '〜Nった',
   flagsKeys: [],
   optionsKeys: [],
   errorMessage: 'このままだと <@521958252280545280> みたいに留年しちゃう....',

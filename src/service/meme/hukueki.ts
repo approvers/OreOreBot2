@@ -2,7 +2,7 @@ import type { MemeTemplate } from '../../model/meme-template';
 
 export const hukueki: MemeTemplate<never, never> = {
   commandNames: ['hukueki'],
-  description: '',
+  description: '〜はしてないといいね',
   flagsKeys: [],
   optionsKeys: [],
   errorMessage: '服役できなかった。',

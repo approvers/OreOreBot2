@@ -2,7 +2,7 @@ import type { MemeTemplate } from '../../model/meme-template';
 
 export const lolicon: MemeTemplate<never, never> = {
   commandNames: ['lolicon'],
-  description: '',
+  description: 'だから僕は〜を辞めた',
   flagsKeys: [],
   optionsKeys: [],
   errorMessage: 'こるくはロリコンをやめられなかった。',
