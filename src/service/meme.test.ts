@@ -41,13 +41,13 @@ test('use case of lolicon', async () => {
   );
 });
 
-test('use case of dousureba', async () => {
+test('use case of dousurya', async () => {
   const responder = new Meme();
   await responder.on(
     'CREATE',
     createMockMessage(
       {
-        args: ['dousureba', 'こるく']
+        args: ['dousurya', 'こるく']
       },
       (message) => {
         expect(message).toStrictEqual({
