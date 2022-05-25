@@ -1,5 +1,5 @@
 workflows:
-  - .github/workflows/:.yml
+  - .github/workflows/*.yml
 
 type:Bold-Italic警察:
   - src/service/bold-italic-cop.ts
