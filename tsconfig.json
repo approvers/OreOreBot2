@@ -18,6 +18,10 @@
     "experimentalDecorators": true,
     "pretty": true,
     "newLine": "CRLF",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/typings"
+    ]
   }
 }
