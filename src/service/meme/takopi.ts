@@ -1,6 +1,6 @@
 import type { MemeTemplate } from '../../model/meme-template';
 
-export const takopiFlags = ['f'] as const;
+const takopiFlags = ['f'] as const;
 
 export const takopi: MemeTemplate<typeof takopiFlags[number], never> = {
   commandNames: ['takopi'],
