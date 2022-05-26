@@ -24,7 +24,7 @@
     "yarn": "1.x"
   },
   "lint-staged": {
-    "*.{js,ts}": [
+    "*.{js,ts,md}": [
       "eslint --fix",
       "prettier --write"
     ]
