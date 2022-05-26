@@ -1,3 +1,4 @@
+import type { EmbedMessage } from '../model/embed-message';
 import { Meme } from './meme';
 import { createMockMessage } from './command-message';
 
@@ -241,4 +242,23 @@ test('delete message', async () => {
     })
   );
   expect(fn).not.toHaveBeenCalled();
+});
+
+test('help of meme', async () => {
+  const responder = new Meme();
+  const fn = jest.fn<Promise<void>, [EmbedMessage]>(() => Promise.resolve());
+  await responder.on(
+    'CREATE',
+    createMockMessage(
+      {
+        args: ['takopi', '--help']
+      },
+      fn
+    )
+  );
+  expect(fn).toHaveBeenCalledWith({
+    title: '`takopi`',
+    description:
+      '「〜、出して」\n`-f` で教員と自分の名前の位置を反対にします。([idea: フライさん](https://github.com/approvers/OreOreBot2/issues/90))'
+  });
 });
