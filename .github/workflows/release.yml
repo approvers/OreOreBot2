@@ -2,7 +2,7 @@ name: Release
 on:
   push:
     tags:
-      - "v*.*.*"
+      - "latest"
   schedule:
     #        +---------------- minute (0 - 59)
     #        | +------------- hour (0 - 23)
