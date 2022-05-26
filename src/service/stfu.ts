@@ -50,5 +50,6 @@ export class SheriffCommand implements CommandResponder {
 
     const channel = message.senderChannelId;
     await this.sheriff.executeMessage(channel, 50);
+    await message.react('👌');
   }
 }

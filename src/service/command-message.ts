@@ -65,6 +65,14 @@ export interface CommandMessage {
    * @memberof CommandMessage
    */
   reply(message: EmbedMessage): Promise<SentMessage>;
+
+  /**
+   * このメッセージに `emoji` の絵文字でリアクションする。
+   *
+   * @param emoji
+   * @memberof CommandMessage
+   */
+  react(emoji: string): Promise<void>;
 }
 
 /**
@@ -108,5 +116,6 @@ export const createMockMessage = (
         Promise.resolve({
           edit: () => Promise.resolve()
         }),
+  react: () => Promise.resolve(),
   ...partial
 });
