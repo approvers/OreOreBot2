@@ -44,7 +44,7 @@ export class Meme implements CommandResponder {
     const { flags, options, unparsed } = parse(commandArgs);
     const body = unparsed.join(' ');
     const sanitizedOptions = sanitizeOptions(options);
-    if (sanitizedOptions['help']) {
+    if (flags['help'] || sanitizedOptions['help']) {
       await message.reply({
         title: meme.commandNames.map((name) => `\`${name}\``).join('/'),
         description: meme.description
