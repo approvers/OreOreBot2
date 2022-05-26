@@ -1,7 +1,7 @@
 import type { MemeTemplate } from '../../model/meme-template';
 
 export const dousurya: MemeTemplate<never, never> = {
-  commandNames: ['dousurya'],
+  commandNames: ['dousurya', 'dousureba'],
   description: '限界みたいな鯖に住んでる〜はどうすりゃいいですか？',
   flagsKeys: [],
   optionsKeys: [],

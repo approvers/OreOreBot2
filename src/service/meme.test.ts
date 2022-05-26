@@ -58,6 +58,20 @@ test('use case of dousurya', async () => {
       }
     )
   );
+  await responder.on(
+    'CREATE',
+    createMockMessage(
+      {
+        args: ['dousureba', 'こるく']
+      },
+      (message) => {
+        expect(message).toStrictEqual({
+          description: `限界みたいな鯖に住んでるこるくはどうすりゃいいですか？`
+        });
+        return Promise.resolve();
+      }
+    )
+  );
 });
 
 test('use case of takopi', async () => {
