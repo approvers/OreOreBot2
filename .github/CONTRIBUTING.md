@@ -140,4 +140,3 @@ OreOreBot2 では Issue Template を用意しています。
 - Pull Request 作成時は Issue と同様テンプレートが用意されているので詳細情報の記載をお願いします。
 - draft などぜひ有効活用してください。
   - 一度作成しても Assign の欄に `Still in progress? Convert to draft` とわかりにくいですがこれを利用することで途中からでも draft に設定できます。
-
