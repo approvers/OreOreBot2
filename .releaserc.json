@@ -5,6 +5,7 @@
     "@semantic-release/github"
   ],
   "branches": [
-    "main"
+    "main",
+    "refs/tags/latest"
   ]
 }
