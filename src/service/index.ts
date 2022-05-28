@@ -23,6 +23,7 @@ import {
 } from './kaere';
 import { KawaemonHasAllRoles, RoleManager } from './kawaemon-has-all-roles';
 import { KokuseiChousa, MemberStats } from './kokusei-chousa';
+import { Sheriff, SheriffCommand } from './stfu';
 import {
   type TypoObservable,
   TypoRecorder,
@@ -31,7 +32,7 @@ import {
 } from './typo-record';
 import { DifferenceDetector } from './difference-detector';
 import { HelpCommand } from './help';
-import { Hukueki } from './hukueki';
+import { Meme } from './meme';
 import type { Snowflake } from '../model/id';
 import type { StandardOutput } from './output';
 import type { VoiceConnectionFactory } from './voice-connection';
@@ -57,7 +58,8 @@ export const registerAllCommandResponder = (
   random: PartyRng & RandomGenerator,
   roomController: VoiceRoomController,
   commandRunner: MessageResponseRunner<CommandMessage, CommandResponder>,
-  stats: MemberStats
+  stats: MemberStats,
+  sheriff: Sheriff
 ) => {
   const allResponders = [
     new TypoReporter(typoRepo, clock, scheduleRunner),
@@ -70,9 +72,10 @@ export const registerAllCommandResponder = (
       reservationRepo
     ),
     new JudgementCommand(random),
-    new Hukueki(),
+    new Meme(),
     new HelpCommand(commandRunner),
-    new KokuseiChousa(stats)
+    new KokuseiChousa(stats),
+    new SheriffCommand(sheriff)
   ];
   for (const responder of allResponders) {
     commandRunner.addResponder(responder);

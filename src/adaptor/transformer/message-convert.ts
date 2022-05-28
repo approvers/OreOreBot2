@@ -43,6 +43,7 @@ export const converterWithPrefix =
     const command: CommandMessage = {
       senderId: getAuthorSnowflake(message),
       senderGuildId: message.guildId as Snowflake,
+      senderChannelId: message.channelId as Snowflake,
       get senderVoiceChannelId(): Snowflake | null {
         const id = message.member?.voice.channelId ?? null;
         return id ? (id as Snowflake) : null;
@@ -56,6 +57,9 @@ export const converterWithPrefix =
             await mes.edit({ embeds: [convertEmbed(embed)] });
           }
         };
+      },
+      async react(emoji) {
+        await message.react(emoji);
       }
     };
     await func(command);

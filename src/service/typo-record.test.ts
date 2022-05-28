@@ -1,5 +1,6 @@
 import { InMemoryTypoRepository, MockClock } from '../adaptor';
 import { TypoRecorder, TypoReporter, type TypoRepository } from './typo-record';
+import { addDays, setHours, setMinutes } from 'date-fns';
 import EventEmitter from 'events';
 import { ScheduleRunner } from '../runner';
 import type { Snowflake } from '../model/id';
@@ -120,6 +121,56 @@ test('must not reply', async () => {
     })
   );
   expect(fn).not.toHaveBeenCalled();
+
+  runner.killAll();
+});
+
+test('clear typos on next day', async () => {
+  const clock = new MockClock(new Date(0));
+  const db = new InMemoryTypoRepository();
+  await db.addTypo('279614913129742338' as Snowflake, 'foo');
+  await db.addTypo('279614913129742338' as Snowflake, 'hoge');
+
+  const runner = new ScheduleRunner(clock);
+
+  const responder = new TypoReporter(db, clock, runner);
+  await responder.on(
+    'CREATE',
+    createMockMessage(
+      {
+        args: ['typo']
+      },
+      (message) => {
+        expect(message).toStrictEqual({
+          title: `† 今日のMikuroさいなのtypo †`,
+          description: '- foo\n- hoge'
+        });
+        return Promise.resolve();
+      }
+    )
+  );
+
+  const now = clock.now();
+  const nextDay = addDays(now, 1);
+  const nextDay6 = setHours(nextDay, 6);
+  clock.placeholder = setMinutes(nextDay6, 1);
+  runner.consume();
+
+  await responder.on(
+    'CREATE',
+    createMockMessage(
+      {
+        args: ['typo']
+      },
+      (message) => {
+        expect(message).toStrictEqual({
+          title: `† 今日のMikuroさいなのtypo †`,
+          description: ''
+        });
+        return Promise.resolve();
+      }
+    )
+  );
 
   runner.killAll();
 });

@@ -1,7 +1,7 @@
 import type { Clock } from '../runner';
 
 export class MockClock implements Clock {
-  constructor(private readonly placeholder: Date) {}
+  constructor(public placeholder: Date) {}
 
   now(): Date {
     return this.placeholder;

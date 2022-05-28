@@ -1,23 +1,23 @@
 ---
 name: Bug-report
 about: バグ報告のIssueを作成します。
-title: ''
+title: 'bug: '
 labels: bug
 assignees: ''
 ---
 
-**Describe the bug (説明)**
+### Describe the bug (説明)
 
-**To Reproduce (再現方法)**
+### To Reproduce (再現方法)
 
-**Expected behavior (期待される動作)**
+### Expected behavior (期待される動作)
 
-**Screenshots (スクリーンショット)**
+### Screenshots (スクリーンショット)
 
-**Client Information (クライアント情報)**
+### Client Information (クライアント情報)
 
 - OS:
 - Client[e.g. Stable, Canary]:
 - Version: <!-- Discordの設定画面から確認できます -->
 
-**Additional context (追加情報)**
+### Additional context (追加情報)

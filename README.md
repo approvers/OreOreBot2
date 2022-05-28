@@ -5,6 +5,7 @@
 [![run eslint](https://github.com/approvers/OreOreBot2/actions/workflows/eslint.yml/badge.svg)](https://github.com/approvers/OreOreBot2/actions/workflows/eslint.yml)
 [![run jest](https://github.com/approvers/OreOreBot2/actions/workflows/test.yml/badge.svg)](https://github.com/approvers/OreOreBot2/actions/workflows/test.yml)
 [![run prettier](https://github.com/approvers/OreOreBot2/actions/workflows/prettier.yml/badge.svg)](https://github.com/approvers/OreOreBot2/actions/workflows/prettier.yml)
+[![codecov](https://codecov.io/gh/approvers/OreOreBot2/branch/main/graph/badge.svg?token=YVDPQFTLZK)](https://codecov.io/gh/approvers/OreOreBot2)
 
 ---
 
@@ -39,7 +40,14 @@
 
 貢献に関する規定などは [CONTRIBUTING.md](.github/CONTRIBUTING.md) をご覧ください。
 
-(開発に関する質問は [Issue](https://github.com/approvers/OreOreBot2/issues) か 限界開発鯖内 プロジェクトチャンネル [`#新生はらちょ`](https://discordapp.com/channels/683939861539192860/947208529561927710) までどうぞ。)
+開発に関する質問は **限界開発鯖内 プロジェクトチャンネル [`#新生はらちょ`](https://discordapp.com/channels/683939861539192860/947208529561927710)
+または [Discussions](https://github.com/approvers/OreOreBot2/discussions)** までどうぞ。
+
+### OreOreBot2 Discussion
+
+OreOreBot2 の [Discussions](https://github.com/approvers/OreOreBot2/discussions) では開発の議論などを行っています。
+
+- [Discussion の使い方](https://github.com/approvers/OreOreBot2/discussions/147)
 
 ## 環境構築
 

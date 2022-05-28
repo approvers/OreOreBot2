@@ -36,6 +36,7 @@ import {
 import type { AssetKey } from '../service/party';
 import { DiscordMemberStats } from '../adaptor/discord-member-stats';
 import { DiscordRoleManager } from '../adaptor/discord-role';
+import { DiscordSheriff } from '../adaptor/discord-sheriff';
 import type { KaereMusicKey } from '../service/kaere';
 import { Snowflake } from '../model/id';
 import dotenv from 'dotenv';
@@ -115,7 +116,8 @@ registerAllCommandResponder(
   new MathRandomGenerator(),
   new DiscordVoiceRoomController(client),
   commandRunner,
-  new DiscordMemberStats(client, GUILD_ID as Snowflake)
+  new DiscordMemberStats(client, GUILD_ID as Snowflake),
+  new DiscordSheriff(client)
 );
 
 const provider = new VoiceRoomProxy<VoiceChannelParticipant>(
