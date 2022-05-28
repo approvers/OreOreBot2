@@ -20,6 +20,7 @@ import type {
   CommandResponder
 } from '../service/command-message';
 import {
+  EmojiResponseRunner,
   MessageResponseRunner,
   MessageUpdateResponseRunner,
   RoleResponseRunner,
@@ -28,6 +29,7 @@ import {
 } from '../runner';
 import { type VoiceChannelParticipant, VoiceDiff } from '../service/voice-diff';
 import {
+  allEmojiResponder,
   allMessageEventResponder,
   allMessageUpdateEventResponder,
   allRoleResponder,
@@ -37,6 +39,7 @@ import type { AssetKey } from '../service/party';
 import { DiscordMemberStats } from '../adaptor/discord-member-stats';
 import { DiscordRoleManager } from '../adaptor/discord-role';
 import { DiscordSheriff } from '../adaptor/discord-sheriff';
+import { EmojiProxy } from '../adaptor/emoji-proxy';
 import type { KaereMusicKey } from '../service/kaere';
 import { Snowflake } from '../model/id';
 import dotenv from 'dotenv';
@@ -140,6 +143,9 @@ roleRunner.addResponder(
   )
 );
 roleProxy(client, roleRunner);
+
+const emojiRunner = new EmojiResponseRunner(new EmojiProxy(client));
+emojiRunner.addResponder(allEmojiResponder(output));
 
 client.once('ready', () => {
   readyLog(client);
