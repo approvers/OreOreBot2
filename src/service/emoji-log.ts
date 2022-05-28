@@ -14,7 +14,7 @@ export class EmojiLog implements EmojiEventResponder<EmojiData> {
     }
 
     await this.output.sendEmbed({
-      title: '絵文字作成',
+      title: '絵文字警察',
       description: `<@${role.emojiAuthorId}> が ${role.emoji} を作成しました`
     });
   }
