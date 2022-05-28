@@ -13,7 +13,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          port: ${{ secrets.SSH_PORT }}
+          port: 22
           script: |
             cd OreOreBot2
             git pull
