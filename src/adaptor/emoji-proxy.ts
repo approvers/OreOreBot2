@@ -11,7 +11,7 @@ export class EmojiProxy implements EmojiEventProvider<EmojiData> {
     this.client.on('emojiCreate', (emoji) =>
       handler({
         emoji: emoji.toString(),
-        emojiAuthorId: emoji.author?.id ?? '不明'
+        emojiAuthorId: emoji.author?.id ?? undefined
       })
     );
   }
