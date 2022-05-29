@@ -8,6 +8,7 @@ import {
   type Clock,
   type MessageResponseRunner,
   ScheduleRunner,
+  composeEmojiEventResponders,
   composeMessageEventResponders,
   composeMessageUpdateEventResponders,
   composeRoleEventResponders
@@ -31,6 +32,7 @@ import {
   type TypoRepository
 } from './typo-record';
 import { DifferenceDetector } from './difference-detector';
+import { EmojiLog } from './emoji-log';
 import { HelpCommand } from './help';
 import { Meme } from './meme';
 import type { Snowflake } from '../model/id';
@@ -90,3 +92,6 @@ export const allRoleResponder = (
   composeRoleEventResponders(
     new KawaemonHasAllRoles(kawaemonId, roleManager, output)
   );
+
+export const allEmojiResponder = (output: StandardOutput) =>
+  composeEmojiEventResponders(new EmojiLog(output));
