@@ -1,5 +1,5 @@
-import { EmojiEventResponder, RoleEvent } from '../runner';
-import { StandardOutput } from './output';
+import type { EmojiEventResponder, RoleEvent } from '../runner';
+import type { StandardOutput } from './output';
 
 export interface EmojiData {
   emoji: string;
