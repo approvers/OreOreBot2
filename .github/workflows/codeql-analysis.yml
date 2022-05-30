@@ -3,12 +3,16 @@ name: run codeql analysis
 on:
   push:
     branches:
-     - main
+      - main
   pull_request:
     branches:
-     - main
+      - main
+    paths-ignore:
+      - "**.md"
+      - "**.json"
+      - "**.lock"
   schedule:
-    - cron: '34 5 * * 1'
+    - cron: "34 5 * * 1"
 
 jobs:
   analyze:
@@ -20,20 +24,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'typescript' ] # https://git.io/codeql-language-support
+        language: ["typescript"] # https://git.io/codeql-language-support
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
-      with:
-        languages: ${{ matrix.language }}
-        config-file: ./.github/codeql/codeql-config.yml
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: ${{ matrix.language }}
+          config-file: ./.github/codeql/codeql-config.yml
 
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v1
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
 
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
