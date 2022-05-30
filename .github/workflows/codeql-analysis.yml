@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - "**.md"
-      - "**.json"
-      - "**.lock"
   pull_request:
     branches:
       - main
