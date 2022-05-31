@@ -39,3 +39,5 @@ export function emojiOf(status: JudgingStatus): string {
       return '<:ac:981090343590166608>';
   }
 }
+
+export const waitingJudgingEmoji = '<:wj:981095156575002634>';
