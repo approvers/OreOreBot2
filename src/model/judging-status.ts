@@ -22,17 +22,17 @@ export function hasNoTestCases(status: JudgingStatus): boolean {
 export function emojiOf(status: JudgingStatus): string {
   switch (status) {
     case 'CE':
-      return '<:CE:981112214633218088>';
+      return '<:CE:981118707264811018>';
     case 'MLE':
-      return '<:MLE:981112214620610610>';
+      return '<:MLE:981118706916675614>';
     case 'TLE':
       return '<:TLE:714879875969712193>';
     case 'RE':
-      return '<:RE:981112215044255764>';
+      return '<:RE:981118707222872084>';
     case 'OLE':
-      return '<:OLE:981112214691905536>';
+      return '<:OLE:981118707088637962>';
     case 'IE':
-      return '<:IE:981112214436085820>';
+      return '<:IE:981118706920865802>';
     case 'WA':
       return '<:WA:714879905111736320>';
     case 'AC':
