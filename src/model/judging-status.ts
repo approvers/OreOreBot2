@@ -22,22 +22,22 @@ export function hasNoTestCases(status: JudgingStatus): boolean {
 export function emojiOf(status: JudgingStatus): string {
   switch (status) {
     case 'CE':
-      return '<:ce:981090343594360842>';
+      return '<:CE:981112214633218088>';
     case 'MLE':
-      return '<:mle:981090343606956082>';
+      return '<:MLE:981112214620610610>';
     case 'TLE':
-      return '<:tle:981090343669862420>';
+      return '<:TLE:714879875969712193>';
     case 'RE':
-      return '<:re:981090343506305055>';
+      return '<:RE:981112215044255764>';
     case 'OLE':
-      return '<:ole:981090343476953099>';
+      return '<:OLE:981112214691905536>';
     case 'IE':
-      return '<:ie:981090343644717106>';
+      return '<:IE:981112214436085820>';
     case 'WA':
-      return '<:wa:981090344009609236>';
+      return '<:WA:714879905111736320>';
     case 'AC':
-      return '<:ac:981090343590166608>';
+      return '<:AC:714879672353161236>';
   }
 }
 
-export const waitingJudgingEmoji = '<:wj:981095156575002634>';
+export const waitingJudgingEmoji = '<:WJ:714879935256461355>';
