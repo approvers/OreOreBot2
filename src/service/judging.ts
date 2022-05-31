@@ -3,6 +3,12 @@ import type {
   CommandResponder,
   HelpInfo
 } from './command-message';
+import {
+  emojiOf,
+  hasNoTestCases,
+  isJudgingStatus,
+  waitingJudgingEmoji
+} from '../model/judging-status';
 import type { MessageEvent } from '../runner';
 
 /**
@@ -78,31 +84,41 @@ export class JudgingCommand implements CommandResponder {
       });
       return;
     }
-    const willBeAccepted = result === 'AC';
 
-    if (willBeAccepted) {
-      await this.accept(message, count);
-    } else {
+    if (!isJudgingStatus(result)) {
       await this.reject(message, count, errorFromStartArg, result);
+      return;
     }
+    if (result === 'AC') {
+      await this.accept(message, count);
+      return;
+    }
+    if (hasNoTestCases(result)) {
+      await message.reply({
+        title: JUDGING_TITLE,
+        description: emojiOf(result)
+      });
+      return;
+    }
+    await this.reject(message, count, errorFromStartArg, emojiOf(result));
   }
 
   private async accept(message: CommandMessage, count: number) {
     const sent = await message.reply({
       title: JUDGING_TITLE,
-      description: `0 / ${count} WJ`
+      description: `0 / ${count} ${waitingJudgingEmoji}`
     });
 
     for (let i = 1; i <= count - 1; ++i) {
       await sent.edit({
         title: JUDGING_TITLE,
-        description: `${i} / ${count} WJ`
+        description: `${i} / ${count} ${waitingJudgingEmoji}`
       });
       await this.rng.sleep();
     }
     await sent.edit({
       title: JUDGING_TITLE,
-      description: `${count} / ${count} AC`
+      description: `${count} / ${count} ${emojiOf('AC')}`
     });
   }
 
@@ -114,7 +130,7 @@ export class JudgingCommand implements CommandResponder {
   ) {
     const sent = await message.reply({
       title: JUDGING_TITLE,
-      description: `0 / ${count} WJ`
+      description: `0 / ${count} ${waitingJudgingEmoji}`
     });
 
     const errorFromStart = errorFromStartArg == '-all';
@@ -123,7 +139,9 @@ export class JudgingCommand implements CommandResponder {
     for (let i = 1; i <= count - 1; ++i) {
       await sent.edit({
         title: JUDGING_TITLE,
-        description: `${i} / ${count} ${errorAt <= i ? result : 'WJ'}`
+        description: `${i} / ${count} ${
+          errorAt <= i ? result : waitingJudgingEmoji
+        }`
       });
       await this.rng.sleep();
     }
