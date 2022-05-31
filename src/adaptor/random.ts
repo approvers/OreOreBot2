@@ -1,7 +1,7 @@
-import type { RandomGenerator as JudgementRng } from '../service/judgement';
+import type { RandomGenerator as JudgingRng } from '../service/judging';
 import type { RandomGenerator as PartyRng } from '../service/party';
 
-export class MathRandomGenerator implements PartyRng, JudgementRng {
+export class MathRandomGenerator implements PartyRng, JudgingRng {
   minutes(): number {
     return Math.floor(Math.random() * 60);
   }

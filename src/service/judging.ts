@@ -3,10 +3,16 @@ import type {
   CommandResponder,
   HelpInfo
 } from './command-message';
+import {
+  emojiOf,
+  hasNoTestCases,
+  isJudgingStatus,
+  waitingJudgingEmoji
+} from '../model/judging-status';
 import type { MessageEvent } from '../runner';
 
 /**
- * `JudgementCommand` のための乱数生成器。
+ * `JudgingCommand` のための乱数生成器。
  *
  * @export
  * @interface RandomGenerator
@@ -31,18 +37,18 @@ export interface RandomGenerator {
   uniform(from: number, to: number): number;
 }
 
-const JUDGEMENT_TITLE = '***†HARACHO ONLINE JUDGEMENT SYSTEM†***';
+const JUDGING_TITLE = '***†HARACHO ONLINE JUDGING SYSTEM†***';
 
 /**
  * `judge` コマンドで競技プログラミングの判定をシミュレートする。
  *
  * @export
- * @class JudgementCommand
+ * @class JudgingCommand
  * @implements {MessageEventResponder<CommandMessage>}
  */
-export class JudgementCommand implements CommandResponder {
+export class JudgingCommand implements CommandResponder {
   help: Readonly<HelpInfo> = {
-    title: JUDGEMENT_TITLE,
+    title: JUDGING_TITLE,
     description: 'プログラムが適格かどうか判定してあげるよ',
     commandName: ['jd', 'judge'],
     argsFormat: [
@@ -78,31 +84,41 @@ export class JudgementCommand implements CommandResponder {
       });
       return;
     }
-    const willBeAccepted = result === 'AC';
 
-    if (willBeAccepted) {
-      await this.accept(message, count);
-    } else {
+    if (!isJudgingStatus(result)) {
       await this.reject(message, count, errorFromStartArg, result);
+      return;
     }
+    if (result === 'AC') {
+      await this.accept(message, count);
+      return;
+    }
+    if (hasNoTestCases(result)) {
+      await message.reply({
+        title: JUDGING_TITLE,
+        description: emojiOf(result)
+      });
+      return;
+    }
+    await this.reject(message, count, errorFromStartArg, emojiOf(result));
   }
 
   private async accept(message: CommandMessage, count: number) {
     const sent = await message.reply({
-      title: JUDGEMENT_TITLE,
-      description: `0 / ${count} WJ`
+      title: JUDGING_TITLE,
+      description: `0 / ${count} ${waitingJudgingEmoji}`
     });
 
     for (let i = 1; i <= count - 1; ++i) {
       await sent.edit({
-        title: JUDGEMENT_TITLE,
-        description: `${i} / ${count} WJ`
+        title: JUDGING_TITLE,
+        description: `${i} / ${count} ${waitingJudgingEmoji}`
       });
       await this.rng.sleep();
     }
     await sent.edit({
-      title: JUDGEMENT_TITLE,
-      description: `${count} / ${count} AC`
+      title: JUDGING_TITLE,
+      description: `${count} / ${count} ${emojiOf('AC')}`
     });
   }
 
@@ -113,8 +129,8 @@ export class JudgementCommand implements CommandResponder {
     result: string
   ) {
     const sent = await message.reply({
-      title: JUDGEMENT_TITLE,
-      description: `0 / ${count} WJ`
+      title: JUDGING_TITLE,
+      description: `0 / ${count} ${waitingJudgingEmoji}`
     });
 
     const errorFromStart = errorFromStartArg == '-all';
@@ -122,13 +138,15 @@ export class JudgementCommand implements CommandResponder {
 
     for (let i = 1; i <= count - 1; ++i) {
       await sent.edit({
-        title: JUDGEMENT_TITLE,
-        description: `${i} / ${count} ${errorAt <= i ? result : 'WJ'}`
+        title: JUDGING_TITLE,
+        description: `${i} / ${count} ${
+          errorAt <= i ? result : waitingJudgingEmoji
+        }`
       });
       await this.rng.sleep();
     }
     await sent.edit({
-      title: JUDGEMENT_TITLE,
+      title: JUDGING_TITLE,
       description: `${count} / ${count} ${result}`
     });
   }

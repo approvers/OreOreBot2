@@ -1,9 +1,10 @@
+import { emojiOf, waitingJudgingEmoji } from '../model/judging-status';
 import type { EmbedMessage } from '../model/embed-message';
-import { JudgementCommand } from './judgement';
+import { JudgingCommand } from './judging';
 import { createMockMessage } from './command-message';
 
 test('use case of jd', async () => {
-  const responder = new JudgementCommand({
+  const responder = new JudgingCommand({
     sleep: () => Promise.resolve(),
     uniform: () => 2
   });
@@ -17,8 +18,8 @@ test('use case of jd', async () => {
       },
       (embed) => {
         expect(embed).toStrictEqual({
-          title: '***†HARACHO ONLINE JUDGEMENT SYSTEM†***',
-          description: '0 / 5 WJ'
+          title: '***†HARACHO ONLINE JUDGING SYSTEM†***',
+          description: `0 / 5 ${waitingJudgingEmoji}`
         });
         return Promise.resolve({ edit: fn });
       }
@@ -28,18 +29,18 @@ test('use case of jd', async () => {
   expect(fn).toBeCalledTimes(5);
   for (let i = 0; i < 4; ++i) {
     expect(fn.mock.calls[i][0]).toStrictEqual({
-      title: '***†HARACHO ONLINE JUDGEMENT SYSTEM†***',
-      description: `${i + 1} / 5 WJ`
+      title: '***†HARACHO ONLINE JUDGING SYSTEM†***',
+      description: `${i + 1} / 5 ${waitingJudgingEmoji}`
     });
   }
   expect(fn.mock.calls[4][0]).toStrictEqual({
-    title: '***†HARACHO ONLINE JUDGEMENT SYSTEM†***',
-    description: `5 / 5 AC`
+    title: '***†HARACHO ONLINE JUDGING SYSTEM†***',
+    description: `5 / 5 ${emojiOf('AC')}`
   });
 });
 
 test('use case of judge', async () => {
-  const responder = new JudgementCommand({
+  const responder = new JudgingCommand({
     sleep: () => Promise.resolve(),
     uniform: () => 0
   });
@@ -49,12 +50,12 @@ test('use case of judge', async () => {
     'CREATE',
     createMockMessage(
       {
-        args: ['judge', '1', 'WA']
+        args: ['judge', '1', 'WWW']
       },
       (embed) => {
         expect(embed).toStrictEqual({
-          title: '***†HARACHO ONLINE JUDGEMENT SYSTEM†***',
-          description: '0 / 1 WJ'
+          title: '***†HARACHO ONLINE JUDGING SYSTEM†***',
+          description: `0 / 1 ${waitingJudgingEmoji}`
         });
         return Promise.resolve({ edit: fn });
       }
@@ -63,13 +64,13 @@ test('use case of judge', async () => {
 
   expect(fn).toBeCalledTimes(1);
   expect(fn.mock.calls[0][0]).toStrictEqual({
-    title: '***†HARACHO ONLINE JUDGEMENT SYSTEM†***',
-    description: `1 / 1 WA`
+    title: '***†HARACHO ONLINE JUDGING SYSTEM†***',
+    description: `1 / 1 WWW`
   });
 });
 
 test('max number of cases', async () => {
-  const responder = new JudgementCommand({
+  const responder = new JudgingCommand({
     sleep: () => Promise.resolve(),
     uniform: () => 1
   });
@@ -82,8 +83,8 @@ test('max number of cases', async () => {
       },
       (embed) => {
         expect(embed).toStrictEqual({
-          title: '***†HARACHO ONLINE JUDGEMENT SYSTEM†***',
-          description: '0 / 1 WJ'
+          title: '***†HARACHO ONLINE JUDGING SYSTEM†***',
+          description: `0 / 1 ${waitingJudgingEmoji}`
         });
         return Promise.resolve({ edit: () => Promise.resolve() });
       }
@@ -97,8 +98,8 @@ test('max number of cases', async () => {
       },
       (embed) => {
         expect(embed).toStrictEqual({
-          title: '***†HARACHO ONLINE JUDGEMENT SYSTEM†***',
-          description: '0 / 64 WJ'
+          title: '***†HARACHO ONLINE JUDGING SYSTEM†***',
+          description: `0 / 64 ${waitingJudgingEmoji}`
         });
         return Promise.resolve({ edit: () => Promise.resolve() });
       }

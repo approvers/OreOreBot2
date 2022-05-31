@@ -15,7 +15,7 @@ import {
 } from '../runner';
 import type { CommandMessage, CommandResponder } from './command-message';
 import { type DeletionObservable, DeletionRepeater } from './deletion-repeater';
-import { JudgementCommand, type RandomGenerator } from './judgement';
+import { JudgingCommand, type RandomGenerator } from './judging';
 import {
   KaereCommand,
   type KaereMusicKey,
@@ -73,7 +73,7 @@ export const registerAllCommandResponder = (
       scheduleRunner,
       reservationRepo
     ),
-    new JudgementCommand(random),
+    new JudgingCommand(random),
     new Meme(),
     new HelpCommand(commandRunner),
     new KokuseiChousa(stats),
