@@ -15,8 +15,8 @@ export function isJudgingStatus(str: string): str is JudgingStatus {
   return (judgingStatuses as readonly string[]).includes(str);
 }
 
-export function hasPassedTestCases(status: JudgingStatus): boolean {
-  return status !== 'CE';
+export function hasNoTestCases(status: JudgingStatus): boolean {
+  return status === 'CE';
 }
 
 export function emojiOf(status: JudgingStatus): string {
