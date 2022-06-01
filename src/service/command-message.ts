@@ -58,6 +58,11 @@ export interface CommandMessage {
   args: readonly string[];
 
   /**
+   * コマンド実行されたタイムスタンプを取得
+   */
+  timestamp: number;
+
+  /**
    * このメッセージに `message` の内容で返信する。
    *
    * @param message
@@ -106,6 +111,7 @@ export const createMockMessage = (
   senderChannelId: '711127633810817026' as Snowflake,
   senderVoiceChannelId: '683939861539192865' as Snowflake,
   senderName: 'Mikuroさいな',
+  timestamp: 1654081876516,
   args: [],
   reply: reply
     ? async (mes) =>
