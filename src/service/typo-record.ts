@@ -109,6 +109,8 @@ const typoRecordResetTask =
     return next6OClock(clock);
   };
 
+const DIGITS = /^[0-9]+$/;
+
 /**
  * `typo` コマンドで今日の Typo 一覧を返信する。
  *
@@ -160,6 +162,13 @@ export class TypoReporter implements CommandResponder {
         await message.reply({
           title: '入力形式エラー',
           description: '`typo by <id>` の形式で入力してね'
+        });
+        return;
+      }
+      if (!DIGITS.test(userId)) {
+        await message.reply({
+          title: '入力形式エラー',
+          description: 'ユーザ ID は整数を入力してね'
         });
         return;
       }

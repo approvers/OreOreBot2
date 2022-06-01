@@ -109,6 +109,31 @@ test('show all typos', async () => {
   runner.killAll();
 });
 
+test('invalid user id', async () => {
+  const clock = new MockClock(new Date(0));
+  const db = new InMemoryTypoRepository();
+  const runner = new ScheduleRunner(clock);
+
+  const responder = new TypoReporter(db, clock, runner);
+  await responder.on(
+    'CREATE',
+    createMockMessage(
+      {
+        args: ['typo', 'by', 'hoge']
+      },
+      (message) => {
+        expect(message).toStrictEqual({
+          title: '入力形式エラー',
+          description: 'ユーザ ID は整数を入力してね'
+        });
+        return Promise.resolve();
+      }
+    )
+  );
+
+  runner.killAll();
+});
+
 test('must not reply', async () => {
   const clock = new MockClock(new Date(0));
   const db = new InMemoryTypoRepository();
