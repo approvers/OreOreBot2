@@ -121,7 +121,13 @@ export class TypoReporter implements CommandResponder {
     title: '今日のTypo',
     description: '「〜だカス」をTypoとして一日間記録するよ',
     commandName: ['typo'],
-    argsFormat: []
+    argsFormat: [
+      {
+        name: 'by',
+        description:
+          'この後にユーザ ID を入れると, そのユーザ ID の今日の Typo を表示するよ'
+      }
+    ]
   };
 
   constructor(
@@ -141,14 +147,45 @@ export class TypoReporter implements CommandResponder {
       return;
     }
     const { senderId, senderName, args } = message;
-    if (args.length !== 1 || args[0] !== 'typo') {
+    if (args.length < 1 || args[0] !== 'typo') {
       return;
     }
-    const description = (await this.repo.allTyposByDate(senderId))
-      .map((typo) => `- ${typo}`)
-      .join('\n');
+    if (args.length === 1) {
+      await this.replyTypos(message, senderId, senderName);
+      return;
+    }
+    if (2 <= args.length && args[1] === 'by') {
+      const userId: string | undefined = args[2];
+      if (!userId) {
+        await message.reply({
+          title: '入力形式エラー',
+          description: '`typo by <id>` の形式で入力してね'
+        });
+        return;
+      }
+      await this.replyTypos(message, userId as Snowflake, `<@${userId}>`);
+      return;
+    }
     await message.reply({
-      title: `† 今日の${senderName}のtypo †`,
+      title: 'Typoヘルプ',
+      description: `
+- 引数なし: あなたの今日のTypoを表示するよ
+- \`by <ユーザID>\`: そのIDの人の今日のTypoを表示するよ
+`
+    });
+    return;
+  }
+
+  private async replyTypos(
+    message: CommandMessage,
+    senderId: Snowflake,
+    senderName: string
+  ) {
+    const typos = await this.repo.allTyposByDate(senderId);
+    const description =
+      `***† 今日の${senderName}のtypo †***\n` +
+      typos.map((typo) => `- ${typo}`).join('\n');
+    await message.reply({
       description
     });
   }
