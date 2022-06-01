@@ -39,6 +39,7 @@ import type { AssetKey } from '../service/party';
 import { DiscordMemberStats } from '../adaptor/discord-member-stats';
 import { DiscordRoleManager } from '../adaptor/discord-role';
 import { DiscordSheriff } from '../adaptor/discord-sheriff';
+import { DiscordWS } from '../adaptor/discord-ws';
 import { EmojiProxy } from '../adaptor/emoji-proxy';
 import type { KaereMusicKey } from '../service/kaere';
 import { Snowflake } from '../model/id';
@@ -121,7 +122,8 @@ registerAllCommandResponder(
   new DiscordVoiceRoomController(client),
   commandRunner,
   new DiscordMemberStats(client, GUILD_ID as Snowflake),
-  new DiscordSheriff(client)
+  new DiscordSheriff(client),
+  new DiscordWS(client)
 );
 
 const provider = new VoiceRoomProxy<VoiceChannelParticipant>(
