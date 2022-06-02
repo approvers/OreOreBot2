@@ -59,6 +59,9 @@ export interface CommandMessage {
 
   /**
    * コマンド実行されたタイムスタンプをミリ秒として取得
+   *
+   * @type {number}
+   * @memberof CommandMessage
    */
   timestamp: number;
 
