@@ -58,7 +58,7 @@ export interface CommandMessage {
   args: readonly string[];
 
   /**
-   * コマンド実行されたタイムスタンプを取得
+   * コマンド実行されたタイムスタンプをミリ秒として取得
    */
   timestamp: number;
 
