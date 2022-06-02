@@ -59,6 +59,8 @@ export interface CommandMessage {
 
   /**
    * コマンド実行されたタイムスタンプをミリ秒として取得
+   * (Discordエポック)
+   * https://discord.com/developers/docs/reference#snowflakes
    *
    * @type {number}
    * @memberof CommandMessage
