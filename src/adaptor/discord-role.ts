@@ -13,4 +13,13 @@ export class DiscordRoleManager implements RoleManager {
     const member = await guild.members.fetch(targetMember);
     await member.roles.add(newRoleId);
   }
+
+  async removeRole(
+    targetMember: Snowflake,
+    removingRoleId: Snowflake
+  ): Promise<void> {
+    const guild = await this.client.guilds.fetch(this.guildId);
+    const member = await guild.members.fetch(targetMember);
+    await member.roles.remove(removingRoleId);
+  }
 }

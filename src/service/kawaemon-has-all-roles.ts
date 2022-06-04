@@ -8,6 +8,7 @@ export interface NewRole {
 
 export interface RoleManager {
   addRole(targetMember: Snowflake, newRoleId: Snowflake): Promise<void>;
+  removeRole(targetMember: Snowflake, removingRoleId: Snowflake): Promise<void>;
 }
 
 export class KawaemonHasAllRoles implements RoleEventResponder<NewRole> {
