@@ -6,7 +6,8 @@ import type { Snowflake } from '../model/id';
 type AllRoleModel = NewRole;
 
 const map: (role: Role) => AllRoleModel = (role) => ({
-  roleId: role.id as Snowflake
+  roleId: role.id as Snowflake,
+  name: role.name
 });
 
 export const roleProxy = (
