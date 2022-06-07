@@ -49,7 +49,6 @@ export const converterWithPrefix =
         return id ? (id as Snowflake) : null;
       },
       senderName: message.author?.username ?? '名無し',
-      timestamp: message.createdTimestamp,
       args,
       async reply(embed) {
         const mes = await message.reply({ embeds: [convertEmbed(embed)] });
