@@ -6,7 +6,8 @@ import type { Snowflake } from '../model/id';
 type AllRoleModel = NewRole;
 
 const map: (role: Role) => AllRoleModel = (role) => ({
-  roleId: role.id as Snowflake
+  roleId: role.id as Snowflake,
+  name: role.name
 });
 
 export const roleProxy = (
@@ -14,4 +15,7 @@ export const roleProxy = (
   runner: RoleResponseRunner<AllRoleModel>
 ) => {
   client.on('roleCreate', (role) => runner.triggerEvent('CREATE', map(role)));
+  client.on('roleUpdate', (_, role) =>
+    runner.triggerEvent('UPDATE', map(role))
+  );
 };
