@@ -1,4 +1,4 @@
-export type RoleEvent = 'CREATE';
+export type RoleEvent = 'CREATE' | 'UPDATE';
 
 export interface RoleEventResponder<R> {
   on(event: RoleEvent, role: R): Promise<void>;
