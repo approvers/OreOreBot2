@@ -103,13 +103,15 @@ export class KaereCommand implements CommandResponder {
   };
 
   constructor(
-    private readonly connectionFactory: VoiceConnectionFactory<KaereMusicKey>,
-    private readonly controller: VoiceRoomController,
-    private readonly clock: Clock,
-    private readonly scheduleRunner: ScheduleRunner,
-    private readonly repo: ReservationRepository
+    private readonly deps: {
+      connectionFactory: VoiceConnectionFactory<KaereMusicKey>;
+      controller: VoiceRoomController;
+      clock: Clock;
+      scheduleRunner: ScheduleRunner;
+      repo: ReservationRepository;
+    }
   ) {
-    void repo.all().then((all) => {
+    void deps.repo.all().then((all) => {
       for (const reservation of all) {
         this.scheduleToStart(reservation);
       }
@@ -164,7 +166,10 @@ export class KaereCommand implements CommandResponder {
       return;
     }
     this.doingKaere = true;
-    const connection = await this.connectionFactory.connectTo(guildId, roomId);
+    const connection = await this.deps.connectionFactory.connectTo(
+      guildId,
+      roomId
+    );
     connection.connect();
     connection.onDisconnected(() => {
       this.doingKaere = false;
@@ -173,7 +178,7 @@ export class KaereCommand implements CommandResponder {
     await connection.playToEnd('NEROYO');
     if (this.bedModeEnabled) {
       try {
-        await this.controller.disconnectAllUsersIn(guildId, roomId);
+        await this.deps.controller.disconnectAllUsersIn(guildId, roomId);
       } catch (e) {
         console.error('強制切断に失敗');
       }
@@ -235,7 +240,7 @@ export class KaereCommand implements CommandResponder {
             message.senderGuildId,
             roomId
           );
-          if ((await this.repo.reserve(reservation)) === 'Err') {
+          if ((await this.deps.repo.reserve(reservation)) === 'Err') {
             await message.reply({
               title: '予約に失敗したよ。',
               description: `あれ、${time.intoJapanese()}にはもう予約が入ってるよ。`
@@ -256,7 +261,7 @@ export class KaereCommand implements CommandResponder {
             await message.reply(timeFormatErrorMessage);
             return;
           }
-          const reservation = await this.repo.reservationAt(time);
+          const reservation = await this.deps.repo.reservationAt(time);
           if (!reservation) {
             await message.reply({
               title: '予約キャンセルに失敗したよ。',
@@ -264,8 +269,8 @@ export class KaereCommand implements CommandResponder {
             });
             return;
           }
-          this.scheduleRunner.stop(reservation.id);
-          if ((await this.repo.cancel(reservation)) === 'Err') {
+          this.deps.scheduleRunner.stop(reservation.id);
+          if ((await this.deps.repo.cancel(reservation)) === 'Err') {
             await message.reply({
               title: '予約キャンセルに失敗したよ。',
               description: 'データベースに問題があったのかもしれない。'
@@ -280,7 +285,7 @@ export class KaereCommand implements CommandResponder {
         return;
       case 'list':
         {
-          const reservations = await this.repo.all();
+          const reservations = await this.deps.repo.all();
           if (reservations.length === 0) {
             await message.reply({
               title: '今は誰も予約してないようだね。'
@@ -307,17 +312,17 @@ export class KaereCommand implements CommandResponder {
   }
 
   private scheduleToStart(reservation: Reservation) {
-    const now = this.clock.now();
+    const now = this.deps.clock.now();
     let set = setHours(now, reservation.time.hours);
     set = setMinutes(set, reservation.time.minutes);
     set = setSeconds(set, 0);
     if (isBefore(set, now)) {
       set = addDays(set, 1);
     }
-    this.scheduleRunner.runOnNextTime(
+    this.deps.scheduleRunner.runOnNextTime(
       reservation.id,
       async () => {
-        await this.repo.cancel(reservation);
+        await this.deps.repo.cancel(reservation);
         await this.start(reservation.guildId, reservation.voiceRoomId);
         return null;
       },

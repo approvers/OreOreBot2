@@ -9,19 +9,19 @@ import { createMockMessage } from './command-message';
 
 test('use case of kaere', async () => {
   const fn = jest.fn();
-  const factory = new MockVoiceConnectionFactory<KaereMusicKey>();
+  const connectionFactory = new MockVoiceConnectionFactory<KaereMusicKey>();
   const clock = new MockClock(new Date(0));
-  const runner = new ScheduleRunner(clock);
+  const scheduleRunner = new ScheduleRunner(clock);
   const repo = new InMemoryReservationRepository();
-  const responder = new KaereCommand(
-    factory,
-    {
+  const responder = new KaereCommand({
+    connectionFactory,
+    controller: {
       disconnectAllUsersIn: fn
     },
     clock,
-    runner,
+    scheduleRunner,
     repo
-  );
+  });
 
   await responder.on(
     'CREATE',
@@ -161,24 +161,24 @@ test('use case of kaere', async () => {
     )
   );
 
-  runner.killAll();
+  scheduleRunner.killAll();
 });
 
 test('must not reply', async () => {
   const fn = jest.fn();
-  const factory = new MockVoiceConnectionFactory<KaereMusicKey>();
+  const connectionFactory = new MockVoiceConnectionFactory<KaereMusicKey>();
   const clock = new MockClock(new Date(0));
-  const runner = new ScheduleRunner(clock);
+  const scheduleRunner = new ScheduleRunner(clock);
   const repo = new InMemoryReservationRepository();
-  const responder = new KaereCommand(
-    factory,
-    {
+  const responder = new KaereCommand({
+    connectionFactory,
+    controller: {
       disconnectAllUsersIn: fn
     },
     clock,
-    runner,
+    scheduleRunner,
     repo
-  );
+  });
 
   await responder.on(
     'CREATE',
@@ -203,5 +203,5 @@ test('must not reply', async () => {
   );
   expect(fn).not.toHaveBeenCalled();
 
-  runner.killAll();
+  scheduleRunner.killAll();
 });

@@ -79,14 +79,14 @@ export const registerAllCommandResponder = ({
 }) => {
   const allResponders = [
     new TypoReporter(typoRepo, clock, scheduleRunner),
-    new PartyCommand(factory, clock, scheduleRunner, random),
-    new KaereCommand(
-      factory,
-      roomController,
+    new PartyCommand({ factory, clock, scheduleRunner, random }),
+    new KaereCommand({
+      connectionFactory: factory,
+      controller: roomController,
       clock,
       scheduleRunner,
-      reservationRepo
-    ),
+      repo: reservationRepo
+    }),
     new JudgingCommand(random),
     new Meme(),
     new HelpCommand(commandRunner),
