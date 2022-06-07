@@ -31,12 +31,12 @@ test('time into Japanese', () => {
 });
 
 test('serialize reservation', () => {
-  const reservation = new Reservation(
-    '0000' as ReservationId,
-    new ReservationTime(6, 0),
-    '1234' as Snowflake,
-    '3456' as Snowflake
-  );
+  const reservation = new Reservation({
+    id: '0000' as ReservationId,
+    time: new ReservationTime(6, 0),
+    guildId: '1234' as Snowflake,
+    voiceRoomId: '3456' as Snowflake
+  });
   expect(reservation.serialize()).toStrictEqual(
     '{"id":"0000","time":{"hours":6,"minutes":0},"guildId":"1234","voiceRoomId":"3456"}'
   );
@@ -81,11 +81,11 @@ test('deserialize reservation', () => {
       '{"id":"0000","time":{"hours":6,"minutes":0},"guildId":"1234","voiceRoomId":"3456"}'
     )
   ).toStrictEqual(
-    new Reservation(
-      '0000' as ReservationId,
-      new ReservationTime(6, 0),
-      '1234' as Snowflake,
-      '3456' as Snowflake
-    )
+    new Reservation({
+      id: '0000' as ReservationId,
+      time: new ReservationTime(6, 0),
+      guildId: '1234' as Snowflake,
+      voiceRoomId: '3456' as Snowflake
+    })
   );
 });

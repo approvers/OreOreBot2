@@ -65,24 +65,39 @@ const isObject = (x: unknown): x is object =>
  * 特定のボイスチャンネルへ参加する予約を表すモデル。
  */
 export class Reservation {
-  constructor(
-    public readonly id: ReservationId,
-    public readonly time: ReservationTime,
-    public readonly guildId: Snowflake,
-    public readonly voiceRoomId: Snowflake
-  ) {}
+  readonly id: ReservationId;
+  readonly time: ReservationTime;
+  readonly guildId: Snowflake;
+  readonly voiceRoomId: Snowflake;
+
+  constructor({
+    id,
+    time,
+    guildId,
+    voiceRoomId
+  }: {
+    id: ReservationId;
+    time: ReservationTime;
+    guildId: Snowflake;
+    voiceRoomId: Snowflake;
+  }) {
+    this.id = id;
+    this.time = time;
+    this.guildId = guildId;
+    this.voiceRoomId = voiceRoomId;
+  }
 
   static new(
     time: ReservationTime,
     guildId: Snowflake,
     voiceRoomId: Snowflake
   ): Reservation {
-    return new Reservation(
-      nanoid() as ReservationId,
+    return new Reservation({
+      id: nanoid() as ReservationId,
       time,
       guildId,
       voiceRoomId
-    );
+    });
   }
 
   static deserialize(json: string): Reservation | null {
@@ -125,12 +140,12 @@ export class Reservation {
     ) {
       return null;
     }
-    return new Reservation(
-      data.id as ReservationId,
-      new ReservationTime(data.time.hours, data.time.minutes),
-      data.guildId as Snowflake,
-      data.voiceRoomId as Snowflake
-    );
+    return new Reservation({
+      id: data.id as ReservationId,
+      time: new ReservationTime(data.time.hours, data.time.minutes),
+      guildId: data.guildId as Snowflake,
+      voiceRoomId: data.voiceRoomId as Snowflake
+    });
   }
 
   serialize(): string {

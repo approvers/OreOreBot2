@@ -86,7 +86,7 @@ export class JudgingCommand implements CommandResponder {
     }
 
     if (!isJudgingStatus(result)) {
-      await this.reject(message, count, errorFromStartArg, result);
+      await this.reject({ message, count, errorFromStartArg, result });
       return;
     }
     if (result === 'AC') {
@@ -100,7 +100,12 @@ export class JudgingCommand implements CommandResponder {
       });
       return;
     }
-    await this.reject(message, count, errorFromStartArg, emojiOf(result));
+    await this.reject({
+      message,
+      count,
+      errorFromStartArg,
+      result: emojiOf(result)
+    });
   }
 
   private async accept(message: CommandMessage, count: number) {
@@ -122,12 +127,17 @@ export class JudgingCommand implements CommandResponder {
     });
   }
 
-  private async reject(
-    message: CommandMessage,
-    count: number,
-    errorFromStartArg: string,
-    result: string
-  ) {
+  private async reject({
+    message,
+    count,
+    errorFromStartArg,
+    result
+  }: {
+    message: CommandMessage;
+    count: number;
+    errorFromStartArg: string;
+    result: string;
+  }) {
     const sent = await message.reply({
       title: JUDGING_TITLE,
       description: `0 / ${count} ${waitingJudgingEmoji}`

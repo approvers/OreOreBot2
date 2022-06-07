@@ -5,7 +5,7 @@ import { MockClock } from '../adaptor';
 import { MockVoiceConnectionFactory } from '../adaptor';
 import { ScheduleRunner } from '../runner';
 
-const randomGen: RandomGenerator = {
+const random: RandomGenerator = {
   minutes: () => 42,
   pick: ([first]) => first
 };
@@ -13,8 +13,13 @@ const randomGen: RandomGenerator = {
 test('use case of party', async () => {
   const factory = new MockVoiceConnectionFactory<AssetKey>();
   const clock = new MockClock(new Date(0));
-  const runner = new ScheduleRunner(clock);
-  const responder = new PartyCommand(factory, clock, runner, randomGen);
+  const scheduleRunner = new ScheduleRunner(clock);
+  const responder = new PartyCommand({
+    factory,
+    clock,
+    scheduleRunner,
+    random
+  });
 
   await responder.on(
     'CREATE',
@@ -145,14 +150,19 @@ test('use case of party', async () => {
     )
   );
 
-  runner.killAll();
+  scheduleRunner.killAll();
 });
 
 test('must not reply', async () => {
   const factory = new MockVoiceConnectionFactory();
   const clock = new MockClock(new Date(0));
-  const runner = new ScheduleRunner(clock);
-  const responder = new PartyCommand(factory, clock, runner, randomGen);
+  const scheduleRunner = new ScheduleRunner(clock);
+  const responder = new PartyCommand({
+    factory,
+    clock,
+    scheduleRunner,
+    random
+  });
 
   const fn = jest.fn();
   await responder.on(
@@ -175,14 +185,19 @@ test('must not reply', async () => {
   );
   expect(fn).not.toHaveBeenCalled();
 
-  runner.killAll();
+  scheduleRunner.killAll();
 });
 
 test('party enable but must cancel', async () => {
   const factory = new MockVoiceConnectionFactory();
   const clock = new MockClock(new Date(0));
-  const runner = new ScheduleRunner(clock);
-  const responder = new PartyCommand(factory, clock, runner, randomGen);
+  const scheduleRunner = new ScheduleRunner(clock);
+  const responder = new PartyCommand({
+    factory,
+    clock,
+    scheduleRunner,
+    random
+  });
 
   const fn = jest.fn();
   const reply = jest.fn<Promise<SentMessage>, [EmbedMessage]>(() =>
@@ -196,12 +211,12 @@ test('party enable but must cancel', async () => {
       senderVoiceChannelId: null
     })
   );
-  const nextTriggerMs = (randomGen.minutes() + 1) * 60 * 1000;
+  const nextTriggerMs = (random.minutes() + 1) * 60 * 1000;
   clock.placeholder = new Date(nextTriggerMs);
-  runner.consume();
-  const oneHoursAgo = (randomGen.minutes() + 61) * 60 * 1000;
+  scheduleRunner.consume();
+  const oneHoursAgo = (random.minutes() + 61) * 60 * 1000;
   clock.placeholder = new Date(oneHoursAgo);
-  runner.consume();
+  scheduleRunner.consume();
 
   expect(reply).toHaveBeenNthCalledWith(1, {
     title: 'ゲリラを有効化しておいたよ。'
@@ -214,5 +229,5 @@ test('party enable but must cancel', async () => {
   expect(reply).toHaveBeenCalledTimes(2);
   expect(fn).not.toHaveBeenCalled();
 
-  runner.killAll();
+  scheduleRunner.killAll();
 });

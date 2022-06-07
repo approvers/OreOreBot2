@@ -65,10 +65,12 @@ export class PartyCommand implements CommandResponder {
   };
 
   constructor(
-    private readonly factory: VoiceConnectionFactory<AssetKey>,
-    private readonly clock: Clock,
-    private readonly scheduleRunner: ScheduleRunner,
-    private readonly random: RandomGenerator
+    private readonly deps: {
+      factory: VoiceConnectionFactory<AssetKey>;
+      clock: Clock;
+      scheduleRunner: ScheduleRunner;
+      random: RandomGenerator;
+    }
   ) {}
 
   private nextMusicKey: AssetKey | null = null;
@@ -107,7 +109,7 @@ export class PartyCommand implements CommandResponder {
           if (args.length === 3) {
             minutes = parseInt(args[2], 10) % 60;
           } else {
-            minutes = this.random.minutes();
+            minutes = this.deps.random.minutes();
           }
           this.startPartyAt(minutes, message);
           await message.reply({
@@ -150,7 +152,7 @@ export class PartyCommand implements CommandResponder {
       this.nextMusicKey = null;
       return next;
     }
-    return this.random.pick(assetKeys);
+    return this.deps.random.pick(assetKeys);
   }
 
   private async startPartyImmediately(
@@ -168,7 +170,7 @@ export class PartyCommand implements CommandResponder {
       });
       return 'BREAK';
     }
-    this.connection = await this.factory.connectTo(
+    this.connection = await this.deps.factory.connectTo(
       message.senderGuildId,
       roomId
     );
@@ -185,7 +187,7 @@ export class PartyCommand implements CommandResponder {
   }
 
   private nextTime(minutes: number): Date {
-    let nextTime = this.clock.now();
+    let nextTime = this.deps.clock.now();
     if (minutes <= getMinutes(nextTime)) {
       nextTime = addHours(nextTime, 1);
     }
@@ -194,7 +196,7 @@ export class PartyCommand implements CommandResponder {
   }
 
   private startPartyAt(minutes: number, message: CommandMessage) {
-    this.scheduleRunner.runOnNextTime(
+    this.deps.scheduleRunner.runOnNextTime(
       { key: 'party-once' },
       async () => {
         await this.startPartyImmediately(message);
@@ -206,21 +208,21 @@ export class PartyCommand implements CommandResponder {
 
   private activateRandomized(message: CommandMessage) {
     this.randomizedEnabled = true;
-    this.scheduleRunner.runOnNextTime(
+    this.deps.scheduleRunner.runOnNextTime(
       'party-random',
       async () => {
         if ((await this.startPartyImmediately(message)) === 'BREAK') {
           this.randomizedEnabled = false;
           return null;
         }
-        return this.nextTime(this.random.minutes());
+        return this.nextTime(this.deps.random.minutes());
       },
-      this.nextTime(this.random.minutes())
+      this.nextTime(this.deps.random.minutes())
     );
   }
 
   private stopRandomized() {
-    this.scheduleRunner.stop('party-random');
+    this.deps.scheduleRunner.stop('party-random');
     this.randomizedEnabled = false;
   }
 }
