@@ -52,19 +52,31 @@ export const allMessageEventResponder = (repo: TypoRepository) =>
 export const allMessageUpdateEventResponder = () =>
   composeMessageUpdateEventResponders(new DifferenceDetector());
 
-export const registerAllCommandResponder = (
-  typoRepo: TypoRepository,
-  reservationRepo: ReservationRepository,
-  factory: VoiceConnectionFactory<AssetKey | KaereMusicKey>,
-  clock: Clock,
-  scheduleRunner: ScheduleRunner,
-  random: PartyRng & RandomGenerator,
-  roomController: VoiceRoomController,
-  commandRunner: MessageResponseRunner<CommandMessage, CommandResponder>,
-  stats: MemberStats,
-  sheriff: Sheriff,
-  ping: Ping
-) => {
+export const registerAllCommandResponder = ({
+  typoRepo,
+  reservationRepo,
+  factory,
+  clock,
+  scheduleRunner,
+  random,
+  roomController,
+  commandRunner,
+  stats,
+  sheriff,
+  ping
+}: {
+  typoRepo: TypoRepository;
+  reservationRepo: ReservationRepository;
+  factory: VoiceConnectionFactory<AssetKey | KaereMusicKey>;
+  clock: Clock;
+  scheduleRunner: ScheduleRunner;
+  random: PartyRng & RandomGenerator;
+  roomController: VoiceRoomController;
+  commandRunner: MessageResponseRunner<CommandMessage, CommandResponder>;
+  stats: MemberStats;
+  sheriff: Sheriff;
+  ping: Ping;
+}) => {
   const allResponders = [
     new TypoReporter(typoRepo, clock, scheduleRunner),
     new PartyCommand(factory, clock, scheduleRunner, random),
@@ -87,11 +99,15 @@ export const registerAllCommandResponder = (
   }
 };
 
-export const allRoleResponder = (
-  kawaemonId: Snowflake,
-  roleManager: RoleManager,
-  output: StandardOutput
-) =>
+export const allRoleResponder = ({
+  kawaemonId,
+  roleManager,
+  output
+}: {
+  kawaemonId: Snowflake;
+  roleManager: RoleManager;
+  output: StandardOutput;
+}) =>
   composeRoleEventResponders(
     new KawaemonHasAllRoles(kawaemonId, roleManager, output)
   );

@@ -106,10 +106,10 @@ const commandRunner: MessageResponseRunner<CommandMessage, CommandResponder> =
   new MessageResponseRunner(
     new MessageProxy(client, transformerForCommand('!'))
   );
-registerAllCommandResponder(
+registerAllCommandResponder({
   typoRepo,
   reservationRepo,
-  new DiscordVoiceConnectionFactory<AssetKey | KaereMusicKey>(client, {
+  factory: new DiscordVoiceConnectionFactory<AssetKey | KaereMusicKey>(client, {
     COFFIN_INTRO: join('assets', 'party', 'coffin-intro.mp3'),
     COFFIN_DROP: join('assets', 'party', 'coffin-drop.mp3'),
     KAKAPO: join('assets', 'party', 'kakapo.mp3'),
@@ -118,13 +118,13 @@ registerAllCommandResponder(
   }),
   clock,
   scheduleRunner,
-  new MathRandomGenerator(),
-  new DiscordVoiceRoomController(client),
+  random: new MathRandomGenerator(),
+  roomController: new DiscordVoiceRoomController(client),
   commandRunner,
-  new DiscordMemberStats(client, GUILD_ID as Snowflake),
-  new DiscordSheriff(client),
-  new DiscordWS(client)
-);
+  stats: new DiscordMemberStats(client, GUILD_ID as Snowflake),
+  sheriff: new DiscordSheriff(client),
+  ping: new DiscordWS(client)
+});
 
 const provider = new VoiceRoomProxy<VoiceChannelParticipant>(
   client,
@@ -139,11 +139,11 @@ const KAWAEMON_ID = '391857452360007680' as Snowflake;
 
 const roleRunner = new RoleResponseRunner();
 roleRunner.addResponder(
-  allRoleResponder(
-    KAWAEMON_ID,
-    new DiscordRoleManager(client, GUILD_ID as Snowflake),
+  allRoleResponder({
+    kawaemonId: KAWAEMON_ID,
+    roleManager: new DiscordRoleManager(client, GUILD_ID as Snowflake),
     output
-  )
+  })
 );
 roleProxy(client, roleRunner);
 
