@@ -42,6 +42,10 @@ export class MessageUpdateProxy<M> implements MessageUpdateEventProvider<M> {
 
   onMessageUpdate(handler: (before: M, after: M) => Promise<void>): void {
     const mapped = this.transformer((args) => handler(...args));
-    this.client.on('messageUpdate', (before, after) => mapped([before, after]));
+    this.client.on('messageUpdate', async (before, after) => {
+      if (after) {
+        await mapped([before, after]);
+      }
+    });
   }
 }
