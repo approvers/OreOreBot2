@@ -17,6 +17,7 @@ plugins:
   - "markdown"
 rules:
   "sort-imports": "error"
+  "max-params": "error"
 overrides:
   - files: ["**/*.md"]
     processor: "markdown/markdown"
