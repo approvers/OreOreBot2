@@ -32,22 +32,9 @@ export class PingCommand implements CommandResponder {
 
     await message.reply({
       title: 'Ping',
-      description: '🏓 Pongだよ。',
-      color: 0x7ec4ed,
-      fields: [
-        {
-          name: 'Latency(WebSocket)',
-          value: `${this.ping.avgPing}ms`,
-          inline: true
-        },
-        {
-          name: 'Latency(API)',
-          value: `${
-            Date.now() - message.timestamp
-          }ms\n[Discord Status](https://discordstatus.com/)`,
-          inline: true
-        }
-      ]
+      url: 'https://discordstatus.com/',
+      description: `🏓 Pongだよ。 / [${this.ping.avgPing}ms](https://discordstatus.com/)`,
+      color: 0x7ec4ed
     });
   }
 }
