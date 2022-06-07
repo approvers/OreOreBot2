@@ -47,7 +47,13 @@ test('kawaemon drop a new role', async () => {
   expect(removeRole).toHaveBeenCalledWith(KAWAEMON_ID, updatedRoleId);
   expect(sendEmbed).toHaveBeenCalledWith({
     title: '***Kawaemon has dropped a new role***',
-    description: `<@&18475613045613281703151>をかわえもんからはずしといたよ。`
+    description: `<@&18475613045613281703151>をかわえもんからはずしといたよ。`,
+    fields: [
+      {
+        name: '理由',
+        value: '限界ポイントと名のつくロールは自動で外すよ。'
+      }
+    ]
   });
 });
 
