@@ -33,7 +33,7 @@ export class PingCommand implements CommandResponder {
     await message.reply({
       title: 'Ping',
       url: 'https://discordstatus.com/',
-      description: `🏓 Pongだよ。 / [${this.ping.avgPing}ms](https://discordstatus.com/)`,
+      description: `🏓 Pongだよ。 / **${this.ping.avgPing}**ms`,
       color: 0x7ec4ed
     });
   }
