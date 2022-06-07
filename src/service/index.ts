@@ -24,6 +24,7 @@ import {
 } from './kaere';
 import { KawaemonHasAllRoles, RoleManager } from './kawaemon-has-all-roles';
 import { KokuseiChousa, MemberStats } from './kokusei-chousa';
+import { Ping, PingCommand } from './ping';
 import { Sheriff, SheriffCommand } from './stfu';
 import {
   type TypoObservable,
@@ -61,7 +62,8 @@ export const registerAllCommandResponder = (
   roomController: VoiceRoomController,
   commandRunner: MessageResponseRunner<CommandMessage, CommandResponder>,
   stats: MemberStats,
-  sheriff: Sheriff
+  sheriff: Sheriff,
+  ping: Ping
 ) => {
   const allResponders = [
     new TypoReporter(typoRepo, clock, scheduleRunner),
@@ -77,7 +79,8 @@ export const registerAllCommandResponder = (
     new Meme(),
     new HelpCommand(commandRunner),
     new KokuseiChousa(stats),
-    new SheriffCommand(sheriff)
+    new SheriffCommand(sheriff),
+    new PingCommand(ping)
   ];
   for (const responder of allResponders) {
     commandRunner.addResponder(responder);
