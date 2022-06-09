@@ -2,7 +2,7 @@ import { expect, it, vi } from 'vitest';
 import { DeletionRepeater } from './deletion-repeater.js';
 
 it('react to deleted message', async () => {
-  const responder = new DeletionRepeater();
+  const responder = new DeletionRepeater(() => false);
   await responder.on('DELETE', {
     author: 'Baba',
     content: 'Wall Is Stop',
@@ -18,7 +18,7 @@ Wall Is Stop
 });
 
 it('must not react', async () => {
-  const responder = new DeletionRepeater();
+  const responder = new DeletionRepeater(() => false);
   const fn = vi.fn();
   await responder.on('CREATE', {
     author: 'Baba',
