@@ -28,7 +28,7 @@ it('must not react', async () => {
   expect(fn).not.toHaveBeenCalled();
 });
 
-test("must not react if it's ignore target", async () => {
+it("must not react if it's ignore target", async () => {
   const responder = new DeletionRepeater(
     (content) => content === 'Wall Is Stop'
   );
@@ -41,7 +41,7 @@ test("must not react if it's ignore target", async () => {
   expect(fn).not.toHaveBeenCalled();
 });
 
-test("must react if it's not ignore target", async () => {
+it("must react if it's not ignore target", async () => {
   const responder = new DeletionRepeater(
     (content) => content === 'Wall Is Stop'
   );
