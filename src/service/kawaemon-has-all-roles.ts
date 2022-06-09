@@ -28,35 +28,6 @@ export class KawaemonHasAllRoles implements RoleEventResponder<NewRole> {
           description: `<@&${role.roleId}>をかわえもんにもつけといたよ。`
         });
         return;
-      case 'UPDATE': {
-        const shouldBeDropped = this.shouldBeDropped(role.name);
-        if (!shouldBeDropped[0]) {
-          return;
-        }
-        const [, reason] = shouldBeDropped;
-        await this.manager.removeRole(this.kawaemonId, role.roleId);
-        await this.output.sendEmbed({
-          title: '***Kawaemon has dropped a new role***',
-          description: `<@&${role.roleId}>をかわえもんからはずしといたよ。`,
-          fields: [
-            {
-              name: '理由',
-              value: reason
-            }
-          ]
-        });
-        return;
-      }
     }
-  }
-
-  shouldBeDropped(
-    roleName: string
-  ): [should: true, reason: string] | [should: false] {
-    // 限界ポイント1000超えなどはこの形式で始まる. 詳細: https://github.com/approvers/OreOreBot2/issues/155
-    if (roleName.startsWith('限界ポイント')) {
-      return [true, '限界ポイントと名のつくロールは自動で外すよ。'];
-    }
-    return [false];
   }
 }
