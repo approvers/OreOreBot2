@@ -43,12 +43,22 @@ export interface DeletionObservable {
 export class DeletionRepeater<M extends DeletionObservable>
   implements MessageEventResponder<M>
 {
+  /**
+   * メッセージを無視するかどうかを判定する述語。
+   * この述語がtrueを返した場合、内容を復唱しない。
+   */
+  private isIgnoreTarget: (content: string) => boolean;
+
+  constructor(isIgnoreTarget: (content: string) => boolean) {
+    this.isIgnoreTarget = isIgnoreTarget;
+  }
+
   async on(event: MessageEvent, message: M): Promise<void> {
     if (event !== 'DELETE') {
       return;
     }
     const { author, content } = message;
-    if (content === '!stfu') {
+    if (this.isIgnoreTarget(content)) {
       return;
     }
 

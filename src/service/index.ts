@@ -57,7 +57,7 @@ export const allMessageEventResponder = (
   composeMessageEventResponders<
     DeletionObservable & TypoObservable & BoldItalicCop & EmojiSeqObservable
   >(
-    new DeletionRepeater(),
+    new DeletionRepeater((content) => content === '!stfu'),
     new TypoRecorder(repo),
     new BoldItalicCopReporter(),
     new EmojiSeqReact(sequencesYaml)
