@@ -197,7 +197,7 @@ export class PartyCommand implements CommandResponder {
 
   private startPartyAt(minutes: number, message: CommandMessage) {
     this.deps.scheduleRunner.runOnNextTime(
-      { key: 'party-once' },
+      'party-once',
       async () => {
         await this.startPartyImmediately(message);
         return null;
