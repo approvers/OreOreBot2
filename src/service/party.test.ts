@@ -24,7 +24,7 @@ describe('party ichiyo', () => {
 
   afterAll(() => scheduleRunner.killAll());
 
-  it('use case of party', async () => {
+  it('with no options', async () => {
     await responder.on(
       'CREATE',
       createMockMessage(
@@ -40,7 +40,9 @@ describe('party ichiyo', () => {
         }
       )
     );
+  });
 
+  it('use case of party', async () => {
     await responder.on(
       'CREATE',
       createMockMessage(
@@ -116,35 +118,6 @@ describe('party ichiyo', () => {
       'CREATE',
       createMockMessage(
         {
-          args: ['party', 'time']
-        },
-        (message) => {
-          expect(message).toStrictEqual({
-            title: '次のゲリラ参加時刻を42分にしたよ。'
-          });
-          return Promise.resolve();
-        }
-      )
-    );
-    await responder.on(
-      'CREATE',
-      createMockMessage(
-        {
-          args: ['party', 'time', '36']
-        },
-        (message) => {
-          expect(message).toStrictEqual({
-            title: '次のゲリラ参加時刻を36分にしたよ。'
-          });
-          return Promise.resolve();
-        }
-      )
-    );
-
-    await responder.on(
-      'CREATE',
-      createMockMessage(
-        {
           args: ['party', 'set', '__UNKNOWN__']
         },
         (message) => {
@@ -153,6 +126,28 @@ describe('party ichiyo', () => {
         }
       )
     );
+  });
+
+  it('party time', async () => {
+    const fn = vi.fn(() => Promise.resolve());
+    await responder.on(
+      'CREATE',
+      createMockMessage({ args: ['party', 'time'] }, fn)
+    );
+    expect(fn).toHaveBeenCalledWith({
+      title: '次のゲリラ参加時刻を42分にしたよ。'
+    });
+  });
+
+  it('party specified time', async () => {
+    const fn = vi.fn(() => Promise.resolve());
+    await responder.on(
+      'CREATE',
+      createMockMessage({ args: ['party', 'time', '36'] }, fn)
+    );
+    expect(fn).toHaveBeenCalledWith({
+      title: '次のゲリラ参加時刻を36分にしたよ。'
+    });
   });
 
   it('must not reply', async () => {
