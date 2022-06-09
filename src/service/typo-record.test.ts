@@ -2,6 +2,7 @@ import { InMemoryTypoRepository, MockClock } from '../adaptor';
 import { SentMessage, createMockMessage } from './command-message';
 import { TypoRecorder, TypoReporter, type TypoRepository } from './typo-record';
 import { addDays, setHours, setMinutes } from 'date-fns';
+import { afterAll, describe, expect, it, vi } from 'vitest';
 import type { EmbedMessage } from '../model/embed-message';
 import EventEmitter from 'events';
 import { ScheduleRunner } from '../runner';
@@ -24,7 +25,7 @@ class MockRepository extends EventEmitter implements TypoRepository {
   }
 }
 
-test('react to だカス', async () => {
+it('react to だカス', async () => {
   const mock = new MockRepository();
   mock.on('ADD_TYPO', (id, newTypo) => {
     expect(id).toEqual('279614913129742338');
@@ -37,8 +38,8 @@ test('react to だカス', async () => {
   });
 });
 
-test('must not react', async () => {
-  const fn = jest.fn();
+it('must not react', async () => {
+  const fn = vi.fn();
   const mock = new MockRepository();
   mock.on('ADD_TYPO', fn);
   mock.on('ALL_TYPOS', fn);
@@ -64,172 +65,147 @@ test('must not react', async () => {
   expect(fn).not.toHaveBeenCalled();
 });
 
-test('show all typos', async () => {
-  const clock = new MockClock(new Date(0));
-  const db = new InMemoryTypoRepository();
-  await db.addTypo('279614913129742338' as Snowflake, 'foo');
-  await db.addTypo('279614913129742338' as Snowflake, 'hoge');
-  await db.addTypo('279614913129742338' as Snowflake, 'fuga');
-  await db.addTypo('000000000000000001' as Snowflake, 'null');
-
-  const runner = new ScheduleRunner(clock);
-
-  const responder = new TypoReporter(db, clock, runner);
-  await responder.on(
-    'CREATE',
-    createMockMessage(
-      {
-        args: ['typo']
-      },
-      (message) => {
-        expect(message).toStrictEqual({
-          description:
-            '***† 今日のMikuroさいなのtypo †***\n- foo\n- hoge\n- fuga'
-        });
-        return Promise.resolve();
-      }
-    )
-  );
-  await responder.on(
-    'CREATE',
-    createMockMessage(
-      {
-        args: ['typo', 'by', '279614913129742338']
-      },
-      (message) => {
-        expect(message).toStrictEqual({
-          description:
-            '***† 今日の<@279614913129742338>のtypo †***\n- foo\n- hoge\n- fuga'
-        });
-        return Promise.resolve();
-      }
-    )
-  );
-
-  runner.killAll();
-});
-
-test('invalid user id', async () => {
-  const clock = new MockClock(new Date(0));
-  const db = new InMemoryTypoRepository();
-  const runner = new ScheduleRunner(clock);
-
-  const responder = new TypoReporter(db, clock, runner);
-  await responder.on(
-    'CREATE',
-    createMockMessage(
-      {
-        args: ['typo', 'by', 'hoge']
-      },
-      (message) => {
-        expect(message).toStrictEqual({
-          title: '入力形式エラー',
-          description: 'ユーザ ID は整数を入力してね'
-        });
-        return Promise.resolve();
-      }
-    )
-  );
-
-  runner.killAll();
-});
-
-test('must not reply', async () => {
+describe('typo record command', () => {
   const clock = new MockClock(new Date(0));
   const db = new InMemoryTypoRepository();
   const runner = new ScheduleRunner(clock);
   const responder = new TypoReporter(db, clock, runner);
 
-  const fn = jest.fn();
-  await responder.on(
-    'DELETE',
-    createMockMessage({
-      senderId: '279614913129742338' as Snowflake,
-      senderGuildId: '683939861539192860' as Snowflake,
-      senderName: 'Mikuroさいな',
-      args: ['typo'],
-      reply: fn
-    })
-  );
-  expect(fn).not.toHaveBeenCalled();
+  afterAll(() => runner.killAll());
 
-  runner.killAll();
-});
+  it('show all typos', async () => {
+    const db = new InMemoryTypoRepository();
+    await db.addTypo('279614913129742338' as Snowflake, 'foo');
+    await db.addTypo('279614913129742338' as Snowflake, 'hoge');
+    await db.addTypo('279614913129742338' as Snowflake, 'fuga');
+    await db.addTypo('000000000000000001' as Snowflake, 'null');
 
-test('help', async () => {
-  const clock = new MockClock(new Date(0));
-  const db = new InMemoryTypoRepository();
-  const runner = new ScheduleRunner(clock);
-  const responder = new TypoReporter(db, clock, runner);
+    const responder = new TypoReporter(db, clock, runner);
+    await responder.on(
+      'CREATE',
+      createMockMessage(
+        {
+          args: ['typo']
+        },
+        (message) => {
+          expect(message).toStrictEqual({
+            description:
+              '***† 今日のMikuroさいなのtypo †***\n- foo\n- hoge\n- fuga'
+          });
+          return Promise.resolve();
+        }
+      )
+    );
+    await responder.on(
+      'CREATE',
+      createMockMessage(
+        {
+          args: ['typo', 'by', '279614913129742338']
+        },
+        (message) => {
+          expect(message).toStrictEqual({
+            description:
+              '***† 今日の<@279614913129742338>のtypo †***\n- foo\n- hoge\n- fuga'
+          });
+          return Promise.resolve();
+        }
+      )
+    );
+  });
 
-  const fn = jest.fn<Promise<SentMessage>, [EmbedMessage]>(() =>
-    Promise.resolve({} as SentMessage)
-  );
-  await responder.on(
-    'CREATE',
-    createMockMessage({
-      senderId: '279614913129742338' as Snowflake,
-      senderGuildId: '683939861539192860' as Snowflake,
-      senderName: 'Mikuroさいな',
-      args: ['typo', 'hoge'],
-      reply: fn
-    })
-  );
-  expect(fn).toHaveBeenCalledWith({
-    title: 'Typoヘルプ',
-    description: `
+  it('invalid user id', async () => {
+    await responder.on(
+      'CREATE',
+      createMockMessage(
+        {
+          args: ['typo', 'by', 'hoge']
+        },
+        (message) => {
+          expect(message).toStrictEqual({
+            title: '入力形式エラー',
+            description: 'ユーザ ID は整数を入力してね'
+          });
+          return Promise.resolve();
+        }
+      )
+    );
+  });
+
+  it('must not reply', async () => {
+    const fn = vi.fn();
+    await responder.on(
+      'DELETE',
+      createMockMessage({
+        senderId: '279614913129742338' as Snowflake,
+        senderGuildId: '683939861539192860' as Snowflake,
+        senderName: 'Mikuroさいな',
+        args: ['typo'],
+        reply: fn
+      })
+    );
+    expect(fn).not.toHaveBeenCalled();
+  });
+
+  it('help', async () => {
+    const fn = vi.fn<[EmbedMessage]>(() => Promise.resolve({} as SentMessage));
+    await responder.on(
+      'CREATE',
+      createMockMessage({
+        senderId: '279614913129742338' as Snowflake,
+        senderGuildId: '683939861539192860' as Snowflake,
+        senderName: 'Mikuroさいな',
+        args: ['typo', 'hoge'],
+        reply: fn
+      })
+    );
+    expect(fn).toHaveBeenCalledWith({
+      title: 'Typoヘルプ',
+      description: `
 - 引数なし: あなたの今日のTypoを表示するよ
 - \`by <ユーザID>\`: そのIDの人の今日のTypoを表示するよ
 `
+    });
   });
 
-  runner.killAll();
-});
+  it('clear typos on next day', async () => {
+    const db = new InMemoryTypoRepository();
+    await db.addTypo('279614913129742338' as Snowflake, 'foo');
+    await db.addTypo('279614913129742338' as Snowflake, 'hoge');
+    const responder = new TypoReporter(db, clock, runner);
+    await responder.on(
+      'CREATE',
+      createMockMessage(
+        {
+          args: ['typo']
+        },
+        (message) => {
+          expect(message).toStrictEqual({
+            description: '***† 今日のMikuroさいなのtypo †***\n- foo\n- hoge'
+          });
+          return Promise.resolve();
+        }
+      )
+    );
 
-test('clear typos on next day', async () => {
-  const clock = new MockClock(new Date(0));
-  const db = new InMemoryTypoRepository();
-  await db.addTypo('279614913129742338' as Snowflake, 'foo');
-  await db.addTypo('279614913129742338' as Snowflake, 'hoge');
+    const now = clock.now();
+    const nextDay = addDays(now, 1);
+    const nextDay6 = setHours(nextDay, 6);
+    clock.placeholder = setMinutes(nextDay6, 1);
+    runner.consume();
 
-  const runner = new ScheduleRunner(clock);
-
-  const responder = new TypoReporter(db, clock, runner);
-  await responder.on(
-    'CREATE',
-    createMockMessage(
-      {
-        args: ['typo']
-      },
-      (message) => {
-        expect(message).toStrictEqual({
-          description: '***† 今日のMikuroさいなのtypo †***\n- foo\n- hoge'
-        });
-        return Promise.resolve();
-      }
-    )
-  );
-
-  const now = clock.now();
-  const nextDay = addDays(now, 1);
-  const nextDay6 = setHours(nextDay, 6);
-  clock.placeholder = setMinutes(nextDay6, 1);
-  runner.consume();
-
-  await responder.on(
-    'CREATE',
-    createMockMessage(
-      {
-        args: ['typo']
-      },
-      (message) => {
-        expect(message).toStrictEqual({
-          description: '***† 今日のMikuroさいなのtypo †***\n'
-        });
-        return Promise.resolve();
-      }
-    )
-  );
-
-  runner.killAll();
+    await responder.on(
+      'CREATE',
+      createMockMessage(
+        {
+          args: ['typo']
+        },
+        (message) => {
+          expect(message).toStrictEqual({
+            description: '***† 今日のMikuroさいなのtypo †***\n'
+          });
+          return Promise.resolve();
+        }
+      )
+    );
+  });
 });

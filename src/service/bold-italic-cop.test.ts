@@ -1,67 +1,64 @@
+import { describe, expect, it, vi } from 'vitest';
 import { BoldItalicCopReporter } from './bold-italic-cop';
 
-test('use case of bold-italic-cop', async () => {
+describe('bold italic cop', () => {
   const responder = new BoldItalicCopReporter();
-  await responder.on('CREATE', {
-    content: '***foge***',
-    replyMessage(message: { content: string }): Promise<void> {
-      expect(message.content).toStrictEqual(
-        'Bold-Italic警察だ!!! <:haracho:684424533997912096>'
-      );
-      return Promise.resolve();
-    }
-  });
-});
 
-test('4 asterisk of bold-italic-cop', async () => {
-  const responder = new BoldItalicCopReporter();
-  await responder.on('CREATE', {
-    content: '****foge****',
-    replyMessage(message: { content: string }): Promise<void> {
-      expect(message.content).toStrictEqual(
-        'Bold-Italic警察だ!!! <:haracho:684424533997912096>'
-      );
-      return Promise.resolve();
-    }
+  it('reacts', async () => {
+    const replyMessage = vi.fn(() => Promise.resolve());
+    await responder.on('CREATE', {
+      content: '***foge***',
+      replyMessage
+    });
+    expect(replyMessage).toHaveBeenCalledWith({
+      content: 'Bold-Italic警察だ!!! <:haracho:684424533997912096>'
+    });
   });
-});
 
-test('4 asterisk', async () => {
-  const responder = new BoldItalicCopReporter();
-  const fn = jest.fn();
-  await responder.on('CREATE', {
-    content: '****hoge',
-    replyMessage: fn
+  it('reacts to 4 asterisks', async () => {
+    const replyMessage = vi.fn(() => Promise.resolve());
+    await responder.on('CREATE', {
+      content: '****foge****',
+      replyMessage
+    });
+    expect(replyMessage).toHaveBeenCalledWith({
+      content: 'Bold-Italic警察だ!!! <:haracho:684424533997912096>'
+    });
   });
-  expect(fn).not.toHaveBeenCalled();
-});
 
-test('2 asterisk', async () => {
-  const responder = new BoldItalicCopReporter();
-  const fn = jest.fn();
-  await responder.on('CREATE', {
-    content: '**hoge',
-    replyMessage: fn
+  it('does not react 4 asterisks on one side', async () => {
+    const replyMessage = vi.fn();
+    await responder.on('CREATE', {
+      content: '****hoge',
+      replyMessage
+    });
+    expect(replyMessage).not.toHaveBeenCalled();
   });
-  expect(fn).not.toHaveBeenCalled();
-});
 
-test('bold', async () => {
-  const responder = new BoldItalicCopReporter();
-  const fn = jest.fn();
-  await responder.on('CREATE', {
-    content: '**hoge**',
-    replyMessage: fn
+  it('2 asterisk', async () => {
+    const replyMessage = vi.fn();
+    await responder.on('CREATE', {
+      content: '**hoge',
+      replyMessage
+    });
+    expect(replyMessage).not.toHaveBeenCalled();
   });
-  expect(fn).not.toHaveBeenCalled();
-});
 
-test('delete case', async () => {
-  const responder = new BoldItalicCopReporter();
-  const fn = jest.fn();
-  await responder.on('DELETE', {
-    content: '***hoge***',
-    replyMessage: fn
+  it('bold', async () => {
+    const replyMessage = vi.fn();
+    await responder.on('CREATE', {
+      content: '**hoge**',
+      replyMessage
+    });
+    expect(replyMessage).not.toHaveBeenCalled();
   });
-  expect(fn).not.toHaveBeenCalled();
+
+  it('delete case', async () => {
+    const replyMessage = vi.fn();
+    await responder.on('DELETE', {
+      content: '***hoge***',
+      replyMessage
+    });
+    expect(replyMessage).not.toHaveBeenCalled();
+  });
 });

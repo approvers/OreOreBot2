@@ -1,8 +1,9 @@
+import { expect, it, vi } from 'vitest';
 import { DifferenceDetector } from './difference-detector';
 
-test('react to edited message', async () => {
+it('react to edited message', async () => {
   const responder = new DifferenceDetector();
-  const fn = jest.fn();
+  const fn = vi.fn();
   await responder.on(
     'UPDATE',
     {

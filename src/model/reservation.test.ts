@@ -1,7 +1,8 @@
 import { Reservation, ReservationId, ReservationTime } from './reservation';
+import { expect, it } from 'vitest';
 import type { Snowflake } from './id';
 
-test('invalid time construction', () => {
+it('invalid time construction', () => {
   expect(() => new ReservationTime(-1, 0)).toThrow(
     'hours or minutes got out of range'
   );
@@ -16,21 +17,21 @@ test('invalid time construction', () => {
   );
 });
 
-test('time from invalid hours minutes', () => {
+it('time from invalid hours minutes', () => {
   expect(ReservationTime.fromHoursMinutes('0:')).toBeNull();
   expect(ReservationTime.fromHoursMinutes(':0')).toBeNull();
   expect(ReservationTime.fromHoursMinutes('24:00')).toBeNull();
   expect(ReservationTime.fromHoursMinutes('10:60')).toBeNull();
 });
 
-test('time into Japanese', () => {
+it('time into Japanese', () => {
   expect(new ReservationTime(11, 59).intoJapanese()).toStrictEqual(
     '午前11時59分'
   );
   expect(new ReservationTime(12, 0).intoJapanese()).toStrictEqual('午後0時0分');
 });
 
-test('serialize reservation', () => {
+it('serialize reservation', () => {
   const reservation = new Reservation({
     id: '0000' as ReservationId,
     time: new ReservationTime(6, 0),
@@ -42,7 +43,7 @@ test('serialize reservation', () => {
   );
 });
 
-test('deserialize reservation', () => {
+it('deserialize reservation', () => {
   expect(Reservation.deserialize('0')).toBeNull();
   expect(Reservation.deserialize('[]')).toBeNull();
   expect(
