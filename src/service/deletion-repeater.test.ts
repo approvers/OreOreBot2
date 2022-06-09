@@ -1,6 +1,7 @@
+import { expect, it, vi } from 'vitest';
 import { DeletionRepeater } from './deletion-repeater';
 
-test('react to deleted message', async () => {
+it('react to deleted message', async () => {
   const responder = new DeletionRepeater();
   await responder.on('DELETE', {
     author: 'Baba',
@@ -16,9 +17,9 @@ Wall Is Stop
   });
 });
 
-test('must not react', async () => {
+it('must not react', async () => {
   const responder = new DeletionRepeater();
-  const fn = jest.fn();
+  const fn = vi.fn();
   await responder.on('CREATE', {
     author: 'Baba',
     content: 'Wall Is Not Stop',

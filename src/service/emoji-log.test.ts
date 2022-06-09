@@ -1,7 +1,8 @@
+import { expect, it, vi } from 'vitest';
 import { EmojiLog } from './emoji-log';
 
-test('create emoji', async () => {
-  const sendEmbed = jest.fn(() => Promise.resolve());
+it('create emoji', async () => {
+  const sendEmbed = vi.fn(() => Promise.resolve());
   const responder = new EmojiLog({ sendEmbed });
   await responder.on('CREATE', {
     emoji: '<:kawaehand:903283802443501618>',
@@ -15,8 +16,8 @@ test('create emoji', async () => {
   });
 });
 
-test('create emoji(author undefined)', async () => {
-  const sendEmbed = jest.fn(() => Promise.resolve());
+it('create emoji(author undefined)', async () => {
+  const sendEmbed = vi.fn(() => Promise.resolve());
   const responder = new EmojiLog({ sendEmbed });
   await responder.on('CREATE', {
     emoji: '<:kawaehand:903283802443501618>',

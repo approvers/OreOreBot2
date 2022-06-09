@@ -1,7 +1,8 @@
+import { expect, it } from 'vitest';
 import type { StandardOutput } from './output';
 import { VoiceDiff } from './voice-diff';
 
-test('use case of VoiceDiff', async () => {
+it('use case of VoiceDiff', async () => {
   const outputJoin: StandardOutput = {
     sendEmbed(message) {
       expect(message).toStrictEqual({

@@ -3,12 +3,13 @@ import {
   MockVoiceConnectionFactory
 } from '../adaptor';
 import { KaereCommand, type KaereMusicKey } from './kaere';
+import { expect, it, vi } from 'vitest';
 import { MockClock } from '../adaptor';
 import { ScheduleRunner } from '../runner';
 import { createMockMessage } from './command-message';
 
-test('use case of kaere', async () => {
-  const fn = jest.fn();
+it('use case of kaere', async () => {
+  const fn = vi.fn();
   const connectionFactory = new MockVoiceConnectionFactory<KaereMusicKey>();
   const clock = new MockClock(new Date(0));
   const scheduleRunner = new ScheduleRunner(clock);
@@ -164,8 +165,8 @@ test('use case of kaere', async () => {
   scheduleRunner.killAll();
 });
 
-test('must not reply', async () => {
-  const fn = jest.fn();
+it('must not reply', async () => {
+  const fn = vi.fn();
   const connectionFactory = new MockVoiceConnectionFactory<KaereMusicKey>();
   const clock = new MockClock(new Date(0));
   const scheduleRunner = new ScheduleRunner(clock);

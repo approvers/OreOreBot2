@@ -1,14 +1,15 @@
 import { emojiOf, waitingJudgingEmoji } from '../model/judging-status';
+import { expect, it, vi } from 'vitest';
 import type { EmbedMessage } from '../model/embed-message';
 import { JudgingCommand } from './judging';
 import { createMockMessage } from './command-message';
 
-test('use case of jd', async () => {
+it('use case of jd', async () => {
   const responder = new JudgingCommand({
     sleep: () => Promise.resolve(),
     uniform: () => 2
   });
-  const fn = jest.fn<Promise<void>, [EmbedMessage]>(() => Promise.resolve());
+  const fn = vi.fn<[EmbedMessage]>(() => Promise.resolve());
 
   await responder.on(
     'CREATE',
@@ -39,12 +40,12 @@ test('use case of jd', async () => {
   });
 });
 
-test('use case of judge', async () => {
+it('use case of judge', async () => {
   const responder = new JudgingCommand({
     sleep: () => Promise.resolve(),
     uniform: () => 0
   });
-  const fn = jest.fn<Promise<void>, [EmbedMessage]>(() => Promise.resolve());
+  const fn = vi.fn<[EmbedMessage]>(() => Promise.resolve());
 
   await responder.on(
     'CREATE',
@@ -69,7 +70,7 @@ test('use case of judge', async () => {
   });
 });
 
-test('max number of cases', async () => {
+it('max number of cases', async () => {
   const responder = new JudgingCommand({
     sleep: () => Promise.resolve(),
     uniform: () => 1

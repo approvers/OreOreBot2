@@ -1,7 +1,8 @@
+import { expect, it, vi } from 'vitest';
 import { KokuseiChousa } from './kokusei-chousa';
 import { createMockMessage } from './command-message';
 
-test('use case of kokusei-chousa', async () => {
+it('use case of kokusei-chousa', async () => {
   const responder = new KokuseiChousa({
     allMemberCount(): Promise<number> {
       return Promise.resolve(150);
@@ -40,7 +41,7 @@ test('use case of kokusei-chousa', async () => {
   );
 });
 
-test('delete message', async () => {
+it('delete message', async () => {
   const responder = new KokuseiChousa({
     allMemberCount(): Promise<number> {
       return Promise.resolve(100);
@@ -49,7 +50,7 @@ test('delete message', async () => {
       return Promise.resolve(50);
     }
   });
-  const fn = jest.fn();
+  const fn = vi.fn();
   await responder.on(
     'DELETE',
     createMockMessage({
