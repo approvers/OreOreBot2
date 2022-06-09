@@ -48,6 +48,10 @@ export class DeletionRepeater<M extends DeletionObservable>
       return;
     }
     const { author, content } = message;
+    if (content === '!stfu') {
+      return;
+    }
+    
     await message.sendToSameChannel(`${author}さん、メッセージを削除しましたね？私は見ていましたよ。内容も知っています。
 \`\`\`
 ${content}
