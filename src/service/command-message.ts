@@ -1,4 +1,4 @@
-import type { EmbedMessage } from '../model/embed-message.js';
+import type { EmbedMessage, EmbedPage } from '../model/embed-message.js';
 import type { MessageEventResponder } from '../runner/index.js';
 import type { Snowflake } from '../model/id.js';
 
@@ -61,10 +61,17 @@ export interface CommandMessage {
    * このメッセージに `message` の内容で返信する。
    *
    * @param message
-   * @type {readonly string[]}
    * @memberof CommandMessage
    */
   reply(message: EmbedMessage): Promise<SentMessage>;
+
+  /**
+   * このメッセージにページ送りできる `pages` で返信する。
+   *
+   * @param pages
+   * @memberof CommandMessage
+   */
+  replyPages(pages: EmbedPage[]): Promise<void>;
 
   /**
    * このメッセージに `emoji` の絵文字でリアクションする。
@@ -116,6 +123,7 @@ export const createMockMessage = (
         Promise.resolve({
           edit: () => Promise.resolve()
         }),
+  replyPages: () => Promise.resolve(),
   react: () => Promise.resolve(),
   ...partial
 });
