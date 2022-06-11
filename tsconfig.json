@@ -7,6 +7,7 @@
     "rootDir": "./src",
     "noEmit": true,
     "removeComments": true,
+    "skipLibCheck": true,
     "strict": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
