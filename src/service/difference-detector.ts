@@ -1,5 +1,5 @@
 import { Differ } from 'difflib-ts';
-import type { MessageUpdateEventResponder } from '../runner';
+import type { MessageUpdateEventResponder } from '../runner/index.js';
 
 /**
  * 監視するメッセージの抽象。

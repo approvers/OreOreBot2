@@ -1,8 +1,8 @@
-import { emojiOf, waitingJudgingEmoji } from '../model/judging-status';
+import { emojiOf, waitingJudgingEmoji } from '../model/judging-status.js';
 import { expect, it, vi } from 'vitest';
-import type { EmbedMessage } from '../model/embed-message';
-import { JudgingCommand } from './judging';
-import { createMockMessage } from './command-message';
+import type { EmbedMessage } from '../model/embed-message.js';
+import { JudgingCommand } from './judging.js';
+import { createMockMessage } from './command-message.js';
 
 it('use case of jd', async () => {
   const responder = new JudgingCommand({

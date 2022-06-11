@@ -13,12 +13,12 @@ import {
   transformerForCommand,
   transformerForMessage,
   transformerForUpdateMessage
-} from '../adaptor';
+} from '../adaptor/index.js';
 import { Client, Intents, version } from 'discord.js';
 import type {
   CommandMessage,
   CommandResponder
-} from '../service/command-message';
+} from '../service/command-message.js';
 import {
   EmojiResponseRunner,
   MessageResponseRunner,
@@ -26,28 +26,31 @@ import {
   RoleResponseRunner,
   ScheduleRunner,
   VoiceRoomResponseRunner
-} from '../runner';
-import { type VoiceChannelParticipant, VoiceDiff } from '../service/voice-diff';
+} from '../runner/index.js';
+import {
+  type VoiceChannelParticipant,
+  VoiceDiff
+} from '../service/voice-diff.js';
 import {
   allEmojiResponder,
   allMessageEventResponder,
   allMessageUpdateEventResponder,
   allRoleResponder,
   registerAllCommandResponder
-} from '../service';
-import type { AssetKey } from '../service/party';
-import { DiscordMemberStats } from '../adaptor/discord-member-stats';
-import { DiscordRoleManager } from '../adaptor/discord-role';
-import { DiscordSheriff } from '../adaptor/discord-sheriff';
-import { DiscordWS } from '../adaptor/discord-ws';
-import { EmojiProxy } from '../adaptor/emoji-proxy';
-import type { KaereMusicKey } from '../service/kaere';
-import { Snowflake } from '../model/id';
+} from '../service/index.js';
+import type { AssetKey } from '../service/party.js';
+import { DiscordMemberStats } from '../adaptor/discord-member-stats.js';
+import { DiscordRoleManager } from '../adaptor/discord-role.js';
+import { DiscordSheriff } from '../adaptor/discord-sheriff.js';
+import { DiscordWS } from '../adaptor/discord-ws.js';
+import { EmojiProxy } from '../adaptor/emoji-proxy.js';
+import type { KaereMusicKey } from '../service/kaere.js';
+import { Snowflake } from '../model/id.js';
 import dotenv from 'dotenv';
-import { extractEnv } from './extract-env';
+import { extractEnv } from './extract-env.js';
 import { generateDependencyReport } from '@discordjs/voice';
-import { join } from 'path';
-import { roleProxy } from '../adaptor/role-proxy';
+import { join } from 'node:path';
+import { roleProxy } from '../adaptor/role-proxy.js';
 
 dotenv.config();
 const {

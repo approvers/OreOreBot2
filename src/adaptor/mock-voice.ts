@@ -1,8 +1,8 @@
 import type {
   VoiceConnection,
   VoiceConnectionFactory
-} from '../service/voice-connection';
-import EventEmitter from 'events';
+} from '../service/voice-connection.js';
+import EventEmitter from 'node:events';
 
 export class MockVoiceConnectionFactory<K>
   implements VoiceConnectionFactory<K>

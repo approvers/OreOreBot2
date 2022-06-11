@@ -2,14 +2,14 @@ import type {
   CommandMessage,
   CommandResponder,
   HelpInfo
-} from './command-message';
+} from './command-message.js';
 import {
   emojiOf,
   hasNoTestCases,
   isJudgingStatus,
   waitingJudgingEmoji
-} from '../model/judging-status';
-import type { MessageEvent } from '../runner';
+} from '../model/judging-status.js';
+import type { MessageEvent } from '../runner/index.js';
 
 /**
  * `JudgingCommand` のための乱数生成器。

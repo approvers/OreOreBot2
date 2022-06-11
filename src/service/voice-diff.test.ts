@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest';
-import type { StandardOutput } from './output';
-import { VoiceDiff } from './voice-diff';
+import type { StandardOutput } from './output.js';
+import { VoiceDiff } from './voice-diff.js';
 
 it('use case of VoiceDiff', async () => {
   const outputJoin: StandardOutput = {

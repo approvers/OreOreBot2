@@ -2,10 +2,12 @@
   "compileOnSave": true,
   "compilerOptions": {
     "target": "ESNext",
-    "module": "CommonJS",
+    "module": "node16",
     "outDir": "./build",
     "rootDir": "./src",
+    "noEmit": true,
     "removeComments": true,
+    "skipLibCheck": true,
     "strict": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
@@ -13,15 +15,13 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
+    "moduleResolution": "node16",
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "pretty": true,
     "newLine": "CRLF",
     "resolveJsonModule": true,
-    "typeRoots": [
-      "./node_modules/@types",
-      "./src/typings"
-    ]
-  }
+    "typeRoots": ["./node_modules/@types", "./src/typings"]
+  },
+  "include": ["src/**/*.ts"]
 }

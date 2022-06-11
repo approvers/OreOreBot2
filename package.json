@@ -1,19 +1,20 @@
 {
   "name": "oreorebot2",
   "version": "1.5.0",
-  "main": "index.js",
+  "exports": "./index.js",
+  "type": "module",
   "license": "MIT",
   "repository": "https://github.com/approvers/OreOreBot2",
   "author": "merunno <merunno92@gmail.com>",
   "scripts": {
-    "start": "node ./build/server/index.js",
+    "start": "node ./build/index.js",
     "setup": "pm2 start ./build/server/index.js --name OreOreBot2",
-    "debug": "ts-node ./src/server/index.ts",
-    "build": "tsc -p .",
-    "format": "prettier --write \"**/*.{js,ts,md}\"",
-    "check": "prettier --check \"**/*.{js,ts,md}\"",
-    "eslint": "eslint --ignore-path .gitignore \"**/*.{js,ts,md}\"",
-    "eslint:fix": "eslint --ignore-path .gitignore \"**/*.{js,ts,md}\" --fix",
+    "debug": "ts-node --esm ./src/server/index.ts",
+    "build": "esbuild ./src/server/index.ts --bundle --platform=node  --target=node16 --format=esm --external:./node_modules/* --outfile=build/index.js",
+    "format": "prettier --write \"src/**/*.{js,ts,md}\"",
+    "check": "prettier --check \"src/**/*.{js,ts,md}\" && tsc -p . --noEmit",
+    "eslint": "eslint \"src/**/*.{js,ts,md}\"",
+    "eslint:fix": "eslint \"src/**/*.{js,ts,md}\" --fix",
     "fix": "yarn run format && yarn run eslint:fix",
     "test": "vitest run",
     "coverage": "vitest run --coverage",
@@ -21,6 +22,7 @@
     "lint-staged": "lint-staged"
   },
   "engines": {
+    "node": ">=14.16",
     "yarn": "1.x"
   },
   "lint-staged": {
@@ -48,6 +50,7 @@
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",
     "c8": "^7.11.3",
+    "esbuild": "^0.14.43",
     "eslint": "^8.17.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-markdown": "^2.2.1",

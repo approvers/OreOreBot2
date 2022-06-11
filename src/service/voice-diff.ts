@@ -1,5 +1,8 @@
-import type { VoiceRoomEvent, VoiceRoomEventResponder } from '../runner';
-import type { StandardOutput } from './output';
+import type {
+  VoiceRoomEvent,
+  VoiceRoomEventResponder
+} from '../runner/index.js';
+import type { StandardOutput } from './output.js';
 
 export interface VoiceChannelParticipant {
   userName: string;

@@ -2,8 +2,8 @@ import type {
   CommandMessage,
   CommandResponder,
   HelpInfo
-} from './command-message';
-import type { MessageEvent } from '../runner';
+} from './command-message.js';
+import type { MessageEvent } from '../runner/index.js';
 
 export interface Ping {
   /**

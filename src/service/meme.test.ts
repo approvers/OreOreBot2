@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
-import type { EmbedMessage } from '../model/embed-message';
-import { Meme } from './meme';
-import { createMockMessage } from './command-message';
+import type { EmbedMessage } from '../model/embed-message.js';
+import { Meme } from './meme.js';
+import { createMockMessage } from './command-message.js';
 
 describe('meme', () => {
   const responder = new Meme();

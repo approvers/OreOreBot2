@@ -1,4 +1,4 @@
-import type { MessageEvent, MessageEventResponder } from '../runner';
+import type { MessageEvent, MessageEventResponder } from '../runner/index.js';
 
 const boldItalic = /\*\*\*/g;
 

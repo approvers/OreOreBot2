@@ -1,7 +1,7 @@
 import type { Client, Role } from 'discord.js';
-import type { NewRole } from '../service/kawaemon-has-all-roles';
-import type { RoleResponseRunner } from '../runner';
-import type { Snowflake } from '../model/id';
+import type { NewRole } from '../service/kawaemon-has-all-roles.js';
+import type { RoleResponseRunner } from '../runner/index.js';
+import type { Snowflake } from '../model/id.js';
 
 type AllRoleModel = NewRole;
 

@@ -1,4 +1,4 @@
-import type { MemeTemplate } from '../../model/meme-template';
+import type { MemeTemplate } from '../../model/meme-template.js';
 
 const takopiFlags = ['f'] as const;
 

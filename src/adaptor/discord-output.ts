@@ -1,6 +1,6 @@
 import { type Client, MessageEmbed } from 'discord.js';
-import type { EmbedMessage } from '../model/embed-message';
-import type { StandardOutput } from '../service/output';
+import type { EmbedMessage } from '../model/embed-message.js';
+import type { StandardOutput } from '../service/output.js';
 
 export class DiscordOutput implements StandardOutput {
   constructor(

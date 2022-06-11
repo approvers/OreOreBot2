@@ -1,6 +1,6 @@
 import type { Client } from 'discord.js';
-import type { MemberStats } from '../service/kokusei-chousa';
-import type { Snowflake } from '../model/id';
+import type { MemberStats } from '../service/kokusei-chousa.js';
+import type { Snowflake } from '../model/id.js';
 
 export class DiscordMemberStats implements MemberStats {
   constructor(

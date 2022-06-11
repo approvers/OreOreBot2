@@ -1,14 +1,14 @@
-import type { Clock, MessageEvent, ScheduleRunner } from '../runner';
+import type { Clock, MessageEvent, ScheduleRunner } from '../runner/index.js';
 import type {
   CommandMessage,
   CommandResponder,
   HelpInfo
-} from './command-message';
-import { Reservation, ReservationTime } from '../model/reservation';
+} from './command-message.js';
+import { Reservation, ReservationTime } from '../model/reservation.js';
 import { addDays, isBefore, setHours, setMinutes, setSeconds } from 'date-fns';
-import type { EmbedMessage } from '../model/embed-message';
-import type { Snowflake } from '../model/id';
-import type { VoiceConnectionFactory } from './voice-connection';
+import type { EmbedMessage } from '../model/embed-message.js';
+import type { Snowflake } from '../model/id.js';
+import type { VoiceConnectionFactory } from './voice-connection.js';
 
 export type KaereMusicKey = 'NEROYO';
 
