@@ -44,6 +44,7 @@ import { DiscordRoleManager } from '../adaptor/discord-role.js';
 import { DiscordSheriff } from '../adaptor/discord-sheriff.js';
 import { DiscordWS } from '../adaptor/discord-ws.js';
 import { EmojiProxy } from '../adaptor/emoji-proxy.js';
+import { GenVersionFetcher } from '../adaptor/version/fetch.js';
 import type { KaereMusicKey } from '../service/kaere.js';
 import { Snowflake } from '../model/id.js';
 import dotenv from 'dotenv';
@@ -126,7 +127,8 @@ registerAllCommandResponder({
   commandRunner,
   stats: new DiscordMemberStats(client, GUILD_ID as Snowflake),
   sheriff: new DiscordSheriff(client),
-  ping: new DiscordWS(client)
+  ping: new DiscordWS(client),
+  fetcher: new GenVersionFetcher()
 });
 
 const provider = new VoiceRoomProxy<VoiceChannelParticipant>(
