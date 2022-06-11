@@ -1,5 +1,5 @@
 import { expect, it, vi } from 'vitest';
-import { DifferenceDetector } from './difference-detector';
+import { DifferenceDetector } from './difference-detector.js';
 
 it('react to edited message', async () => {
   const responder = new DifferenceDetector();

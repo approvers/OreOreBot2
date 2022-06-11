@@ -1,5 +1,5 @@
 import { expect, it, vi } from 'vitest';
-import { EmojiLog } from './emoji-log';
+import { EmojiLog } from './emoji-log.js';
 
 it('create emoji', async () => {
   const sendEmbed = vi.fn(() => Promise.resolve());

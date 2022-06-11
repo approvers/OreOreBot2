@@ -2,9 +2,9 @@ import type {
   CommandMessage,
   CommandResponder,
   HelpInfo
-} from './command-message';
-import type { MessageEvent } from '../runner';
-import type { Snowflake } from '../model/id';
+} from './command-message.js';
+import type { MessageEvent } from '../runner/index.js';
+import type { Snowflake } from '../model/id.js';
 
 /**
  * 'SheriffCommandのための削除機能。

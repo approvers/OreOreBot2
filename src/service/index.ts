@@ -2,8 +2,11 @@ import {
   type AssetKey,
   PartyCommand,
   type RandomGenerator as PartyRng
-} from './party';
-import { type BoldItalicCop, BoldItalicCopReporter } from './bold-italic-cop';
+} from './party.js';
+import {
+  type BoldItalicCop,
+  BoldItalicCopReporter
+} from './bold-italic-cop.js';
 import {
   type Clock,
   type MessageResponseRunner,
@@ -12,33 +15,36 @@ import {
   composeMessageEventResponders,
   composeMessageUpdateEventResponders,
   composeRoleEventResponders
-} from '../runner';
-import type { CommandMessage, CommandResponder } from './command-message';
-import { type DeletionObservable, DeletionRepeater } from './deletion-repeater';
-import { JudgingCommand, type RandomGenerator } from './judging';
+} from '../runner/index.js';
+import type { CommandMessage, CommandResponder } from './command-message.js';
+import {
+  type DeletionObservable,
+  DeletionRepeater
+} from './deletion-repeater.js';
+import { JudgingCommand, type RandomGenerator } from './judging.js';
 import {
   KaereCommand,
   type KaereMusicKey,
   type ReservationRepository,
   type VoiceRoomController
-} from './kaere';
-import { KawaemonHasAllRoles, RoleManager } from './kawaemon-has-all-roles';
-import { KokuseiChousa, MemberStats } from './kokusei-chousa';
-import { Ping, PingCommand } from './ping';
-import { Sheriff, SheriffCommand } from './stfu';
+} from './kaere.js';
+import { KawaemonHasAllRoles, RoleManager } from './kawaemon-has-all-roles.js';
+import { KokuseiChousa, MemberStats } from './kokusei-chousa.js';
+import { Ping, PingCommand } from './ping.js';
+import { Sheriff, SheriffCommand } from './stfu.js';
 import {
   type TypoObservable,
   TypoRecorder,
   TypoReporter,
   type TypoRepository
-} from './typo-record';
-import { DifferenceDetector } from './difference-detector';
-import { EmojiLog } from './emoji-log';
-import { HelpCommand } from './help';
-import { Meme } from './meme';
-import type { Snowflake } from '../model/id';
-import type { StandardOutput } from './output';
-import type { VoiceConnectionFactory } from './voice-connection';
+} from './typo-record.js';
+import { DifferenceDetector } from './difference-detector.js';
+import { EmojiLog } from './emoji-log.js';
+import { HelpCommand } from './help.js';
+import { Meme } from './meme.js';
+import type { Snowflake } from '../model/id.js';
+import type { StandardOutput } from './output.js';
+import type { VoiceConnectionFactory } from './voice-connection.js';
 
 export const allMessageEventResponder = (repo: TypoRepository) =>
   composeMessageEventResponders<

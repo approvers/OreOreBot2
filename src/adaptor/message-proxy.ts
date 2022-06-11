@@ -1,8 +1,8 @@
 import type {
   MessageEventProvider,
   MessageUpdateEventProvider
-} from '../runner';
-import type { RawMessage, Transformer } from './transformer';
+} from '../runner/index.js';
+import type { RawMessage, Transformer } from './transformer/index.js';
 import type { Client } from 'discord.js';
 
 export type MessageHandler<M> = (message: M) => Promise<void>;

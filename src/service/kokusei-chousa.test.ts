@@ -1,6 +1,6 @@
 import { expect, it, vi } from 'vitest';
-import { KokuseiChousa } from './kokusei-chousa';
-import { createMockMessage } from './command-message';
+import { KokuseiChousa } from './kokusei-chousa.js';
+import { createMockMessage } from './command-message.js';
 
 it('use case of kokusei-chousa', async () => {
   const responder = new KokuseiChousa({

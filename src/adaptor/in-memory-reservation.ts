@@ -1,8 +1,8 @@
-import type { Reservation, ReservationTime } from '../model/reservation';
+import type { Reservation, ReservationTime } from '../model/reservation.js';
 import type {
   ReservationRepository,
   ReservationResult
-} from '../service/kaere';
+} from '../service/kaere.js';
 
 export class InMemoryReservationRepository implements ReservationRepository {
   map: Map<string, Reservation> = new Map();

@@ -1,4 +1,4 @@
-import type { EmbedMessage } from '../model/embed-message';
+import type { EmbedMessage } from '../model/embed-message.js';
 import { MessageEmbed } from 'discord.js';
 
 export const convertEmbed = ({

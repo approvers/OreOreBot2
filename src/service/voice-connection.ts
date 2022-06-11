@@ -1,4 +1,4 @@
-import type { Snowflake } from '../model/id';
+import type { Snowflake } from '../model/id.js';
 
 /**
  * ボイスチャンネルへの接続を生成する抽象。`K` は再生したいデータを指すためのキーの型で `"hoge" | "fuga"` などが入る。

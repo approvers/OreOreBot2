@@ -2,9 +2,9 @@ import type {
   CommandMessage,
   CommandResponder,
   HelpInfo
-} from './command-message';
-import type { MessageEvent, MessageResponseRunner } from '../runner';
-import type { EmbedMessageField } from '../model/embed-message';
+} from './command-message.js';
+import type { MessageEvent, MessageResponseRunner } from '../runner/index.js';
+import type { EmbedMessageField } from '../model/embed-message.js';
 
 export class HelpCommand implements CommandResponder {
   help: Readonly<HelpInfo> = {

@@ -1,4 +1,4 @@
-import type { Clock } from '../runner';
+import type { Clock } from '../runner/index.js';
 
 export class MockClock implements Clock {
   constructor(public placeholder: Date) {}

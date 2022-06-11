@@ -2,15 +2,15 @@ import type {
   CommandMessage,
   CommandResponder,
   HelpInfo
-} from './command-message';
-import type { MemeTemplate } from '../model/meme-template';
-import type { MessageEvent } from '../runner';
-import { dousurya } from './meme/dousurya';
-import { hukueki } from './meme/hukueki';
-import { lolicon } from './meme/lolicon';
-import { n } from './meme/n';
+} from './command-message.js';
+import type { MemeTemplate } from '../model/meme-template.js';
+import type { MessageEvent } from '../runner/index.js';
+import { dousurya } from './meme/dousurya.js';
+import { hukueki } from './meme/hukueki.js';
+import { lolicon } from './meme/lolicon.js';
+import { n } from './meme/n.js';
 import parse from 'cli-argparse';
-import { takopi } from './meme/takopi';
+import { takopi } from './meme/takopi.js';
 
 const memes = [dousurya, hukueki, lolicon, n, takopi];
 const memesByCommandName: Record<

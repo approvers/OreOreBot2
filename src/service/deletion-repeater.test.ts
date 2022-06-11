@@ -1,5 +1,5 @@
 import { expect, it, vi } from 'vitest';
-import { DeletionRepeater } from './deletion-repeater';
+import { DeletionRepeater } from './deletion-repeater.js';
 
 it('react to deleted message', async () => {
   const responder = new DeletionRepeater();
