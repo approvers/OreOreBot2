@@ -13,7 +13,7 @@ export class GetVersionCommand implements CommandResponder {
   help: Readonly<HelpInfo> = {
     commandName: ['version'],
     title: 'はらちょバージョン',
-    description: 'OreOreBot2 のバージョンを出力するよ。',
+    description: '現在の私のバージョンを出力するよ。',
     argsFormat: []
   };
 
