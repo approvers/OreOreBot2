@@ -8,7 +8,7 @@ import {
 import { addDays, setHours, setMinutes } from 'date-fns';
 import { afterAll, describe, expect, it, vi } from 'vitest';
 import type { EmbedMessage } from '../model/embed-message.js';
-import EventEmitter from 'events';
+import EventEmitter from 'node:events';
 import { ScheduleRunner } from '../runner/index.js';
 import type { Snowflake } from '../model/id.js';
 
