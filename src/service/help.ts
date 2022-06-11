@@ -4,7 +4,7 @@ import type {
   HelpInfo
 } from './command-message.js';
 import type { MessageEvent, MessageResponseRunner } from '../runner/index.js';
-import type { EmbedMessageField } from '../model/embed-message.js';
+import type { EmbedPage } from '../model/embed-message.js';
 
 export class HelpCommand implements CommandResponder {
   help: Readonly<HelpInfo> = {
@@ -29,10 +29,8 @@ export class HelpCommand implements CommandResponder {
     const helps = this.runner
       .getResponders()
       .map((responder) => responder.help);
-    const fields: EmbedMessageField[] = helps.map((help) =>
-      this.buildField(help)
-    );
-    await message.reply({ fields });
+    const pages: EmbedPage[] = helps.map((help) => this.buildField(help));
+    await message.replyPages(pages);
   }
 
   private buildField({
@@ -40,7 +38,7 @@ export class HelpCommand implements CommandResponder {
     description,
     commandName,
     argsFormat
-  }: Readonly<HelpInfo>): { name: string; value: string } {
+  }: Readonly<HelpInfo>): EmbedPage {
     const patternsWithDesc: [string, string][] = argsFormat.map(
       ({ name, description, defaultValue }) => [
         defaultValue === undefined ? `<${name}>` : `[${name}=${defaultValue}]`,
@@ -52,8 +50,8 @@ export class HelpCommand implements CommandResponder {
       .join('\n');
     const patterns = patternsWithDesc.map(([pattern]) => pattern);
     return {
-      name: title,
-      value: `${description}
+      title,
+      description: `${description}
 \`${commandName.join('/')}${['', ...patterns].join(' ')}\`
 ${argsDecrptions}`
     };
