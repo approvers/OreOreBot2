@@ -22,3 +22,5 @@ export interface EmbedMessage {
   url?: string;
   thumbnail?: EmbedMessageThumbnail;
 }
+
+export type EmbedPage = Omit<EmbedMessage, 'footer'>;

@@ -1,3 +1,4 @@
+import { MessageActionRow, MessageButton } from 'discord.js';
 import type { RawMessage, Transformer } from './index.js';
 import type { BoldItalicCop } from '../../service/bold-italic-cop.js';
 import type { CommandMessage } from '../../service/command-message.js';
@@ -31,6 +32,22 @@ export const observableTransformer: Transformer<
 > = (handler) => (raw: RawMessage) => handler(observableMessage(raw));
 
 const SPACES = /\s+/;
+const ONE_MINUTE_MS = 60_000;
+const CONTROLS = new MessageActionRow().addComponents(
+  new MessageButton()
+    .setStyle('SECONDARY')
+    .setCustomId('prev')
+    .setLabel('戻る')
+    .setEmoji('⏪'),
+  new MessageButton()
+    .setStyle('SECONDARY')
+    .setCustomId('next')
+    .setLabel('進む')
+    .setEmoji('⏩')
+);
+
+const pagesFooter = (currentPage: number, pagesLength: number) =>
+  `ページ ${currentPage + 1}/${pagesLength}`;
 
 export const converterWithPrefix =
   (prefix: string): Transformer<CommandMessage, RawMessage> =>
@@ -57,6 +74,45 @@ export const converterWithPrefix =
             await mes.edit({ embeds: [convertEmbed(embed)] });
           }
         };
+      },
+      async replyPages(pages) {
+        if (pages.length === 0) {
+          throw new Error('pages must not be empty array');
+        }
+
+        const generatePage = (index: number) =>
+          convertEmbed(pages[index]).setFooter({
+            text: pagesFooter(index, pages.length)
+          });
+
+        const paginated = await message.reply({
+          embeds: [generatePage(0)],
+          components: [CONTROLS]
+        });
+
+        const collector = paginated.createMessageComponentCollector({
+          time: ONE_MINUTE_MS
+        });
+        let currentPage = 0;
+        collector.on('collect', async (interaction) => {
+          switch (interaction.customId) {
+            case 'prev':
+              if (0 < currentPage) {
+                currentPage -= 1;
+              } else {
+                currentPage = pages.length - 1;
+              }
+              break;
+            case 'next':
+              if (currentPage < pages.length - 1) {
+                currentPage += 1;
+              } else {
+                currentPage = 0;
+              }
+              break;
+          }
+          await interaction.update({ embeds: [generatePage(currentPage)] });
+        });
       },
       async react(emoji) {
         await message.react(emoji);
