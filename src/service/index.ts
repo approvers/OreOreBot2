@@ -21,6 +21,7 @@ import {
   type DeletionObservable,
   DeletionRepeater
 } from './deletion-repeater.js';
+import { GetVersionCommand, VersionFetcher } from './version.js';
 import { JudgingCommand, type RandomGenerator } from './judging.js';
 import {
   KaereCommand,
@@ -69,7 +70,8 @@ export const registerAllCommandResponder = ({
   commandRunner,
   stats,
   sheriff,
-  ping
+  ping,
+  fetcher
 }: {
   typoRepo: TypoRepository;
   reservationRepo: ReservationRepository;
@@ -82,6 +84,7 @@ export const registerAllCommandResponder = ({
   stats: MemberStats;
   sheriff: Sheriff;
   ping: Ping;
+  fetcher: VersionFetcher;
 }) => {
   const allResponders = [
     new TypoReporter(typoRepo, clock, scheduleRunner),
@@ -98,7 +101,8 @@ export const registerAllCommandResponder = ({
     new HelpCommand(commandRunner),
     new KokuseiChousa(stats),
     new SheriffCommand(sheriff),
-    new PingCommand(ping)
+    new PingCommand(ping),
+    new GetVersionCommand(fetcher)
   ];
   for (const responder of allResponders) {
     commandRunner.addResponder(responder);
