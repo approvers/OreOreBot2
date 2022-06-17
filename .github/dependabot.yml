@@ -4,6 +4,9 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    reviewers:
+      - "m2en"
+      - "MikuroXina"
     target-branch: main
     commit-message:
       prefix: chore(npm)
@@ -11,6 +14,9 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    reviewers:
+      - "m2en"
+      - "MikuroXina"
+    target-branch: main
     commit-message:
       prefix: chore(ci)
-    target-branch: main
