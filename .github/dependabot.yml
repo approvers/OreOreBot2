@@ -6,4 +6,11 @@ updates:
       interval: "daily"
     target-branch: main
     commit-message:
-      prefix: chore
+      prefix: chore(npm)
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: chore(ci)
+    target-branch: main
