@@ -11,7 +11,7 @@
 */
 
 import type { MessageHandler } from '../index.js';
-import type { Transformer } from './index.js';
+import type { Transformer } from '../transformer.js';
 
 // A1=> -> A2=> -> A1*A2=>
 const merge =

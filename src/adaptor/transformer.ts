@@ -2,11 +2,11 @@ import type { Message, PartialMessage } from 'discord.js';
 import {
   converterWithPrefix,
   observableTransformer
-} from './message-convert.js';
-import type { EditingObservable } from '../../service/difference-detector.js';
-import type { MessageHandler } from '../index.js';
-import { botFilter } from './bot-filter.js';
-import { tupleTransformer } from './tuple.js';
+} from './transformer/message-convert.js';
+import type { EditingObservable } from '../service/difference-detector.js';
+import type { MessageHandler } from './index.js';
+import { botFilter } from './transformer/bot-filter.js';
+import { tupleTransformer } from './transformer/tuple.js';
 
 export type RawMessage = Message | PartialMessage;
 

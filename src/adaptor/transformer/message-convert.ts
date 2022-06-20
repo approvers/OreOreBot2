@@ -1,5 +1,5 @@
 import { MessageActionRow, MessageButton } from 'discord.js';
-import type { RawMessage, Transformer } from './index.js';
+import type { RawMessage, Transformer } from '../transformer.js';
 import type { BoldItalicCop } from '../../service/bold-italic-cop.js';
 import type { CommandMessage } from '../../service/command-message.js';
 import type { DeletionObservable } from '../../service/deletion-repeater.js';

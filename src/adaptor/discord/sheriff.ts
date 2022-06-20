@@ -1,6 +1,6 @@
 import type { Client } from 'discord.js';
-import type { Sheriff } from '../service/stfu.js';
-import type { Snowflake } from '../model/id.js';
+import type { Sheriff } from '../../service/stfu.js';
+import type { Snowflake } from '../../model/id.js';
 
 export class DiscordSheriff implements Sheriff {
   constructor(private readonly client: Client) {}
