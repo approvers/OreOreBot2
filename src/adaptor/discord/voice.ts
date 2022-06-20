@@ -12,9 +12,9 @@ import { type Client, Permissions, type VoiceBasedChannel } from 'discord.js';
 import type {
   VoiceConnection,
   VoiceConnectionFactory
-} from '../service/voice-connection.js';
-import type { Snowflake } from '../model/id.js';
-import type { VoiceRoomController } from '../service/kaere.js';
+} from '../../service/voice-connection.js';
+import type { Snowflake } from '../../model/id.js';
+import type { VoiceRoomController } from '../../service/kaere.js';
 
 /**
  * ボイスチャンネルへの接続が、復帰できない切断 (管理者の手で切断させられたなど) になったと判断するまでのミリ秒数。

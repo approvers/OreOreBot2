@@ -1,4 +1,4 @@
-import type { VoiceChannelParticipant } from '../service/voice-diff.js';
+import type { VoiceChannelParticipant } from '../../service/voice-diff.js';
 import type { VoiceState } from 'discord.js';
 
 export class DiscordParticipant implements VoiceChannelParticipant {

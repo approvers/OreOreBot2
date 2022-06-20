@@ -1,9 +1,10 @@
 import { MessageActionRow, MessageButton } from 'discord.js';
-import type { RawMessage, Transformer } from './index.js';
+import type { RawMessage, Transformer } from '../transformer.js';
 import type { BoldItalicCop } from '../../service/bold-italic-cop.js';
 import type { CommandMessage } from '../../service/command-message.js';
 import type { DeletionObservable } from '../../service/deletion-repeater.js';
 import type { EditingObservable } from '../../service/difference-detector.js';
+import type { EmbedPage } from '../../model/embed-message.js';
 import type { MessageHandler } from '../index.js';
 import type { Snowflake } from '../../model/id.js';
 import type { TypoObservable } from '../../service/typo-record.js';
@@ -45,9 +46,69 @@ const CONTROLS = new MessageActionRow().addComponents(
     .setLabel('進む')
     .setEmoji('⏩')
 );
+const CONTROLS_DISABLED = new MessageActionRow().addComponents(
+  new MessageButton()
+    .setStyle('SECONDARY')
+    .setCustomId('prev')
+    .setLabel('戻る')
+    .setEmoji('⏪')
+    .setDisabled(true),
+  new MessageButton()
+    .setStyle('SECONDARY')
+    .setCustomId('next')
+    .setLabel('進む')
+    .setEmoji('⏩')
+    .setDisabled(true)
+);
 
 const pagesFooter = (currentPage: number, pagesLength: number) =>
   `ページ ${currentPage + 1}/${pagesLength}`;
+
+const replyPages = (message: RawMessage) => async (pages: EmbedPage[]) => {
+  if (pages.length === 0) {
+    throw new Error('pages must not be empty array');
+  }
+
+  const generatePage = (index: number) =>
+    convertEmbed(pages[index]).setFooter({
+      text: pagesFooter(index, pages.length)
+    });
+
+  const paginated = await message.reply({
+    embeds: [generatePage(0)],
+    components: [CONTROLS]
+  });
+
+  const collector = paginated.createMessageComponentCollector({
+    time: ONE_MINUTE_MS
+  });
+
+  let currentPage = 0;
+  collector.on('collect', async (interaction) => {
+    switch (interaction.customId) {
+      case 'prev':
+        if (0 < currentPage) {
+          currentPage -= 1;
+        } else {
+          currentPage = pages.length - 1;
+        }
+        break;
+      case 'next':
+        if (currentPage < pages.length - 1) {
+          currentPage += 1;
+        } else {
+          currentPage = 0;
+        }
+        break;
+      default:
+        return;
+    }
+    await interaction.update({ embeds: [generatePage(currentPage)] });
+  });
+  collector.on('end', async () => {
+    await paginated.edit({ components: [CONTROLS_DISABLED] });
+  });
+};
 
 export const converterWithPrefix =
   (prefix: string): Transformer<CommandMessage, RawMessage> =>
@@ -75,45 +136,7 @@ export const converterWithPrefix =
           }
         };
       },
-      async replyPages(pages) {
-        if (pages.length === 0) {
-          throw new Error('pages must not be empty array');
-        }
-
-        const generatePage = (index: number) =>
-          convertEmbed(pages[index]).setFooter({
-            text: pagesFooter(index, pages.length)
-          });
-
-        const paginated = await message.reply({
-          embeds: [generatePage(0)],
-          components: [CONTROLS]
-        });
-
-        const collector = paginated.createMessageComponentCollector({
-          time: ONE_MINUTE_MS
-        });
-        let currentPage = 0;
-        collector.on('collect', async (interaction) => {
-          switch (interaction.customId) {
-            case 'prev':
-              if (0 < currentPage) {
-                currentPage -= 1;
-              } else {
-                currentPage = pages.length - 1;
-              }
-              break;
-            case 'next':
-              if (currentPage < pages.length - 1) {
-                currentPage += 1;
-              } else {
-                currentPage = 0;
-              }
-              break;
-          }
-          await interaction.update({ embeds: [generatePage(currentPage)] });
-        });
-      },
+      replyPages: replyPages(message),
       async react(emoji) {
         await message.react(emoji);
       }
