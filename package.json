@@ -8,7 +8,7 @@
   "author": "merunno <merunno92@gmail.com>",
   "scripts": {
     "start": "node ./build/index.js",
-    "setup": "pm2 start ./build/server/index.js --name OreOreBot2",
+    "setup": "pm2 start \"yarn start\" --name OreOreBot2",
     "predebug": "yarn gen-version",
     "debug": "ts-node --esm ./src/server/index.ts",
     "gen-version": "git describe --tags --abbrev=0 > build/version.txt",
