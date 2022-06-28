@@ -45,7 +45,8 @@
     "ffmpeg-static": "^5.0.0",
     "husky": "^8.0.1",
     "nanoid": "^4.0.0",
-    "tweetnacl": "^1.0.3"
+    "tweetnacl": "^1.0.3",
+    "yaml": "^2.1.1"
   },
   "devDependencies": {
     "@types/node": "^18.0.0",
