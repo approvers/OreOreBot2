@@ -21,6 +21,7 @@ import {
   type DeletionObservable,
   DeletionRepeater
 } from './deletion-repeater.js';
+import { EmojiSeqObservable, EmojiSeqReact } from './emoji-seq-react.js';
 import { GetVersionCommand, VersionFetcher } from './version.js';
 import { JudgingCommand, type RandomGenerator } from './judging.js';
 import {
@@ -49,11 +50,12 @@ import type { VoiceConnectionFactory } from './voice-connection.js';
 
 export const allMessageEventResponder = (repo: TypoRepository) =>
   composeMessageEventResponders<
-    DeletionObservable & TypoObservable & BoldItalicCop
+    DeletionObservable & TypoObservable & BoldItalicCop & EmojiSeqObservable
   >(
     new DeletionRepeater(),
     new TypoRecorder(repo),
-    new BoldItalicCopReporter()
+    new BoldItalicCopReporter(),
+    new EmojiSeqReact()
   );
 
 export const allMessageUpdateEventResponder = () =>
