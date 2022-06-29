@@ -5,6 +5,7 @@ import type { CommandMessage } from '../../service/command-message.js';
 import type { DeletionObservable } from '../../service/deletion-repeater.js';
 import type { EditingObservable } from '../../service/difference-detector.js';
 import type { EmbedPage } from '../../model/embed-message.js';
+import type { EmojiSeqObservable } from '../../service/emoji-seq-react.js';
 import type { MessageHandler } from '../index.js';
 import type { Snowflake } from '../../model/id.js';
 import type { TypoObservable } from '../../service/typo-record.js';
@@ -15,7 +16,11 @@ const getAuthorSnowflake = (message: RawMessage): Snowflake =>
 
 const observableMessage = (
   raw: RawMessage
-): EditingObservable & DeletionObservable & TypoObservable & BoldItalicCop => ({
+): EditingObservable &
+  DeletionObservable &
+  TypoObservable &
+  BoldItalicCop &
+  EmojiSeqObservable => ({
   authorId: getAuthorSnowflake(raw),
   author: raw.author?.username || '名無し',
   content: raw.content || '',
@@ -24,11 +29,18 @@ const observableMessage = (
   },
   async replyMessage(message): Promise<void> {
     await raw.reply(message);
+  },
+  async addReaction(reaction): Promise<void> {
+    await raw.react(reaction);
   }
 });
 
 export const observableTransformer: Transformer<
-  EditingObservable & DeletionObservable & TypoObservable & BoldItalicCop,
+  EditingObservable &
+    DeletionObservable &
+    TypoObservable &
+    BoldItalicCop &
+    EmojiSeqObservable,
   RawMessage
 > = (handler) => (raw: RawMessage) => handler(observableMessage(raw));
 

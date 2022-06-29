@@ -1,0 +1,11 @@
+- pattern: 響
+  emojisToSend:
+    - <:haracho:684424533997912096>
+- pattern: ぴちょん
+  emojisToSend:
+    - <:python_kuso:689921246913101962>
+- pattern: 腹切り
+  emojisToSend:
+    - <:hara:991347806180741160>
+    - <:ki:991347820693032970>
+    - <:ri:991347831875047454>
