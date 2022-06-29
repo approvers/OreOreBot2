@@ -12,8 +12,11 @@ export class EmojiSeq {
     pattern: string,
     public readonly emojisToSend: readonly string[]
   ) {
+    if (emojisToSend.length === 0) {
+      throw new Error('`emojisToSend` must not be empty');
+    }
     if (new Set(emojisToSend).size !== emojisToSend.length) {
-      throw new Error(`elements of \`emojisToSend\` must be unique`);
+      throw new Error('elements of `emojisToSend` must be unique');
     }
     const regexp = new RegExp(pattern);
     this.predicate = (body) => regexp.test(body);
