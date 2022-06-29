@@ -42,7 +42,7 @@
     "difflib-ts": "^1.0.3",
     "discord.js": "^13.8.1",
     "dotenv": "^16.0.1",
-    "ffmpeg-static": "^5.0.0",
+    "ffmpeg-static": "^5.0.2",
     "husky": "^8.0.1",
     "nanoid": "^4.0.0",
     "tweetnacl": "^1.0.3",
