@@ -31,6 +31,17 @@ emojisToSend:
     }).throws('yaml must be an array');
     expect(() => {
       EmojiSeqSet.fromYaml(`
+- 3.14
+`);
+    }).throws('invalid 0-th entry');
+    expect(() => {
+      EmojiSeqSet.fromYaml(`
+- pattern: fuga
+  emojisToSend: 2022-02-02
+`);
+    }).throws('invalid 0-th entry');
+    expect(() => {
+      EmojiSeqSet.fromYaml(`
 - pattern: fuga
   emojisToSend:
     - 120
