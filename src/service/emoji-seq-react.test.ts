@@ -2,7 +2,11 @@ import { describe, expect, it, vi } from 'vitest';
 import { EmojiSeqReact } from './emoji-seq-react.js';
 
 describe('EmojiSeqReact', () => {
-  const responder = new EmojiSeqReact();
+  const responder = new EmojiSeqReact(`
+- pattern: 響
+  emojisToSend:
+    - <:haracho:684424533997912096>
+`);
 
   it('adds the reaction to creation a message that contains Hibiki', async () => {
     const addReaction = vi.fn<[string], Promise<void>>(() => Promise.resolve());
