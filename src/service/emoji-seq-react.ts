@@ -1,7 +1,5 @@
 import type { MessageEvent, MessageEventResponder } from '../runner/message.js';
-import { EmojiSeq } from '../model/emoji-seq.js';
-
-const SEQUENCES = [new EmojiSeq('響', ['<:haracho:684424533997912096>'])];
+import { EmojiSeqSet } from '../model/emoji-seq.js';
 
 export interface EmojiSeqObservable {
   content: string;
@@ -12,16 +10,20 @@ export interface EmojiSeqObservable {
 export class EmojiSeqReact<M extends EmojiSeqObservable>
   implements MessageEventResponder<M>
 {
+  private readonly sequences: EmojiSeqSet;
+
+  constructor(sequencesYaml: string) {
+    this.sequences = EmojiSeqSet.fromYaml(sequencesYaml);
+  }
+
   async on(event: MessageEvent, message: M): Promise<void> {
     if (event !== 'CREATE') {
       return;
     }
-    for (const sequence of SEQUENCES) {
-      if (sequence.shouldReactTo(message.content)) {
-        for (const emoji of sequence.emojisToSend) {
-          await message.addReaction(emoji);
-        }
-        return;
+    const what = this.sequences.whatShouldBeReactTo(message.content);
+    if (what) {
+      for (const emoji of what) {
+        await message.addReaction(emoji);
       }
     }
   }

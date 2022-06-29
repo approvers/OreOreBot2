@@ -51,6 +51,7 @@ import dotenv from 'dotenv';
 import { extractEnv } from './extract-env.js';
 import { generateDependencyReport } from '@discordjs/voice';
 import { join } from 'node:path';
+import { loadEmojiSeqYaml } from '../adaptor/emoji-seq-loader.js';
 import { roleProxy } from '../adaptor/role-proxy.js';
 
 dotenv.config();
@@ -93,11 +94,12 @@ function readyLog(client: Client): void {
 const typoRepo = new InMemoryTypoRepository();
 const reservationRepo = new InMemoryReservationRepository();
 const clock = new ActualClock();
+const sequencesYaml = loadEmojiSeqYaml(['assets', 'emoji-seq.yaml']);
 
 const runner = new MessageResponseRunner(
   new MessageProxy(client, transformerForMessage())
 );
-runner.addResponder(allMessageEventResponder(typoRepo));
+runner.addResponder(allMessageEventResponder(typoRepo, sequencesYaml));
 
 const updateRunner = new MessageUpdateResponseRunner(
   new MessageUpdateProxy(client, transformerForUpdateMessage())

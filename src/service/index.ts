@@ -48,14 +48,17 @@ import type { Snowflake } from '../model/id.js';
 import type { StandardOutput } from './output.js';
 import type { VoiceConnectionFactory } from './voice-connection.js';
 
-export const allMessageEventResponder = (repo: TypoRepository) =>
+export const allMessageEventResponder = (
+  repo: TypoRepository,
+  sequencesYaml: string
+) =>
   composeMessageEventResponders<
     DeletionObservable & TypoObservable & BoldItalicCop & EmojiSeqObservable
   >(
     new DeletionRepeater(),
     new TypoRecorder(repo),
     new BoldItalicCopReporter(),
-    new EmojiSeqReact()
+    new EmojiSeqReact(sequencesYaml)
   );
 
 export const allMessageUpdateEventResponder = () =>
