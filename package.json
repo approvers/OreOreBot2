@@ -54,7 +54,7 @@
     "@typescript-eslint/parser": "^5.30.3",
     "c8": "^7.11.3",
     "esbuild": "^0.14.48",
-    "eslint": "^8.18.0",
+    "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-markdown": "^2.2.1",
     "lint-staged": "^13.0.3",
