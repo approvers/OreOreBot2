@@ -17,6 +17,7 @@ import {
   composeRoleEventResponders
 } from '../runner/index.js';
 import type { CommandMessage, CommandResponder } from './command-message.js';
+import { DebugCommand, MessageRepository } from './debug.js';
 import {
   type DeletionObservable,
   DeletionRepeater
@@ -76,7 +77,8 @@ export const registerAllCommandResponder = ({
   stats,
   sheriff,
   ping,
-  fetcher
+  fetcher,
+  messageRepo
 }: {
   typoRepo: TypoRepository;
   reservationRepo: ReservationRepository;
@@ -90,6 +92,7 @@ export const registerAllCommandResponder = ({
   sheriff: Sheriff;
   ping: Ping;
   fetcher: VersionFetcher;
+  messageRepo: MessageRepository;
 }) => {
   const allResponders = [
     new TypoReporter(typoRepo, clock, scheduleRunner),
@@ -107,7 +110,8 @@ export const registerAllCommandResponder = ({
     new KokuseiChousa(stats),
     new SheriffCommand(sheriff),
     new PingCommand(ping),
-    new GetVersionCommand(fetcher)
+    new GetVersionCommand(fetcher),
+    new DebugCommand(messageRepo)
   ];
   for (const responder of allResponders) {
     commandRunner.addResponder(responder);

@@ -40,6 +40,7 @@ import {
 } from '../service/index.js';
 import type { AssetKey } from '../service/party.js';
 import { DiscordMemberStats } from '../adaptor/discord/member-stats.js';
+import { DiscordMessageRepository } from '../adaptor/discord/message-repo.js';
 import { DiscordRoleManager } from '../adaptor/discord/role.js';
 import { DiscordSheriff } from '../adaptor/discord/sheriff.js';
 import { DiscordWS } from '../adaptor/discord/ws.js';
@@ -130,7 +131,8 @@ registerAllCommandResponder({
   stats: new DiscordMemberStats(client, GUILD_ID as Snowflake),
   sheriff: new DiscordSheriff(client),
   ping: new DiscordWS(client),
-  fetcher: new GenVersionFetcher()
+  fetcher: new GenVersionFetcher(),
+  messageRepo: new DiscordMessageRepository(client)
 });
 
 const provider = new VoiceRoomProxy<VoiceChannelParticipant>(
