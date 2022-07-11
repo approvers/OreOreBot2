@@ -91,6 +91,15 @@ console.log(\`Hello, \${name}!\`);
     const getMessageContent = vi.spyOn(repo, 'getMessageContent');
     const reply = vi.fn(() => Promise.resolve());
     await responder.on(
+      'CREATE',
+      createMockMessage(
+        {
+          args: ['party']
+        },
+        reply
+      )
+    );
+    await responder.on(
       'DELETE',
       createMockMessage(
         {
