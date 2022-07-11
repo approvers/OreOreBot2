@@ -13,6 +13,8 @@ export interface MessageRepository {
   ): Promise<string | undefined>;
 }
 
+const TRIPLE_BACK_QUOTES = /```/g;
+
 export class DebugCommand implements CommandResponder {
   help: Readonly<HelpInfo> = {
     title: 'デバッガーはらちょ',
@@ -50,9 +52,10 @@ export class DebugCommand implements CommandResponder {
       return;
     }
     const contentIncludesBackQuotes = content.includes('```');
+    const sanitized = content.replace(TRIPLE_BACK_QUOTES, "'''");
     await message.reply({
       title: 'デバッグ出力',
-      description: `\`\`\`\n${content.replace(/```/g, "'''")}\n\`\`\``,
+      description: `\`\`\`\n${sanitized}\n\`\`\``,
       footer: contentIncludesBackQuotes
         ? "三連続の ` (バッククォート) は ' (シングルクォート) に置換してあるよ。"
         : undefined
