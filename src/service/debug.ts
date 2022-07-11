@@ -49,12 +49,12 @@ export class DebugCommand implements CommandResponder {
       });
       return;
     }
-    const contentIncludesBackQuotes = content.includes('`');
+    const contentIncludesBackQuotes = content.includes('```');
     await message.reply({
       title: 'デバッグ出力',
-      description: `\`\`\`\n${content.replace(/`/g, "'")}\n\`\`\``,
+      description: `\`\`\`\n${content.replace(/```/g, "'''")}\n\`\`\``,
       footer: contentIncludesBackQuotes
-        ? "` (バッククォート) は ' (シングルクォート) に置換してあるよ。"
+        ? "三連続の ` (バッククォート) は ' (シングルクォート) に置換してあるよ。"
         : undefined
     });
   }
