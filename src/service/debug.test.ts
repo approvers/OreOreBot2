@@ -87,6 +87,22 @@ console.log(\`Hello, \${name}!\`);
     });
   });
 
+  it('does not react to another command', async () => {
+    const getMessageContent = vi.spyOn(repo, 'getMessageContent');
+    const reply = vi.fn(() => Promise.resolve());
+    await responder.on(
+      'DELETE',
+      createMockMessage(
+        {
+          args: ['party']
+        },
+        reply
+      )
+    );
+    expect(getMessageContent).not.toHaveBeenCalled();
+    expect(reply).not.toHaveBeenCalled();
+  });
+
   it('does not react on deletion', async () => {
     const getMessageContent = vi.spyOn(repo, 'getMessageContent');
     const reply = vi.fn(() => Promise.resolve());
