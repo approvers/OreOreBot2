@@ -1,9 +1,13 @@
 import { DebugCommand, MessageRepository } from './debug.js';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { Snowflake } from '../model/id.js';
 import { createMockMessage } from './command-message.js';
 
 describe('debug', () => {
+  afterEach(() => {
+    vi.resetAllMocks();
+  });
+
   const repo: MessageRepository = {
     getMessageContent: () => Promise.resolve(undefined)
   };
@@ -60,6 +64,26 @@ console.log(\`Hello, \${name}!\`);
 \`\`\``,
       footer:
         "三連続の ` (バッククォート) は ' (シングルクォート) に置換してあるよ。"
+    });
+  });
+
+  it('errors on message not found', async () => {
+    const getMessageContent = vi.spyOn(repo, 'getMessageContent');
+    const reply = vi.fn(() => Promise.resolve());
+    await responder.on(
+      'CREATE',
+      createMockMessage(
+        {
+          args: ['debug', '1423523'],
+          senderChannelId: '8623233' as Snowflake
+        },
+        reply
+      )
+    );
+    expect(getMessageContent).toHaveBeenCalledWith('8623233', '1423523');
+    expect(reply).toHaveBeenCalledWith({
+      title: '指定のメッセージが見つからなかったよ',
+      description: 'そのメッセージがこのチャンネルにあるかどうか確認してね。'
     });
   });
 
