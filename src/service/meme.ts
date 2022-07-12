@@ -9,10 +9,11 @@ import { dousurya } from './meme/dousurya.js';
 import { hukueki } from './meme/hukueki.js';
 import { lolicon } from './meme/lolicon.js';
 import { n } from './meme/n.js';
+import { nigetane } from './meme/nigetane.js';
 import parse from 'cli-argparse';
 import { takopi } from './meme/takopi.js';
 
-const memes = [dousurya, hukueki, lolicon, n, takopi];
+const memes = [dousurya, hukueki, lolicon, n, takopi, nigetane];
 const memesByCommandName: Record<
   string,
   MemeTemplate<string, string> | undefined
