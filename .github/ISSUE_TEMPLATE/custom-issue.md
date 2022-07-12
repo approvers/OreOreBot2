@@ -1,6 +1,6 @@
 ---
 name: Custom-Issue
-about: 完全カスタマイズのIssueを作成します。
+about: バグ報告、機能要望に該当しないIssueを作成します。
 title: ''
 labels: ''
 assignees: ''
