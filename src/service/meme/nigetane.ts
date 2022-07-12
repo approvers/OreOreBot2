@@ -5,7 +5,7 @@ const template = (inject: string) =>
 
 export const nigetane: MemeTemplate<never, never> = {
   commandNames: ['nigetane'],
-  description: 'Arcaeaの光が自身を断罪したセリフ, 通称逃げたねコピペ.',
+  description: '… 〜から悪くないって、… (from Arcaea "Final Verdict")',
   flagsKeys: [],
   optionsKeys: [],
   errorMessage: '……手遅れなのは頭（おつむ）からなのかな。',
