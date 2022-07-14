@@ -48,7 +48,7 @@
     "yaml": "^2.1.1"
   },
   "devDependencies": {
-    "@types/node": "^18.0.3",
+    "@types/node": "^18.0.4",
     "@typescript-eslint/eslint-plugin": "^5.30.6",
     "@typescript-eslint/parser": "^5.30.6",
     "c8": "^7.11.3",
