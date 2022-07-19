@@ -139,6 +139,9 @@ export const converterWithPrefix =
   (prefix: string): Transformer<CommandMessage, RawMessage> =>
   (func: MessageHandler<CommandMessage>) =>
   async (message: RawMessage): Promise<void> => {
+    await message.fetch().catch(() => {
+      /* ignore */
+    });
     if (!message.content?.trimStart().startsWith(prefix)) {
       return;
     }
