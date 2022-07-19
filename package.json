@@ -55,7 +55,7 @@
     "esbuild": "^0.14.49",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-markdown": "^2.2.1",
+    "eslint-plugin-markdown": "^3.0.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "make-dir-cli": "^3.0.0",
