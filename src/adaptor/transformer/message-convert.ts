@@ -1,4 +1,11 @@
-import { MessageActionRow, MessageButton } from 'discord.js';
+import {
+  APIActionRowComponent,
+  APIMessageActionRowComponent,
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  MessageActionRowComponentBuilder
+} from 'discord.js';
 import type { RawMessage, Transformer } from '../transformer.js';
 import type { BoldItalicCop } from '../../service/bold-italic-cop.js';
 import type { CommandMessage } from '../../service/command-message.js';
@@ -46,32 +53,38 @@ export const observableTransformer: Transformer<
 
 const SPACES = /\s+/;
 const ONE_MINUTE_MS = 60_000;
-const CONTROLS = new MessageActionRow().addComponents(
-  new MessageButton()
-    .setStyle('SECONDARY')
-    .setCustomId('prev')
-    .setLabel('戻る')
-    .setEmoji('⏪'),
-  new MessageButton()
-    .setStyle('SECONDARY')
-    .setCustomId('next')
-    .setLabel('進む')
-    .setEmoji('⏩')
-);
-const CONTROLS_DISABLED = new MessageActionRow().addComponents(
-  new MessageButton()
-    .setStyle('SECONDARY')
-    .setCustomId('prev')
-    .setLabel('戻る')
-    .setEmoji('⏪')
-    .setDisabled(true),
-  new MessageButton()
-    .setStyle('SECONDARY')
-    .setCustomId('next')
-    .setLabel('進む')
-    .setEmoji('⏩')
-    .setDisabled(true)
-);
+const CONTROLS: APIActionRowComponent<APIMessageActionRowComponent> =
+  new ActionRowBuilder<MessageActionRowComponentBuilder>()
+    .addComponents(
+      new ButtonBuilder()
+        .setStyle(ButtonStyle.Secondary)
+        .setCustomId('prev')
+        .setLabel('戻る')
+        .setEmoji('⏪'),
+      new ButtonBuilder()
+        .setStyle(ButtonStyle.Secondary)
+        .setCustomId('next')
+        .setLabel('進む')
+        .setEmoji('⏩')
+    )
+    .toJSON();
+const CONTROLS_DISABLED: APIActionRowComponent<APIMessageActionRowComponent> =
+  new ActionRowBuilder<MessageActionRowComponentBuilder>()
+    .addComponents(
+      new ButtonBuilder()
+        .setStyle(ButtonStyle.Secondary)
+        .setCustomId('prev')
+        .setLabel('戻る')
+        .setEmoji('⏪')
+        .setDisabled(true),
+      new ButtonBuilder()
+        .setStyle(ButtonStyle.Secondary)
+        .setCustomId('next')
+        .setLabel('進む')
+        .setEmoji('⏩')
+        .setDisabled(true)
+    )
+    .toJSON();
 
 const pagesFooter = (currentPage: number, pagesLength: number) =>
   `ページ ${currentPage + 1}/${pagesLength}`;

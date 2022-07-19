@@ -14,7 +14,7 @@ import {
   transformerForMessage,
   transformerForUpdateMessage
 } from '../adaptor/index.js';
-import { Client, Intents, version } from 'discord.js';
+import { Client, GatewayIntentBits, version } from 'discord.js';
 import type {
   CommandMessage,
   CommandResponder
@@ -62,13 +62,12 @@ const {
   GUILD_ID
 } = extractEnv(['DISCORD_TOKEN', 'MAIN_CHANNEL_ID', 'GUILD_ID']);
 
-const intents = new Intents();
-intents.add(
-  Intents.FLAGS.GUILDS, // GUILD_CREATE による初期化
-  Intents.FLAGS.GUILD_MESSAGES, // ほとんどのメッセージに反応する機能
-  Intents.FLAGS.GUILD_VOICE_STATES, // VoiceDiff 機能
-  Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS // EmojiLog機能
-);
+const intents = [
+  GatewayIntentBits.Guilds, // GUILD_CREATE による初期化
+  GatewayIntentBits.GuildMessages, // ほとんどのメッセージに反応する機能
+  GatewayIntentBits.GuildVoiceStates, // VoiceDiff 機能
+  GatewayIntentBits.GuildEmojisAndStickers // EmojiLog機能
+];
 
 const client = new Client({ intents });
 

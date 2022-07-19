@@ -1,4 +1,4 @@
-import type { Client } from 'discord.js';
+import { ChannelType, Client } from 'discord.js';
 import type { MessageRepository } from '../../service/debug.js';
 import type { Snowflake } from '../../model/id.js';
 
@@ -10,7 +10,7 @@ export class DiscordMessageRepository implements MessageRepository {
     messageId: Snowflake
   ): Promise<string | undefined> {
     const channel = await this.client.channels.fetch(channelId);
-    if (!channel || !channel.isText()) {
+    if (!channel || channel.type !== ChannelType.GuildText) {
       throw new Error(`text channel (${channelId}) not found`);
     }
     try {

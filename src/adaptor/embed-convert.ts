@@ -1,5 +1,5 @@
+import { EmbedBuilder } from 'discord.js';
 import type { EmbedMessage } from '../model/embed-message.js';
-import { MessageEmbed } from 'discord.js';
 
 export const convertEmbed = ({
   author,
@@ -10,8 +10,8 @@ export const convertEmbed = ({
   title,
   thumbnail,
   url
-}: EmbedMessage): MessageEmbed => {
-  const embed = new MessageEmbed();
+}: EmbedMessage): EmbedBuilder => {
+  const embed = new EmbedBuilder();
   if (author) {
     embed.setAuthor({
       name: author.name,
