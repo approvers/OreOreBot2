@@ -49,7 +49,12 @@ export const observableTransformer: Transformer<
     BoldItalicCop &
     EmojiSeqObservable,
   RawMessage
-> = (handler) => (raw: RawMessage) => handler(observableMessage(raw));
+> = (handler) => async (raw: RawMessage) => {
+  await raw.fetch().catch(() => {
+    /* ignore */
+  });
+  return handler(observableMessage(raw));
+};
 
 const SPACES = /\s+/;
 const ONE_MINUTE_MS = 60_000;
