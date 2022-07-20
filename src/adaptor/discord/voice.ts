@@ -8,7 +8,12 @@ import {
   entersState,
   joinVoiceChannel
 } from '@discordjs/voice';
-import { type Client, Permissions, type VoiceBasedChannel } from 'discord.js';
+import {
+  ChannelType,
+  type Client,
+  PermissionsBitField,
+  type VoiceBasedChannel
+} from 'discord.js';
 import type {
   VoiceConnection,
   VoiceConnectionFactory
@@ -41,7 +46,7 @@ export class DiscordVoiceConnectionFactory<K extends string | number | symbol>
     if (!channel) {
       throw new Error('the user is not joined to voice channel');
     }
-    if (!channel.isVoice()) {
+    if (channel.type !== ChannelType.GuildVoice) {
       throw new TypeError('the id is not an id for voice channel');
     }
     return new DiscordVoiceConnection(channel, this.audioRecord);
@@ -121,7 +126,7 @@ export class DiscordVoiceConnection<K extends string | number | symbol>
     }
     this.connection.on(
       VoiceConnectionStatus.Disconnected,
-      this.makeDisconnectionHandler(shouldReconnect)
+      () => void this.makeDisconnectionHandler(shouldReconnect)
     );
   }
   private makeDisconnectionHandler(shouldReconnect: () => boolean) {
@@ -175,12 +180,14 @@ export class DiscordVoiceRoomController implements VoiceRoomController {
     const guild =
       this.client.guilds.cache.get(guildId) ||
       (await this.client.guilds.fetch(guildId));
-    if (!guild.me?.permissions.has(Permissions.FLAGS.MOVE_MEMBERS)) {
+    if (
+      !guild.members.me?.permissions.has(PermissionsBitField.Flags.MoveMembers)
+    ) {
       throw new Error('insufficient permission');
     }
     const room =
       guild.channels.cache.get(roomId) || (await guild.channels.fetch(roomId));
-    if (!room?.isVoice()) {
+    if (room?.type !== ChannelType.GuildVoice) {
       throw new TypeError(`invalid room id: ${roomId}`);
     }
     await Promise.all(

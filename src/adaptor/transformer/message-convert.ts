@@ -1,4 +1,11 @@
-import { MessageActionRow, MessageButton } from 'discord.js';
+import {
+  APIActionRowComponent,
+  APIMessageActionRowComponent,
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  MessageActionRowComponentBuilder
+} from 'discord.js';
 import type { RawMessage, Transformer } from '../transformer.js';
 import type { BoldItalicCop } from '../../service/bold-italic-cop.js';
 import type { CommandMessage } from '../../service/command-message.js';
@@ -13,6 +20,13 @@ import { convertEmbed } from '../embed-convert.js';
 
 const getAuthorSnowflake = (message: RawMessage): Snowflake =>
   (message.author?.id || 'unknown') as Snowflake;
+
+const fetchMessage = async (message: RawMessage) => {
+  await message.fetch().catch(() => {
+    // 取得に失敗した場合は既に削除されたかアクセスできない可能性が高いため、エラーは無視します。
+    // 実際に削除されたメッセージに対しては、`fetch` に失敗するもののキャッシュが残っているため引き続き動作可能です。
+  });
+};
 
 const observableMessage = (
   raw: RawMessage
@@ -42,36 +56,45 @@ export const observableTransformer: Transformer<
     BoldItalicCop &
     EmojiSeqObservable,
   RawMessage
-> = (handler) => (raw: RawMessage) => handler(observableMessage(raw));
+> = (handler) => async (raw: RawMessage) => {
+  await fetchMessage(raw);
+  return handler(observableMessage(raw));
+};
 
 const SPACES = /\s+/;
 const ONE_MINUTE_MS = 60_000;
-const CONTROLS = new MessageActionRow().addComponents(
-  new MessageButton()
-    .setStyle('SECONDARY')
-    .setCustomId('prev')
-    .setLabel('戻る')
-    .setEmoji('⏪'),
-  new MessageButton()
-    .setStyle('SECONDARY')
-    .setCustomId('next')
-    .setLabel('進む')
-    .setEmoji('⏩')
-);
-const CONTROLS_DISABLED = new MessageActionRow().addComponents(
-  new MessageButton()
-    .setStyle('SECONDARY')
-    .setCustomId('prev')
-    .setLabel('戻る')
-    .setEmoji('⏪')
-    .setDisabled(true),
-  new MessageButton()
-    .setStyle('SECONDARY')
-    .setCustomId('next')
-    .setLabel('進む')
-    .setEmoji('⏩')
-    .setDisabled(true)
-);
+const CONTROLS: APIActionRowComponent<APIMessageActionRowComponent> =
+  new ActionRowBuilder<MessageActionRowComponentBuilder>()
+    .addComponents(
+      new ButtonBuilder()
+        .setStyle(ButtonStyle.Secondary)
+        .setCustomId('prev')
+        .setLabel('戻る')
+        .setEmoji('⏪'),
+      new ButtonBuilder()
+        .setStyle(ButtonStyle.Secondary)
+        .setCustomId('next')
+        .setLabel('進む')
+        .setEmoji('⏩')
+    )
+    .toJSON();
+const CONTROLS_DISABLED: APIActionRowComponent<APIMessageActionRowComponent> =
+  new ActionRowBuilder<MessageActionRowComponentBuilder>()
+    .addComponents(
+      new ButtonBuilder()
+        .setStyle(ButtonStyle.Secondary)
+        .setCustomId('prev')
+        .setLabel('戻る')
+        .setEmoji('⏪')
+        .setDisabled(true),
+      new ButtonBuilder()
+        .setStyle(ButtonStyle.Secondary)
+        .setCustomId('next')
+        .setLabel('進む')
+        .setEmoji('⏩')
+        .setDisabled(true)
+    )
+    .toJSON();
 
 const pagesFooter = (currentPage: number, pagesLength: number) =>
   `ページ ${currentPage + 1}/${pagesLength}`;
@@ -126,6 +149,7 @@ export const converterWithPrefix =
   (prefix: string): Transformer<CommandMessage, RawMessage> =>
   (func: MessageHandler<CommandMessage>) =>
   async (message: RawMessage): Promise<void> => {
+    await fetchMessage(message);
     if (!message.content?.trimStart().startsWith(prefix)) {
       return;
     }
