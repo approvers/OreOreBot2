@@ -1,4 +1,4 @@
-import { type Client, MessageEmbed } from 'discord.js';
+import { ChannelType, type Client, EmbedBuilder } from 'discord.js';
 import type { EmbedMessage } from '../../model/embed-message.js';
 import type { StandardOutput } from '../../service/output.js';
 
@@ -10,7 +10,7 @@ export class DiscordOutput implements StandardOutput {
 
   async sendEmbed(embed: EmbedMessage): Promise<void> {
     const channel = await this.client.channels.fetch(this.channelId);
-    if (!channel || !channel.isText()) {
+    if (!channel || channel.type !== ChannelType.GuildText) {
       throw new Error(`the channel (${this.channelId}) is not text channel`);
     }
 
@@ -22,7 +22,7 @@ export class DiscordOutput implements StandardOutput {
 }
 
 function buildEmbed(embed: EmbedMessage) {
-  const makeEmbed = new MessageEmbed();
+  const makeEmbed = new EmbedBuilder();
   const { title, color, description, fields, url, footer, thumbnail, author } =
     embed;
   if (author) {
