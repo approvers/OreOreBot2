@@ -21,6 +21,13 @@ import { convertEmbed } from '../embed-convert.js';
 const getAuthorSnowflake = (message: RawMessage): Snowflake =>
   (message.author?.id || 'unknown') as Snowflake;
 
+const fetchMessage = async (message: RawMessage) => {
+  await message.fetch().catch(() => {
+    // 取得に失敗した場合は既に削除されたかアクセスできない可能性が高いため、エラーは無視します。
+    // 実際に削除されたメッセージに対しては、`fetch` に失敗するもののキャッシュが残っているため引き続き動作可能です。
+  });
+};
+
 const observableMessage = (
   raw: RawMessage
 ): EditingObservable &
@@ -50,9 +57,7 @@ export const observableTransformer: Transformer<
     EmojiSeqObservable,
   RawMessage
 > = (handler) => async (raw: RawMessage) => {
-  await raw.fetch().catch(() => {
-    /* ignore */
-  });
+  await fetchMessage(raw);
   return handler(observableMessage(raw));
 };
 
@@ -144,9 +149,7 @@ export const converterWithPrefix =
   (prefix: string): Transformer<CommandMessage, RawMessage> =>
   (func: MessageHandler<CommandMessage>) =>
   async (message: RawMessage): Promise<void> => {
-    await message.fetch().catch(() => {
-      /* ignore */
-    });
+    await fetchMessage(message);
     if (!message.content?.trimStart().startsWith(prefix)) {
       return;
     }
