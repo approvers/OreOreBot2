@@ -6,8 +6,7 @@ import type {
 import { MessageEvent } from '../runner/message.js';
 
 export interface MemberWithRole {
-  defaultName: string;
-  nickName: string | undefined;
+  displayName: string;
   roles: number;
 }
 
@@ -35,9 +34,9 @@ export class RoleRank implements CommandResponder {
     const members = await this.repo.fetchMembersWithRole();
     members.sort((a, b) => b.roles - a.roles);
     members.splice(5);
-    const fields = members.map(({ defaultName, nickName, roles }, index) => ({
+    const fields = members.map(({ displayName, roles }, index) => ({
       name: `${index + 1} 位`,
-      value: `${nickName ?? defaultName} : ${roles} 個`
+      value: `${displayName} : ${roles} 個`
     }));
 
     await message.reply({

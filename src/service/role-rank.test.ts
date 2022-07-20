@@ -11,33 +11,27 @@ describe('RoleRank', () => {
     fetchMembersWithRole: () =>
       Promise.resolve([
         {
-          defaultName: 'Baba',
-          nickName: 'Baba Is Baba',
+          displayName: 'Baba Is Baba',
           roles: 8
         },
         {
-          defaultName: 'Keke',
-          nickName: undefined,
+          displayName: 'Keke',
           roles: 5
         },
         {
-          defaultName: 'Me',
-          nickName: 'Meme',
+          displayName: 'Meme',
           roles: 12
         },
         {
-          defaultName: 'Fofo',
-          nickName: 'Morizo',
+          displayName: 'Morizo',
           roles: 2
         },
         {
-          defaultName: 'Jiji',
-          nickName: 'Alpaca',
+          displayName: 'Alpaca',
           roles: 3
         },
         {
-          defaultName: 'Wugan',
-          nickName: 'Bird',
+          displayName: 'Bird',
           roles: 4
         }
       ])
