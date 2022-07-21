@@ -42,10 +42,10 @@ export class Meme implements CommandResponder {
     if (!meme) {
       return;
     }
-    const { flags, options, unparsed } = parse(commandArgs);
+    const sanitizedArgs = sanitizeArgs(commandArgs);
+    const { flags, options, unparsed } = parse(sanitizedArgs);
     const body = unparsed.join(' ');
-    const sanitizedOptions = sanitizeOptions(options);
-    if (flags['help'] || sanitizedOptions['help']) {
+    if (flags['help'] || options['help']) {
       await message.reply({
         title: meme.commandNames.map((name) => `\`${name}\``).join('/'),
         description: meme.description
@@ -59,10 +59,11 @@ export class Meme implements CommandResponder {
       });
       return;
     }
+    const splitOptions = split(options);
     const generated = meme.generate(
       {
         flags,
-        options: sanitizedOptions,
+        options: splitOptions,
         body
       },
       message.senderName
@@ -71,18 +72,24 @@ export class Meme implements CommandResponder {
   }
 }
 
-function sanitizeOptions(
+const TO_RID = /^(-+)?(__proto__|prototype|constructor)/g;
+
+export function sanitizeArgs(args: readonly string[]): string[] {
+  return args.flatMap((arg) => {
+    if (TO_RID.test(arg)) {
+      return [];
+    }
+    return [arg];
+  });
+}
+
+function split(
   options: Record<string, string | string[] | undefined>
 ): Record<string, string | undefined> {
-  const sanitized = { ...options };
-  for (const key in sanitized) {
-    if (!Object.hasOwn(sanitized, key)) {
-      continue;
-    }
-    const entry = sanitized[key];
-    if (Array.isArray(entry)) {
-      sanitized[key] = entry.join(' ');
-    }
-  }
-  return sanitized as Record<string, string | undefined>;
+  return Object.fromEntries(
+    Object.entries(options).map(([key, value]) => [
+      key,
+      Array.isArray(value) ? value.join(' ') : value
+    ])
+  );
 }
