@@ -1,6 +1,6 @@
+import { Meme, sanitizeArgs } from './meme.js';
 import { describe, expect, it, vi } from 'vitest';
 import type { EmbedMessage } from '../model/embed-message.js';
-import { Meme } from './meme.js';
 import { createMockMessage } from './command-message.js';
 
 describe('meme', () => {
@@ -265,5 +265,13 @@ describe('meme', () => {
       description:
         '「〜、出して」\n`-f` で教員と自分の名前の位置を反対にします。([idea: フライさん](https://github.com/approvers/OreOreBot2/issues/90))'
     });
+  });
+});
+
+describe('sanitizeArgs', () => {
+  it('rids pollution', () => {
+    expect(
+      sanitizeArgs(['--yes', '--__proto__=0', '-n', '-constructor', 'hoge'])
+    ).toStrictEqual(['--yes', '-n', 'hoge']);
   });
 });
