@@ -3,8 +3,8 @@ import {
   converterWithPrefix,
   observableTransformer
 } from './transformer/message-convert.js';
-import type { EditingObservable } from '../service/difference-detector.js';
-import type { MessageHandler } from './index.js';
+import type { EditingObservable } from '../../service/difference-detector.js';
+import type { MessageHandler } from './message.js';
 import { botFilter } from './transformer/bot-filter.js';
 import { tupleTransformer } from './transformer/tuple.js';
 

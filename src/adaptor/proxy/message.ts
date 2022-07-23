@@ -1,7 +1,7 @@
 import type {
   MessageEventProvider,
   MessageUpdateEventProvider
-} from '../runner/index.js';
+} from '../../runner/index.js';
 import type { RawMessage, Transformer } from './transformer.js';
 import type { Client } from 'discord.js';
 

@@ -4,12 +4,14 @@ import {
   DiscordParticipant,
   DiscordVoiceConnectionFactory,
   DiscordVoiceRoomController,
+  EmojiProxy,
   InMemoryReservationRepository,
   InMemoryTypoRepository,
   MathRandomGenerator,
   MessageProxy,
   MessageUpdateProxy,
   VoiceRoomProxy,
+  roleProxy,
   transformerForCommand,
   transformerForMessage,
   transformerForUpdateMessage
@@ -44,7 +46,6 @@ import { DiscordMessageRepository } from '../adaptor/discord/message-repo.js';
 import { DiscordRoleManager } from '../adaptor/discord/role.js';
 import { DiscordSheriff } from '../adaptor/discord/sheriff.js';
 import { DiscordWS } from '../adaptor/discord/ws.js';
-import { EmojiProxy } from '../adaptor/emoji-proxy.js';
 import { GenVersionFetcher } from '../adaptor/version/fetch.js';
 import type { KaereMusicKey } from '../service/command/kaere.js';
 import { Snowflake } from '../model/id.js';
@@ -53,7 +54,6 @@ import { extractEnv } from './extract-env.js';
 import { generateDependencyReport } from '@discordjs/voice';
 import { join } from 'node:path';
 import { loadEmojiSeqYaml } from '../adaptor/emoji-seq-loader.js';
-import { roleProxy } from '../adaptor/role-proxy.js';
 
 dotenv.config();
 const {

@@ -1,6 +1,6 @@
 import type { Client } from 'discord.js';
-import type { EmojiData } from '../service/emoji-log.js';
-import type { EmojiEventProvider } from '../runner/index.js';
+import type { EmojiData } from '../../service/emoji-log.js';
+import type { EmojiEventProvider } from '../../runner/index.js';
 
 export type EmojiHandler<E> = (emoji: E) => Promise<void>;
 
