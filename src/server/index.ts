@@ -112,6 +112,7 @@ const commandRunner: MessageResponseRunner<CommandMessage, CommandResponder> =
   new MessageResponseRunner(
     new MessageProxy(client, transformerForCommand('!'))
   );
+const stats = new DiscordMemberStats(client, GUILD_ID as Snowflake);
 registerAllCommandResponder({
   typoRepo,
   reservationRepo,
@@ -127,11 +128,12 @@ registerAllCommandResponder({
   random: new MathRandomGenerator(),
   roomController: new DiscordVoiceRoomController(client),
   commandRunner,
-  stats: new DiscordMemberStats(client, GUILD_ID as Snowflake),
+  stats,
   sheriff: new DiscordSheriff(client),
   ping: new DiscordWS(client),
   fetcher: new GenVersionFetcher(),
-  messageRepo: new DiscordMessageRepository(client)
+  messageRepo: new DiscordMessageRepository(client),
+  membersRepo: stats
 });
 
 const provider = new VoiceRoomProxy<VoiceChannelParticipant>(
