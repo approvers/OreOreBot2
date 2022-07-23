@@ -1,4 +1,4 @@
-import { MemeTemplate } from '../../model/meme-template.js';
+import type { MemeTemplate } from '../../model/meme-template.js';
 
 export const web3: MemeTemplate<never, never> = {
   commandNames: ['web3'],
