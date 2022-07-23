@@ -128,6 +128,24 @@ describe('meme', () => {
     );
   });
 
+  it('use case of web3', async () => {
+    await responder.on(
+      'CREATE',
+      createMockMessage(
+        {
+          args: ['web3', 'Rust']
+        },
+        (message) => {
+          expect(message).toStrictEqual({
+            description:
+              '```\n「いちばんやさしいRustの教本」 - インプレス \n```'
+          });
+          return Promise.resolve();
+        }
+      )
+    );
+  });
+
   it('args space', async () => {
     await responder.on(
       'CREATE',
@@ -230,6 +248,25 @@ describe('meme', () => {
             title: '引数が不足してるみたいだ。',
             description:
               'このままだと <@521958252280545280> みたいに留年しちゃう....'
+          });
+          return Promise.resolve();
+        }
+      )
+    );
+  });
+
+  it('args null (web3)', async () => {
+    await responder.on(
+      'CREATE',
+      createMockMessage(
+        {
+          args: ['web3']
+        },
+        (message) => {
+          expect(message).toStrictEqual({
+            title: '引数が不足してるみたいだ。',
+            description:
+              'TCP/IP、SMTP、HTTPはGoogleやAmazonに独占されています。'
           });
           return Promise.resolve();
         }
