@@ -33,6 +33,7 @@ import {
 } from './kaere.js';
 import { KawaemonHasAllRoles, RoleManager } from './kawaemon-has-all-roles.js';
 import { KokuseiChousa, MemberStats } from './kokusei-chousa.js';
+import { MembersWithRoleRepository, RoleRank } from './role-rank.js';
 import { Ping, PingCommand } from './ping.js';
 import { Sheriff, SheriffCommand } from './stfu.js';
 import {
@@ -78,7 +79,8 @@ export const registerAllCommandResponder = ({
   sheriff,
   ping,
   fetcher,
-  messageRepo
+  messageRepo,
+  membersRepo
 }: {
   typoRepo: TypoRepository;
   reservationRepo: ReservationRepository;
@@ -93,6 +95,7 @@ export const registerAllCommandResponder = ({
   ping: Ping;
   fetcher: VersionFetcher;
   messageRepo: MessageRepository;
+  membersRepo: MembersWithRoleRepository;
 }) => {
   const allResponders = [
     new TypoReporter(typoRepo, clock, scheduleRunner),
@@ -111,7 +114,8 @@ export const registerAllCommandResponder = ({
     new SheriffCommand(sheriff),
     new PingCommand(ping),
     new GetVersionCommand(fetcher),
-    new DebugCommand(messageRepo)
+    new DebugCommand(messageRepo),
+    new RoleRank(membersRepo)
   ];
   for (const responder of allResponders) {
     commandRunner.addResponder(responder);
