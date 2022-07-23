@@ -50,6 +50,8 @@ import type { Snowflake } from '../model/id.js';
 import type { StandardOutput } from './output.js';
 import type { VoiceConnectionFactory } from './voice-connection.js';
 
+const stfuIgnorePredicate = (content: string): boolean => content === '!stfu';
+
 export const allMessageEventResponder = (
   repo: TypoRepository,
   sequencesYaml: string
@@ -57,7 +59,7 @@ export const allMessageEventResponder = (
   composeMessageEventResponders<
     DeletionObservable & TypoObservable & BoldItalicCop & EmojiSeqObservable
   >(
-    new DeletionRepeater(),
+    new DeletionRepeater(stfuIgnorePredicate),
     new TypoRecorder(repo),
     new BoldItalicCopReporter(),
     new EmojiSeqReact(sequencesYaml)
