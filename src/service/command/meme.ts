@@ -3,8 +3,8 @@ import type {
   CommandResponder,
   HelpInfo
 } from './command-message.js';
-import type { MemeTemplate } from '../model/meme-template.js';
-import type { MessageEvent } from '../runner/index.js';
+import type { MemeTemplate } from '../../model/meme-template.js';
+import type { MessageEvent } from '../../runner/index.js';
 import { dousurya } from './meme/dousurya.js';
 import { hukueki } from './meme/hukueki.js';
 import { lolicon } from './meme/lolicon.js';

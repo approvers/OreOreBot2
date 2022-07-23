@@ -1,6 +1,6 @@
-import type { EmbedMessage, EmbedPage } from '../model/embed-message.js';
-import type { MessageEventResponder } from '../runner/index.js';
-import type { Snowflake } from '../model/id.js';
+import type { EmbedMessage, EmbedPage } from '../../model/embed-message.js';
+import type { MessageEventResponder } from '../../runner/index.js';
+import type { Snowflake } from '../../model/id.js';
 
 /**
  * コマンド形式のメッセージの抽象。

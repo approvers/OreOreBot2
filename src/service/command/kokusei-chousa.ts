@@ -3,7 +3,7 @@ import type {
   CommandResponder,
   HelpInfo
 } from './command-message.js';
-import type { MessageEvent } from '../runner/index.js';
+import type { MessageEvent } from '../../runner/index.js';
 
 export interface MemberStats {
   allMemberCount(): Promise<number>;

@@ -3,8 +3,8 @@ import type {
   CommandResponder,
   HelpInfo
 } from './command-message.js';
-import type { MessageEvent } from '../runner/message.js';
-import type { Snowflake } from '../model/id.js';
+import type { MessageEvent } from '../../runner/message.js';
+import type { Snowflake } from '../../model/id.js';
 
 export interface MessageRepository {
   getMessageContent(

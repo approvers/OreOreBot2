@@ -1,4 +1,8 @@
-import type { Clock, MessageEvent, ScheduleRunner } from '../runner/index.js';
+import type {
+  Clock,
+  MessageEvent,
+  ScheduleRunner
+} from '../../runner/index.js';
 import type {
   CommandMessage,
   CommandResponder,
@@ -7,9 +11,9 @@ import type {
 import type {
   VoiceConnection,
   VoiceConnectionFactory
-} from './voice-connection.js';
+} from '../voice-connection.js';
 import { addHours, getMinutes, setMinutes, setSeconds } from 'date-fns';
-import type { EmbedMessage } from '../model/embed-message.js';
+import type { EmbedMessage } from '../../model/embed-message.js';
 
 const partyStarting: EmbedMessage = {
   title: 'パーティー Nigth',

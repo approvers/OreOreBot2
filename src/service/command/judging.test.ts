@@ -1,6 +1,6 @@
-import { emojiOf, waitingJudgingEmoji } from '../model/judging-status.js';
+import { emojiOf, waitingJudgingEmoji } from '../../model/judging-status.js';
 import { expect, it, vi } from 'vitest';
-import type { EmbedMessage } from '../model/embed-message.js';
+import type { EmbedMessage } from '../../model/embed-message.js';
 import { JudgingCommand } from './judging.js';
 import { createMockMessage } from './command-message.js';
 

@@ -4,14 +4,14 @@ import type {
   MessageEventResponder,
   ScheduleRunner,
   ScheduleTask
-} from '../runner/index.js';
+} from '../../runner/index.js';
 import type {
   CommandMessage,
   CommandResponder,
   HelpInfo
 } from './command-message.js';
 import { addDays, setHours, setMinutes } from 'date-fns';
-import type { Snowflake } from '../model/id.js';
+import type { Snowflake } from '../../model/id.js';
 
 /**
  * 監視するメッセージの抽象。

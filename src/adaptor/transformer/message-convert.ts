@@ -8,14 +8,14 @@ import {
 } from 'discord.js';
 import type { RawMessage, Transformer } from '../transformer.js';
 import type { BoldItalicCop } from '../../service/bold-italic-cop.js';
-import type { CommandMessage } from '../../service/command-message.js';
+import type { CommandMessage } from '../../service/command/command-message.js';
 import type { DeletionObservable } from '../../service/deletion-repeater.js';
 import type { EditingObservable } from '../../service/difference-detector.js';
 import type { EmbedPage } from '../../model/embed-message.js';
 import type { EmojiSeqObservable } from '../../service/emoji-seq-react.js';
 import type { MessageHandler } from '../index.js';
 import type { Snowflake } from '../../model/id.js';
-import type { TypoObservable } from '../../service/typo-record.js';
+import type { TypoObservable } from '../../service/command/typo-record.js';
 import { convertEmbed } from '../embed-convert.js';
 
 const getAuthorSnowflake = (message: RawMessage): Snowflake =>

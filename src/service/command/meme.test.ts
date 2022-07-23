@@ -1,6 +1,6 @@
 import { Meme, sanitizeArgs } from './meme.js';
 import { describe, expect, it, vi } from 'vitest';
-import type { EmbedMessage } from '../model/embed-message.js';
+import type { EmbedMessage } from '../../model/embed-message.js';
 import { createMockMessage } from './command-message.js';
 
 describe('meme', () => {

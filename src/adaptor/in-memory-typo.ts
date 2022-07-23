@@ -1,5 +1,5 @@
 import type { Snowflake } from '../model/id.js';
-import type { TypoRepository } from '../service/typo-record.js';
+import type { TypoRepository } from '../service/command/typo-record.js';
 
 export class InMemoryTypoRepository implements TypoRepository {
   private dict: Map<Snowflake, string[]> = new Map();

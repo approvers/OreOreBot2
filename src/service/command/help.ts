@@ -3,8 +3,11 @@ import type {
   CommandResponder,
   HelpInfo
 } from './command-message.js';
-import type { MessageEvent, MessageResponseRunner } from '../runner/index.js';
-import type { EmbedPage } from '../model/embed-message.js';
+import type {
+  MessageEvent,
+  MessageResponseRunner
+} from '../../runner/index.js';
+import type { EmbedPage } from '../../model/embed-message.js';
 
 export class HelpCommand implements CommandResponder {
   help: Readonly<HelpInfo> = {

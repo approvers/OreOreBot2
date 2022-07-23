@@ -2,10 +2,10 @@ import {
   InMemoryReservationRepository,
   MockClock,
   MockVoiceConnectionFactory
-} from '../adaptor/index.js';
+} from '../../adaptor/index.js';
 import { KaereCommand, type KaereMusicKey } from './kaere.js';
 import { expect, it, vi } from 'vitest';
-import { ScheduleRunner } from '../runner/index.js';
+import { ScheduleRunner } from '../../runner/index.js';
 import { createMockMessage } from './command-message.js';
 
 it('use case of kaere', async () => {

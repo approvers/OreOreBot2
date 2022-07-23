@@ -8,8 +8,8 @@ import {
   hasNoTestCases,
   isJudgingStatus,
   waitingJudgingEmoji
-} from '../model/judging-status.js';
-import type { MessageEvent } from '../runner/index.js';
+} from '../../model/judging-status.js';
+import type { MessageEvent } from '../../runner/index.js';
 
 /**
  * `JudgingCommand` のための乱数生成器。

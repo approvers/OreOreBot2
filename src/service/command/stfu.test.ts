@@ -1,6 +1,6 @@
 import { type Sheriff, SheriffCommand } from './stfu.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { type Snowflake } from '../model/id.js';
+import type { Snowflake } from '../../model/id.js';
 import { createMockMessage } from './command-message.js';
 
 describe('stfu', () => {
