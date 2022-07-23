@@ -47,11 +47,7 @@ export class DeletionRepeater<M extends DeletionObservable>
    * メッセージを無視するかどうかを判定する述語。
    * この述語がtrueを返した場合、内容を復唱しない。
    */
-  private isIgnoreTarget: (content: string) => boolean;
-
-  constructor(isIgnoreTarget: (content: string) => boolean) {
-    this.isIgnoreTarget = isIgnoreTarget;
-  }
+  constructor(private readonly isIgnoreTarget: (content: string) => boolean) {}
 
   async on(event: MessageEvent, message: M): Promise<void> {
     if (event !== 'DELETE') {
