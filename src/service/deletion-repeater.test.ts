@@ -32,7 +32,7 @@ it("must not react if it's ignore target", async () => {
   const responder = new DeletionRepeater(
     (content) => content === 'Wall Is Stop'
   );
-  const fn = jest.fn();
+  const fn = vi.fn();
   await responder.on('DELETE', {
     author: 'Baba',
     content: 'Wall Is Stop',
@@ -47,12 +47,12 @@ it("must react if it's not ignore target", async () => {
   );
   await responder.on('DELETE', {
     author: 'Baba',
-    content: 'Wall Is Stop',
+    content: 'Wall Is Not Stop',
     sendToSameChannel: (message) => {
       expect(message)
         .toEqual(`Babaさん、メッセージを削除しましたね？私は見ていましたよ。内容も知っています。
 \`\`\`
-Wall Is Stop
+Wall Is Not Stop
 \`\`\``);
       return Promise.resolve();
     }
