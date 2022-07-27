@@ -17,6 +17,7 @@ import {
 import { KokuseiChousa, MemberStats } from './command/kokusei-chousa.js';
 import { MembersWithRoleRepository, RoleRank } from './command/role-rank.js';
 import { Ping, PingCommand } from './command/ping.js';
+import { RoleInfo, RoleStatsRepository } from './command/role-info.js';
 import { Sheriff, SheriffCommand } from './command/stfu.js';
 import { TypoReporter, TypoRepository } from './command/typo-record.js';
 import { HelpCommand } from './command/help.js';
@@ -38,7 +39,8 @@ export const registerAllCommandResponder = ({
   ping,
   fetcher,
   messageRepo,
-  membersRepo
+  membersRepo,
+  roleRepo
 }: {
   typoRepo: TypoRepository;
   reservationRepo: ReservationRepository;
@@ -54,6 +56,7 @@ export const registerAllCommandResponder = ({
   fetcher: VersionFetcher;
   messageRepo: MessageRepository;
   membersRepo: MembersWithRoleRepository;
+  roleRepo: RoleStatsRepository;
 }) => {
   const allResponders = [
     new TypoReporter(typoRepo, clock, scheduleRunner),
@@ -73,7 +76,8 @@ export const registerAllCommandResponder = ({
     new PingCommand(ping),
     new GetVersionCommand(fetcher),
     new DebugCommand(messageRepo),
-    new RoleRank(membersRepo)
+    new RoleRank(membersRepo),
+    new RoleInfo(roleRepo)
   ];
   for (const responder of allResponders) {
     commandRunner.addResponder(responder);

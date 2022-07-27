@@ -113,6 +113,11 @@ const commandRunner: MessageResponseRunner<CommandMessage, CommandResponder> =
     new MessageProxy(client, transformerForCommand('!'))
   );
 const stats = new DiscordMemberStats(client, GUILD_ID as Snowflake);
+
+// ほとんど変わらないことが予想され環境変数で管理する必要性が薄いので、ハードコードした。
+const KAWAEMON_ID = '391857452360007680' as Snowflake;
+const roleManager = new DiscordRoleManager(client, GUILD_ID as Snowflake);
+
 registerAllCommandResponder({
   typoRepo,
   reservationRepo,
@@ -133,7 +138,8 @@ registerAllCommandResponder({
   ping: new DiscordWS(client),
   fetcher: new GenVersionFetcher(),
   messageRepo: new DiscordMessageRepository(client),
-  membersRepo: stats
+  membersRepo: stats,
+  roleRepo: roleManager
 });
 
 const provider = new VoiceRoomProxy<VoiceChannelParticipant>(
@@ -144,14 +150,11 @@ const voiceRunner = new VoiceRoomResponseRunner(provider);
 const output = new DiscordOutput(client, mainChannelId);
 voiceRunner.addResponder(new VoiceDiff(output));
 
-// ほとんど変わらないことが予想され環境変数で管理する必要性が薄いので、ハードコードした。
-const KAWAEMON_ID = '391857452360007680' as Snowflake;
-
 const roleRunner = new RoleResponseRunner();
 roleRunner.addResponder(
   allRoleResponder({
     kawaemonId: KAWAEMON_ID,
-    roleManager: new DiscordRoleManager(client, GUILD_ID as Snowflake),
+    roleManager,
     output
   })
 );
