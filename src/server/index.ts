@@ -61,7 +61,7 @@ const {
   MAIN_CHANNEL_ID: mainChannelId,
   GUILD_ID,
   PREFIX
-} = extractEnv(['DISCORD_TOKEN', 'MAIN_CHANNEL_ID', 'GUILD_ID'], {
+} = extractEnv(['DISCORD_TOKEN', 'MAIN_CHANNEL_ID', 'GUILD_ID', 'PREFIX'], {
   PREFIX: '!'
 });
 
