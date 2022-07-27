@@ -68,3 +68,4 @@ yarn start
 | `DISCORD_TOKEN`   | BOT のトークン                                                  |
 | `MAIN_CHANNEL_ID` | VoiceDiff(VC 入退室ログ)を送信する **テキスト** チャンネルの ID |
 | `GUILD_ID`        | 限界開発鯖の ID                                                 |
+| `PREFIX`          | コマンドの接頭辞、デフォルト値は `"!"`                          |
