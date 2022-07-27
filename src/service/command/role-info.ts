@@ -17,7 +17,7 @@ export type RoleIcon =
 
 export interface RoleStats {
   color: string;
-  createdAt: number;
+  createdAt: Date;
   icon?: RoleIcon;
   numOfMembersBelonged: number;
   position: number;
@@ -74,6 +74,7 @@ export class RoleInfo implements CommandResponder {
     { color, createdAt, icon, numOfMembersBelonged, position }: RoleStats,
     roleId: string
   ) {
+    const timeStampSeconds = Math.floor(createdAt.getTime() / 1000);
     const fields = [
       {
         name: 'ID',
@@ -82,7 +83,7 @@ export class RoleInfo implements CommandResponder {
       },
       {
         name: '作成日時',
-        value: `<t:${createdAt}>`,
+        value: `<t:${timeStampSeconds}>`,
         inline: true
       },
       {

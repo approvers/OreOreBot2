@@ -47,7 +47,7 @@ export class DiscordRoleManager implements RoleManager, RoleStatsRepository {
       : undefined;
     return {
       color: role.color.toString(16).padStart(6, '0'),
-      createdAt: role.createdTimestamp,
+      createdAt: role.createdAt,
       icon,
       numOfMembersBelonged: role.members.size,
       position: role.rawPosition

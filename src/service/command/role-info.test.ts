@@ -13,7 +13,7 @@ describe('RoleRank', () => {
         id === '101'
           ? {
               color: '1a1d1a',
-              createdAt: 20200101,
+              createdAt: new Date(20200101),
               position: 1,
               numOfMembersBelonged: 3
             }
@@ -47,7 +47,7 @@ describe('RoleRank', () => {
         },
         {
           name: '作成日時',
-          value: `<t:20200101>`,
+          value: `<t:20200>`,
           inline: true
         },
         {
