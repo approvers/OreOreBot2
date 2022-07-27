@@ -1,5 +1,5 @@
 import { ChannelType, Client } from 'discord.js';
-import type { MessageRepository } from '../../service/debug.js';
+import type { MessageRepository } from '../../service/command/debug.js';
 import type { Snowflake } from '../../model/id.js';
 
 export class DiscordMessageRepository implements MessageRepository {

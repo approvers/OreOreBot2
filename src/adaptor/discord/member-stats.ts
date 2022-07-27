@@ -1,9 +1,9 @@
 import type {
   MemberWithRole,
   MembersWithRoleRepository
-} from '../../service/role-rank.js';
+} from '../../service/command/role-rank.js';
 import type { Client } from 'discord.js';
-import type { MemberStats } from '../../service/kokusei-chousa.js';
+import type { MemberStats } from '../../service/command/kokusei-chousa.js';
 import type { Snowflake } from '../../model/id.js';
 
 export class DiscordMemberStats

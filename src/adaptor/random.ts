@@ -1,5 +1,5 @@
-import type { RandomGenerator as JudgingRng } from '../service/judging.js';
-import type { RandomGenerator as PartyRng } from '../service/party.js';
+import type { RandomGenerator as JudgingRng } from '../service/command/judging.js';
+import type { RandomGenerator as PartyRng } from '../service/command/party.js';
 
 export class MathRandomGenerator implements PartyRng, JudgingRng {
   minutes(): number {

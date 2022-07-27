@@ -19,7 +19,7 @@ import type {
   VoiceConnectionFactory
 } from '../../service/voice-connection.js';
 import type { Snowflake } from '../../model/id.js';
-import type { VoiceRoomController } from '../../service/kaere.js';
+import type { VoiceRoomController } from '../../service/command/kaere.js';
 
 /**
  * ボイスチャンネルへの接続が、復帰できない切断 (管理者の手で切断させられたなど) になったと判断するまでのミリ秒数。

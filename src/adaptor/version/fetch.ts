@@ -1,4 +1,4 @@
-import type { VersionFetcher } from '../../service/version.js';
+import type { VersionFetcher } from '../../service/command/version.js';
 import { readFileSync } from 'node:fs';
 
 export class GenVersionFetcher implements VersionFetcher {

@@ -4,12 +4,14 @@ import {
   DiscordParticipant,
   DiscordVoiceConnectionFactory,
   DiscordVoiceRoomController,
+  EmojiProxy,
   InMemoryReservationRepository,
   InMemoryTypoRepository,
   MathRandomGenerator,
   MessageProxy,
   MessageUpdateProxy,
   VoiceRoomProxy,
+  roleProxy,
   transformerForCommand,
   transformerForMessage,
   transformerForUpdateMessage
@@ -18,7 +20,7 @@ import { Client, GatewayIntentBits, version } from 'discord.js';
 import type {
   CommandMessage,
   CommandResponder
-} from '../service/command-message.js';
+} from '../service/command/command-message.js';
 import {
   EmojiResponseRunner,
   MessageResponseRunner,
@@ -38,22 +40,20 @@ import {
   allRoleResponder,
   registerAllCommandResponder
 } from '../service/index.js';
-import type { AssetKey } from '../service/party.js';
+import type { AssetKey } from '../service/command/party.js';
 import { DiscordMemberStats } from '../adaptor/discord/member-stats.js';
 import { DiscordMessageRepository } from '../adaptor/discord/message-repo.js';
 import { DiscordRoleManager } from '../adaptor/discord/role.js';
 import { DiscordSheriff } from '../adaptor/discord/sheriff.js';
 import { DiscordWS } from '../adaptor/discord/ws.js';
-import { EmojiProxy } from '../adaptor/emoji-proxy.js';
 import { GenVersionFetcher } from '../adaptor/version/fetch.js';
-import type { KaereMusicKey } from '../service/kaere.js';
+import type { KaereMusicKey } from '../service/command/kaere.js';
 import { Snowflake } from '../model/id.js';
 import dotenv from 'dotenv';
 import { extractEnv } from './extract-env.js';
 import { generateDependencyReport } from '@discordjs/voice';
 import { join } from 'node:path';
 import { loadEmojiSeqYaml } from '../adaptor/emoji-seq-loader.js';
-import { roleProxy } from '../adaptor/role-proxy.js';
 
 dotenv.config();
 const {
