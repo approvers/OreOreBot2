@@ -59,8 +59,11 @@ dotenv.config();
 const {
   DISCORD_TOKEN: token,
   MAIN_CHANNEL_ID: mainChannelId,
-  GUILD_ID
-} = extractEnv(['DISCORD_TOKEN', 'MAIN_CHANNEL_ID', 'GUILD_ID']);
+  GUILD_ID,
+  PREFIX
+} = extractEnv(['DISCORD_TOKEN', 'MAIN_CHANNEL_ID', 'GUILD_ID', 'PREFIX'], {
+  PREFIX: '!'
+});
 
 const intents = [
   GatewayIntentBits.Guilds, // GUILD_CREATE による初期化
@@ -110,7 +113,7 @@ const scheduleRunner = new ScheduleRunner(clock);
 
 const commandRunner: MessageResponseRunner<CommandMessage, CommandResponder> =
   new MessageResponseRunner(
-    new MessageProxy(client, transformerForCommand('!'))
+    new MessageProxy(client, transformerForCommand(PREFIX))
   );
 const stats = new DiscordMemberStats(client, GUILD_ID as Snowflake);
 
