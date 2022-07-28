@@ -11,21 +11,16 @@
 /// ```ts
 /// const env = extractEnv(["DISCORD_TOKEN", "MAIN_CHANNEL_ID"]);
 /// ```
-export function extractEnv<K extends readonly string[]>(
-  keys: K,
-  defaults?: Readonly<Partial<Record<K[number], string>>>
-): Record<K[number], string> {
-  const env: Partial<Record<K[number], string>> = {};
-  // `K` は可変長引数である配列の型で, `string[]` より広く拡張されている具体的な型.
-  // そのため, `K` は実際には `["DISCORD_TOKEN", "MAIN_CHANNEL_ID"]` のようなリテラル型である.
-  // `K[number]` とすればキーのリテラル型全ての直和型が得られる.
-  // 例えば, `["DISCORD_TOKEN", "MAIN_CHANNEL_ID"][number]` は `"DISCORD_TOKEN" | "MAIN_CHANNEL_ID"` である.
+export function extractEnv<K extends string>(
+  keys: readonly K[],
+  defaults?: Readonly<Partial<Record<K, string>>>
+): Record<K, string> {
+  const env: Partial<Record<K, string>> = {};
+  // `K` は可変長引数である配列の値が取りうる型で, キーのリテラル型全ての直和型が得られる.
   // この直和型を `Record` のキーにすればいい感じの戻り値型になる.
   // (`Record` についてはこちらを参照: https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type)
-  // だから, 戻り値型は `Record<K[number], string>` になる.
-  for (let i = 0; i < keys.length; ++i) {
-    // for-of だとなぜか `key` の型がおかしくなる
-    const key: K[number] = keys[i];
+  // だから, 戻り値型は `Record<K, string>` になる.
+  for (const key of keys) {
     // `keys` から一個ずつ取り出して
     if (process.env[key] !== undefined && process.env[key] !== '') {
       // 存在したらそれに設定
@@ -39,5 +34,5 @@ export function extractEnv<K extends readonly string[]>(
     }
   }
   // すでに問題ないことを確認したので `as` で変換
-  return env as Record<K[number], string>;
+  return env as Record<K, string>;
 }
