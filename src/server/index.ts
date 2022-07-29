@@ -60,10 +60,17 @@ const {
   DISCORD_TOKEN: token,
   MAIN_CHANNEL_ID: mainChannelId,
   GUILD_ID,
-  PREFIX
-} = extractEnv(['DISCORD_TOKEN', 'MAIN_CHANNEL_ID', 'GUILD_ID', 'PREFIX'], {
-  PREFIX: '!'
-});
+  PREFIX,
+  FEATURE
+} = extractEnv(
+  ['DISCORD_TOKEN', 'MAIN_CHANNEL_ID', 'GUILD_ID', 'PREFIX', 'FEATURE'],
+  {
+    PREFIX: '!',
+    FEATURE: 'MESSAGE_CREATE,MESSAGE_UPDATE,COMMAND,VOICE_ROOM,ROLE,EMOJI'
+  }
+);
+
+const features = FEATURE.split(',');
 
 const intents = [
   GatewayIntentBits.Guilds, // GUILD_CREATE による初期化
@@ -99,15 +106,21 @@ const reservationRepo = new InMemoryReservationRepository();
 const clock = new ActualClock();
 const sequencesYaml = loadEmojiSeqYaml(['assets', 'emoji-seq.yaml']);
 
-const runner = new MessageResponseRunner(
+const messageCreateRunner = new MessageResponseRunner(
   new MessageProxy(client, transformerForMessage())
 );
-runner.addResponder(allMessageEventResponder(typoRepo, sequencesYaml));
+if (features.includes('MESSAGE_CREATE')) {
+  messageCreateRunner.addResponder(
+    allMessageEventResponder(typoRepo, sequencesYaml)
+  );
+}
 
-const updateRunner = new MessageUpdateResponseRunner(
+const messageUpdateRunner = new MessageUpdateResponseRunner(
   new MessageUpdateProxy(client, transformerForUpdateMessage())
 );
-updateRunner.addResponder(allMessageUpdateEventResponder());
+if (features.includes('MESSAGE_UPDATE')) {
+  messageUpdateRunner.addResponder(allMessageUpdateEventResponder());
+}
 
 const scheduleRunner = new ScheduleRunner(clock);
 
@@ -121,50 +134,61 @@ const stats = new DiscordMemberStats(client, GUILD_ID as Snowflake);
 const KAWAEMON_ID = '391857452360007680' as Snowflake;
 const roleManager = new DiscordRoleManager(client, GUILD_ID as Snowflake);
 
-registerAllCommandResponder({
-  typoRepo,
-  reservationRepo,
-  factory: new DiscordVoiceConnectionFactory<AssetKey | KaereMusicKey>(client, {
-    COFFIN_INTRO: join('assets', 'party', 'coffin-intro.mp3'),
-    COFFIN_DROP: join('assets', 'party', 'coffin-drop.mp3'),
-    KAKAPO: join('assets', 'party', 'kakapo.mp3'),
-    KAKUSIN_DAISUKE: join('assets', 'party', 'kakusin-daisuke.mp3'),
-    NEROYO: join('assets', 'kaere', 'neroyo.mp3')
-  }),
-  clock,
-  scheduleRunner,
-  random: new MathRandomGenerator(),
-  roomController: new DiscordVoiceRoomController(client),
-  commandRunner,
-  stats,
-  sheriff: new DiscordSheriff(client),
-  ping: new DiscordWS(client),
-  fetcher: new GenVersionFetcher(),
-  messageRepo: new DiscordMessageRepository(client),
-  membersRepo: stats,
-  roleRepo: roleManager
-});
+if (features.includes('COMMAND')) {
+  registerAllCommandResponder({
+    typoRepo,
+    reservationRepo,
+    factory: new DiscordVoiceConnectionFactory<AssetKey | KaereMusicKey>(
+      client,
+      {
+        COFFIN_INTRO: join('assets', 'party', 'coffin-intro.mp3'),
+        COFFIN_DROP: join('assets', 'party', 'coffin-drop.mp3'),
+        KAKAPO: join('assets', 'party', 'kakapo.mp3'),
+        KAKUSIN_DAISUKE: join('assets', 'party', 'kakusin-daisuke.mp3'),
+        NEROYO: join('assets', 'kaere', 'neroyo.mp3')
+      }
+    ),
+    clock,
+    scheduleRunner,
+    random: new MathRandomGenerator(),
+    roomController: new DiscordVoiceRoomController(client),
+    commandRunner,
+    stats,
+    sheriff: new DiscordSheriff(client),
+    ping: new DiscordWS(client),
+    fetcher: new GenVersionFetcher(),
+    messageRepo: new DiscordMessageRepository(client),
+    membersRepo: stats,
+    roleRepo: roleManager
+  });
+}
 
 const provider = new VoiceRoomProxy<VoiceChannelParticipant>(
   client,
   (voiceState) => new DiscordParticipant(voiceState)
 );
-const voiceRunner = new VoiceRoomResponseRunner(provider);
+const voiceRoomRunner = new VoiceRoomResponseRunner(provider);
 const output = new DiscordOutput(client, mainChannelId);
-voiceRunner.addResponder(new VoiceDiff(output));
+if (features.includes('VOICE_ROOM')) {
+  voiceRoomRunner.addResponder(new VoiceDiff(output));
+}
 
 const roleRunner = new RoleResponseRunner();
-roleRunner.addResponder(
-  allRoleResponder({
-    kawaemonId: KAWAEMON_ID,
-    roleManager,
-    output
-  })
-);
-roleProxy(client, roleRunner);
+if (features.includes('ROLE')) {
+  roleRunner.addResponder(
+    allRoleResponder({
+      kawaemonId: KAWAEMON_ID,
+      roleManager,
+      output
+    })
+  );
+  roleProxy(client, roleRunner);
+}
 
 const emojiRunner = new EmojiResponseRunner(new EmojiProxy(client));
-emojiRunner.addResponder(allEmojiResponder(output));
+if (features.includes('EMOJI')) {
+  emojiRunner.addResponder(allEmojiResponder(output));
+}
 
 client.once('ready', () => {
   readyLog(client);
