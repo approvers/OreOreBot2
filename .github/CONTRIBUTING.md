@@ -34,15 +34,18 @@ git push
 
 新機能の追加や、既存の機能の変更などを行った際はテストを追加してください。
 
-- [Jest](https://jestjs.io/ja/) を使用してテストしています。
+- [Vitest](https://vitest.dev/) を使用してテストしています。
 - テストファイルの名前は `<file-name>.test.ts` とします。
   - `<file-name>` は機能の処理を行うファイルと同じ名前にし、 `.test.ts` との競合を回避するため、`<file-name>` で `.` は含めないようにしてください。
-  - 必ず `service` ディレクトリに配置してください。
+  - これは `<file-name>.ts` と同じディレクトリに配置してください。
 
 ### テストの例
 
 ```typescript
-test('use case of hukueki', async () => {
+import { expect, it } from 'vitest';
+
+it('use case of hukueki', async () => {
+  const fn = vi.fn<[EmbedMessage]>(() => Promise.resolve());
   const responder = new Hukueki();
   await responder.on(
     'CREATE',
@@ -50,21 +53,20 @@ test('use case of hukueki', async () => {
       {
         args: ['hukueki', 'こるく']
       },
-      (message) => {
-        expect(message).toStrictEqual({
-          description:
-            'ねぇ、将来何してるだろうね\n' +
-            'こるくはしてないといいね\n' +
-            '困らないでよ'
-        });
-        return Promise.resolve();
-      }
+      fn
     )
   );
+  expect(fn).toHaveBeenCalledWith({
+    title: '`takopi`',
+    description:
+      'ねぇ、将来何してるだろうね\n' +
+      'こるくはしてないといいね\n' +
+      '困らないでよ'
+  });
 });
 ```
 
-詳しくは [Jest のドキュメント](https://jestjs.io/ja/docs/getting-started) をご覧ください。
+詳しくは [Vitest のドキュメント](https://vitest.dev/api/) をご覧ください。
 
 ## コミットメッセージ
 
