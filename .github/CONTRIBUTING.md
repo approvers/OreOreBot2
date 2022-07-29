@@ -37,7 +37,7 @@ git push
 ### テストの例
 
 ```typescript
-import { expect, it } from 'vitest';
+import { expect, it, vi } from 'vitest';
 
 it('use case of hukueki', async () => {
   const fn = vi.fn<[EmbedMessage]>(() => Promise.resolve());
