@@ -20,6 +20,7 @@ run cp -r /src/{build,assets,package.json,yarn.lock} . && \
 
 
 from gcr.io/distroless/nodejs:16-debug
+LABEL org.opencontainers.image.source=https://github.com/approvers/OreOreBot2
 env NODE_ENV=production
 workdir /app
 
