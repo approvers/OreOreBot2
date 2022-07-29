@@ -19,7 +19,7 @@ RUN cp -r /src/{build,assets,package.json,yarn.lock} . && \
     yarn install --production=true
 
 
-FROM gcr.io/distroless/nodejs:16-debug
+FROM gcr.io/distroless/nodejs:16
 LABEL org.opencontainers.image.source=https://github.com/approvers/OreOreBot2
 ENV NODE_ENV=production
 WORKDIR /app
