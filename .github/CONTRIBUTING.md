@@ -1,10 +1,5 @@
 # OreOreBot2 への貢献
 
-## このプロジェクトについて
-
-限界開発鯖の Bot [【はらちょ】](https://github.com/approvers/OreOreBot) を discord.js +
-TypeScript で作り直すプロジェクトです。
-
 ## 貢献の流れ
 
 1. 当リポジトリをフォークしてください。
