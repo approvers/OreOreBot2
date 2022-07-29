@@ -90,6 +90,8 @@ function readyLog(client: Client): void {
   console.info('');
   console.info('起動完了しました。');
   console.info('');
+  console.info('有効になっている機能> ' + features.join(', '));
+  console.info('');
   console.info('接続クライアント> ' + connectionClient.username);
   console.info('接続クライアントID> ' + connectionClient.id);
   console.info('接続クライアントバージョン> ' + projectVersion);
