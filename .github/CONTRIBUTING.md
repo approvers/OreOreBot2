@@ -36,12 +36,14 @@ git push
 
 ### テストの例
 
-```typescript
+```typescript:meme.test.ts
 import { expect, it, vi } from 'vitest';
+import { Meme } from './meme.js';
+import { createMockMessage } from './command-message.js';
 
 it('use case of hukueki', async () => {
   const fn = vi.fn<[EmbedMessage]>(() => Promise.resolve());
-  const responder = new Hukueki();
+  const responder = new Meme();
   await responder.on(
     'CREATE',
     createMockMessage(
@@ -52,7 +54,6 @@ it('use case of hukueki', async () => {
     )
   );
   expect(fn).toHaveBeenCalledWith({
-    title: '`takopi`',
     description:
       'ねぇ、将来何してるだろうね\n' +
       'こるくはしてないといいね\n' +
