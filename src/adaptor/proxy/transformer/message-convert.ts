@@ -58,6 +58,9 @@ export const observableTransformer: Transformer<
   RawMessage
 > = (handler) => async (raw: RawMessage) => {
   await fetchMessage(raw);
+  if (raw.content === null || raw.content === '') {
+    return;
+  }
   return handler(observableMessage(raw));
 };
 
