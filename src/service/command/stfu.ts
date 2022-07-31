@@ -31,9 +31,17 @@ export interface Sheriff {
 export class SheriffCommand implements CommandResponder {
   help: Readonly<HelpInfo> = {
     title: '治安統率機構',
-    description: 'はらちょの治安維持コマンドだよ',
+    description:
+      'はらちょがうるさいときに治安維持するためのコマンドだよ。最新メッセージから 50 件以内のはらちょのメッセージを指定の個数だけ削除するよ。',
     commandName: ['stfu'],
-    argsFormat: []
+    argsFormat: [
+      {
+        name: 'numbersToRemove',
+        description:
+          'はらちょのメッセージを削除する個数だよ。1 以上 50 以下の整数で指定してね。',
+        defaultValue: '1'
+      }
+    ]
   };
 
   constructor(private readonly sheriff: Sheriff) {}
@@ -43,13 +51,22 @@ export class SheriffCommand implements CommandResponder {
       return;
     }
 
-    const [commandName] = message.args;
+    const [commandName, numbersToRemove = '1'] = message.args;
     if (!this.help.commandName.includes(commandName)) {
       return;
     }
-
-    const channel = message.senderChannelId;
-    await this.sheriff.executeMessage(channel, 50);
+    const toRemove = parseInt(numbersToRemove, 10);
+    if (Number.isNaN(toRemove) || !(1 <= toRemove && toRemove <= 50)) {
+      await message.reply({
+        title: '引数の範囲エラー',
+        description: '1 以上 50 以下の整数を指定してね。'
+      });
+      return;
+    }
+    for (let i = 0; i < toRemove; ++i) {
+      const channel = message.senderChannelId;
+      await this.sheriff.executeMessage(channel, 50);
+    }
     await message.react('👌');
   }
 }
