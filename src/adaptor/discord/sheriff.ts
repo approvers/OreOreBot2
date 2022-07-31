@@ -3,9 +3,26 @@ import type { Sheriff } from '../../service/command/stfu.js';
 import type { Snowflake } from '../../model/id.js';
 
 export class DiscordSheriff implements Sheriff {
-  constructor(private readonly client: Client) {}
+  private queue: (() => void)[] = [];
 
-  async executeMessage(
+  constructor(private readonly client: Client) {
+    setInterval(() => {
+      const first = this.queue.shift();
+      if (!first) {
+        return;
+      }
+      first();
+    }, 500);
+  }
+
+  executeMessage(channelId: Snowflake, historyRange: number): Promise<void> {
+    this.queue.push(
+      () => void this.innerExecuteMessage(channelId, historyRange)
+    );
+    return Promise.resolve();
+  }
+
+  private async innerExecuteMessage(
     channelId: Snowflake,
     historyRange: number
   ): Promise<void> {
