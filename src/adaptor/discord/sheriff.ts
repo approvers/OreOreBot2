@@ -6,13 +6,14 @@ export class DiscordSheriff implements Sheriff {
   private queue: (() => void)[] = [];
 
   constructor(private readonly client: Client) {
+    const INTERVAL_MS = 1000;
     setInterval(() => {
       const first = this.queue.shift();
       if (!first) {
         return;
       }
       first();
-    }, 500);
+    }, INTERVAL_MS);
   }
 
   executeMessage(channelId: Snowflake, historyRange: number): Promise<void> {
@@ -34,10 +35,13 @@ export class DiscordSheriff implements Sheriff {
     if (channel.type !== ChannelType.GuildText)
       throw new Error('this channel is not text channel.');
 
-    const messages = await channel.messages.fetch({ limit: historyRange });
+    const messages = await channel.messages.fetch({
+      limit: historyRange,
+      cache: false
+    });
 
     const targetMessage = messages.find(
-      (message) => message.author.id === harachoId
+      (message) => message.author.id === harachoId && message.deletable
     );
     if (!targetMessage) return;
     await targetMessage.delete();
