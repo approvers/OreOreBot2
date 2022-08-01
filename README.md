@@ -3,7 +3,7 @@
 [![Release](https://github.com/approvers/OreOreBot2/actions/workflows/release.yml/badge.svg)](https://github.com/approvers/OreOreBot2/actions/workflows/release.yml)
 [![run codeql analysis](https://github.com/approvers/OreOreBot2/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/approvers/OreOreBot2/actions/workflows/codeql-analysis.yml)
 [![run eslint](https://github.com/approvers/OreOreBot2/actions/workflows/eslint.yml/badge.svg)](https://github.com/approvers/OreOreBot2/actions/workflows/eslint.yml)
-[![run jest](https://github.com/approvers/OreOreBot2/actions/workflows/test.yml/badge.svg)](https://github.com/approvers/OreOreBot2/actions/workflows/test.yml)
+[![run test](https://github.com/approvers/OreOreBot2/actions/workflows/test.yml/badge.svg)](https://github.com/approvers/OreOreBot2/actions/workflows/test.yml)
 [![run prettier](https://github.com/approvers/OreOreBot2/actions/workflows/prettier.yml/badge.svg)](https://github.com/approvers/OreOreBot2/actions/workflows/prettier.yml)
 [![codecov](https://codecov.io/gh/approvers/OreOreBot2/branch/main/graph/badge.svg?token=YVDPQFTLZK)](https://codecov.io/gh/approvers/OreOreBot2)
 
