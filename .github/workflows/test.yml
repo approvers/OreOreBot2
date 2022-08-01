@@ -1,17 +1,17 @@
-name: run jest
+name: run test
 
 on:
   pull_request:
     paths-ignore:
-      - '**.md'
+      - "**.md"
 
 jobs:
-  run_jest:
-    name: jest
+  run_test:
+    name: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Install packages
         run: yarn install
-      - name: Test with Jest
+      - name: Test
         run: yarn test
