@@ -1,4 +1,4 @@
-name: run jest
+name: run test
 
 on:
   pull_request:
@@ -6,8 +6,8 @@ on:
       - "**.md"
 
 jobs:
-  run_jest:
-    name: jest
+  run_test:
+    name: test
     runs-on: ubuntu-latest
     steps:
       - run: |
