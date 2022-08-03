@@ -11,9 +11,9 @@ import {
   MessageProxy,
   MessageUpdateProxy,
   VoiceRoomProxy,
+  middlewareForMessage,
   roleProxy,
   transformerForCommand,
-  transformerForMessage,
   transformerForUpdateMessage
 } from '../adaptor/index.js';
 import { Client, GatewayIntentBits, version } from 'discord.js';
@@ -109,7 +109,7 @@ const clock = new ActualClock();
 const sequencesYaml = loadEmojiSeqYaml(['assets', 'emoji-seq.yaml']);
 
 const messageCreateRunner = new MessageResponseRunner(
-  new MessageProxy(client, transformerForMessage())
+  new MessageProxy(client, middlewareForMessage())
 );
 if (features.includes('MESSAGE_CREATE')) {
   messageCreateRunner.addResponder(
