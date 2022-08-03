@@ -68,14 +68,6 @@ export class UserInfo implements CommandResponder {
     { color, displayName, joinedAt, bot, tag }: UserStats,
     userId: string
   ) {
-    let joinedTimeStamp = '';
-    if (!joinedAt) {
-      joinedTimeStamp = '情報なし';
-    } else {
-      const timeStampSeconds = Math.floor(joinedAt.getTime() / 1000);
-      joinedTimeStamp = `<t:${timeStampSeconds}>`;
-    }
-
     const fields = [
       {
         name: 'ID',
@@ -104,7 +96,7 @@ export class UserInfo implements CommandResponder {
       },
       {
         name: '参加日時',
-        value: `${joinedTimeStamp}`,
+        value: createTimeStamp(joinedAt),
         inline: true
       }
     ];
@@ -115,4 +107,11 @@ export class UserInfo implements CommandResponder {
       fields
     };
   }
+}
+
+function createTimeStamp(joinedAt: Date | undefined): string {
+  if (!joinedAt) {
+    return '情報なし';
+  }
+  return `<t:${Math.floor(joinedAt.getTime() / 1000)}`;
 }
