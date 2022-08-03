@@ -20,7 +20,8 @@ export interface UserStatsRepository {
 export class UserInfo implements CommandResponder {
   help: Readonly<HelpInfo> = {
     title: 'ユーザー秘書艦',
-    description: '指定したユーザーの情報を調べてくるよ',
+    description:
+      '指定したユーザーの情報を調べてくるよ。限界開発鯖のメンバーしか検索できないから注意してね。',
     commandName: ['userinfo'],
     argsFormat: [
       {
