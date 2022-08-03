@@ -1,4 +1,4 @@
-import {
+import type {
   CommandMessage,
   CommandResponder,
   HelpInfo
@@ -85,13 +85,13 @@ export class UserInfo implements CommandResponder {
         inline: true
       },
       {
-        name: 'アカウントカラー',
+        name: 'プロフィールカラー',
         value: color,
         inline: true
       },
       {
-        name: 'Botか',
-        value: bot ? 'True' : 'False',
+        name: 'ユーザ種別',
+        value: bot ? 'ボット' : '人類',
         inline: true
       },
       {
