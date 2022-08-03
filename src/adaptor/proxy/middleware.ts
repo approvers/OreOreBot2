@@ -35,8 +35,8 @@ const liftTuple =
 export const middlewareForMessage = () =>
   connectMiddleware(botFilter, observableMiddleware);
 
-export const transformerForCommand = (prefix: string) =>
+export const middlewareForCommand = (prefix: string) =>
   connectMiddleware(botFilter, prefixMiddleware(prefix));
 
-export const transformerForUpdateMessage = () =>
+export const middlewareForUpdateMessage = () =>
   liftTuple(middlewareForMessage());
