@@ -24,7 +24,7 @@ export class MessageProxy<M> implements MessageEventProvider<M> {
     this.client.on('messageCreate', async (m) => {
       try {
         return handler(await this.map(m));
-      } catch (_) {
+      } catch {
         // 変換処理の結果として続行すべきでないと判断されたため, 無視できます。
       }
     });
@@ -34,7 +34,7 @@ export class MessageProxy<M> implements MessageEventProvider<M> {
     const wrapper = async (m: RawMessage) => {
       try {
         return handler(await this.map(m));
-      } catch (_) {
+      } catch {
         // 変換処理の結果として続行すべきでないと判断されたため, 無視できます。
       }
     };
@@ -56,7 +56,7 @@ export class MessageUpdateProxy<M> implements MessageUpdateEventProvider<M> {
     const mapped = async (ms: [RawMessage, RawMessage]) => {
       try {
         return await handler(...(await this.map(ms)));
-      } catch (_) {
+      } catch {
         // 変換処理の結果として続行すべきでないと判断されたため, 無視できます。
       }
     };
