@@ -71,17 +71,17 @@ export class UserInfo implements CommandResponder {
     const fields = [
       {
         name: 'ID',
-        value: `${userId}`,
+        value: userId,
         inline: true
       },
       {
         name: '表示名',
-        value: `${displayName}`,
+        value: displayName,
         inline: true
       },
       {
         name: 'ユーザー名+Discord Tag',
-        value: `${tag}`,
+        value: tag,
         inline: true
       },
       {
