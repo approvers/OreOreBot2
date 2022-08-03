@@ -45,6 +45,7 @@ import { DiscordMemberStats } from '../adaptor/discord/member-stats.js';
 import { DiscordMessageRepository } from '../adaptor/discord/message-repo.js';
 import { DiscordRoleManager } from '../adaptor/discord/role.js';
 import { DiscordSheriff } from '../adaptor/discord/sheriff.js';
+import { DiscordUserManager } from '../adaptor/discord/user.js';
 import { DiscordWS } from '../adaptor/discord/ws.js';
 import { GenVersionFetcher } from '../adaptor/version/fetch.js';
 import type { KaereMusicKey } from '../service/command/kaere.js';
@@ -135,6 +136,7 @@ const stats = new DiscordMemberStats(client, GUILD_ID as Snowflake);
 // ほとんど変わらないことが予想され環境変数で管理する必要性が薄いので、ハードコードした。
 const KAWAEMON_ID = '391857452360007680' as Snowflake;
 const roleManager = new DiscordRoleManager(client, GUILD_ID as Snowflake);
+const userManager = new DiscordUserManager(client, GUILD_ID as Snowflake);
 
 if (features.includes('COMMAND')) {
   registerAllCommandResponder({
@@ -161,7 +163,8 @@ if (features.includes('COMMAND')) {
     fetcher: new GenVersionFetcher(),
     messageRepo: new DiscordMessageRepository(client),
     membersRepo: stats,
-    roleRepo: roleManager
+    roleRepo: roleManager,
+    userRepo: userManager
   });
 }
 
