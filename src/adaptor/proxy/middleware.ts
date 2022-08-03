@@ -27,7 +27,7 @@ const connectMiddleware =
   (message: M) =>
     first(message).then(second);
 
-const tupleTransformer =
+const liftTuple =
   <T, U>(m: Middleware<T, U>): Middleware<[T, T], [U, U]> =>
   (tt) =>
     Promise.all([m(tt[0]), m(tt[1])]);
@@ -39,4 +39,4 @@ export const transformerForCommand = (prefix: string) =>
   connectMiddleware(botFilter, prefixMiddleware(prefix));
 
 export const transformerForUpdateMessage = () =>
-  tupleTransformer(connectMiddleware(botFilter, observableMiddleware));
+  liftTuple(connectMiddleware(botFilter, observableMiddleware));
