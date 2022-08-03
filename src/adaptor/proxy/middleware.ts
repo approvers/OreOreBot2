@@ -29,8 +29,8 @@ const connectMiddleware =
 
 const liftTuple =
   <T, U>(m: Middleware<T, U>): Middleware<[T, T], [U, U]> =>
-  (tt) =>
-    Promise.all([m(tt[0]), m(tt[1])]);
+  ([t1, t2]) =>
+    Promise.all([m(t1), m(t2)]);
 
 export const middlewareForMessage = () =>
   connectMiddleware(botFilter, observableMiddleware);
