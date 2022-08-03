@@ -6,6 +6,15 @@ labels: bug
 assignees: ''
 ---
 
+### Haracho Version (はらちょのバージョン)
+
+v``
+
+<!--
+    はらちょのバージョンを記載します。(必須ではありませんがあると喜びます)
+    はらちょのバージョンは "!version" で確認が可能です。
+-->
+
 ### Describe the bug (説明)
 
 ### To Reproduce (再現方法)
