@@ -11,10 +11,10 @@ import {
   MessageProxy,
   MessageUpdateProxy,
   VoiceRoomProxy,
-  roleProxy,
-  transformerForCommand,
-  transformerForMessage,
-  transformerForUpdateMessage
+  middlewareForCommand,
+  middlewareForMessage,
+  middlewareForUpdateMessage,
+  roleProxy
 } from '../adaptor/index.js';
 import { Client, GatewayIntentBits, version } from 'discord.js';
 import type {
@@ -109,7 +109,7 @@ const clock = new ActualClock();
 const sequencesYaml = loadEmojiSeqYaml(['assets', 'emoji-seq.yaml']);
 
 const messageCreateRunner = new MessageResponseRunner(
-  new MessageProxy(client, transformerForMessage())
+  new MessageProxy(client, middlewareForMessage())
 );
 if (features.includes('MESSAGE_CREATE')) {
   messageCreateRunner.addResponder(
@@ -118,7 +118,7 @@ if (features.includes('MESSAGE_CREATE')) {
 }
 
 const messageUpdateRunner = new MessageUpdateResponseRunner(
-  new MessageUpdateProxy(client, transformerForUpdateMessage())
+  new MessageUpdateProxy(client, middlewareForUpdateMessage())
 );
 if (features.includes('MESSAGE_UPDATE')) {
   messageUpdateRunner.addResponder(allMessageUpdateEventResponder());
@@ -128,7 +128,7 @@ const scheduleRunner = new ScheduleRunner(clock);
 
 const commandRunner: MessageResponseRunner<CommandMessage, CommandResponder> =
   new MessageResponseRunner(
-    new MessageProxy(client, transformerForCommand(PREFIX))
+    new MessageProxy(client, middlewareForCommand(PREFIX))
   );
 const stats = new DiscordMemberStats(client, GUILD_ID as Snowflake);
 

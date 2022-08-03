@@ -6,14 +6,13 @@ import {
   ButtonStyle,
   MessageActionRowComponentBuilder
 } from 'discord.js';
-import type { RawMessage, Transformer } from '../transformer.js';
+import type { Middleware, RawMessage } from '../middleware.js';
 import type { BoldItalicCop } from '../../../service/bold-italic-cop.js';
 import type { CommandMessage } from '../../../service/command/command-message.js';
 import type { DeletionObservable } from '../../../service/deletion-repeater.js';
 import type { EditingObservable } from '../../../service/difference-detector.js';
 import type { EmbedPage } from '../../../model/embed-message.js';
 import type { EmojiSeqObservable } from '../../../service/emoji-seq-react.js';
-import type { MessageHandler } from '../../index.js';
 import type { Snowflake } from '../../../model/id.js';
 import type { TypoObservable } from '../../../service/command/typo-record.js';
 import { convertEmbed } from '../../embed-convert.js';
@@ -49,19 +48,19 @@ const observableMessage = (
   }
 });
 
-export const observableTransformer: Transformer<
+export const observableMiddleware: Middleware<
+  RawMessage,
   EditingObservable &
     DeletionObservable &
     TypoObservable &
     BoldItalicCop &
-    EmojiSeqObservable,
-  RawMessage
-> = (handler) => async (raw: RawMessage) => {
+    EmojiSeqObservable
+> = async (raw) => {
   await fetchMessage(raw);
   if (raw.content === null || raw.content === '') {
-    return;
+    throw new Error('the message was null');
   }
-  return handler(observableMessage(raw));
+  return observableMessage(raw);
 };
 
 const SPACES = /\s+/;
@@ -148,13 +147,12 @@ const replyPages = (message: RawMessage) => async (pages: EmbedPage[]) => {
   });
 };
 
-export const converterWithPrefix =
-  (prefix: string): Transformer<CommandMessage, RawMessage> =>
-  (func: MessageHandler<CommandMessage>) =>
-  async (message: RawMessage): Promise<void> => {
+export const prefixMiddleware =
+  (prefix: string): Middleware<RawMessage, CommandMessage> =>
+  async (message) => {
     await fetchMessage(message);
     if (!message.content?.trimStart().startsWith(prefix)) {
-      return;
+      throw new Error('the message does not have the prefix');
     }
     const args = message.content?.trim().slice(prefix.length).split(SPACES);
     const command: CommandMessage = {
@@ -180,5 +178,5 @@ export const converterWithPrefix =
         await message.react(emoji);
       }
     };
-    await func(command);
+    return command;
   };
