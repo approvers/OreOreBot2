@@ -8,6 +8,12 @@ assignees: ''
 
 ### Describe the bug (説明)
 
+- はらちょのバージョン: `v`
+<!--
+    はらちょのバージョンを記載します。(必須ではありませんがあると喜びます)
+    はらちょのバージョンは "!version" で確認が可能です。
+-->
+
 ### To Reproduce (再現方法)
 
 ### Expected behavior (期待される動作)
