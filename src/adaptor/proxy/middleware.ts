@@ -39,4 +39,4 @@ export const transformerForCommand = (prefix: string) =>
   connectMiddleware(botFilter, prefixMiddleware(prefix));
 
 export const transformerForUpdateMessage = () =>
-  liftTuple(connectMiddleware(botFilter, observableMiddleware));
+  liftTuple(middlewareForMessage());
