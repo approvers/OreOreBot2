@@ -93,7 +93,7 @@ export class UserInfo implements CommandResponder {
         inline: true
       },
       {
-        name: 'アカウントカラー',
+        name: 'プロフィールカラー',
         value: color,
         inline: true
       },
