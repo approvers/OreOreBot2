@@ -13,7 +13,7 @@ export interface UserStats {
   createdAt: Date;
   bot: boolean;
   tag: string;
-  hoistRoleId?: Snowflake;
+  hoistRoleId?: Snowflake | undefined;
 }
 
 export interface UserStatsRepository {
