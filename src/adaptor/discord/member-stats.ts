@@ -55,13 +55,16 @@ export class DiscordMemberStats
     }
 
     const joinedAt: Date | undefined = member.joinedAt ?? undefined;
+    const createAt = member.user.createdAt;
 
     return {
       color: member.displayColor.toString(16).padStart(6, '0'),
       displayName: member.displayName,
       joinedAt: joinedAt,
+      createdAt: createAt,
       bot: member.user.bot,
-      tag: member.user.tag
+      tag: member.user.tag,
+      hoistRoleId: member.roles.hoist?.id as Snowflake | undefined
     };
   }
 }

@@ -4,13 +4,16 @@ import type {
   HelpInfo
 } from './command-message.js';
 import type { MessageEvent } from '../../runner/message.js';
+import { Snowflake } from '../../model/id.js';
 
 export interface UserStats {
   color: string;
   displayName: string;
   joinedAt?: Date;
+  createdAt: Date;
   bot: boolean;
   tag: string;
+  hoistRoleId?: Snowflake;
 }
 
 export interface UserStatsRepository {
@@ -65,7 +68,15 @@ export class UserInfo implements CommandResponder {
   }
 
   private buildEmbed(
-    { color, displayName, joinedAt, bot, tag }: UserStats,
+    {
+      color,
+      displayName,
+      joinedAt,
+      createdAt,
+      bot,
+      tag,
+      hoistRoleId
+    }: UserStats,
     userId: string
   ) {
     const fields = [
@@ -95,8 +106,18 @@ export class UserInfo implements CommandResponder {
         inline: true
       },
       {
+        name: 'メンバーリストロール(最上位)',
+        value: createHoistRoleDisplay(hoistRoleId),
+        inline: true
+      },
+      {
         name: '参加日時',
-        value: createTimeStamp(joinedAt),
+        value: createJoinTimeStamp(joinedAt),
+        inline: true
+      },
+      {
+        name: 'アカウント作成日時',
+        value: createCreateTimeStamp(createdAt),
         inline: true
       }
     ];
@@ -109,11 +130,24 @@ export class UserInfo implements CommandResponder {
   }
 }
 
-function createTimeStamp(joinedAt: Date | undefined): string {
+function createJoinTimeStamp(joinedAt: Date | undefined): string {
   if (!joinedAt) {
     return '情報なし';
   }
 
   const unixTime = Math.floor(joinedAt.getTime() / 1000);
   return `<t:${unixTime}>(<t:${unixTime}:R>)`;
+}
+
+function createCreateTimeStamp(createAt: Date): string {
+  const unixTime = Math.floor(createAt.getTime() / 1000);
+  return `<t:${unixTime}>(<t:${unixTime}:R>)`;
+}
+
+function createHoistRoleDisplay(hoistRoleId: Snowflake | undefined): string {
+  if (!hoistRoleId) {
+    return 'なし';
+  }
+
+  return `<@&${hoistRoleId}>`;
 }
