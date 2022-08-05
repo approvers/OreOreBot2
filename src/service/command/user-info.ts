@@ -113,5 +113,5 @@ function createTimeStamp(joinedAt: Date | undefined): string {
   if (!joinedAt) {
     return '情報なし';
   }
-  return `<t:${Math.floor(joinedAt.getTime() / 1000)}`;
+  return `<t:${Math.floor(joinedAt.getTime() / 1000)}>`;
 }
