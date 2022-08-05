@@ -71,17 +71,17 @@ describe('UserInfo', () => {
         },
         {
           name: 'メンバーリストロール(最上位)',
-          value: '<@865951894173515786>',
+          value: '<@&865951894173515786>',
           inline: true
         },
         {
           name: '参加日時',
-          value: `<t:20050>`,
+          value: `<t:20050>(<t:20050:R>)`,
           inline: true
         },
         {
           name: 'アカウント作成日時',
-          value: `<t:20050>`,
+          value: `<t:20050>(<t:20050:R>)`,
           inline: true
         }
       ]
@@ -107,7 +107,7 @@ describe('UserInfo', () => {
       title: 'コマンド形式エラー',
       description: '引数にユーザーIDの文字列を指定してね'
     });
-    expect(fetchStats).not.toHaveBeenCalled();
+    expect(fetchStats).toHaveBeenCalledOnce();
   });
 
   it('error with top role undefined', async () => {
@@ -160,12 +160,12 @@ describe('UserInfo', () => {
         },
         {
           name: '参加日時',
-          value: `<t:20050>`,
+          value: `<t:20050>(<t:20050:R>)`,
           inline: true
         },
         {
           name: 'アカウント作成日時',
-          value: `<t:20050>`,
+          value: `<t:20050>(<t:20050:R>)`,
           inline: true
         }
       ]
@@ -228,7 +228,7 @@ describe('UserInfo', () => {
         },
         {
           name: 'アカウント作成日時',
-          value: `<t:20050>`,
+          value: `<t:20050>(<t:20050:R>)`,
           inline: true
         }
       ]
@@ -254,6 +254,6 @@ describe('UserInfo', () => {
       title: '引数エラー',
       description: '指定したユーザーは存在しないよ'
     });
-    expect(fetchStats).not.toHaveBeenCalled();
+    expect(fetchStats).toHaveBeenCalledOnce();
   });
 });
