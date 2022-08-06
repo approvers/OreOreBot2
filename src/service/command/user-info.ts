@@ -111,7 +111,7 @@ export class UserInfo implements CommandResponder {
         inline: true
       },
       {
-        name: '参加日時',
+        name: 'サーバー参加日時',
         value: makeDiscordTimeStamp(joinedAt),
         inline: true
       },
