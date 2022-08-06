@@ -2,7 +2,19 @@
   "plugins": [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
-    "@semantic-release/github"
+    "@semantic-release/github",
+    [
+      "@codedependant/semantic-release-docker",
+      {
+        "dockerTags": [
+          "latest",
+          "v{{version}}",
+          "v{{major}}",
+          "v{{major}}.{{minor}}"
+        ],
+        "dockerRegistry": "ghcr.io"
+      }
+    ]
   ],
   "branches": [
     "main"
