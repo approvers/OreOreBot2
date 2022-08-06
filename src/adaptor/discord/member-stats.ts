@@ -2,7 +2,7 @@ import type {
   MemberWithRole,
   MembersWithRoleRepository
 } from '../../service/command/role-rank.js';
-import {
+import type {
   UserStats,
   UserStatsRepository
 } from '../../service/command/user-info.js';
