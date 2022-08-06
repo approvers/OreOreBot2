@@ -5,17 +5,9 @@ import type {
 } from './command-message.js';
 import type { MemeTemplate } from '../../model/meme-template.js';
 import type { MessageEvent } from '../../runner/index.js';
-import { dousurya } from './meme/dousurya.js';
-import { hukueki } from './meme/hukueki.js';
-import { lolicon } from './meme/lolicon.js';
-import { moeta } from './meme/moeta.js';
-import { n } from './meme/n.js';
-import { nigetane } from './meme/nigetane.js';
+import { memes } from './meme/index.js';
 import parse from 'cli-argparse';
-import { takopi } from './meme/takopi.js';
-import { web3 } from './meme/web3.js';
 
-const memes = [dousurya, hukueki, lolicon, n, takopi, nigetane, web3, moeta];
 const memesByCommandName: Record<
   string,
   MemeTemplate<string, string> | undefined
