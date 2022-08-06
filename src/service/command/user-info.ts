@@ -4,7 +4,7 @@ import type {
   HelpInfo
 } from './command-message.js';
 import type { MessageEvent } from '../../runner/message.js';
-import { Snowflake } from '../../model/id.js';
+import type { Snowflake } from '../../model/id.js';
 
 export interface UserStats {
   color: string;

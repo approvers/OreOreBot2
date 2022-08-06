@@ -56,13 +56,13 @@ export class DiscordMemberStats
 
     const joinedAt: Date | undefined = member.joinedAt ?? undefined;
     const hoistRoleId = (member.roles.hoist?.id as Snowflake) ?? null;
-    const createAt = member.user.createdAt;
+    const createdAt = member.user.createdAt;
 
     return {
       color: member.displayColor.toString(16).padStart(6, '0'),
       displayName: member.displayName,
-      joinedAt: joinedAt,
-      createdAt: createAt,
+      joinedAt,
+      createdAt: createdAt,
       bot: member.user.bot,
       tag: member.user.tag,
       hoistRoleId: hoistRoleId
