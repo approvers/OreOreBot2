@@ -106,7 +106,7 @@ export class UserInfo implements CommandResponder {
         inline: true
       },
       {
-        name: 'メンバーリストロール(最上位)',
+        name: 'メンバーリストの分類ロール',
         value: createHoistRoleDisplay(hoistRoleId),
         inline: true
       },
