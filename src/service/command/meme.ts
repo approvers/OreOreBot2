@@ -3,21 +3,11 @@ import type {
   CommandResponder,
   HelpInfo
 } from './command-message.js';
-import {
-  dousurya,
-  hukueki,
-  lolicon,
-  moeta,
-  n,
-  nigetane,
-  takopi,
-  web3
-} from './meme/index.js';
 import type { MemeTemplate } from '../../model/meme-template.js';
 import type { MessageEvent } from '../../runner/index.js';
+import { memes } from './meme/index.js';
 import parse from 'cli-argparse';
 
-const memes = [dousurya, hukueki, lolicon, n, takopi, nigetane, web3, moeta];
 const memesByCommandName: Record<
   string,
   MemeTemplate<string, string> | undefined
