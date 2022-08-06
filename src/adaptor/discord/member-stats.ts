@@ -55,7 +55,7 @@ export class DiscordMemberStats
     }
 
     const joinedAt: Date | undefined = member.joinedAt ?? undefined;
-    const hoistRoleId = (member.roles.hoist?.id as Snowflake) ?? null;
+    const hoistRoleId = (member.roles.hoist?.id as Snowflake) ?? undefined;
     const createdAt = member.user.createdAt;
 
     return {
