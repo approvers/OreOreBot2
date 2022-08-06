@@ -1,4 +1,4 @@
-import { MemeTemplate } from '../../../model/meme-template.js';
+import type { MemeTemplate } from '../../../model/meme-template.js';
 
 export const moeta: MemeTemplate<never, never> = {
   commandNames: ['moeta', 'yuki'],
