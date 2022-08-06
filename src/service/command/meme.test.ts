@@ -274,6 +274,25 @@ describe('meme', () => {
     );
   });
 
+  it('args null (moeta)', async () => {
+    await responder.on(
+      'CREATE',
+      createMockMessage(
+        {
+          args: ['moeta']
+        },
+        (message) => {
+          expect(message).toStrictEqual({
+            title: '引数が不足してるみたいだ。',
+            description:
+              '[元ネタ](https://twitter.com/yuki_yuigishi/status/1555557259798687744)'
+          });
+          return Promise.resolve();
+        }
+      )
+    );
+  });
+
   it('delete message', async () => {
     const fn = vi.fn();
     await responder.on(
