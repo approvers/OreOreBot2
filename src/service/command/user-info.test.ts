@@ -107,7 +107,7 @@ describe('UserInfo', () => {
       title: 'コマンド形式エラー',
       description: '引数にユーザーIDの文字列を指定してね'
     });
-    expect(fetchStats).toHaveBeenCalledOnce();
+    expect(fetchStats).not.toHaveBeenCalled();
   });
 
   it('error with invalid arg', async () => {
@@ -128,6 +128,6 @@ describe('UserInfo', () => {
       title: '引数エラー',
       description: '指定したユーザーは存在しないよ'
     });
-    expect(fetchStats).toHaveBeenCalledOnce();
+    expect(fetchStats).not.toHaveBeenCalled();
   });
 });
