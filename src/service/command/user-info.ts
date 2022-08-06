@@ -112,12 +112,12 @@ export class UserInfo implements CommandResponder {
       },
       {
         name: '参加日時',
-        value: createJoinTimeStamp(joinedAt),
+        value: makeDiscordTimeStamp(joinedAt),
         inline: true
       },
       {
         name: 'アカウント作成日時',
-        value: createCreateTimeStamp(createdAt),
+        value: makeDiscordTimeStamp(createdAt),
         inline: true
       }
     ];
@@ -130,17 +130,12 @@ export class UserInfo implements CommandResponder {
   }
 }
 
-function createJoinTimeStamp(joinedAt: Date | undefined): string {
-  if (!joinedAt) {
+function makeDiscordTimeStamp(date: Date | undefined) {
+  if (!date) {
     return '情報なし';
   }
 
-  const unixTime = Math.floor(joinedAt.getTime() / 1000);
-  return `<t:${unixTime}>(<t:${unixTime}:R>)`;
-}
-
-function createCreateTimeStamp(createAt: Date): string {
-  const unixTime = Math.floor(createAt.getTime() / 1000);
+  const unixTime = Math.floor(date.getTime() / 1000);
   return `<t:${unixTime}>(<t:${unixTime}:R>)`;
 }
 
