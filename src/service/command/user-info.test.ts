@@ -1,6 +1,6 @@
 import { UserInfo, UserStatsRepository } from './user-info.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { Snowflake } from '../../model/id.js';
+import type { Snowflake } from '../../model/id.js';
 import { createMockMessage } from './command-message.js';
 
 describe('UserInfo', () => {
