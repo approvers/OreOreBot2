@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node ./build/index.js",
     "predebug": "yarn gen-version",
-    "debug": "ts-node --esm ./src/server/index.ts",
+    "dev": "ts-node --esm ./src/server/index.ts",
     "gen-version": "make-dir build && git describe --tags --abbrev=0 > build/version.txt",
     "prebuild": "yarn gen-version",
     "build": "esbuild ./src/server/index.ts --bundle --platform=node  --target=node16 --format=esm --external:./node_modules/* --outfile=build/index.js",
