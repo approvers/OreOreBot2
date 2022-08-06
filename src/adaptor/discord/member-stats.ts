@@ -20,16 +20,16 @@ export class DiscordMemberStats
 
   async allMemberCount(): Promise<number> {
     const guild = await this.client.guilds.fetch(this.guildId);
-    if (!guild) {
-      throw new Error('guild not found');
+    if (!guild.available) {
+      throw new Error('guild unavailable');
     }
     return guild.memberCount;
   }
 
   async botMemberCount(): Promise<number> {
     const guild = await this.client.guilds.fetch(this.guildId);
-    if (!guild) {
-      throw new Error('guild not found');
+    if (!guild.available) {
+      throw new Error('guild unavailable');
     }
     const guildMemberList = await guild.members.list({ limit: 1000 });
     return guildMemberList.filter((member) => member.user.bot).size;
@@ -37,8 +37,8 @@ export class DiscordMemberStats
 
   async fetchMembersWithRole(): Promise<MemberWithRole[]> {
     const guild = await this.client.guilds.fetch(this.guildId);
-    if (!guild) {
-      throw new Error('guild not found');
+    if (!guild.available) {
+      throw new Error('guild unavailable');
     }
     const guildMemberList = await guild.members.list({ limit: 1000 });
     return guildMemberList.map(({ displayName, roles }) => ({
@@ -49,6 +49,9 @@ export class DiscordMemberStats
 
   async fetchStats(userId: string): Promise<UserStats | null> {
     const guild = await this.client.guilds.fetch(this.guildId);
+    if (!guild.available) {
+      throw new Error('guild unavailable');
+    }
     const member = await guild.members.fetch(userId);
     if (!member) {
       return null;

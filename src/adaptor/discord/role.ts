@@ -15,6 +15,9 @@ export class DiscordRoleManager implements RoleManager, RoleStatsRepository {
 
   async addRole(targetMember: Snowflake, newRoleId: Snowflake): Promise<void> {
     const guild = await this.client.guilds.fetch(this.guildId);
+    if (!guild.available) {
+      throw new Error('guild unavailable');
+    }
     const member = await guild.members.fetch(targetMember);
     await member.roles.add(newRoleId);
   }
@@ -24,12 +27,18 @@ export class DiscordRoleManager implements RoleManager, RoleStatsRepository {
     removingRoleId: Snowflake
   ): Promise<void> {
     const guild = await this.client.guilds.fetch(this.guildId);
+    if (!guild.available) {
+      throw new Error('guild unavailable');
+    }
     const member = await guild.members.fetch(targetMember);
     await member.roles.remove(removingRoleId);
   }
 
   async fetchStats(roleId: string): Promise<RoleStats | null> {
     const guild = await this.client.guilds.fetch(this.guildId);
+    if (!guild.available) {
+      throw new Error('guild unavailable');
+    }
     const role = await guild.roles.fetch(roleId);
     if (!role) {
       return null;
