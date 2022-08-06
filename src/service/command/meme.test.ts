@@ -146,6 +146,24 @@ describe('meme', () => {
     );
   });
 
+  it('use case of moeta', async () => {
+    await responder.on(
+      'CREATE',
+      createMockMessage(
+        {
+          args: ['moeta', '雪']
+        },
+        (message) => {
+          expect(message).toStrictEqual({
+            description:
+              '「久留米の花火大会ね、寮から見れたの?」\n「うん ついでに雪が燃えた」\n「は?」'
+          });
+          return Promise.resolve();
+        }
+      )
+    );
+  });
+
   it('args space', async () => {
     await responder.on(
       'CREATE',
