@@ -146,6 +146,24 @@ describe('meme', () => {
     );
   });
 
+  it('use case of moeta', async () => {
+    await responder.on(
+      'CREATE',
+      createMockMessage(
+        {
+          args: ['moeta', '雪']
+        },
+        (message) => {
+          expect(message).toStrictEqual({
+            description:
+              '「久留米の花火大会ね、寮から見れたの?」\n「うん ついでに雪が燃えた」\n「は?」'
+          });
+          return Promise.resolve();
+        }
+      )
+    );
+  });
+
   it('args space', async () => {
     await responder.on(
       'CREATE',
@@ -267,6 +285,25 @@ describe('meme', () => {
             title: '引数が不足してるみたいだ。',
             description:
               'TCP/IP、SMTP、HTTPはGoogleやAmazonに独占されています。'
+          });
+          return Promise.resolve();
+        }
+      )
+    );
+  });
+
+  it('args null (moeta)', async () => {
+    await responder.on(
+      'CREATE',
+      createMockMessage(
+        {
+          args: ['moeta']
+        },
+        (message) => {
+          expect(message).toStrictEqual({
+            title: '引数が不足してるみたいだ。',
+            description:
+              '[元ネタ](https://twitter.com/yuki_yuigishi/status/1555557259798687744)'
           });
           return Promise.resolve();
         }
