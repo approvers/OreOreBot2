@@ -135,7 +135,6 @@ const stats = new DiscordMemberStats(client, GUILD_ID as Snowflake);
 // ほとんど変わらないことが予想され環境変数で管理する必要性が薄いので、ハードコードした。
 const KAWAEMON_ID = '391857452360007680' as Snowflake;
 const roleManager = new DiscordRoleManager(client, GUILD_ID as Snowflake);
-const userManager = new DiscordMemberStats(client, GUILD_ID as Snowflake);
 
 if (features.includes('COMMAND')) {
   registerAllCommandResponder({
@@ -163,7 +162,7 @@ if (features.includes('COMMAND')) {
     messageRepo: new DiscordMessageRepository(client),
     membersRepo: stats,
     roleRepo: roleManager,
-    userRepo: userManager
+    userRepo: stats
   });
 }
 
