@@ -53,11 +53,13 @@ OreOreBot2 の [Discussions](https://github.com/approvers/OreOreBot2/discussions
 
 ```shell
 git clone https://github.com/approvers/OreOreBot2.git
-yarn compile
+yarn build
 yarn start
 ```
 
 `yarn start` での起動時に下記の環境変数を指定してください。`.env` でも指定できます。
+
+`yarn dev` を使用することでコンパイルせずに起動することもできます。
 
 ## 環境変数
 
