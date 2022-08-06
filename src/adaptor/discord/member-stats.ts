@@ -62,7 +62,7 @@ export class DiscordMemberStats
       color: member.displayColor.toString(16).padStart(6, '0'),
       displayName: member.displayName,
       joinedAt,
-      createdAt: createdAt,
+      createdAt,
       bot: member.user.bot,
       tag: member.user.tag,
       hoistRoleId: hoistRoleId
