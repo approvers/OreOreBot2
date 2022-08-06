@@ -70,12 +70,12 @@ describe('UserInfo', () => {
           inline: true
         },
         {
-          name: 'メンバーリストロール(最上位)',
+          name: 'メンバーリストの分類ロール',
           value: '<@&865951894173515786>',
           inline: true
         },
         {
-          name: '参加日時',
+          name: 'サーバー参加日時',
           value: `<t:20050>(<t:20050:R>)`,
           inline: true
         },
