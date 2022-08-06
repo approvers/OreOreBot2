@@ -38,9 +38,10 @@ export class DiscordVoiceConnectionFactory<K extends string | number | symbol>
     guildId: Snowflake,
     roomId: Snowflake
   ): Promise<VoiceConnection<K>> {
-    const guild =
-      this.client.guilds.cache.get(guildId) ||
-      (await this.client.guilds.fetch(guildId));
+    const guild = await this.client.guilds.fetch(guildId);
+    if (!guild.available) {
+      throw new Error('guild unavailable');
+    }
     const channel =
       guild.channels.cache.get(roomId) || (await guild.channels.fetch(roomId));
     if (!channel) {
