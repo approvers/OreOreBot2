@@ -161,7 +161,8 @@ if (features.includes('COMMAND')) {
     fetcher: new GenVersionFetcher(),
     messageRepo: new DiscordMessageRepository(client),
     membersRepo: stats,
-    roleRepo: roleManager
+    roleRepo: roleManager,
+    userRepo: stats
   });
 }
 

@@ -20,6 +20,7 @@ import { Ping, PingCommand } from './command/ping.js';
 import { RoleInfo, RoleStatsRepository } from './command/role-info.js';
 import { Sheriff, SheriffCommand } from './command/stfu.js';
 import { TypoReporter, TypoRepository } from './command/typo-record.js';
+import { UserInfo, UserStatsRepository } from './command/user-info.js';
 import { HelpCommand } from './command/help.js';
 import { Meme } from './command/meme.js';
 import { MessageResponseRunner } from '../runner/message.js';
@@ -40,7 +41,8 @@ export const registerAllCommandResponder = ({
   fetcher,
   messageRepo,
   membersRepo,
-  roleRepo
+  roleRepo,
+  userRepo
 }: {
   typoRepo: TypoRepository;
   reservationRepo: ReservationRepository;
@@ -57,6 +59,7 @@ export const registerAllCommandResponder = ({
   messageRepo: MessageRepository;
   membersRepo: MembersWithRoleRepository;
   roleRepo: RoleStatsRepository;
+  userRepo: UserStatsRepository;
 }) => {
   const allResponders = [
     new TypoReporter(typoRepo, clock, scheduleRunner),
@@ -77,7 +80,8 @@ export const registerAllCommandResponder = ({
     new GetVersionCommand(fetcher),
     new DebugCommand(messageRepo),
     new RoleRank(membersRepo),
-    new RoleInfo(roleRepo)
+    new RoleInfo(roleRepo),
+    new UserInfo(userRepo)
   ];
   for (const responder of allResponders) {
     commandRunner.addResponder(responder);
