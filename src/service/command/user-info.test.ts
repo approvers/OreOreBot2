@@ -128,6 +128,6 @@ describe('UserInfo', () => {
       title: '引数エラー',
       description: '指定したユーザーは存在しないよ'
     });
-    expect(fetchStats).not.toHaveBeenCalled();
+    expect(fetchStats).toHaveBeenCalledOnce();
   });
 });
