@@ -15,7 +15,7 @@
 - pattern: カス
   emojisToSend:
     - <:ks:845281735897645066>
-- pattern: (雪|ゆき|ユキ)
+- pattern: 雪|ゆき|ユキ
   emojisToSend:
     - <:e_yukisan_ryuunen:969214991955820604>
 - pattern: Python
