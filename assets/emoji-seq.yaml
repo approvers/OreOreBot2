@@ -12,3 +12,22 @@
 - pattern: 磯(崎|﨑)
   emojisToSend:
     - <:isozaki_kirito:836249519632023623>
+- pattern: カス
+  emojisToSend:
+    - <:ks:845281735897645066>
+- pattern: 雪|ゆき|ユキ
+  emojisToSend:
+    - <:e_yukisan_ryuunen:969214991955820604>
+- pattern: Python
+  emojisToSend:
+    - <:python_kuso:689921246913101962>
+- pattern: かわえ
+  emojisToSend:
+    - <:kawaemon_anpanman:863031747280896070>
+    - <:kawaehand_left:903283802443501618>
+- pattern: Docker
+  emojisToSend:
+    - <:docker:725967469021233162>
+- pattern: しゅん
+  emojisToSend:
+    - <:shun_chan:982672664281903124>
