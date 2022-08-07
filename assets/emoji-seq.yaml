@@ -28,6 +28,6 @@
 - pattern: Docker
   emojisToSend:
     - <:docker:725967469021233162>
-- pattern: しゅん(ちゃん)
+- pattern: しゅん
   emojisToSend:
     - <:shun_chan:982672664281903124>
