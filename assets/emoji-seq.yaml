@@ -21,7 +21,7 @@
 - pattern: Python
   emojisToSend:
     - <:python_kuso:689921246913101962>
-- pattern: かわえ(もん)
+- pattern: かわえ
   emojisToSend:
     - <:kawaemon_anpanman:863031747280896070>
     - <:kawaehand_left:903283802443501618>
