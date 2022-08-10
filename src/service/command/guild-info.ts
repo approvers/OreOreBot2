@@ -165,22 +165,22 @@ export class GuildInfo implements CommandResponder {
       },
       {
         name: '管理の2要素認証',
-        value: `${mfaLevel}`,
+        value: mfaLevel,
         inline: true
       },
       {
         name: 'NSFWレベル',
-        value: `${nsfwLevel}`,
+        value: nsfwLevel,
         inline: true
       },
       {
         name: 'ブースト状況',
-        value: `${boostTier}`,
+        value: boostTier,
         inline: true
       },
       {
         name: '認証レベル',
-        value: `${verificationLevel}`,
+        value: verificationLevel,
         inline: true
       },
       {
