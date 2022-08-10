@@ -19,7 +19,7 @@ export interface GuildStats {
   name: string;
   nsfwLevel: GuildNsfwLevel;
   ownerId: Snowflake;
-  boostTir: GuildPremiumTier;
+  boostTier: GuildPremiumTier;
   roleCount: number;
   stickerCount: number;
   verificationLevel: GuildVerificationLevel;
@@ -112,7 +112,7 @@ export class GuildInfo implements CommandResponder {
     name,
     nsfwLevel,
     ownerId,
-    boostTir,
+    boostTier,
     roleCount,
     stickerCount,
     verificationLevel
@@ -185,7 +185,7 @@ export class GuildInfo implements CommandResponder {
       },
       {
         name: 'ブースト状況',
-        value: `${boostTir}`,
+        value: `${boostTier}`,
         inline: true
       },
       {

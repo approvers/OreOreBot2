@@ -15,6 +15,7 @@ import type {
   UserStatsRepository
 } from '../../service/command/user-info.js';
 import type { Client } from 'discord.js';
+import type { Guild } from 'discord.js';
 import type { MemberStats } from '../../service/command/kokusei-chousa.js';
 import type { Snowflake } from '../../model/id.js';
 
@@ -93,11 +94,36 @@ export class DiscordMemberStats
     const afkChannelId = guild.afkChannelId as Snowflake;
     const id = guild.id as Snowflake;
     const ownerId = guild.ownerId as Snowflake;
-    const mfaLevel = guild.mfaLevel as unknown as GuildMfaLevel;
-    const nsfwLevel = guild.nsfwLevel as unknown as GuildNsfwLevel;
-    const boostTir = guild.premiumTier as unknown as GuildPremiumTier;
-    const verificationLevel =
-      guild.verificationLevel as unknown as GuildVerificationLevel;
+
+    const mappingMfaLevel: Record<Guild['mfaLevel'], GuildMfaLevel> = {
+      0: '2FAを要求しない',
+      1: '2FAを要求する'
+    };
+
+    const mappingNsfwLevel: Record<Guild['nsfwLevel'], GuildNsfwLevel> = {
+      0: 'デフォルト',
+      1: 'iosユーザーに対する制限あり',
+      2: '安全',
+      3: '年齢制限'
+    };
+
+    const mappingBoostTier: Record<Guild['premiumTier'], GuildPremiumTier> = {
+      0: 'ティア0',
+      1: 'ティア1',
+      2: 'ティア2',
+      3: 'ティア3'
+    };
+
+    const mappingVerificationLevel: Record<
+      Guild['verificationLevel'],
+      GuildVerificationLevel
+    > = {
+      0: '制限なし',
+      1: '低(メール認証要求)',
+      2: '中(作成から5分経過したアカウントのみ)',
+      3: '高(限界開発鯖に参加して10分以上経過したアカウントのみ)',
+      4: '最高(電話番号認証要求)'
+    };
 
     return {
       afkChannelId,
@@ -108,14 +134,14 @@ export class DiscordMemberStats
       id,
       large: guild.large,
       membersCount: guild.memberCount,
-      mfaLevel,
+      mfaLevel: mappingMfaLevel[guild.mfaLevel],
       name: guild.name,
-      nsfwLevel,
+      nsfwLevel: mappingNsfwLevel[guild.nsfwLevel],
       ownerId,
-      boostTir,
+      boostTier: mappingBoostTier[guild.premiumTier],
       roleCount: guild.roles.cache.size,
       stickerCount: guild.stickers.cache.size,
-      verificationLevel
+      verificationLevel: mappingVerificationLevel[guild.verificationLevel]
     };
   }
 }
