@@ -1,3 +1,11 @@
+import {
+  GuildMfaLevel,
+  GuildNsfwLevel,
+  GuildPremiumTier,
+  GuildStats,
+  GuildStatsRepository,
+  GuildVerificationLevel
+} from '../../service/command/guild-info.js';
 import type {
   MemberWithRole,
   MembersWithRoleRepository
@@ -11,7 +19,11 @@ import type { MemberStats } from '../../service/command/kokusei-chousa.js';
 import type { Snowflake } from '../../model/id.js';
 
 export class DiscordMemberStats
-  implements MemberStats, MembersWithRoleRepository, UserStatsRepository
+  implements
+    MemberStats,
+    MembersWithRoleRepository,
+    UserStatsRepository,
+    GuildStatsRepository
 {
   constructor(
     private readonly client: Client,
@@ -69,6 +81,41 @@ export class DiscordMemberStats
       bot: member.user.bot,
       tag: member.user.tag,
       hoistRoleId: hoistRoleId
+    };
+  }
+
+  async fetchGuildStats(): Promise<GuildStats | null> {
+    const guild = await this.client.guilds.fetch(this.guildId);
+    if (!guild.available) {
+      throw new Error('guild unavailable');
+    }
+
+    const afkChannelId = guild.afkChannelId as Snowflake;
+    const id = guild.id as Snowflake;
+    const ownerId = guild.ownerId as Snowflake;
+    const mfaLevel = guild.mfaLevel as unknown as GuildMfaLevel;
+    const nsfwLevel = guild.nsfwLevel as unknown as GuildNsfwLevel;
+    const boostTir = guild.premiumTier as unknown as GuildPremiumTier;
+    const verificationLevel =
+      guild.verificationLevel as unknown as GuildVerificationLevel;
+
+    return {
+      afkChannelId,
+      afkTimeout: guild.afkTimeout,
+      channelCount: guild.channels.cache.size,
+      createdAt: guild.createdAt,
+      emojiCount: guild.emojis.cache.size,
+      id,
+      large: guild.large,
+      membersCount: guild.memberCount,
+      mfaLevel,
+      name: guild.name,
+      nsfwLevel,
+      ownerId,
+      boostTir,
+      roleCount: guild.roles.cache.size,
+      stickerCount: guild.stickers.cache.size,
+      verificationLevel
     };
   }
 }
