@@ -47,7 +47,7 @@ export class DiscordMemberStats
     }));
   }
 
-  async fetchStats(userId: string): Promise<UserStats | null> {
+  async fetchUserStats(userId: string): Promise<UserStats | null> {
     const guild = await this.client.guilds.fetch(this.guildId);
     if (!guild.available) {
       throw new Error('guild unavailable');

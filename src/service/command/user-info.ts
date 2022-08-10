@@ -17,7 +17,7 @@ export interface UserStats {
 }
 
 export interface UserStatsRepository {
-  fetchStats(userId: string): Promise<UserStats | null>;
+  fetchUserStats(userId: string): Promise<UserStats | null>;
 }
 
 export class UserInfo implements CommandResponder {
@@ -55,7 +55,7 @@ export class UserInfo implements CommandResponder {
       return;
     }
 
-    const stats = await this.repo.fetchStats(userId);
+    const stats = await this.repo.fetchUserStats(userId);
     if (!stats) {
       await message.reply({
         title: '引数エラー',
