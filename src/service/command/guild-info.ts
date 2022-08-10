@@ -5,6 +5,7 @@ import type {
 } from './command-message.js';
 import type { MessageEvent } from '../../runner/message.js';
 import type { Snowflake } from '../../model/id.js';
+import { createTimestamp } from '../../model/create-timestamp.js';
 
 export interface GuildStats {
   afkChannelId: Snowflake;
@@ -184,7 +185,7 @@ export class GuildInfo implements CommandResponder {
       },
       {
         name: '作成日時',
-        value: makeDiscordTimestamp(createdAt),
+        value: createTimestamp(createdAt),
         inline: true
       }
     ];
@@ -195,12 +196,6 @@ export class GuildInfo implements CommandResponder {
       fields
     };
   }
-}
-
-function makeDiscordTimestamp(createdAt: Date) {
-  const unixTime = Math.floor(createdAt.getTime() / 1000);
-
-  return `<t:${unixTime}>(<t:${unixTime}:R>)`;
 }
 
 function makeAfkChannelMention(afkChannelId: Snowflake, afkTimeout: number) {
