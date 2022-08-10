@@ -119,23 +119,18 @@ export class GuildInfo implements CommandResponder {
   }: GuildStats) {
     const fields = [
       {
-        name: 'ID',
-        value: `${id}`,
-        inline: true
-      },
-      {
         name: 'サーバー名',
-        value: `${name}`,
+        value: `${name}\n(${id})`,
         inline: true
       },
       {
-        name: '作成日時',
-        value: makeDiscordTimestamp(createdAt),
+        name: 'オーナー',
+        value: `<@${ownerId}>\n(${ownerId})`,
         inline: true
       },
       {
-        name: 'AFKチャンネル・タイムアウト時間',
-        value: `<#${afkChannelId}>(${afkTimeout})`,
+        name: 'AFK設定',
+        value: makeAfkChannelMention(afkChannelId, afkTimeout),
         inline: true
       },
       {
@@ -144,7 +139,7 @@ export class GuildInfo implements CommandResponder {
         inline: true
       },
       {
-        name: '絵文字数(通常 + アニメーション)',
+        name: '絵文字数',
         value: `${emojiCount}`,
         inline: true
       },
@@ -159,7 +154,7 @@ export class GuildInfo implements CommandResponder {
         inline: true
       },
       {
-        name: 'メンバー数(人類 + BOT)',
+        name: '全メンバー数',
         value: `${membersCount}`,
         inline: true
       },
@@ -169,18 +164,13 @@ export class GuildInfo implements CommandResponder {
         inline: true
       },
       {
-        name: 'mfaLevel(管理の2要素認証)',
+        name: '管理の2要素認証',
         value: `${mfaLevel}`,
         inline: true
       },
       {
-        name: 'nsfwLevel',
+        name: 'NSFWレベル',
         value: `${nsfwLevel}`,
-        inline: true
-      },
-      {
-        name: 'オーナー',
-        value: `<@${ownerId}>(${ownerId})`,
         inline: true
       },
       {
@@ -191,6 +181,11 @@ export class GuildInfo implements CommandResponder {
       {
         name: '認証レベル',
         value: `${verificationLevel}`,
+        inline: true
+      },
+      {
+        name: '作成日時',
+        value: makeDiscordTimestamp(createdAt),
         inline: true
       }
     ];
@@ -207,4 +202,12 @@ function makeDiscordTimestamp(createdAt: Date) {
   const unixTime = Math.floor(createdAt.getTime() / 1000);
 
   return `<t:${unixTime}>(<t:${unixTime}:R>)`;
+}
+
+function makeAfkChannelMention(afkChannelId: Snowflake, afkTimeout: number) {
+  if (!afkChannelId) {
+    return '未設定';
+  }
+
+  return `<#${afkChannelId}>(${afkTimeout})`;
 }
