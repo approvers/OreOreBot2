@@ -159,8 +159,8 @@ export class GuildInfo implements CommandResponder {
         inline: true
       },
       {
-        name: '大規模か',
-        value: large ? 'True' : 'False',
+        name: '規模',
+        value: large ? '大規模' : '小規模',
         inline: true
       },
       {
