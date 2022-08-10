@@ -1,10 +1,10 @@
-import {
+import type {
   CommandMessage,
   CommandResponder,
   HelpInfo
 } from './command-message.js';
 import type { MessageEvent } from '../../runner/message.js';
-import { Snowflake } from '../../model/id.js';
+import type { Snowflake } from '../../model/id.js';
 
 export interface GuildStats {
   afkChannelId: Snowflake;
