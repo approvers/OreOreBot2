@@ -7,6 +7,7 @@ import { Clock, ScheduleRunner } from '../runner/schedule.js';
 import { CommandMessage, CommandResponder } from './command/command-message.js';
 import { DebugCommand, MessageRepository } from './command/debug.js';
 import { GetVersionCommand, VersionFetcher } from './command/version.js';
+import { GuildInfo, GuildStatsRepository } from './command/guild-info.js';
 import { JudgingCommand, RandomGenerator } from './command/judging.js';
 import {
   KaereCommand,
@@ -42,7 +43,8 @@ export const registerAllCommandResponder = ({
   messageRepo,
   membersRepo,
   roleRepo,
-  userRepo
+  userRepo,
+  guildRepo
 }: {
   typoRepo: TypoRepository;
   reservationRepo: ReservationRepository;
@@ -60,6 +62,7 @@ export const registerAllCommandResponder = ({
   membersRepo: MembersWithRoleRepository;
   roleRepo: RoleStatsRepository;
   userRepo: UserStatsRepository;
+  guildRepo: GuildStatsRepository;
 }) => {
   const allResponders = [
     new TypoReporter(typoRepo, clock, scheduleRunner),
@@ -81,7 +84,8 @@ export const registerAllCommandResponder = ({
     new DebugCommand(messageRepo),
     new RoleRank(membersRepo),
     new RoleInfo(roleRepo),
-    new UserInfo(userRepo)
+    new UserInfo(userRepo),
+    new GuildInfo(guildRepo)
   ];
   for (const responder of allResponders) {
     commandRunner.addResponder(responder);

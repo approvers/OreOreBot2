@@ -162,7 +162,8 @@ if (features.includes('COMMAND')) {
     messageRepo: new DiscordMessageRepository(client),
     membersRepo: stats,
     roleRepo: roleManager,
-    userRepo: stats
+    userRepo: stats,
+    guildRepo: stats
   });
 }
 

@@ -9,7 +9,7 @@ describe('UserInfo', () => {
   });
 
   const repo: UserStatsRepository = {
-    fetchStats: (id) =>
+    fetchUserStats: (id) =>
       Promise.resolve(
         id === '586824421470109716'
           ? {
@@ -27,7 +27,7 @@ describe('UserInfo', () => {
   const userInfo = new UserInfo(repo);
 
   it('gets info of user', async () => {
-    const fetchStats = vi.spyOn(repo, 'fetchStats');
+    const fetchStats = vi.spyOn(repo, 'fetchUserStats');
     const fn = vi.fn();
 
     await userInfo.on(
@@ -90,7 +90,7 @@ describe('UserInfo', () => {
   });
 
   it('error with no arg', async () => {
-    const fetchStats = vi.spyOn(repo, 'fetchStats');
+    const fetchStats = vi.spyOn(repo, 'fetchUserStats');
     const fn = vi.fn();
 
     await userInfo.on(
@@ -111,7 +111,7 @@ describe('UserInfo', () => {
   });
 
   it('error with invalid arg', async () => {
-    const fetchStats = vi.spyOn(repo, 'fetchStats');
+    const fetchStats = vi.spyOn(repo, 'fetchUserStats');
     const fn = vi.fn();
 
     await userInfo.on(

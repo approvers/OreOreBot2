@@ -5,6 +5,7 @@ import type {
 } from './command-message.js';
 import type { MessageEvent } from '../../runner/message.js';
 import type { Snowflake } from '../../model/id.js';
+import { createTimestamp } from '../../model/create-timestamp.js';
 
 export interface UserStats {
   color: string;
@@ -17,7 +18,7 @@ export interface UserStats {
 }
 
 export interface UserStatsRepository {
-  fetchStats(userId: string): Promise<UserStats | null>;
+  fetchUserStats(userId: string): Promise<UserStats | null>;
 }
 
 export class UserInfo implements CommandResponder {
@@ -55,7 +56,7 @@ export class UserInfo implements CommandResponder {
       return;
     }
 
-    const stats = await this.repo.fetchStats(userId);
+    const stats = await this.repo.fetchUserStats(userId);
     if (!stats) {
       await message.reply({
         title: '引数エラー',
@@ -112,12 +113,12 @@ export class UserInfo implements CommandResponder {
       },
       {
         name: 'サーバー参加日時',
-        value: makeDiscordTimeStamp(joinedAt),
+        value: createTimestamp(joinedAt),
         inline: true
       },
       {
         name: 'アカウント作成日時',
-        value: makeDiscordTimeStamp(createdAt),
+        value: createTimestamp(createdAt),
         inline: true
       }
     ];
@@ -128,15 +129,6 @@ export class UserInfo implements CommandResponder {
       fields
     };
   }
-}
-
-function makeDiscordTimeStamp(date: Date | undefined) {
-  if (!date) {
-    return '情報なし';
-  }
-
-  const unixTime = Math.floor(date.getTime() / 1000);
-  return `<t:${unixTime}>(<t:${unixTime}:R>)`;
 }
 
 function createHoistRoleDisplay(hoistRoleId: Snowflake | undefined): string {
