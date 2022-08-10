@@ -90,8 +90,7 @@ export class GuildInfo implements CommandResponder {
     if (!stats) {
       await message.reply({
         title: '取得エラー',
-        description:
-          '限界開発鯖の情報を見つけることが出来なかった.... ごめんなさい、力になれなくて'
+        description: '限界開発鯖の情報が見つからないみたい……'
       });
       return;
     }
