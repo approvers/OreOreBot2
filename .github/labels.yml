@@ -36,3 +36,7 @@
   color: 'bfd4f2'
 - name: 'priority:Medium'
   color: '1D76DB'
+- name: 'Need more Hibikiness'
+  description: 'I need more Hibikiness in the message'
+  color: 'DEAFEE'
+
