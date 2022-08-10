@@ -27,7 +27,8 @@ export interface GuildStats {
 
 /**
  * 管理の2要素認証の設定状況を定義します。
- * これはModやAdminアカウントを侵害する悪意ある人物のよる破壊行為を防止することが出来ます。
+ * ModやAdminアカウントを侵害する悪意ある人物のよる破壊行為を防止することが出来る設定です。
+ * 要求している場合、モデレーション操作を行うには2要素認証をONにしている必要があります。
  * モデレーション操作として定義されているものとして、BANやKick、サーバーへのBot接続などが該当します。
  * 設定: サーバー設定 → 管理 | 安心設定 → 管理の2要素認証
  * https://discord.com/developers/docs/resources/guild#guild-object-mfa-level
