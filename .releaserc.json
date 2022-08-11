@@ -12,7 +12,8 @@
           "v{{major}}",
           "v{{major}}.{{minor}}"
         ],
-        "dockerRegistry": "ghcr.io"
+        "dockerRegistry": "ghcr.io",
+        "dockerProject": "approvers"
       }
     ]
   ],
