@@ -47,6 +47,7 @@
     "yaml": "^2.1.1"
   },
   "devDependencies": {
+    "@codedependant/semantic-release-docker": "^4.1.0",
     "@types/node": "^18.7.0",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
