@@ -1,4 +1,4 @@
-FROM node:16-slim as build
+FROM node:18-slim as build
 SHELL ["/bin/bash", "-c"]
 WORKDIR /src
 
