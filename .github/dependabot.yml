@@ -20,3 +20,13 @@ updates:
     target-branch: main
     commit-message:
       prefix: chore(ci)
+  - package-ecosystem: 'docker'
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "m2en"
+      - "MikuroXina"
+    target-branch: main
+    commit-message:
+      prefix: chore(docker)
