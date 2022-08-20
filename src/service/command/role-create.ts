@@ -5,7 +5,7 @@ import {
 } from './command-message.js';
 import type { MessageEvent } from '../../runner/message.js';
 
-export interface RoleManager {
+export interface RoleCreateManager {
   createRole(roleName: string, roleColor: string): Promise<void>;
 }
 
@@ -27,7 +27,7 @@ export class RoleCreate implements CommandResponder {
     ]
   };
 
-  constructor(private readonly manager: RoleManager) {}
+  constructor(private readonly manager: RoleCreateManager) {}
 
   async on(event: MessageEvent, message: CommandMessage): Promise<void> {
     if (event !== 'CREATE') {
