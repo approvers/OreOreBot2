@@ -6,7 +6,11 @@ import {
 import type { MessageEvent } from '../../runner/message.js';
 
 export interface RoleCreateManager {
-  createRole(roleName: string, roleColor: string): Promise<void>;
+  createRole(
+    roleName: string,
+    roleColor: string,
+    createSenderName: string
+  ): Promise<void>;
 }
 
 export class RoleCreate implements CommandResponder {
@@ -33,7 +37,6 @@ export class RoleCreate implements CommandResponder {
     if (event !== 'CREATE') {
       return;
     }
-
     const [command, roleName, roleColor] = message.args;
     if (!this.help.commandName.includes(command)) {
       return;
@@ -55,7 +58,7 @@ export class RoleCreate implements CommandResponder {
       return;
     }
 
-    await this.manager.createRole(roleName, roleColor);
+    await this.manager.createRole(roleName, roleColor, message.senderName);
     await message.reply({
       title: 'ロール作成',
       description: 'ロールを作成したよ'
