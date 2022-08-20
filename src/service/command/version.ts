@@ -29,8 +29,8 @@ export class GetVersionCommand implements CommandResponder {
     const { version } = this.fetcher;
     await message.reply({
       title: 'はらちょバージョン',
-      description: `${version} だよ。`,
-      url: `https://github.com/approvers/OreOreBot2/releases/tag/${version}`
+      description: `[${version}](https://github.com/approvers/OreOreBot2/releases/tag/${version}) だよ。`,
+      url: `https://github.com/approvers/OreOreBot2/releases`
     });
   }
 }
