@@ -28,3 +28,18 @@
 - pattern: しゅん
   emojisToSend:
     - <:shun_chan:982672664281903124>
+- pattern: 留年
+  emojisToSend:
+    - <:ryuunen:1011335382681522309>
+- pattern: 最悪
+  emojisToSend:
+    - <:saiaku:967034437231583342>
+- pattern: 黙れ
+  emojisToSend:
+    - <:damareyo:969200173978882108>
+- pattern: 腹切れよ
+  emojisToSend:
+    - <:hara:991347806180741160>
+    - <:ki:991347820693032970>
+    - <:re:1011328598935879771>
+    - <:yo:1011331370250928299>
