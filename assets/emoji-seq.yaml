@@ -8,16 +8,13 @@
   emojisToSend:
     - <:hara:991347806180741160>
     - <:ki:991347820693032970>
-    - <:ri:991347831875047454>
+    - <:ri:1011328993657634887>
 - pattern: 磯(崎|﨑)
   emojisToSend:
     - <:isozaki_kirito:836249519632023623>
 - pattern: カス
   emojisToSend:
     - <:ks:845281735897645066>
-- pattern: 雪|ゆき|ユキ
-  emojisToSend:
-    - <:e_yukisan_ryuunen:969214991955820604>
 - pattern: Python
   emojisToSend:
     - <:python_kuso:689921246913101962>
@@ -31,3 +28,18 @@
 - pattern: しゅん
   emojisToSend:
     - <:shun_chan:982672664281903124>
+- pattern: 留年
+  emojisToSend:
+    - <:ryuunen:1011335382681522309>
+- pattern: 最悪
+  emojisToSend:
+    - <:saiaku:967034437231583342>
+- pattern: 黙れ
+  emojisToSend:
+    - <:damareyo:969200173978882108>
+- pattern: 腹切れよ
+  emojisToSend:
+    - <:hara:991347806180741160>
+    - <:ki:991347820693032970>
+    - <:re:1011328598935879771>
+    - <:yo:1011331370250928299>
