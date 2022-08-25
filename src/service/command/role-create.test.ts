@@ -115,17 +115,20 @@ describe('Create a role', () => {
       'CREATE',
       createMockMessage(
         {
-          args: ['rolecreate', newRoleName, '#fffffff']
+          args: ['rolecreate', newRoleName, '#ffffff']
         },
         fn
       )
     );
 
     expect(fn).toHaveBeenCalledWith({
-      title: 'コマンド形式エラー',
-      description:
-        '引数のHEXが6桁の16進数でないよ。HEXは`000000`から`FFFFFF`までの6桁の16進数だよ'
+      title: 'ロール作成',
+      description: 'ロールを作成したよ'
     });
-    expect(createGuildRole).not.toHaveBeenCalled();
+    expect(createGuildRole).toHaveBeenCalledWith(
+      newRoleName,
+      'ffffff',
+      'Mikuroさいな'
+    );
   });
 });

@@ -57,6 +57,7 @@ export class RoleCreate implements CommandResponder {
       });
       return;
     }
+
     if (!roleColor.match(/^#?[0-9a-f]{6}$/m)) {
       await message.reply({
         title: 'コマンド形式エラー',
@@ -65,8 +66,13 @@ export class RoleCreate implements CommandResponder {
       });
       return;
     }
+    const roleColorRemoveSharp = roleColor.replace('#', '');
 
-    await this.manager.createRole(roleName, roleColor, message.senderName);
+    await this.manager.createRole(
+      roleName,
+      roleColorRemoveSharp,
+      message.senderName
+    );
     await message.reply({
       title: 'ロール作成',
       description: 'ロールを作成したよ'
