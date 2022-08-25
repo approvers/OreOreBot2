@@ -4,7 +4,7 @@ import type {
   RoleStatsRepository
 } from '../../service/command/role-info.js';
 import type { Client } from 'discord.js';
-import { RoleCreateManager } from '../../service/command/role-create.js';
+import type { RoleCreateManager } from '../../service/command/role-create.js';
 import type { RoleManager } from '../../service/kawaemon-has-all-roles.js';
 import type { Snowflake } from '../../model/id.js';
 
