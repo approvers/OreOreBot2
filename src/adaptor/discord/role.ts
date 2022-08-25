@@ -47,7 +47,7 @@ export class DiscordRoleManager
       throw new Error('guild unavailable');
     }
 
-    const roles = guild.roles;
+    const { roles } = guild;
     await roles.create({
       name: roleName,
       color: `#${roleColor}`,
