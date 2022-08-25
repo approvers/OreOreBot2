@@ -82,4 +82,27 @@ describe('Create a role', () => {
     });
     expect(createGuildRole).not.toHaveBeenCalled();
   });
+
+  it('HEX Error (rolecolor)', async () => {
+    const newRoleName = 'かわえもんのおねえさん';
+    const createGuildRole = vi.spyOn(manager, 'createRole');
+    const fn = vi.fn();
+
+    await createRole.on(
+      'CREATE',
+      createMockMessage(
+        {
+          args: ['rolecreate', newRoleName, 'fffffff']
+        },
+        fn
+      )
+    );
+
+    expect(fn).toHaveBeenCalledWith({
+      title: 'コマンド形式エラー',
+      description:
+        '引数のHEXが6桁の16進数でないよ。HEXは`000000`から`FFFFFF`までの6桁の16進数だよ'
+    });
+    expect(createGuildRole).not.toHaveBeenCalled();
+  });
 });

@@ -57,6 +57,14 @@ export class RoleCreate implements CommandResponder {
       });
       return;
     }
+    if (!roleColor.match(/^[0-9a-f]{6}$/m)) {
+      await message.reply({
+        title: 'コマンド形式エラー',
+        description:
+          '引数のHEXが6桁の16進数でないよ。HEXは`000000`から`FFFFFF`までの6桁の16進数だよ'
+      });
+      return;
+    }
 
     await this.manager.createRole(roleName, roleColor, message.senderName);
     await message.reply({
