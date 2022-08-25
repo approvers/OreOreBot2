@@ -18,6 +18,7 @@ import {
 import { KokuseiChousa, MemberStats } from './command/kokusei-chousa.js';
 import { MembersWithRoleRepository, RoleRank } from './command/role-rank.js';
 import { Ping, PingCommand } from './command/ping.js';
+import { RoleCreate, RoleCreateManager } from './command/role-create.js';
 import { RoleInfo, RoleStatsRepository } from './command/role-info.js';
 import { Sheriff, SheriffCommand } from './command/stfu.js';
 import { TypoReporter, TypoRepository } from './command/typo-record.js';
@@ -44,7 +45,8 @@ export const registerAllCommandResponder = ({
   membersRepo,
   roleRepo,
   userRepo,
-  guildRepo
+  guildRepo,
+  roleCreateRepo
 }: {
   typoRepo: TypoRepository;
   reservationRepo: ReservationRepository;
@@ -63,6 +65,7 @@ export const registerAllCommandResponder = ({
   roleRepo: RoleStatsRepository;
   userRepo: UserStatsRepository;
   guildRepo: GuildStatsRepository;
+  roleCreateRepo: RoleCreateManager;
 }) => {
   const allResponders = [
     new TypoReporter(typoRepo, clock, scheduleRunner),
@@ -85,7 +88,8 @@ export const registerAllCommandResponder = ({
     new RoleRank(membersRepo),
     new RoleInfo(roleRepo),
     new UserInfo(userRepo),
-    new GuildInfo(guildRepo)
+    new GuildInfo(guildRepo),
+    new RoleCreate(roleCreateRepo)
   ];
   for (const responder of allResponders) {
     commandRunner.addResponder(responder);

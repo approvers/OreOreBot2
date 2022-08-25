@@ -4,10 +4,13 @@ import type {
   RoleStatsRepository
 } from '../../service/command/role-info.js';
 import type { Client } from 'discord.js';
+import type { RoleCreateManager } from '../../service/command/role-create.js';
 import type { RoleManager } from '../../service/kawaemon-has-all-roles.js';
 import type { Snowflake } from '../../model/id.js';
 
-export class DiscordRoleManager implements RoleManager, RoleStatsRepository {
+export class DiscordRoleManager
+  implements RoleManager, RoleCreateManager, RoleStatsRepository
+{
   constructor(
     private readonly client: Client,
     private readonly guildId: Snowflake
@@ -32,6 +35,24 @@ export class DiscordRoleManager implements RoleManager, RoleStatsRepository {
     }
     const member = await guild.members.fetch(targetMember);
     await member.roles.remove(removingRoleId);
+  }
+
+  async createRole(
+    roleName: string,
+    roleColor: string,
+    createSenderName: string
+  ): Promise<void> {
+    const guild = await this.client.guilds.fetch(this.guildId);
+    if (!guild.available) {
+      throw new Error('guild unavailable');
+    }
+
+    const { roles } = guild;
+    await roles.create({
+      name: roleName,
+      color: `#${roleColor}`,
+      reason: `"${createSenderName}" に頼まれたよ`
+    });
   }
 
   async fetchStats(roleId: string): Promise<RoleStats | null> {

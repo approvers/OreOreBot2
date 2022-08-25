@@ -163,7 +163,8 @@ if (features.includes('COMMAND')) {
     membersRepo: stats,
     roleRepo: roleManager,
     userRepo: stats,
-    guildRepo: stats
+    guildRepo: stats,
+    roleCreateRepo: roleManager
   });
 }
 
