@@ -48,7 +48,7 @@ import { DiscordSheriff } from '../adaptor/discord/sheriff.js';
 import { DiscordWS } from '../adaptor/discord/ws.js';
 import { GenVersionFetcher } from '../adaptor/version/fetch.js';
 import type { KaereMusicKey } from '../service/command/kaere.js';
-import { Snowflake } from '../model/id.js';
+import type { Snowflake } from '../model/id.js';
 import dotenv from 'dotenv';
 import { extractEnv } from './extract-env.js';
 import { generateDependencyReport } from '@discordjs/voice';
