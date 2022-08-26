@@ -1,7 +1,8 @@
 import { KawaemonHasAllRoles, RoleManager } from './kawaemon-has-all-roles.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import type { Snowflake } from '../model/id.js';
-import { StandardOutput } from './output.js';
+import type { StandardOutput } from './output.js';
 
 const KAWAEMON_ID = '391857452360007680' as Snowflake;
 

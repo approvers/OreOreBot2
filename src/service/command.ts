@@ -3,8 +3,11 @@ import {
   PartyCommand,
   RandomGenerator as PartyRng
 } from './command/party.js';
-import { Clock, ScheduleRunner } from '../runner/schedule.js';
-import { CommandMessage, CommandResponder } from './command/command-message.js';
+import type { Clock, ScheduleRunner } from '../runner/schedule.js';
+import type {
+  CommandMessage,
+  CommandResponder
+} from './command/command-message.js';
 import { DebugCommand, MessageRepository } from './command/debug.js';
 import { GetVersionCommand, VersionFetcher } from './command/version.js';
 import { GuildInfo, GuildStatsRepository } from './command/guild-info.js';
@@ -23,10 +26,11 @@ import { RoleInfo, RoleStatsRepository } from './command/role-info.js';
 import { Sheriff, SheriffCommand } from './command/stfu.js';
 import { TypoReporter, TypoRepository } from './command/typo-record.js';
 import { UserInfo, UserStatsRepository } from './command/user-info.js';
+
 import { HelpCommand } from './command/help.js';
 import { Meme } from './command/meme.js';
-import { MessageResponseRunner } from '../runner/message.js';
-import { VoiceConnectionFactory } from './voice-connection.js';
+import type { MessageResponseRunner } from '../runner/message.js';
+import type { VoiceConnectionFactory } from './voice-connection.js';
 
 export const registerAllCommandResponder = ({
   typoRepo,

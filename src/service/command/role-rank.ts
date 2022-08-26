@@ -3,7 +3,8 @@ import type {
   CommandResponder,
   HelpInfo
 } from './command-message.js';
-import { MessageEvent } from '../../runner/message.js';
+
+import type { MessageEvent } from '../../runner/message.js';
 
 export interface MemberWithRole {
   displayName: string;
