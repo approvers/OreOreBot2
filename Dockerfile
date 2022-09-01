@@ -1,3 +1,5 @@
+FROM mwader/static-ffmpeg:5.1 as ff
+
 FROM node:18-slim as build
 SHELL ["/bin/bash", "-c"]
 WORKDIR /src
@@ -21,10 +23,7 @@ RUN cp -r /src/{build,assets,package.json,yarn.lock} . && \
 
 FROM gcr.io/distroless/nodejs:18
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends ffmpeg=7:4.3.4-0+deb11u1 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+COPY --from=ff /ffmpeg /usr/local/bin/
 
 LABEL org.opencontainers.image.source=https://github.com/approvers/OreOreBot2
 ENV NODE_ENV=production
