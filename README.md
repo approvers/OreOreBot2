@@ -49,19 +49,18 @@ OreOreBot2 の [Discussions](https://github.com/approvers/OreOreBot2/discussions
 
 - [Discussion の使い方](https://github.com/approvers/OreOreBot2/discussions/147)
 
-## 環境構築
+## 使用方法
 
-```shell
-git clone https://github.com/approvers/OreOreBot2.git
-yarn build
-yarn start
-```
+### 事前要件
 
-`yarn start` での起動時に下記の環境変数を指定してください。`.env` でも指定できます。
+以下のものをインストールしていることを想定しています。
 
-`yarn dev` を使用することでコンパイルせずに起動することもできます。
+- git
+- ffmpeg
+- node.js
+- yarn
 
-## 環境変数
+### 環境変数
 
 すべて必須です。指定しなければ起動に失敗します。
 
@@ -72,3 +71,15 @@ yarn start
 | `GUILD_ID`        | 限界開発鯖の ID                                                                                                                                                           |
 | `PREFIX`          | コマンドの接頭辞、デフォルト値は `"!"`                                                                                                                                    |
 | `FEATURE`         | 有効にする機能のカンマ区切り文字列、デフォルト値は全ての機能。`"MESSAGE_CREATE"`, `"MESSAGE_UPDATE"`, `"COMMAND"`, `"VOICE_ROOM"`, `"ROLE"`, `"EMOJI"` を組み合わせ可能。 |
+
+### インストールと実行
+
+```shell
+git clone https://github.com/approvers/OreOreBot2.git
+yarn build
+yarn start
+```
+
+`yarn start` での起動時に上記の環境変数を指定してください。`.env` でも指定できます。
+
+`yarn dev` を使用することでコンパイルせずに起動することもできます。

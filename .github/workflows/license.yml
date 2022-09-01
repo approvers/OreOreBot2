@@ -1,0 +1,15 @@
+name: run license-checker
+
+on:
+  pull_request:
+
+jobs:
+  run_license_checker:
+    name: license-checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install packages
+        run: yarn install
+      - name: license-checker
+        run: npx @guidesmiths/license-checker --failOn /GPL/ --disableReport
