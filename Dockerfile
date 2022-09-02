@@ -1,4 +1,4 @@
-FROM mwader/static-ffmpeg:5.1 as ff
+FROM mwader/static-ffmpeg:5.1 as ffmpeg
 
 FROM node:18-slim as build
 SHELL ["/bin/bash", "-c"]
@@ -23,7 +23,7 @@ RUN cp -r /src/{build,assets,package.json,yarn.lock} . && \
 
 FROM gcr.io/distroless/nodejs:18
 
-COPY --from=ff /ffmpeg /usr/local/bin/
+COPY --from=ffmpeg /ffmpeg /usr/local/bin/
 
 LABEL org.opencontainers.image.source=https://github.com/approvers/OreOreBot2
 ENV NODE_ENV=production
