@@ -6,8 +6,8 @@ on:
       - ./Dockerfile
 
 jobs:
-  run_test:
-    name: test
+  lint:
+    name: Dockerfile lint
     runs-on: ubuntu-latest
     steps:
       - run: |
