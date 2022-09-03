@@ -1,0 +1,15 @@
+name: dockerfile lint (else)
+
+on:
+  pull_request:
+    paths:
+      - ./Dockerfile
+
+jobs:
+  run_test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "No lint(dockerfile) required"
+
