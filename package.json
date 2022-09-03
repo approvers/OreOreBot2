@@ -8,7 +8,7 @@
   "author": "merunno <merunno92@gmail.com>",
   "scripts": {
     "start": "node ./build/index.js",
-    "predebug": "yarn gen-version",
+    "predev": "yarn gen-version",
     "dev": "ts-node --esm ./src/server/index.ts",
     "gen-version": "make-dir build && git describe --tags --abbrev=0 > build/version.txt",
     "prebuild": "yarn gen-version",
