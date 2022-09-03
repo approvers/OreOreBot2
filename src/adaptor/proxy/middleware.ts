@@ -3,6 +3,7 @@ import {
   observableMiddleware,
   prefixMiddleware
 } from './middleware/message-convert.js';
+
 import { botFilter } from './middleware/bot-filter.js';
 
 export type RawMessage = Message | PartialMessage;
@@ -32,6 +33,16 @@ const liftTuple =
   ([t1, t2]) =>
     Promise.all([m(t1), m(t2)]);
 
+const sameMessageFilter: Middleware<
+  [RawMessage, RawMessage],
+  [RawMessage, RawMessage]
+> = ([before, after]) => {
+  if (before.id === after.id) {
+    return Promise.resolve([before, after]);
+  }
+  return Promise.reject(new Error('author of edited messages was differ'));
+};
+
 export const middlewareForMessage = () =>
   connectMiddleware(botFilter, observableMiddleware);
 
@@ -39,4 +50,4 @@ export const middlewareForCommand = (prefix: string) =>
   connectMiddleware(botFilter, prefixMiddleware(prefix));
 
 export const middlewareForUpdateMessage = () =>
-  liftTuple(middlewareForMessage());
+  connectMiddleware(sameMessageFilter, liftTuple(middlewareForMessage()));
