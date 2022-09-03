@@ -13,8 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: lint
-        uses: hadolint/hadolint-action@v2.1.0
+      - uses: hadolint/hadolint-action@v2.1.0
+        id: run_hadolint
         with:
           dockerfile: ./Dockerfile
           no-color: false
@@ -26,7 +26,7 @@ jobs:
         with:
           script: |
             const hadolintOutput = `
-            #### Hadolint: \`${{ steps.lint.outcome }}\`
+            #### Hadolint: \`${{ steps.run_hadolint.outcome }}\`
             \`\`\`
             ${process.env.HADOLINT_RESULTS}
             \`\`\`
