@@ -1,4 +1,4 @@
-name: dockerfile lint (else)
+name: dockerfile lint
 
 on:
   pull_request:
