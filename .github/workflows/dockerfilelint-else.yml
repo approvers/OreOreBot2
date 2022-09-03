@@ -2,7 +2,7 @@ name: dockerfile lint (else)
 
 on:
   pull_request:
-    paths:
+    paths-ignore:
       - ./Dockerfile
 
 jobs:
