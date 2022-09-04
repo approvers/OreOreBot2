@@ -39,6 +39,60 @@ describe('Create a role', () => {
     );
   });
 
+  it('create a role(lower case)', async () => {
+    const newRoleName = 'かわえもんのおねえさん';
+    const newRoleColor = 'faac9b'; //黒
+    const createGuildRole = vi.spyOn(manager, 'createRole');
+    const fn = vi.fn();
+
+    await createRole.on(
+      'CREATE',
+      createMockMessage(
+        {
+          args: ['rolecreate', newRoleName, newRoleColor]
+        },
+        fn
+      )
+    );
+
+    expect(fn).toHaveBeenCalledWith({
+      title: 'ロール作成',
+      description: 'ロールを作成したよ'
+    });
+    expect(createGuildRole).toHaveBeenCalledWith(
+      newRoleName,
+      newRoleColor,
+      'Mikuroさいな'
+    );
+  });
+
+  it('create a role(big letter)', async () => {
+    const newRoleName = 'かわえもんのおねえさん';
+    const newRoleColor = 'FAAC9B'; //黒
+    const createGuildRole = vi.spyOn(manager, 'createRole');
+    const fn = vi.fn();
+
+    await createRole.on(
+      'CREATE',
+      createMockMessage(
+        {
+          args: ['rolecreate', newRoleName, newRoleColor]
+        },
+        fn
+      )
+    );
+
+    expect(fn).toHaveBeenCalledWith({
+      title: 'ロール作成',
+      description: 'ロールを作成したよ'
+    });
+    expect(createGuildRole).toHaveBeenCalledWith(
+      newRoleName,
+      newRoleColor,
+      'Mikuroさいな'
+    );
+  });
+
   it('Missing argument(rolename)', async () => {
     const createGuildRole = vi.spyOn(manager, 'createRole');
     const fn = vi.fn();
