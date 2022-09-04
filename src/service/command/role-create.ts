@@ -26,7 +26,7 @@ export class RoleCreate implements CommandResponder {
       {
         name: 'ロールの色',
         description:
-          '作成するロールの色を[HEX](https://htmlcolorcodes.com/)で指定してね\n`#`はなしで指定してね'
+          '作成するロールの色を[HEX](https://htmlcolorcodes.com/)で指定してね'
       }
     ]
   };
@@ -58,7 +58,7 @@ export class RoleCreate implements CommandResponder {
       return;
     }
 
-    if (!roleColor.match(/^#?[0-9a-f]{6}$/m)) {
+    if (!roleColor.match(/^#?[0-9a-fA-F]{6}$/m)) {
       await message.reply({
         title: 'コマンド形式エラー',
         description:
