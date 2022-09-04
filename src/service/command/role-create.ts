@@ -26,7 +26,7 @@ export class RoleCreate implements CommandResponder {
       {
         name: 'ロールの色',
         description:
-          '作成するロールの色を[HEX](https://htmlcolorcodes.com/)で指定してね\n`#`はなしで指定してね'
+          '作成するロールの色を[HEX](https://htmlcolorcodes.com/)で指定してね'
       }
     ]
   };
