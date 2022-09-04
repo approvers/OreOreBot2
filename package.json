@@ -5,7 +5,7 @@
   "type": "module",
   "license": "MIT",
   "repository": "https://github.com/approvers/OreOreBot2",
-  "author": "merunno <merunno92@gmail.com>",
+  "author": "approvers <info@approvers.dev>",
   "scripts": {
     "start": "node ./build/index.js",
     "predev": "yarn gen-version",
