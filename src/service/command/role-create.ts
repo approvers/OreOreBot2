@@ -58,7 +58,7 @@ export class RoleCreate implements CommandResponder {
       return;
     }
 
-    if (!roleColor.match(/^#?[0-9a-f]{6}$/m)) {
+    if (!roleColor.match(/^#?[0-9a-fA-F]{6}$/m)) {
       await message.reply({
         title: 'コマンド形式エラー',
         description:
