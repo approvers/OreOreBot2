@@ -1,4 +1,4 @@
-FROM mwader/static-ffmpeg:5.1 as ffmpeg
+FROM mwader/static-ffmpeg:5.1.1 as ffmpeg
 
 FROM node:18-slim as build
 SHELL ["/bin/bash", "-c"]
