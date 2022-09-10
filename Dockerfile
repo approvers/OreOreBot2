@@ -1,6 +1,7 @@
 FROM mwader/static-ffmpeg:5.1.1 as ffmpeg
 
 FROM node:18-slim as build
+ARG GIT_TAG
 SHELL ["/bin/bash", "-c"]
 WORKDIR /src
 
@@ -14,11 +15,12 @@ RUN apt-get update \
 COPY package.json yarn.lock ./
 RUN yarn
 COPY . .
-RUN yarn build
+RUN yarn build \
+    && echo $GIT_TAG > ./build/version.txt
 
 WORKDIR /build
-RUN cp -r /src/{build,assets,package.json,yarn.lock} . && \
-    yarn install --production=true
+RUN cp -r /src/{build,assets,package.json,yarn.lock} . \
+    && yarn install --production=true
 
 
 FROM gcr.io/distroless/nodejs:18
