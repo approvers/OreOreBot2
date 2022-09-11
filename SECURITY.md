@@ -17,7 +17,5 @@
 
 ## Reporting a Vulnerability
 
-<!-- me@m2en.dev の所有者は @m2en(https://github.com/m2en) です。-->
-
 OreOreBot2 自身の脆弱性を発見した際は [me@m2en.dev](mailto:me@m2en.dev) までご連絡ください。
 当リポジトリの Issue や、Twitter の公開スレッドなど、外部から見えてしまう場所での報告はご遠慮ください。
