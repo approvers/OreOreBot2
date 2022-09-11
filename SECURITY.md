@@ -14,10 +14,8 @@
 
 ## Reporting a Vulnerability
 
-OreOreBot2 自身の脆弱性を発見した際は [me@m2en.dev](mailto:me@m2en.dev) までご連絡ください。
+OreOreBot2 自身の脆弱性を発見した際は [me@m2en.dev](mailto:me@m2en.dev) まで GPG 鍵で暗号化を行ってからご連絡ください。
 当リポジトリの Issue や、Twitter の公開スレッドなど、外部から見えてしまう場所での報告はご遠慮ください。
-
-[me@m2en.dev](mailto:me@m2en.dev) に報告する際は GPG 鍵で暗号化を行ってから報告を行ってください。
 
 暗号化を行う際の GPG 鍵は以下の通りです。
 
