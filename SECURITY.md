@@ -4,10 +4,6 @@
 
 ここでは OreOreBot2 のセキュリティポリシーについて説明します。
 
-- [Security Policy](#security-policy)
-  - [Supported Versions](#supported-versions)
-  - [Reporting a Vulnerability](#reporting-a-vulnerability)
-
 ## Supported Versions
 
 以下のテーブルは、OreOreBot2 のサポートバージョンを示しています。
