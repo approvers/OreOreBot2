@@ -1,7 +1,5 @@
 # Security Policy
 
-**last updated**: `2022/09/11`
-
 ここでは OreOreBot2 のセキュリティポリシーについて説明します。
 
 ## Supported Versions
