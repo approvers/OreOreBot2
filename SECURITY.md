@@ -11,9 +11,9 @@
 
 以下のテーブルは、OreOreBot2 のサポートバージョンを示しています。
 
-| Version                   | Supported | Support Start Date                                                        | Support End Date |
-| ------------------------- | --------- | ------------------------------------------------------------------------- | ---------------- |
-| バージョン 1 ( `v1.x.x` ) | ✅        | [2022/02/27](https://github.com/approvers/OreOreBot2/releases/tag/v1.0.0) | 未定             |
+| Version  | Supported | Support Start Date                                                        | Support End Date |
+| -------- | --------- | ------------------------------------------------------------------------- | ---------------- |
+| `v1.x.y` | ✅        | [2022/02/27](https://github.com/approvers/OreOreBot2/releases/tag/v1.0.0) | 未定             |
 
 ## Reporting a Vulnerability
 
