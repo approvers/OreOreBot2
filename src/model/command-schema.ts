@@ -6,6 +6,7 @@
  */
 export interface BooleanParam {
   type: 'BOOLEAN';
+  name: string;
   defaultValue?: boolean;
 }
 
@@ -19,6 +20,7 @@ export interface BooleanParam {
  */
 export interface StringParam {
   type: 'STRING';
+  name: string;
   defaultValue?: string;
   minLength?: number;
   maxLength?: number;
@@ -32,6 +34,7 @@ export interface StringParam {
  */
 export interface SnowflakeParam {
   type: 'USER' | 'CHANNEL' | 'ROLE';
+  name: string;
   defaultValue?: string;
 }
 
@@ -47,13 +50,14 @@ export interface SnowflakeParam {
  */
 export interface NumberParam {
   type: 'INTEGER' | 'FLOAT';
+  name: string;
   defaultValue?: number;
   minValue?: number;
   maxValue?: number;
 }
 
 /**
- * 選択式の引数のスキーマ。`defaultValueIndex` が未定義ならば必須の引数になる。パース結果は、対応する `choices` 内の文字列のインデックスである。
+ * 選択式の引数のスキーマ。`defaultValue` が未定義ならば必須の引数になる。パース結果は、対応する `choices` 内の文字列のインデックスである。
  *
  * `choices` の中に存在しない文字列ならばパースに失敗する。
  *
@@ -62,7 +66,8 @@ export interface NumberParam {
  */
 export interface ChoicesParam {
   type: 'CHOICES';
-  defaultValueIndex?: number;
+  name: string;
+  defaultValue?: number;
   choices: readonly string[];
 }
 
@@ -86,47 +91,70 @@ export type ParamValue<P extends Param> = P extends BooleanParam
   ? number
   : string;
 
-export type ParamValueByKey<P> = {
-  [K in keyof P]: P[K] extends Param ? ParamValue<P[K]> : Record<string, never>;
-};
+export type ParamsValues<S extends readonly Param[]> = S extends [
+  infer H,
+  ...infer R
+]
+  ? H extends Param
+    ? R extends readonly Param[]
+      ? [ParamValue<H>, ...ParamsValues<R>]
+      : []
+    : []
+  : [];
 
 /**
  * コマンドの中で分岐する細かいサブコマンド。
  *
- * `paramsOrder` は引数の順序を引数名の配列で指定する。必須の引数は他のどの任意の引数よりも前に登場しなければならない。
+ * `params` は引数を受け取る順番で並べたスキーマの配列で指定する。必須の引数は他のどの任意の引数よりも前に登場しなければならない。
  *
  * @export
  * @interface SubCommand
  */
 export interface SubCommand {
   type: 'SUB_COMMAND';
-  params: Readonly<Record<string, Param>>;
-  paramsOrder: readonly string[];
+  params: readonly Param[];
 }
 
+export const isValidSubCommand = (sc: SubCommand): boolean => {
+  const lastRequiredParam = sc.params.reduce(
+    (prev, curr, idx) => ('defaultValue' in curr ? prev : idx),
+    0
+  );
+  const firstOptionalParam = sc.params.reduceRight(
+    (prev, curr, idx) => ('defaultValue' in curr ? idx : prev),
+    sc.params.length
+  );
+  return lastRequiredParam < firstOptionalParam;
+};
+
+export const assertValidSubCommand = (sc: SubCommand): void => {
+  if (!isValidSubCommand(sc)) {
+    console.dir(sc);
+    throw new Error('assertion failure');
+  }
+};
+
 /**
- * サブコマンドが属するグループ。これ単体ではコマンドとして実行できないが、グループ全体で共通する引数を定義できる。
+ * サブコマンドが属するグループ。これ単体ではコマンドとして実行できない。
  *
  * @export
  * @interface SubCommandGroup
  */
 export interface SubCommandGroup {
   type: 'SUB_COMMAND_GROUP';
-  params: Readonly<Record<string, Param>>;
   subCommands: Readonly<Record<string, SubCommand | SubCommandGroup>>;
 }
 
 /**
  * コマンドの引数のスキーマ。
  *
- * `names` はこのコマンド実行に利用可能な全てのコマンド名、`params` はコマンド全体で共通の引数、`subCommands` はこの配下にあるサブコマンドである。
+ * `names` はこのコマンド実行に利用可能な全てのコマンド名、`subCommands` はこの配下にあるサブコマンドである。
  *
  * @export
  * @interface Schema
  */
 export interface Schema {
   names: readonly string[];
-  params: Readonly<Record<string, Param>>;
   subCommands: Readonly<Record<string, SubCommand | SubCommandGroup>>;
 }
 
@@ -137,29 +165,57 @@ export interface Schema {
  * @typedef ParsedSchema
  * @template S コマンドスキーマの型
  */
-export type ParsedSchema<S> = S extends Record<
-  string,
-  SubCommand | SubCommandGroup
->
-  ? {
-      [K in keyof S]: {
-        key: K;
-        value: Params<S[K]>;
-      };
-    }[keyof S]
-  : S extends Schema
-  ? {
-      name: Names<S>[number];
-      params: Params<S>;
-      subCommand: ParsedSchema<SubCommands<S>>;
-    }
-  : never;
+export type ParsedSchema<S extends Schema> = {
+  name: Names<S>[number];
+  subCommand?: ParsedSubCommand<S>;
+};
 
-type Names<S extends Schema> = S['names'];
-type Params<S extends Schema | SubCommand | SubCommandGroup> = S['params'] &
-  (S extends infer T
-    ? T extends SubCommandGroup
-      ? ParsedSchema<SubCommands<T>>
-      : Record<string, never>
-    : Record<string, never>);
-type SubCommands<S extends Schema | SubCommandGroup> = S['subCommands'];
+/**
+ * コマンドのスキーマ `S` の引数のみに対応するパース結果の型を返す。
+ *
+ * @export
+ * @typedef ParsedParameter
+ * @template S コマンドスキーマの型
+ */
+export type ParsedParameter<S extends SubCommand | SubCommandGroup> =
+  S extends SubCommand
+    ? {
+        params: ParamsValues<S['params']>;
+      }
+    : S extends SubCommandGroup
+    ? {
+        subCommand: ParsedSubCommand<S>;
+      }
+    : never;
+
+/**
+ * コマンドのスキーマ `S` のサブコマンドのみに対応するパース結果の型を返す。
+ *
+ * @export
+ * @typedef ParsedParameter
+ * @template S コマンドスキーマの型
+ */
+export type ParsedSubCommand<S extends Schema | SubCommandGroup> = {
+  [K in keyof SubCommands<S>]: ParsedParameter<SubCommands<S>[K]>;
+}[keyof SubCommands<S>];
+
+export type Names<S extends Schema> = S['names'];
+export type SubCommands<S extends Schema | SubCommandGroup> = S['subCommands'];
+
+/**
+ * パース結果のエラーを表す型。
+ *
+ * @export
+ * @typedef ParseError
+ */
+export type ParseError =
+  | [type: 'INVALID_DATA', expected: ParamType, but: string]
+  | [
+      type: 'OUT_OF_RANGE',
+      min: number | undefined,
+      max: number | undefined,
+      but: number
+    ]
+  | [type: 'UNKNOWN_CHOICE', choices: readonly string[], but: string]
+  | [type: 'UNKNOWN_COMMAND', subCommands: readonly string[], but: string]
+  | [type: 'OTHERS', message: string];
