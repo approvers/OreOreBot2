@@ -15,7 +15,7 @@
 OreOreBot2 自身の脆弱性を発見した際は **[me@m2en.dev](mailto:me@m2en.dev) 宛に下記 PGP 鍵で暗号化を施して** ご連絡ください。
 当リポジトリの Issue や、Twitter の公開スレッドなど、外部から見えてしまう場所での報告はご遠慮ください。
 
-暗号化を行う際の GPG 鍵は以下の通りです。
+暗号化を行う際の PGP 鍵は以下の通りです。
 
 [pgp_keys.asc](https://keybase.io/merunno/pgp_keys.asc?fingerprint=6e23c654c587e55dfafa8d4715db72f06f2acc5c)
 
