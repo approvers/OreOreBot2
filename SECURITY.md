@@ -17,6 +17,8 @@ OreOreBot2 自身の脆弱性を発見した際は **[me@m2en.dev](mailto:me@m2e
 
 暗号化を行う際の PGP 鍵は以下の通りです。
 
+鍵指紋: `6E23 C654 C587 E55D FAFA 8D47 15DB 72F0 6F2A CC5C`
+
 [pgp_keys.asc](https://keybase.io/merunno/pgp_keys.asc?fingerprint=6e23c654c587e55dfafa8d4715db72f06f2acc5c)
 
 また、これらの脆弱性をより早く解決するために、以下の情報をできる限り多く提供してください。
