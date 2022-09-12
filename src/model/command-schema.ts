@@ -93,12 +93,15 @@ export type ParamValueByKey<P> = {
 /**
  * コマンドの中で分岐する細かいサブコマンド。
  *
+ * `paramsOrder` は引数の順序を引数名の配列で指定する。必須の引数は他のどの任意の引数よりも前に登場しなければならない。
+ *
  * @export
  * @interface SubCommand
  */
 export interface SubCommand {
   type: 'SUB_COMMAND';
   params: Readonly<Record<string, Param>>;
+  paramsOrder: readonly string[];
 }
 
 /**
