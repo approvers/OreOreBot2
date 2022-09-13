@@ -97,7 +97,7 @@ export type ParamsValues<S> = S extends [infer H, ...infer R]
       ? [ParamValue<H>, ...ParamsValues<R>]
       : []
     : []
-  : readonly Param[];
+  : [];
 
 /**
  * コマンドの中で分岐する細かいサブコマンド。
@@ -175,7 +175,7 @@ export interface Schema<S = Record<string, unknown>, P = readonly Param[]> {
 export type ParsedSchema<S extends Schema> = {
   name: S['names'][number];
   subCommand: ParsedSubCommand<S['subCommands']>;
-  params: ParsedParameter<S['params']>;
+  params: ParamsValues<S['params']>;
 };
 
 /**
