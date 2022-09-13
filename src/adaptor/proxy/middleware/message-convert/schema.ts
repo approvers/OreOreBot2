@@ -62,6 +62,7 @@ const parseParams = <P extends readonly Param[]>(
       case 'USER':
       case 'CHANNEL':
       case 'ROLE':
+      case 'MESSAGE':
         if (!DIGITS.test(arg)) {
           return ['Err', ['INVALID_DATA', param.type, arg]];
         }

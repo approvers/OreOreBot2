@@ -33,7 +33,7 @@ export interface StringParam {
  * @interface SnowflakeParam
  */
 export interface SnowflakeParam {
-  type: 'USER' | 'CHANNEL' | 'ROLE';
+  type: 'USER' | 'CHANNEL' | 'ROLE' | 'MESSAGE';
   name: string;
   defaultValue?: string;
 }
