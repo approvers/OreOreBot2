@@ -4,24 +4,33 @@ import type {
   HelpInfo
 } from './command-message.js';
 
-import type { MessageEvent } from '../../runner/index.js';
-
 /**
- * 'QueenCommand' のための乱数生成器。
- *
- * @export
- * @interface RandomGenerator
+ * ダイスの管理者。面白いものの味方。
+ * 今後詳細値がほしい場合があるかも知れないので、各ダイスについてどんな出目が出たかを判断する。
  */
-export interface RandomGenerator {
+export interface DiceQueen {
   /**
    *
-   * @param {number} from
-   * @param {number} to
-   * @return {number}
-   * @memberOf RandomGenerator
+   * @param {number} faces
+   * @param {number} HowManyRoll
+   * @return {Array<number>}
    */
-  uniform(from: number, to: number): number;
+  roll(faces: number, HowManyRoll: number): Array<number>;
 }
+
+const SCHEMA = {
+  names: ['d', 'dice'],
+  subCommands: {},
+  params: [
+    {
+      type: 'STRING',
+      name: 'ダイスロール設定',
+      description:
+        'どのダイスを何個振るかの指定。6面ダイス2個であれば ‘!dice 2d6`のように入力してね',
+      defaultValue: '1d100'
+    }
+  ]
+} as const;
 
 /**
  * 'dice' コマンドで
@@ -30,43 +39,36 @@ export interface RandomGenerator {
  * @class DiceCommand
  * @implements {MessageEventResponder<CommandMessage>}
  */
-export class DiceCommand implements CommandResponder {
+export class DiceCommand implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
-    title: 'ダイスの女王様だ',
-    description: 'あなたの代わりにダイスを振るよ',
-    commandName: ['d', 'dice'],
-    argsFormat: [
-      {
-        name: 'ダイス設定',
-        description:
-          '{ダイスの最大出目}d{ダイスを振る個数}の形式 6面ダイス3個なら 6d3 みたいに',
-        defaultValue: '1d100'
-      }
-    ]
+    title: 'ダイスロール',
+    description: '賽子が振れるみたいだよ'
   };
+  readonly schema = SCHEMA;
 
-  constructor(private readonly rng: RandomGenerator) {}
+  constructor(private readonly diceQueen: DiceQueen) {}
 
-  async on(event: MessageEvent, message: CommandMessage): Promise<void> {
-    if (event !== 'CREATE') {
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
+    const [arg] = message.args.params;
+
+    if (arg.match(/^(?!a-c,e-z)*$/)) {
+      await message.reply({
+        title: 'コマンド形式エラー',
+        description: '引数の形は`<num>d<num>`をとる必要があるよ。'
+      });
       return;
     }
+    const [diceFaces, diceNum] = arg.toLowerCase().split('d', 2);
 
-    const [commandName, diceString = '1d6'] = message.args;
-    const diceMessage = diceString;
-    if (!['d', 'dice'].includes(commandName)) {
-      return;
-    }
+    const diceResult = this.diceQueen.roll(
+      parseInt(diceFaces),
+      parseInt(diceNum)
+    );
+    const diceSum = diceResult.reduce((a, x) => a + x);
 
-    const [diceSize, diceQuan] = diceString.split('d').map(Number);
-    let diceResult = 0;
-    for (let i = 1; i <= diceQuan; ++i) {
-      diceResult += this.rng.uniform(1, diceSize);
-    }
     await message.reply({
-      title: 'ダイスロール(' + diceMessage + ')',
-      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-      description: '(' + diceMessage + ') =>' + diceResult
+      title: '運命のダイスロール！',
+      description: `${arg} => ${diceSum}`
     });
   }
 }
