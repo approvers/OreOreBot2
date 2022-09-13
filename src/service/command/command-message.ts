@@ -1,4 +1,6 @@
 import type { EmbedMessage, EmbedPage } from '../../model/embed-message.js';
+import type { ParsedSchema, Schema } from '../../model/command-schema.js';
+
 import type { MessageEventResponder } from '../../runner/index.js';
 import type { Snowflake } from '../../model/id.js';
 
@@ -7,8 +9,9 @@ import type { Snowflake } from '../../model/id.js';
  *
  * @export
  * @interface CommandMessage
+ * @template S スキーマの型
  */
-export interface CommandMessage {
+export interface CommandMessage<S extends Schema<Record<string, never>>> {
   /**
    * コマンドの送信者の ID。
    *
@@ -50,12 +53,12 @@ export interface CommandMessage {
   senderName: string;
 
   /**
-   * コマンドの引数リスト。
+   * パースされたコマンドの引数。
    *
-   * @type {readonly string[]}
+   * @type {Readonly<ParsedSchema<S>>}
    * @memberof CommandMessage
    */
-  args: readonly string[];
+  args: Readonly<ParsedSchema<S>>;
 
   /**
    * このメッセージに `message` の内容で返信する。
@@ -100,20 +103,23 @@ export interface HelpInfo {
   }[];
 }
 
-export type CommandResponder = MessageEventResponder<CommandMessage> & {
-  help: Readonly<HelpInfo>;
-};
+export type CommandResponder<S extends Schema<Record<string, never>>> =
+  MessageEventResponder<S> & {
+    help: Readonly<HelpInfo>;
+    schema: Readonly<S>;
+  };
 
-export const createMockMessage = (
-  partial: Readonly<Partial<CommandMessage>>,
+export const createMockMessage = <S extends Schema<Record<string, never>>>(
+  args: Readonly<ParsedSchema<S>>,
+  partial: Readonly<Partial<CommandMessage<S>>>,
   reply?: (message: EmbedMessage) => Promise<SentMessage | void>
-): CommandMessage => ({
+): CommandMessage<S> => ({
   senderId: '279614913129742338' as Snowflake,
   senderGuildId: '683939861539192860' as Snowflake,
   senderChannelId: '711127633810817026' as Snowflake,
   senderVoiceChannelId: '683939861539192865' as Snowflake,
   senderName: 'Mikuroさいな',
-  args: [],
+  args,
   reply: reply
     ? async (mes) =>
         (await reply(mes)) || {
