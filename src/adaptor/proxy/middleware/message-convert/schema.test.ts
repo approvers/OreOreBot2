@@ -7,6 +7,9 @@ const TIME_OPTION = [{ name: 'at', type: 'STRING' }] as const;
 const SCHEMA = {
   names: ['kaere'],
   subCommands: {
+    start: {
+      type: 'SUB_COMMAND'
+    },
     bed: {
       type: 'SUB_COMMAND_GROUP',
       subCommands: {
@@ -40,21 +43,43 @@ const SCHEMA = {
   }
 } as const;
 
-test('simple', () => {
-  const expected = {
-    name: 'kaere',
-    subCommand: {
-      name: 'reserve',
-      type: 'SUB_COMMAND',
+test('single arg', () => {
+  const noParamRes = parseStrings(['kaere'], SCHEMA);
+
+  expect(noParamRes).toStrictEqual(['Err', ['NEED_MORE_ARGS']]);
+
+  const oneParamRes = parseStrings(['kaere', 'start'], SCHEMA);
+
+  expect(oneParamRes).toStrictEqual([
+    'Ok',
+    {
+      name: 'kaere',
       subCommand: {
-        name: 'add',
+        name: 'start',
         type: 'PARAMS',
-        params: ['01:12']
+        params: []
       }
     }
-  };
+  ]);
 
-  const res = parseStrings(['kaere', 'reserve', 'add', '01:12'], SCHEMA);
+  const subCommandRes = parseStrings(
+    ['kaere', 'reserve', 'add', '01:12'],
+    SCHEMA
+  );
 
-  expect(res[1]).toStrictEqual(expected);
+  expect(subCommandRes).toStrictEqual([
+    'Ok',
+    {
+      name: 'kaere',
+      subCommand: {
+        name: 'reserve',
+        type: 'SUB_COMMAND',
+        subCommand: {
+          name: 'add',
+          type: 'PARAMS',
+          params: ['01:12']
+        }
+      }
+    }
+  ]);
 });
