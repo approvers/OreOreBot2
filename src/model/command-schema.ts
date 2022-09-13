@@ -175,11 +175,11 @@ export interface Schema<S = Record<string, unknown>, P = readonly Param[]> {
 export type ParsedSchema<S extends Schema> =
   | {
       name: S['names'][number];
-      subCommand?: ParsedSubCommand<S['subCommands']>;
+      subCommand: ParsedSubCommand<S['subCommands']>;
     }
   | {
       name: S['names'][number];
-      params?: ParsedParameter<S['params']>;
+      params: ParsedParameter<S['params']>;
     };
 
 /**
