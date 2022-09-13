@@ -48,6 +48,15 @@ const parseParams = <P extends readonly Param[]>(
         return ['Err', ['INVALID_DATA', 'BOOLEAN', arg]];
       }
       case 'STRING':
+        if (
+          (param.minLength && arg.length < param.minLength) ||
+          (param.maxLength && param.maxLength < arg.length)
+        ) {
+          return [
+            'Err',
+            ['OUT_OF_RANGE', param.minLength, param.maxLength, arg]
+          ];
+        }
         values.push(arg);
         break;
       case 'USER':
@@ -58,16 +67,30 @@ const parseParams = <P extends readonly Param[]>(
         }
         values.push(arg);
         break;
-      case 'INTEGER':
+      case 'INTEGER': {
         if (!DIGITS.test(arg)) {
           return ['Err', ['INVALID_DATA', 'INTEGER', arg]];
         }
-        values.push(Number.parseInt(arg, 10));
+        const parsed = Number.parseInt(arg, 10);
+        if (
+          (param.minValue && parsed < param.minValue) ||
+          (param.maxValue && param.maxValue < parsed)
+        ) {
+          return ['Err', ['OUT_OF_RANGE', param.minValue, param.maxValue, arg]];
+        }
+        values.push(parsed);
         break;
+      }
       case 'FLOAT': {
         const parsed = Number.parseFloat(arg);
         if (Number.isNaN(parsed)) {
           return ['Err', ['INVALID_DATA', 'FLOAT', arg]];
+        }
+        if (
+          (param.minValue && parsed < param.minValue) ||
+          (param.maxValue && param.maxValue < parsed)
+        ) {
+          return ['Err', ['OUT_OF_RANGE', param.minValue, param.maxValue, arg]];
         }
         values.push(parsed);
         break;
