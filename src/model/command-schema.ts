@@ -95,7 +95,7 @@ export type ParamsValues<S> = S extends [infer H, ...infer R]
   ? H extends Param
     ? R extends readonly Param[]
       ? [ParamValue<H>, ...ParamsValues<R>]
-      : []
+      : [ParamValue<H>]
     : []
   : [];
 
