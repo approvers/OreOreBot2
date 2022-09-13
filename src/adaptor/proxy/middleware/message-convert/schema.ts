@@ -192,7 +192,8 @@ export const parseStrings = <
       'Ok',
       {
         name,
-        params: paramsRes[1]
+        params: paramsRes[1],
+        subCommand: {}
       } as ParsedSchema<S>
     ];
   }
@@ -202,8 +203,9 @@ export const parseStrings = <
       'Ok',
       {
         name,
+        params: [],
         subCommand: subCommandRes[1]
-      }
+      } as ParsedSchema<S>
     ];
   }
   return subCommandRes;

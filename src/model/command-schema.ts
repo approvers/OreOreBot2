@@ -172,15 +172,11 @@ export interface Schema<S = Record<string, unknown>, P = readonly Param[]> {
  * @typedef ParsedSchema
  * @template S コマンドスキーマの型
  */
-export type ParsedSchema<S extends Schema> =
-  | {
-      name: S['names'][number];
-      subCommand: ParsedSubCommand<S['subCommands']>;
-    }
-  | {
-      name: S['names'][number];
-      params: ParsedParameter<S['params']>;
-    };
+export type ParsedSchema<S extends Schema> = {
+  name: S['names'][number];
+  subCommand: ParsedSubCommand<S['subCommands']>;
+  params: ParsedParameter<S['params']>;
+};
 
 /**
  * コマンドのスキーマ `S` の引数のみに対応するパース結果の型を返す。
