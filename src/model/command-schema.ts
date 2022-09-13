@@ -249,3 +249,36 @@ export type ParseError =
   | [type: 'UNKNOWN_CHOICE', choices: readonly string[], but: unknown]
   | [type: 'UNKNOWN_COMMAND', subCommands: readonly string[], but: unknown]
   | [type: 'OTHERS', message: string];
+
+export const makeError = (error: ParseError): Error => {
+  let message: string;
+  switch (error[0]) {
+    case 'INVALID_DATA':
+      message = `${error[1]} 型の値を期待しましたが、${String(
+        error[2]
+      )} を受け取りました`;
+      break;
+    case 'NEED_MORE_ARGS':
+      message = `このコマンドの実行にはもっと引数が必要です`;
+      break;
+    case 'OUT_OF_RANGE':
+      message = `値 ${String(error[3])} が範囲 ${error[1] ?? '-∞'} ~ ${
+        error[2] ?? '∞'
+      } の外でした`;
+      break;
+    case 'UNKNOWN_CHOICE':
+      message = `${String(error[2])} が選択肢 ${error[1].join(
+        ', '
+      )} の中にありませんでした`;
+      break;
+    case 'UNKNOWN_COMMAND':
+      message = `コマンド ${String(
+        error[2]
+      )} は利用可能なコマンド ${error[1].join(', ')} の中に存在しませんでした`;
+      break;
+    case 'OTHERS':
+      message = '不明なエラーが発生しました';
+      break;
+  }
+  return new Error(message);
+};
