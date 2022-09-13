@@ -100,7 +100,7 @@ export type ParamsValues<S extends readonly Param[]> = S extends [
       ? [ParamValue<H>, ...ParamsValues<R>]
       : []
     : []
-  : [];
+  : readonly Param[];
 
 /**
  * コマンドの中で分岐する細かいサブコマンド。
@@ -162,9 +162,13 @@ export interface SubCommandGroup<S extends SubCommandEntries> {
  * @export
  * @interface Schema
  */
-export interface Schema<S extends SubCommandEntries> {
+export interface Schema<
+  S extends SubCommandEntries,
+  P extends readonly Param[] = readonly Param[]
+> {
   names: readonly string[];
   subCommands: Readonly<S>;
+  params?: P;
 }
 
 /**
@@ -174,10 +178,15 @@ export interface Schema<S extends SubCommandEntries> {
  * @typedef ParsedSchema
  * @template S コマンドスキーマの型
  */
-export type ParsedSchema<S extends Schema<Record<string, never>>> = {
-  name: S['names'][number];
-  subCommand?: ParsedSubCommand<S['subCommands']>;
-};
+export type ParsedSchema<S extends Schema<Record<string, never>>> =
+  | {
+      name: S['names'][number];
+      subCommand?: ParsedSubCommand<S['subCommands']>;
+    }
+  | {
+      name: S['names'][number];
+      params?: ParsedParameter<S['params']>;
+    };
 
 /**
  * コマンドのスキーマ `S` の引数のみに対応するパース結果の型を返す。
