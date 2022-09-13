@@ -11,7 +11,7 @@ import type { Snowflake } from '../../model/id.js';
  * @interface CommandMessage
  * @template S スキーマの型
  */
-export interface CommandMessage<S extends Schema<Record<string, never>>> {
+export interface CommandMessage<S extends Schema<Record<string, unknown>>> {
   /**
    * コマンドの送信者の ID。
    *
@@ -95,16 +95,10 @@ export interface SentMessage {
 export interface HelpInfo {
   title: string;
   description: string;
-  commandName: string[];
-  argsFormat: {
-    name: string;
-    description: string;
-    defaultValue?: string;
-  }[];
 }
 
-export type CommandResponder<S extends Schema<Record<string, never>>> =
-  MessageEventResponder<S> & {
+export type CommandResponder<S extends Schema<Record<string, unknown>>> =
+  MessageEventResponder<CommandMessage<S>> & {
     help: Readonly<HelpInfo>;
     schema: Readonly<S>;
   };
