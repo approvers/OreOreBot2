@@ -217,8 +217,7 @@ export type HasSubCommand =
 export type ParsedSubCommand<E> = {
   [K in keyof E]: {
     name: K;
-    parsed: ParsedParameter<E[K]>;
-  };
+  } & ParsedParameter<E[K]>;
 }[keyof E];
 
 export type SubCommands<S> = S extends Schema<infer C>

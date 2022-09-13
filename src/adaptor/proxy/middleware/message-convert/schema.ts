@@ -145,11 +145,9 @@ const parseSubCommand = <E>(
         'Ok',
         {
           name: subCommandKey,
-          parsed: {
-            type: 'SUB_COMMAND',
-            subCommand: subSubCommand[1]
-          }
-        } as ParsedSubCommand<E>
+          type: 'SUB_COMMAND',
+          subCommand: subSubCommand[1]
+        } as unknown as ParsedSubCommand<E>
       ];
     }
     const params = parseParams(args, subCommand);
@@ -160,10 +158,8 @@ const parseSubCommand = <E>(
       'Ok',
       {
         name: subCommandKey,
-        parsed: {
-          type: 'PARAMS',
-          params: params[1]
-        }
+        type: 'PARAMS',
+        params: params[1]
       } as ParsedSubCommand<E>
     ];
   }

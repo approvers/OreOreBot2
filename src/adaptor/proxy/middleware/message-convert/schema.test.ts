@@ -45,15 +45,11 @@ test('simple', () => {
     name: 'kaere',
     subCommand: {
       name: 'reserve',
-      parsed: {
-        type: 'SUB_COMMAND',
-        subCommand: {
-          name: 'add',
-          parsed: {
-            type: 'PARAMS',
-            params: ['01:12']
-          }
-        }
+      type: 'SUB_COMMAND',
+      subCommand: {
+        name: 'add',
+        type: 'PARAMS',
+        params: ['01:12']
       }
     }
   };
