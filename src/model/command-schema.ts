@@ -91,10 +91,7 @@ export type ParamValue<P extends Param> = P extends BooleanParam
   ? number
   : string;
 
-export type ParamsValues<S extends readonly Param[]> = S extends [
-  infer H,
-  ...infer R
-]
+export type ParamsValues<S> = S extends [infer H, ...infer R]
   ? H extends Param
     ? R extends readonly Param[]
       ? [ParamValue<H>, ...ParamsValues<R>]
@@ -110,7 +107,7 @@ export type ParamsValues<S extends readonly Param[]> = S extends [
  * @export
  * @interface SubCommand
  */
-export interface SubCommand<P extends readonly Param[]> {
+export interface SubCommand<P> {
   type: 'SUB_COMMAND';
   params: P;
 }
@@ -140,7 +137,7 @@ export const assertValidSubCommand = <P extends readonly Param[]>(
 
 export type SubCommandEntries = Record<
   string,
-  SubCommand<Param[]> | SubCommandGroup<Record<string, never>>
+  SubCommand<Param[]> | SubCommandGroup<Record<string, unknown>>
 >;
 
 /**
@@ -149,7 +146,7 @@ export type SubCommandEntries = Record<
  * @export
  * @interface SubCommandGroup
  */
-export interface SubCommandGroup<S extends SubCommandEntries> {
+export interface SubCommandGroup<S> {
   type: 'SUB_COMMAND_GROUP';
   subCommands: Readonly<S>;
 }
@@ -162,10 +159,7 @@ export interface SubCommandGroup<S extends SubCommandEntries> {
  * @export
  * @interface Schema
  */
-export interface Schema<
-  S extends SubCommandEntries,
-  P extends readonly Param[] = readonly Param[]
-> {
+export interface Schema<S = Record<string, unknown>, P = readonly Param[]> {
   names: readonly string[];
   subCommands: Readonly<S>;
   params?: P;
@@ -178,7 +172,7 @@ export interface Schema<
  * @typedef ParsedSchema
  * @template S コマンドスキーマの型
  */
-export type ParsedSchema<S extends Schema<Record<string, never>>> =
+export type ParsedSchema<S extends Schema> =
   | {
       name: S['names'][number];
       subCommand?: ParsedSubCommand<S['subCommands']>;
@@ -201,10 +195,12 @@ export type ParsedParameter<S> = S extends SubCommand<infer P>
       params: ParamsValues<P>;
     }
   : S extends SubCommandGroup<infer R>
-  ? {
-      type: 'SUB_COMMAND';
-      subCommand: ParsedSubCommand<R>;
-    }
+  ? R extends SubCommandEntries
+    ? {
+        type: 'SUB_COMMAND';
+        subCommand: ParsedSubCommand<R>;
+      }
+    : never
   : never;
 
 export type HasSubCommand =
@@ -218,7 +214,7 @@ export type HasSubCommand =
  * @typedef ParsedParameter
  * @template S コマンドスキーマの型
  */
-export type ParsedSubCommand<E extends SubCommandEntries> = {
+export type ParsedSubCommand<E> = {
   [K in keyof E]: {
     subCommand: K;
     parsed: ParsedParameter<E[K]>;
