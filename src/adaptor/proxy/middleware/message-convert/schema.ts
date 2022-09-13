@@ -10,7 +10,7 @@ import type {
   SubCommandGroup
 } from '../../../../model/command-schema.js';
 
-const DIGITS = /^\d$/;
+const DIGITS = /^\d+$/;
 
 const hasOwn = <O extends Record<PropertyKey, unknown>>(
   object: O,
@@ -183,27 +183,27 @@ export const parseStrings = <
     Object.getOwnPropertyNames(schema.subCommands).length !== 0;
 
   if (!hasSubCommand) {
-    return ['Ok', { name }];
-  }
-  const subCommand = parseSubCommand(args, schema);
-  if (subCommand[0] === 'Ok') {
+    const paramsRes = parseParams(args, schema);
+    if (paramsRes[0] === 'Err') {
+      return paramsRes;
+    }
     return [
       'Ok',
       {
         name,
-        subCommand: subCommand[1]
-      }
-    ];
-  }
-  if (schema.params) {
-    const params = parseParams(args, schema);
-    return [
-      'Ok',
-      {
-        name,
-        params
+        params: paramsRes[1]
       } as ParsedSchema<S>
     ];
   }
-  return subCommand;
+  const subCommandRes = parseSubCommand(args, schema);
+  if (subCommandRes[0] === 'Ok') {
+    return [
+      'Ok',
+      {
+        name,
+        subCommand: subCommandRes[1]
+      }
+    ];
+  }
+  return subCommandRes;
 };
