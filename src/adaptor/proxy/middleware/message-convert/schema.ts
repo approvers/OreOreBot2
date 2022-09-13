@@ -111,22 +111,17 @@ const parseSubCommand = <E>(
   schema: Schema<E> | SubCommandGroup<E>
 ): ['Ok', ParsedSubCommand<E>] | ['Err', ParseError] => {
   const subCommandNames = Object.getOwnPropertyNames(schema.subCommands);
-  const head = args.shift();
+  const arg = args.shift();
 
-  if (!head) {
+  if (!arg) {
     return ['Err', ['NEED_MORE_ARGS']];
   }
 
-  if (head[0] === 'string' && subCommandNames.includes(head[1])) {
-    const headValue = head[1];
-
-    if (!hasOwn(schema.subCommands, headValue)) {
-      return [
-        'Err',
-        ['UNKNOWN_COMMAND', Object.keys(schema.subCommands), headValue]
-      ];
+  if (subCommandNames.includes(arg)) {
+    if (!hasOwn(schema.subCommands, arg)) {
+      return ['Err', ['UNKNOWN_COMMAND', Object.keys(schema.subCommands), arg]];
     }
-    const subCommandKey: keyof E = headValue;
+    const subCommandKey: keyof E = arg;
 
     const subCommand = schema.subCommands[subCommandKey];
     if (
@@ -149,7 +144,7 @@ const parseSubCommand = <E>(
       return [
         'Ok',
         {
-          subCommand: subCommandKey,
+          name: subCommandKey,
           parsed: {
             type: 'SUB_COMMAND',
             subCommand: subSubCommand[1]
@@ -164,7 +159,7 @@ const parseSubCommand = <E>(
     return [
       'Ok',
       {
-        subCommand: subCommandKey,
+        name: subCommandKey,
         parsed: {
           type: 'PARAMS',
           params: params[1]
@@ -172,7 +167,7 @@ const parseSubCommand = <E>(
       } as ParsedSubCommand<E>
     ];
   }
-  return ['Err', ['UNKNOWN_COMMAND', Object.keys(schema.subCommands), head[1]]];
+  return ['Err', ['UNKNOWN_COMMAND', Object.keys(schema.subCommands), arg]];
 };
 
 export const parseStrings = <

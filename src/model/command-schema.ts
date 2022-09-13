@@ -216,7 +216,7 @@ export type HasSubCommand =
  */
 export type ParsedSubCommand<E> = {
   [K in keyof E]: {
-    subCommand: K;
+    name: K;
     parsed: ParsedParameter<E[K]>;
   };
 }[keyof E];

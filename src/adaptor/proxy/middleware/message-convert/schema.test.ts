@@ -44,11 +44,15 @@ test('simple', () => {
   const expected = {
     name: 'kaere',
     subCommand: {
-      key: 'reserve',
-      subCommand: {
-        key: 'add',
-        param: {
-          at: '01:12'
+      name: 'reserve',
+      parsed: {
+        type: 'SUB_COMMAND',
+        subCommand: {
+          name: 'add',
+          parsed: {
+            type: 'PARAMS',
+            params: ['01:12']
+          }
         }
       }
     }
