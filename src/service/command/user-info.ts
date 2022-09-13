@@ -42,10 +42,16 @@ export class UserInfo implements CommandResponder {
       return;
     }
 
-    const [command, userId] = message.args;
+    const [arg1, arg2] = message.args;
+    const command = arg1;
+    let userId = arg2;
 
     if (!this.help.commandName.includes(command)) {
       return;
+    }
+
+    if (userId == 'me') {
+      userId = message.senderId;
     }
 
     if (typeof userId !== 'string') {
