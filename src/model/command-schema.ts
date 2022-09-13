@@ -188,10 +188,12 @@ export type ParsedSchema<S extends Schema<Record<string, never>>> = {
  */
 export type ParsedParameter<S> = S extends SubCommand<infer P>
   ? {
+      type: 'PARAMS';
       params: ParamsValues<P>;
     }
   : S extends SubCommandGroup<infer R>
   ? {
+      type: 'SUB_COMMAND';
       subCommand: ParsedSubCommand<R>;
     }
   : never;
@@ -208,7 +210,10 @@ export type HasSubCommand =
  * @template S コマンドスキーマの型
  */
 export type ParsedSubCommand<E extends SubCommandEntries> = {
-  [K in keyof E]: ParsedParameter<E[K]>;
+  [K in keyof E]: {
+    subCommand: K;
+    parsed: ParsedParameter<E[K]>;
+  };
 }[keyof E];
 
 export type SubCommands<S> = S extends Schema<infer C>
