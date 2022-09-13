@@ -176,7 +176,7 @@ export interface Schema<S extends SubCommandEntries> {
  */
 export type ParsedSchema<S extends Schema<Record<string, never>>> = {
   name: S['names'][number];
-  subCommand?: ParsedSubCommand<S>;
+  subCommand?: ParsedSubCommand<S['subCommands']>;
 };
 
 /**
@@ -207,9 +207,9 @@ export type HasSubCommand =
  * @typedef ParsedParameter
  * @template S コマンドスキーマの型
  */
-export type ParsedSubCommand<S> = {
-  [K in keyof SubCommands<S>]: ParsedParameter<SubCommands<S>[K]>;
-}[keyof SubCommands<S>];
+export type ParsedSubCommand<E extends SubCommandEntries> = {
+  [K in keyof E]: ParsedParameter<E[K]>;
+}[keyof E];
 
 export type SubCommands<S> = S extends Schema<infer C>
   ? C
