@@ -209,13 +209,13 @@ export type SubCommands<S extends Schema | SubCommandGroup> = S['subCommands'];
  * @typedef ParseError
  */
 export type ParseError =
-  | [type: 'INVALID_DATA', expected: ParamType, but: string]
+  | [type: 'INVALID_DATA', expected: ParamType, but: unknown]
   | [
       type: 'OUT_OF_RANGE',
       min: number | undefined,
       max: number | undefined,
-      but: number
+      but: unknown
     ]
-  | [type: 'UNKNOWN_CHOICE', choices: readonly string[], but: string]
-  | [type: 'UNKNOWN_COMMAND', subCommands: readonly string[], but: string]
+  | [type: 'UNKNOWN_CHOICE', choices: readonly string[], but: unknown]
+  | [type: 'UNKNOWN_COMMAND', subCommands: readonly string[], but: unknown]
   | [type: 'OTHERS', message: string];
