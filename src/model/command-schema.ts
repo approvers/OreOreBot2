@@ -210,6 +210,7 @@ export type SubCommands<S extends Schema | SubCommandGroup> = S['subCommands'];
  */
 export type ParseError =
   | [type: 'INVALID_DATA', expected: ParamType, but: unknown]
+  | [type: 'NEED_MORE_ARGS']
   | [
       type: 'OUT_OF_RANGE',
       min: number | undefined,
