@@ -91,11 +91,9 @@ export type ParamValue<P extends Param> = P extends BooleanParam
   ? number
   : string;
 
-export type ParamsValues<S> = S extends [infer H, ...infer R]
+export type ParamsValues<S> = S extends readonly [infer H, ...infer R]
   ? H extends Param
-    ? R extends readonly Param[]
-      ? [ParamValue<H>, ...ParamsValues<R>]
-      : [ParamValue<H>]
+    ? [ParamValue<H>, ...ParamsValues<R>]
     : []
   : [];
 
