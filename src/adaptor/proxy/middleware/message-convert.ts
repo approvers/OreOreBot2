@@ -7,7 +7,6 @@ import {
   MessageActionRowComponentBuilder
 } from 'discord.js';
 import type { Middleware, RawMessage } from '../middleware.js';
-import { Schema, makeError } from '../../../model/command-schema.js';
 
 import type { BoldItalicCop } from '../../../service/bold-italic-cop.js';
 import type { CommandMessage } from '../../../service/command/command-message.js';
@@ -15,10 +14,11 @@ import type { DeletionObservable } from '../../../service/deletion-repeater.js';
 import type { EditingObservable } from '../../../service/difference-detector.js';
 import type { EmbedPage } from '../../../model/embed-message.js';
 import type { EmojiSeqObservable } from '../../../service/emoji-seq-react.js';
+import type { Schema } from '../../../model/command-schema.js';
 import type { Snowflake } from '../../../model/id.js';
 import type { TypoObservable } from '../../../service/command/typo-record.js';
 import { convertEmbed } from '../../embed-convert.js';
-import { parseStrings } from './message-convert/schema.js';
+import { parseStringsOrThrow } from './message-convert/schema.js';
 
 const getAuthorSnowflake = (message: RawMessage): Snowflake =>
   (message.author?.id || 'unknown') as Snowflake;
@@ -161,10 +161,7 @@ export const prefixMiddleware =
       throw new Error('the message does not have the prefix');
     }
     const args = message.content?.trim().slice(prefix.length).split(SPACES);
-    const parseRes = parseStrings(args, schema);
-    if (parseRes[0] === 'Err') {
-      throw makeError(parseRes[1]);
-    }
+    const parsedArgs = parseStringsOrThrow(args, schema);
     const command: CommandMessage<S> = {
       senderId: getAuthorSnowflake(message),
       senderGuildId: message.guildId as Snowflake,
@@ -174,7 +171,7 @@ export const prefixMiddleware =
         return id ? (id as Snowflake) : null;
       },
       senderName: message.author?.username ?? '名無し',
-      args: parseRes[1],
+      args: parsedArgs,
       async reply(embed) {
         const mes = await message.reply({ embeds: [convertEmbed(embed)] });
         return {

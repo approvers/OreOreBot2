@@ -1,4 +1,4 @@
-import type {
+import {
   Param,
   ParamsValues,
   ParseError,
@@ -7,7 +7,8 @@ import type {
   Schema,
   SubCommand,
   SubCommandEntries,
-  SubCommandGroup
+  SubCommandGroup,
+  makeError
 } from '../../../../model/command-schema.js';
 
 const DIGITS = /^\d+$/;
@@ -212,4 +213,19 @@ export const parseStrings = <
     ];
   }
   return subCommandRes;
+};
+
+export const parseStringsOrThrow = <
+  E,
+  P extends readonly Param[],
+  S extends Schema<E, P>
+>(
+  args: string[],
+  schema: S
+): ParsedSchema<S> => {
+  const parsed = parseStrings(args, schema);
+  if (parsed[0] === 'Err') {
+    throw makeError(parsed[1]);
+  }
+  return parsed[1];
 };
