@@ -1,12 +1,16 @@
+export interface ParamBase {
+  name: string;
+  description: string;
+}
+
 /**
  * 真偽値の引数のスキーマ。`defaultValue` が未定義ならば必須の引数になる。
  *
  * @export
  * @interface BooleanParam
  */
-export interface BooleanParam {
+export interface BooleanParam extends ParamBase {
   type: 'BOOLEAN';
-  name: string;
   defaultValue?: boolean;
 }
 
@@ -18,9 +22,8 @@ export interface BooleanParam {
  * @export
  * @interface StringParam
  */
-export interface StringParam {
+export interface StringParam extends ParamBase {
   type: 'STRING';
-  name: string;
   defaultValue?: string;
   minLength?: number;
   maxLength?: number;
@@ -32,9 +35,8 @@ export interface StringParam {
  * @export
  * @interface SnowflakeParam
  */
-export interface SnowflakeParam {
+export interface SnowflakeParam extends ParamBase {
   type: 'USER' | 'CHANNEL' | 'ROLE' | 'MESSAGE';
-  name: string;
   defaultValue?: string;
 }
 
@@ -48,9 +50,8 @@ export interface SnowflakeParam {
  * @export
  * @interface NumberParam
  */
-export interface NumberParam {
+export interface NumberParam extends ParamBase {
   type: 'INTEGER' | 'FLOAT';
-  name: string;
   defaultValue?: number;
   minValue?: number;
   maxValue?: number;
@@ -64,9 +65,8 @@ export interface NumberParam {
  * @export
  * @interface ChoicesParam
  */
-export interface ChoicesParam {
+export interface ChoicesParam extends ParamBase {
   type: 'CHOICES';
-  name: string;
   defaultValue?: number;
   choices: readonly string[];
 }
