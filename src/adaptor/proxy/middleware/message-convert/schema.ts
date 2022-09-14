@@ -196,8 +196,7 @@ export const parseStrings = <
       'Ok',
       {
         name,
-        params: paramsRes[1],
-        subCommand: {}
+        params: paramsRes[1]
       } as ParsedSchema<S>
     ];
   }

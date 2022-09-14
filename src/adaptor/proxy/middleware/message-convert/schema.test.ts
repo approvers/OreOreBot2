@@ -20,7 +20,9 @@ test('no args', () => {
 });
 
 test('single arg', () => {
-  const TIME_OPTION = [{ name: 'at', type: 'STRING' }] as const;
+  const TIME_OPTION = [
+    { name: 'at', description: '', type: 'STRING' }
+  ] as const;
   const KAERE_SCHEMA = {
     names: ['kaere'],
     subCommands: {
@@ -70,6 +72,7 @@ test('single arg', () => {
     'Ok',
     {
       name: 'kaere',
+      params: [],
       subCommand: {
         name: 'start',
         type: 'PARAMS',
@@ -87,6 +90,7 @@ test('single arg', () => {
     'Ok',
     {
       name: 'kaere',
+      params: [],
       subCommand: {
         name: 'reserve',
         type: 'SUB_COMMAND',
@@ -105,8 +109,8 @@ test('multi args', () => {
     names: ['rolecreate'],
     subCommands: {},
     params: [
-      { type: 'USER', name: 'target' },
-      { type: 'STRING', name: 'color', defaultValue: 'random' }
+      { type: 'USER', name: 'target', description: '' },
+      { type: 'STRING', name: 'color', description: '', defaultValue: 'random' }
     ]
   } as const;
 
