@@ -64,7 +64,13 @@ test('single arg', () => {
 
   const noParamRes = parseStrings(['kaere'], KAERE_SCHEMA);
 
-  expect(noParamRes).toStrictEqual(['Err', ['NEED_MORE_ARGS']]);
+  expect(noParamRes).toStrictEqual([
+    'Ok',
+    {
+      name: 'kaere',
+      params: []
+    }
+  ]);
 
   const oneParamRes = parseStrings(['kaere', 'start'], KAERE_SCHEMA);
 

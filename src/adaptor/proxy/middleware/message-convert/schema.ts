@@ -200,6 +200,17 @@ export const parseStrings = <
       } as ParsedSchema<S>
     ];
   }
+
+  if (args.length === 0) {
+    return [
+      'Ok',
+      {
+        name,
+        params: []
+      } as ParsedSchema<S>
+    ];
+  }
+
   const subCommandRes = parseSubCommand(args, schema);
   if (subCommandRes[0] === 'Ok') {
     return [
