@@ -44,14 +44,10 @@ export class UserInfo implements CommandResponder {
     }
 
     const [command, arg] = message.args;
-    let userId = arg;
+    const userId = fetchUserId(arg, message.senderId);
 
     if (!this.help.commandName.includes(command)) {
       return;
-    }
-
-    if (userId == 'me') {
-      userId = message.senderId;
     }
 
     if (typeof userId !== 'string') {
@@ -137,6 +133,12 @@ export class UserInfo implements CommandResponder {
   }
 }
 
+function fetchUserId(arg: string, senderId: string): string {
+  if (arg === 'me') {
+    return senderId;
+  }
+  return arg;
+}
 function createHoistRoleDisplay(hoistRoleId: Snowflake | undefined): string {
   if (!hoistRoleId) {
     return 'なし';
