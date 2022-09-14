@@ -4,6 +4,7 @@ import { afterAll, describe, expect, it, vi } from 'vitest';
 import type { EmbedMessage } from '../../model/embed-message.js';
 import { ScheduleRunner } from '../../runner/index.js';
 import { createMockMessage } from './command-message.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/middleware/message-convert/schema.js';
 
 const random: RandomGenerator = {
   minutes: () => 42,
@@ -27,15 +28,12 @@ describe('party ichiyo', () => {
     await responder.on(
       'CREATE',
       createMockMessage(
-        {
-          args: ['party']
-        },
+        parseStringsOrThrow(['party'], responder.schema),
         (message) => {
           expect(message).toStrictEqual({
             title: `パーティー Nigth`,
             description: 'хорошо、宴の始まりだ。'
           });
-          return Promise.resolve();
         }
       )
     );
@@ -45,83 +43,55 @@ describe('party ichiyo', () => {
     await responder.on(
       'CREATE',
       createMockMessage(
-        {
-          args: ['party', 'status']
-        },
+        parseStringsOrThrow(['party', 'status'], responder.schema),
         (message) => {
           expect(message).toStrictEqual({
             title: 'ゲリラは現在無効だよ。'
           });
-          return Promise.resolve();
         }
       )
     );
     await responder.on(
       'CREATE',
       createMockMessage(
-        {
-          args: ['party', 'enable']
-        },
+        parseStringsOrThrow(['party', 'enable'], responder.schema),
         (message) => {
           expect(message).toStrictEqual({
             title: 'ゲリラを有効化しておいたよ。'
           });
-          return Promise.resolve();
         }
       )
     );
     await responder.on(
       'CREATE',
       createMockMessage(
-        {
-          args: ['party', 'status']
-        },
+        parseStringsOrThrow(['party', 'status'], responder.schema),
         (message) => {
           expect(message).toStrictEqual({
             title: 'ゲリラは現在有効だよ。'
           });
-          return Promise.resolve();
         }
       )
     );
     await responder.on(
       'CREATE',
       createMockMessage(
-        {
-          args: ['party', 'disable']
-        },
+        parseStringsOrThrow(['party', 'disable'], responder.schema),
         (message) => {
           expect(message).toStrictEqual({
             title: 'ゲリラを無効化しておいたよ。'
           });
-          return Promise.resolve();
         }
       )
     );
     await responder.on(
       'CREATE',
       createMockMessage(
-        {
-          args: ['party', 'status']
-        },
+        parseStringsOrThrow(['party', 'status'], responder.schema),
         (message) => {
           expect(message).toStrictEqual({
             title: 'ゲリラは現在無効だよ。'
           });
-          return Promise.resolve();
-        }
-      )
-    );
-
-    await responder.on(
-      'CREATE',
-      createMockMessage(
-        {
-          args: ['party', 'set', '__UNKNOWN__']
-        },
-        (message) => {
-          expect(message.title).toStrictEqual('BGMを設定できなかった。');
-          return Promise.resolve();
         }
       )
     );
@@ -131,7 +101,10 @@ describe('party ichiyo', () => {
     const fn = vi.fn(() => Promise.resolve());
     await responder.on(
       'CREATE',
-      createMockMessage({ args: ['party', 'time'] }, fn)
+      createMockMessage(
+        parseStringsOrThrow(['party', 'time'], responder.schema),
+        fn
+      )
     );
     expect(fn).toHaveBeenCalledWith({
       title: '次のゲリラ参加時刻を42分にしたよ。'
@@ -142,34 +115,14 @@ describe('party ichiyo', () => {
     const fn = vi.fn(() => Promise.resolve());
     await responder.on(
       'CREATE',
-      createMockMessage({ args: ['party', 'time', '36'] }, fn)
+      createMockMessage(
+        parseStringsOrThrow(['party', 'time', '36'], responder.schema),
+        fn
+      )
     );
     expect(fn).toHaveBeenCalledWith({
       title: '次のゲリラ参加時刻を36分にしたよ。'
     });
-  });
-
-  it('must not reply', async () => {
-    const fn = vi.fn();
-    await responder.on(
-      'CREATE',
-      createMockMessage({
-        args: ['typo']
-      })
-    );
-    await responder.on(
-      'CREATE',
-      createMockMessage({
-        args: ['partyichiyo']
-      })
-    );
-    await responder.on(
-      'DELETE',
-      createMockMessage({
-        args: ['party']
-      })
-    );
-    expect(fn).not.toHaveBeenCalled();
   });
 
   it('party enable but must cancel', async () => {
@@ -177,11 +130,13 @@ describe('party ichiyo', () => {
     const reply = vi.fn<[EmbedMessage]>(() => Promise.resolve({ edit: fn }));
     await responder.on(
       'CREATE',
-      createMockMessage({
-        args: ['party', 'enable'],
+      createMockMessage(
+        parseStringsOrThrow(['party', 'enable'], responder.schema),
         reply,
-        senderVoiceChannelId: null
-      })
+        {
+          senderVoiceChannelId: null
+        }
+      )
     );
     const nextTriggerMs = (random.minutes() + 1) * 60 * 1000;
     clock.placeholder = new Date(nextTriggerMs);

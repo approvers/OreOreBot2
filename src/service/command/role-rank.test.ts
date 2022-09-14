@@ -1,6 +1,8 @@
 import { MembersWithRoleRepository, RoleRank } from './role-rank.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import { createMockMessage } from './command-message.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/middleware/message-convert/schema.js';
 
 describe('RoleRank', () => {
   afterEach(() => {
@@ -44,12 +46,7 @@ describe('RoleRank', () => {
 
     await roleRank.on(
       'CREATE',
-      createMockMessage(
-        {
-          args: ['rolerank']
-        },
-        fn
-      )
+      createMockMessage(parseStringsOrThrow(['rolerank'], roleRank.schema), fn)
     );
 
     expect(fn).toHaveBeenCalledWith({
@@ -86,12 +83,7 @@ describe('RoleRank', () => {
 
     await roleRank.on(
       'DELETE',
-      createMockMessage(
-        {
-          args: ['rolerank']
-        },
-        fn
-      )
+      createMockMessage(parseStringsOrThrow(['rolerank'], roleRank.schema), fn)
     );
 
     expect(fn).not.toBeCalled();

@@ -1,6 +1,8 @@
 import { expect, it, vi } from 'vitest';
+
 import { KokuseiChousa } from './kokusei-chousa.js';
 import { createMockMessage } from './command-message.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/middleware/message-convert/schema.js';
 
 it('use case of kokusei-chousa', async () => {
   const responder = new KokuseiChousa({
@@ -14,9 +16,7 @@ it('use case of kokusei-chousa', async () => {
   await responder.on(
     'CREATE',
     createMockMessage(
-      {
-        args: ['kokusei']
-      },
+      parseStringsOrThrow(['kokusei'], responder.schema),
       (message) => {
         expect(message).toStrictEqual({
           title: '***†只今の限界開発鯖の人口†***',
@@ -35,7 +35,6 @@ it('use case of kokusei-chousa', async () => {
             { name: 'Bot率', value: '33.333%' }
           ]
         });
-        return Promise.resolve();
       }
     )
   );
@@ -53,10 +52,7 @@ it('delete message', async () => {
   const fn = vi.fn();
   await responder.on(
     'DELETE',
-    createMockMessage({
-      args: ['kokusei'],
-      reply: fn
-    })
+    createMockMessage(parseStringsOrThrow(['kokusei'], responder.schema), fn)
   );
 
   expect(fn).not.toHaveBeenCalled();

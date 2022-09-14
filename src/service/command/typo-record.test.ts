@@ -1,5 +1,4 @@
 import { InMemoryTypoRepository, MockClock } from '../../adaptor/index.js';
-import { SentMessage, createMockMessage } from './command-message.js';
 import {
   TypoRecorder,
   TypoReporter,
@@ -7,10 +6,12 @@ import {
 } from './typo-record.js';
 import { addDays, setHours, setMinutes } from 'date-fns';
 import { afterAll, describe, expect, it, vi } from 'vitest';
-import type { EmbedMessage } from '../../model/embed-message.js';
+
 import EventEmitter from 'node:events';
 import { ScheduleRunner } from '../../runner/index.js';
 import type { Snowflake } from '../../model/id.js';
+import { createMockMessage } from './command-message.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/middleware/message-convert/schema.js';
 
 class MockRepository extends EventEmitter implements TypoRepository {
   private db = new InMemoryTypoRepository();
@@ -88,48 +89,27 @@ describe('typo record command', () => {
     await responder.on(
       'CREATE',
       createMockMessage(
-        {
-          args: ['typo']
-        },
+        parseStringsOrThrow(['typo'], responder.schema),
         (message) => {
           expect(message).toStrictEqual({
             description:
               '***† 今日のMikuroさいなのtypo †***\n- foo\n- hoge\n- fuga'
           });
-          return Promise.resolve();
         }
       )
     );
     await responder.on(
       'CREATE',
       createMockMessage(
-        {
-          args: ['typo', 'by', '279614913129742338']
-        },
+        parseStringsOrThrow(
+          ['typo', 'by', '279614913129742338'],
+          responder.schema
+        ),
         (message) => {
           expect(message).toStrictEqual({
             description:
               '***† 今日の<@279614913129742338>のtypo †***\n- foo\n- hoge\n- fuga'
           });
-          return Promise.resolve();
-        }
-      )
-    );
-  });
-
-  it('invalid user id', async () => {
-    await responder.on(
-      'CREATE',
-      createMockMessage(
-        {
-          args: ['typo', 'by', 'hoge']
-        },
-        (message) => {
-          expect(message).toStrictEqual({
-            title: '入力形式エラー',
-            description: 'ユーザ ID は整数を入力してね'
-          });
-          return Promise.resolve();
         }
       )
     );
@@ -139,36 +119,9 @@ describe('typo record command', () => {
     const fn = vi.fn();
     await responder.on(
       'DELETE',
-      createMockMessage({
-        senderId: '279614913129742338' as Snowflake,
-        senderGuildId: '683939861539192860' as Snowflake,
-        senderName: 'Mikuroさいな',
-        args: ['typo'],
-        reply: fn
-      })
+      createMockMessage(parseStringsOrThrow(['typo'], responder.schema), fn)
     );
     expect(fn).not.toHaveBeenCalled();
-  });
-
-  it('help', async () => {
-    const fn = vi.fn<[EmbedMessage]>(() => Promise.resolve({} as SentMessage));
-    await responder.on(
-      'CREATE',
-      createMockMessage({
-        senderId: '279614913129742338' as Snowflake,
-        senderGuildId: '683939861539192860' as Snowflake,
-        senderName: 'Mikuroさいな',
-        args: ['typo', 'hoge'],
-        reply: fn
-      })
-    );
-    expect(fn).toHaveBeenCalledWith({
-      title: 'Typoヘルプ',
-      description: `
-- 引数なし: あなたの今日のTypoを表示するよ
-- \`by <ユーザID>\`: そのIDの人の今日のTypoを表示するよ
-`
-    });
   });
 
   it('clear typos on next day', async () => {
@@ -179,14 +132,11 @@ describe('typo record command', () => {
     await responder.on(
       'CREATE',
       createMockMessage(
-        {
-          args: ['typo']
-        },
+        parseStringsOrThrow(['typo'], responder.schema),
         (message) => {
           expect(message).toStrictEqual({
             description: '***† 今日のMikuroさいなのtypo †***\n- foo\n- hoge'
           });
-          return Promise.resolve();
         }
       )
     );
@@ -200,14 +150,11 @@ describe('typo record command', () => {
     await responder.on(
       'CREATE',
       createMockMessage(
-        {
-          args: ['typo']
-        },
+        parseStringsOrThrow(['typo'], responder.schema),
         (message) => {
           expect(message).toStrictEqual({
             description: '***† 今日のMikuroさいなのtypo †***\n'
           });
-          return Promise.resolve();
         }
       )
     );

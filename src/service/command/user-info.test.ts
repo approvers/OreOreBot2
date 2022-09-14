@@ -1,7 +1,9 @@
 import { UserInfo, UserStatsRepository } from './user-info.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import type { Snowflake } from '../../model/id.js';
 import { createMockMessage } from './command-message.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/middleware/message-convert/schema.js';
 
 describe('UserInfo', () => {
   afterEach(() => {
@@ -33,9 +35,10 @@ describe('UserInfo', () => {
     await userInfo.on(
       'CREATE',
       createMockMessage(
-        {
-          args: ['userinfo', '586824421470109716']
-        },
+        parseStringsOrThrow(
+          ['userinfo', '586824421470109716'],
+          userInfo.schema
+        ),
         fn
       )
     );
@@ -96,11 +99,11 @@ describe('UserInfo', () => {
     await userInfo.on(
       'CREATE',
       createMockMessage(
+        parseStringsOrThrow(['userinfo'], userInfo.schema),
+        fn,
         {
-          args: ['userinfo', 'me'],
           senderId: '586824421470109716' as Snowflake
-        },
-        fn
+        }
       )
     );
 
@@ -153,27 +156,6 @@ describe('UserInfo', () => {
     expect(fetchStats).toHaveBeenCalledOnce();
   });
 
-  it('error with no arg', async () => {
-    const fetchStats = vi.spyOn(repo, 'fetchUserStats');
-    const fn = vi.fn();
-
-    await userInfo.on(
-      'CREATE',
-      createMockMessage(
-        {
-          args: ['userinfo']
-        },
-        fn
-      )
-    );
-
-    expect(fn).toHaveBeenCalledWith({
-      title: 'コマンド形式エラー',
-      description: '引数にユーザーIDの文字列を指定してね'
-    });
-    expect(fetchStats).not.toHaveBeenCalled();
-  });
-
   it('error with invalid arg', async () => {
     const fetchStats = vi.spyOn(repo, 'fetchUserStats');
     const fn = vi.fn();
@@ -181,9 +163,10 @@ describe('UserInfo', () => {
     await userInfo.on(
       'CREATE',
       createMockMessage(
-        {
-          args: ['userinfo', '354996809447505920']
-        },
+        parseStringsOrThrow(
+          ['userinfo', '354996809447505920'],
+          userInfo.schema
+        ),
         fn
       )
     );

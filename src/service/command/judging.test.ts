@@ -1,22 +1,21 @@
 import { emojiOf, waitingJudgingEmoji } from '../../model/judging-status.js';
 import { expect, it, vi } from 'vitest';
-import type { EmbedMessage } from '../../model/embed-message.js';
+
 import { JudgingCommand } from './judging.js';
 import { createMockMessage } from './command-message.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/middleware/message-convert/schema.js';
 
 it('use case of jd', async () => {
   const responder = new JudgingCommand({
     sleep: () => Promise.resolve(),
     uniform: () => 2
   });
-  const fn = vi.fn<[EmbedMessage]>(() => Promise.resolve());
+  const fn = vi.fn();
 
   await responder.on(
     'CREATE',
     createMockMessage(
-      {
-        args: ['jd']
-      },
+      parseStringsOrThrow(['jd'], responder.schema),
       (embed) => {
         expect(embed).toStrictEqual({
           title: '***†HARACHO ONLINE JUDGING SYSTEM†***',
@@ -45,14 +44,12 @@ it('use case of judge', async () => {
     sleep: () => Promise.resolve(),
     uniform: () => 0
   });
-  const fn = vi.fn<[EmbedMessage]>(() => Promise.resolve());
+  const fn = vi.fn();
 
   await responder.on(
     'CREATE',
     createMockMessage(
-      {
-        args: ['judge', '1', 'WWW']
-      },
+      parseStringsOrThrow(['judge', '1', 'WWW'], responder.schema),
       (embed) => {
         expect(embed).toStrictEqual({
           title: '***†HARACHO ONLINE JUDGING SYSTEM†***',
@@ -79,59 +76,24 @@ it('max number of cases', async () => {
   await responder.on(
     'CREATE',
     createMockMessage(
-      {
-        args: ['jd', '1']
-      },
+      parseStringsOrThrow(['jd', '1'], responder.schema),
       (embed) => {
         expect(embed).toStrictEqual({
           title: '***†HARACHO ONLINE JUDGING SYSTEM†***',
           description: `0 / 1 ${waitingJudgingEmoji}`
         });
-        return Promise.resolve({ edit: () => Promise.resolve() });
       }
     )
   );
   await responder.on(
     'CREATE',
     createMockMessage(
-      {
-        args: ['jd', '64']
-      },
+      parseStringsOrThrow(['jd', '64'], responder.schema),
       (embed) => {
         expect(embed).toStrictEqual({
           title: '***†HARACHO ONLINE JUDGING SYSTEM†***',
           description: `0 / 64 ${waitingJudgingEmoji}`
         });
-        return Promise.resolve({ edit: () => Promise.resolve() });
-      }
-    )
-  );
-
-  await responder.on(
-    'CREATE',
-    createMockMessage(
-      {
-        args: ['jd', '0']
-      },
-      (embed) => {
-        expect(embed).toStrictEqual({
-          title: '回数の指定が 1 以上 64 以下の整数じゃないよ。'
-        });
-        return Promise.resolve({ edit: () => Promise.resolve() });
-      }
-    )
-  );
-  await responder.on(
-    'CREATE',
-    createMockMessage(
-      {
-        args: ['jd', '65']
-      },
-      (embed) => {
-        expect(embed).toStrictEqual({
-          title: '回数の指定が 1 以上 64 以下の整数じゃないよ。'
-        });
-        return Promise.resolve({ edit: () => Promise.resolve() });
       }
     )
   );

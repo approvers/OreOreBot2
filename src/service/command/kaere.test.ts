@@ -7,6 +7,7 @@ import { KaereCommand, type KaereMusicKey } from './kaere.js';
 import { expect, it, vi } from 'vitest';
 import { ScheduleRunner } from '../../runner/index.js';
 import { createMockMessage } from './command-message.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/middleware/message-convert/schema.js';
 
 it('use case of kaere', async () => {
   const fn = vi.fn();
@@ -26,78 +27,61 @@ it('use case of kaere', async () => {
 
   await responder.on(
     'CREATE',
-    createMockMessage({
-      args: ['kaere']
-    })
+    createMockMessage(parseStringsOrThrow(['kaere'], responder.schema))
   );
 
   await responder.on(
     'CREATE',
     createMockMessage(
-      {
-        args: ['kaere', 'bed', 'status']
-      },
+      parseStringsOrThrow(['kaere', 'bed', 'status'], responder.schema),
       (message) => {
         expect(message).toStrictEqual({
           title: '強制切断モードは現在無効だよ。'
         });
-        return Promise.resolve();
       }
     )
   );
   await responder.on(
     'CREATE',
     createMockMessage(
-      {
-        args: ['kaere', 'bed', 'enable']
-      },
+      parseStringsOrThrow(['kaere', 'bed', 'enable'], responder.schema),
       (message) => {
         expect(message).toStrictEqual({
           title: '強制切断モードを有効化したよ。'
         });
-        return Promise.resolve();
       }
     )
   );
   await responder.on(
     'CREATE',
     createMockMessage(
-      {
-        args: ['kaere', 'bed', 'status']
-      },
+      parseStringsOrThrow(['kaere', 'bed', 'status'], responder.schema),
       (message) => {
         expect(message).toStrictEqual({
           title: '強制切断モードは現在有効だよ。'
         });
-        return Promise.resolve();
       }
     )
   );
   await responder.on(
     'CREATE',
     createMockMessage(
-      {
-        args: ['kaere', 'bed', 'disable']
-      },
+      parseStringsOrThrow(['kaere', 'bed', 'disable'], responder.schema),
       (message) => {
         expect(message).toStrictEqual({
           title: '強制切断モードを無効化したよ。'
         });
-        return Promise.resolve();
       }
     )
   );
   await responder.on(
     'CREATE',
     createMockMessage(
-      {
-        args: ['kaere', 'bed', 'status']
-      },
+      parseStringsOrThrow(['kaere', 'bed', 'status'], responder.schema),
       (message) => {
         expect(message).toStrictEqual({
           title: '強制切断モードは現在無効だよ。'
         });
-        return Promise.resolve();
       }
     )
   );
@@ -105,104 +89,56 @@ it('use case of kaere', async () => {
   await responder.on(
     'CREATE',
     createMockMessage(
-      {
-        args: ['kaere', 'reserve', 'add', '01:0']
-      },
+      parseStringsOrThrow(
+        ['kaere', 'reserve', 'add', '01:0'],
+        responder.schema
+      ),
       (message) => {
         expect(message).toStrictEqual({
           title: '予約に成功したよ。',
           description: '午前1時0分に予約を入れておくね。'
         });
-        return Promise.resolve();
       }
     )
   );
   await responder.on(
     'CREATE',
     createMockMessage(
-      {
-        args: ['kaere', 'reserve', 'list']
-      },
+      parseStringsOrThrow(['kaere', 'reserve', 'list'], responder.schema),
       (message) => {
         expect(message).toStrictEqual({
           title: '現在の予約状況をお知らせするね。',
           description: '- 午前1時0分'
         });
-        return Promise.resolve();
       }
     )
   );
   await responder.on(
     'CREATE',
     createMockMessage(
-      {
-        args: ['kaere', 'reserve', 'cancel', '1:00']
-      },
+      parseStringsOrThrow(
+        ['kaere', 'reserve', 'cancel', '01:0'],
+        responder.schema
+      ),
       (message) => {
         expect(message).toStrictEqual({
           title: '予約キャンセルに成功したよ。',
           description: '午前1時0分の予約はキャンセルしておくね。'
         });
-        return Promise.resolve();
       }
     )
   );
   await responder.on(
     'CREATE',
     createMockMessage(
-      {
-        args: ['kaere', 'reserve', 'list']
-      },
+      parseStringsOrThrow(['kaere', 'reserve', 'list'], responder.schema),
       (message) => {
         expect(message).toStrictEqual({
           title: '今は誰も予約してないようだね。'
         });
-        return Promise.resolve();
       }
     )
   );
-
-  scheduleRunner.killAll();
-});
-
-it('must not reply', async () => {
-  const fn = vi.fn();
-  const connectionFactory = new MockVoiceConnectionFactory<KaereMusicKey>();
-  const clock = new MockClock(new Date(0));
-  const scheduleRunner = new ScheduleRunner(clock);
-  const repo = new InMemoryReservationRepository();
-  const responder = new KaereCommand({
-    connectionFactory,
-    controller: {
-      disconnectAllUsersIn: fn
-    },
-    clock,
-    scheduleRunner,
-    repo
-  });
-
-  await responder.on(
-    'CREATE',
-    createMockMessage({
-      args: ['typo'],
-      reply: fn
-    })
-  );
-  await responder.on(
-    'CREATE',
-    createMockMessage({
-      args: ['party'],
-      reply: fn
-    })
-  );
-  await responder.on(
-    'DELETE',
-    createMockMessage({
-      args: ['kaere'],
-      reply: fn
-    })
-  );
-  expect(fn).not.toHaveBeenCalled();
 
   scheduleRunner.killAll();
 });

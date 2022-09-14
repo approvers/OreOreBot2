@@ -1,7 +1,9 @@
 import { type Sheriff, SheriffCommand } from './stfu.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import type { Snowflake } from '../../model/id.js';
 import { createMockMessage } from './command-message.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/middleware/message-convert/schema.js';
 
 describe('stfu', () => {
   afterEach(() => {
@@ -17,9 +19,7 @@ describe('stfu', () => {
     const react = vi.fn<[string]>(() => Promise.resolve());
     await responder.on(
       'CREATE',
-      createMockMessage({
-        args: ['stfu'],
-        reply: fn,
+      createMockMessage(parseStringsOrThrow(['stfu'], responder.schema), fn, {
         react
       })
     );
@@ -38,11 +38,13 @@ describe('stfu', () => {
     const react = vi.fn<[string]>(() => Promise.resolve());
     await responder.on(
       'CREATE',
-      createMockMessage({
-        args: ['stfu', '25'],
-        reply: fn,
-        react
-      })
+      createMockMessage(
+        parseStringsOrThrow(['stfu', '25'], responder.schema),
+        fn,
+        {
+          react
+        }
+      )
     );
 
     expect(fn).not.toHaveBeenCalled();
@@ -54,51 +56,12 @@ describe('stfu', () => {
     expect(react).toHaveBeenCalledWith('👌');
   });
 
-  it('errors invalid specification', async () => {
-    const executeMessage = vi.spyOn(sheriff, 'executeMessage');
-    const fn = vi.fn();
-    const react = vi.fn<[string]>(() => Promise.resolve());
-    await responder.on(
-      'CREATE',
-      createMockMessage({
-        args: ['stfu', '51'],
-        reply: fn,
-        react
-      })
-    );
-
-    expect(fn).toHaveBeenCalledWith({
-      title: '引数の範囲エラー',
-      description: '1 以上 50 以下の整数を指定してね。'
-    });
-    expect(executeMessage).not.toHaveBeenCalled();
-    expect(react).not.toHaveBeenCalled();
-  });
-
   it('delete message', async () => {
     const executeMessage = vi.spyOn(sheriff, 'executeMessage');
     const fn = vi.fn();
     await responder.on(
       'DELETE',
-      createMockMessage({
-        args: ['stfu'],
-        reply: fn
-      })
-    );
-
-    expect(fn).not.toHaveBeenCalled();
-    expect(executeMessage).not.toHaveBeenCalled();
-  });
-
-  it('other command', async () => {
-    const executeMessage = vi.spyOn(sheriff, 'executeMessage');
-    const fn = vi.fn();
-    await responder.on(
-      'CREATE',
-      createMockMessage({
-        args: ['sft'],
-        reply: fn
-      })
+      createMockMessage(parseStringsOrThrow(['stfu'], responder.schema), fn)
     );
 
     expect(fn).not.toHaveBeenCalled();
