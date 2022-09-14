@@ -20,6 +20,7 @@ import {
 } from './command/kaere.js';
 import { KokuseiChousa, MemberStats } from './command/kokusei-chousa.js';
 import { MembersWithRoleRepository, RoleRank } from './command/role-rank.js';
+import type { Param, Schema } from '../model/command-schema.js';
 import { Ping, PingCommand } from './command/ping.js';
 import { RoleCreate, RoleCreateManager } from './command/role-create.js';
 import { RoleInfo, RoleStatsRepository } from './command/role-info.js';
@@ -59,7 +60,10 @@ export const registerAllCommandResponder = ({
   scheduleRunner: ScheduleRunner;
   random: PartyRng & RandomGenerator;
   roomController: VoiceRoomController;
-  commandRunner: MessageResponseRunner<CommandMessage, CommandResponder>;
+  commandRunner: MessageResponseRunner<
+    CommandMessage<Schema<Record<string, unknown>, readonly Param[]>>,
+    CommandResponder<Schema<Record<string, unknown>, readonly Param[]>>
+  >;
   stats: MemberStats;
   sheriff: Sheriff;
   ping: Ping;
@@ -96,6 +100,10 @@ export const registerAllCommandResponder = ({
     new RoleCreate(roleCreateRepo)
   ];
   for (const responder of allResponders) {
-    commandRunner.addResponder(responder);
+    commandRunner.addResponder(
+      responder as unknown as CommandResponder<
+        Schema<Record<string, unknown>, readonly Param[]>
+      >
+    );
   }
 };
