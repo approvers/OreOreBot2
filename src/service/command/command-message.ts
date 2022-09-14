@@ -103,7 +103,7 @@ export type CommandResponder<S extends Schema<Record<string, unknown>>> =
     schema: Readonly<S>;
   };
 
-export const createMockMessage = <S extends Schema<Record<string, never>>>(
+export const createMockMessage = <S extends Schema<Record<string, unknown>>>(
   args: Readonly<ParsedSchema<S>>,
   partial: Readonly<Partial<CommandMessage<S>>>,
   reply?: (message: EmbedMessage) => Promise<SentMessage | void>
