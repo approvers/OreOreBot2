@@ -5,7 +5,7 @@ import { createMockMessage } from './command-message.js';
 
 describe('UserInfo', () => {
   afterEach(() => {
-    vi.resetAllMocks();
+    vi.restoreAllMocks();
   });
 
   const repo: UserStatsRepository = {
