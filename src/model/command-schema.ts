@@ -71,12 +71,24 @@ export interface ChoicesParam extends ParamBase {
   choices: readonly string[];
 }
 
+/**
+ * 可変長引数のスキーマ。`defaultValue` が未定義ならば必須の引数になる。引数リストの中では一番最後の位置にのみ置ける。
+ *
+ * @export
+ * @interface ChoicesParam
+ */
+export interface VariadicParam extends ParamBase {
+  type: 'VARIADIC';
+  defaultValue?: readonly string[];
+}
+
 export type Param =
   | BooleanParam
   | StringParam
   | SnowflakeParam
   | NumberParam
-  | ChoicesParam;
+  | ChoicesParam
+  | VariadicParam;
 export type ParamType = Param['type'];
 /**
  * 引数のスキーマ `P` に対応するパース結果の型を返す。
@@ -89,6 +101,8 @@ export type ParamValue<P extends Param> = P extends BooleanParam
   ? boolean
   : P extends NumberParam | ChoicesParam
   ? number
+  : P extends VariadicParam
+  ? string[]
   : string;
 
 export type ParamsValues<S> = S extends readonly [infer H, ...infer R]
@@ -100,7 +114,7 @@ export type ParamsValues<S> = S extends readonly [infer H, ...infer R]
 /**
  * コマンドの中で分岐する細かいサブコマンド。
  *
- * `params` は引数を受け取る順番で並べたスキーマの配列で指定する。必須の引数は他のどの任意の引数よりも前に登場しなければならない。
+ * `params` は引数を受け取る順番で並べたスキーマの配列で指定する。必須の引数は他のどの任意の引数よりも前に登場しなければならない。可変長引数は最後にのみ登場しなければならない。
  *
  * @export
  * @interface SubCommand
@@ -115,6 +129,12 @@ export const isValidSubCommand = <P extends readonly Param[]>(
 ): boolean => {
   if (!sc.params) {
     return true;
+  }
+  const variadicIndex = sc.params.findIndex(
+    (param) => param.type === 'VARIADIC'
+  );
+  if (variadicIndex !== -1 && variadicIndex !== sc.params.length - 1) {
+    return false;
   }
   const lastRequiredParam = sc.params.reduce(
     (prev, curr, idx) => ('defaultValue' in curr ? prev : idx),
