@@ -161,6 +161,9 @@ export const prefixMiddleware =
       throw new Error('the message does not have the prefix');
     }
     const args = message.content?.trim().slice(prefix.length).split(SPACES);
+    if (!schema.names.includes(args[0])) {
+      throw new Error('should not react other commands');
+    }
     const [tag, parsedArgs] = parseStrings(args, schema);
     if (tag === 'Err') {
       const error = makeError(parsedArgs);
