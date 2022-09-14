@@ -30,7 +30,8 @@ export class UserInfo implements CommandResponder {
     argsFormat: [
       {
         name: 'ユーザーID',
-        description: 'このIDのロールを調べるよ'
+        description:
+          'このIDのロールを調べるよ。`me`と入力すると自分が対象になるよ。'
       }
     ]
   };
