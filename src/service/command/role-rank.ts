@@ -15,23 +15,28 @@ export interface MembersWithRoleRepository {
   fetchMembersWithRole(): Promise<MemberWithRole[]>;
 }
 
-export class RoleRank implements CommandResponder {
+const SCHEMA = {
+  names: ['rolerank'],
+  subCommands: {}
+} as const;
+
+export class RoleRank implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ロール数ランキング',
-    commandName: ['rolerank'],
-    argsFormat: [],
     description: '各メンバーごとのロール数をランキング形式で表示するよ'
   };
+  readonly schema = SCHEMA;
 
   constructor(private readonly repo: MembersWithRoleRepository) {}
 
-  async on(event: MessageEvent, message: CommandMessage): Promise<void> {
+  async on(
+    event: MessageEvent,
+    message: CommandMessage<typeof SCHEMA>
+  ): Promise<void> {
     if (event !== 'CREATE') {
       return;
     }
-    if (!this.help.commandName.includes(message.args[0])) {
-      return;
-    }
+
     const members = await this.repo.fetchMembersWithRole();
     members.sort((a, b) => b.roles - a.roles);
     members.splice(5);

@@ -7,47 +7,60 @@ import type {
   MessageEvent,
   MessageResponseRunner
 } from '../../runner/index.js';
+import type { Param, Schema } from '../../model/command-schema.js';
+
 import type { EmbedPage } from '../../model/embed-message.js';
 
-export class HelpCommand implements CommandResponder {
+const SCHEMA = {
+  names: ['help', 'h'],
+  subCommands: {}
+} as const;
+
+export class HelpCommand implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'はらちょヘルプ',
-    description: 'こんな機能が搭載されてるよ',
-    commandName: ['help', 'h'],
-    argsFormat: []
+    description: 'こんな機能が搭載されてるよ'
   };
+  readonly schema = SCHEMA;
 
   constructor(
     private readonly runner: MessageResponseRunner<
-      CommandMessage,
-      CommandResponder
+      CommandMessage<Schema<Record<string, unknown>, readonly Param[]>>,
+      CommandResponder<Schema<Record<string, unknown>, readonly Param[]>>
     >
   ) {}
 
-  async on(event: MessageEvent, message: CommandMessage): Promise<void> {
-    const { args } = message;
-    if (event !== 'CREATE' || !this.help.commandName.includes(args[0])) {
+  async on(
+    event: MessageEvent,
+    message: CommandMessage<typeof SCHEMA>
+  ): Promise<void> {
+    if (event !== 'CREATE') {
       return;
     }
-    const helps = this.runner
+    const helpAndSchema = this.runner
       .getResponders()
-      .map((responder) => responder.help);
-    const pages: EmbedPage[] = helps.map((help) => this.buildField(help));
+      .map((responder) => ({ ...responder.help, ...responder.schema }));
+    const pages: EmbedPage[] = helpAndSchema.map((helpScheme) =>
+      this.buildField(helpScheme)
+    );
     await message.replyPages(pages);
   }
 
   private buildField({
     title,
     description,
-    commandName,
-    argsFormat
-  }: Readonly<HelpInfo>): EmbedPage {
-    const patternsWithDesc: [string, string][] = argsFormat.map(
-      ({ name, description, defaultValue }) => [
-        defaultValue === undefined ? `<${name}>` : `[${name}=${defaultValue}]`,
+    names,
+    params
+  }: Readonly<
+    HelpInfo & Schema<Record<string, unknown>, readonly Param[]>
+  >): EmbedPage {
+    const patternsWithDesc: [string, string][] =
+      params?.map(({ name, description, defaultValue }) => [
+        defaultValue === undefined
+          ? `<${name}>`
+          : `[${name}=${String(defaultValue)}]`,
         description
-      ]
-    );
+      ]) ?? [];
     const argsDecrptions = patternsWithDesc
       .map(([argPattern, description]) => `\`${argPattern}\`: ${description}`)
       .join('\n');
@@ -55,7 +68,7 @@ export class HelpCommand implements CommandResponder {
     return {
       title,
       description: `${description}
-\`${commandName.join('/')}${['', ...patterns].join(' ')}\`
+\`${names.join('/')}${['', ...patterns].join(' ')}\`
 ${argsDecrptions}`
     };
   }

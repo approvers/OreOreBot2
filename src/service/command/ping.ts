@@ -3,6 +3,7 @@ import type {
   CommandResponder,
   HelpInfo
 } from './command-message.js';
+
 import type { MessageEvent } from '../../runner/index.js';
 
 export interface Ping {
@@ -12,21 +13,25 @@ export interface Ping {
   avgPing: number;
 }
 
-export class PingCommand implements CommandResponder {
+const SCHEMA = {
+  names: ['ping', 'latency'],
+  subCommands: {}
+} as const;
+
+export class PingCommand implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'Ping',
-    description: '現在のレイテンシを表示するよ。',
-    commandName: ['ping', 'latency'],
-    argsFormat: []
+    description: '現在のレイテンシを表示するよ。'
   };
+  readonly schema = SCHEMA;
 
   constructor(private readonly ping: Ping) {}
 
-  async on(event: MessageEvent, message: CommandMessage): Promise<void> {
-    if (
-      event !== 'CREATE' ||
-      !this.help.commandName.includes(message.args[0])
-    ) {
+  async on(
+    event: MessageEvent,
+    message: CommandMessage<typeof SCHEMA>
+  ): Promise<void> {
+    if (event !== 'CREATE') {
       return;
     }
 

@@ -3,6 +3,7 @@ import type {
   CommandResponder,
   HelpInfo
 } from './command-message.js';
+
 import type { MessageEvent } from '../../runner/index.js';
 
 export interface MemberStats {
@@ -10,28 +11,32 @@ export interface MemberStats {
   botMemberCount(): Promise<number>;
 }
 
-export class KokuseiChousa implements CommandResponder {
+const SCHEMA = {
+  names: [
+    'kokusei',
+    'kokusei-chousa',
+    'population',
+    'number',
+    'zinnkou',
+    'zinkou'
+  ],
+  subCommands: {}
+} as const;
+
+export class KokuseiChousa implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: '国勢調査',
-    description: '限界開発鯖の人類の数、Botの数とBot率を算出するよ。',
-    commandName: [
-      'kokusei',
-      'kokusei-chousa',
-      'population',
-      'number',
-      'zinnkou',
-      'zinkou'
-    ],
-    argsFormat: []
+    description: '限界開発鯖の人類の数、Botの数とBot率を算出するよ。'
   };
+  readonly schema = SCHEMA;
 
   constructor(private readonly stats: MemberStats) {}
 
-  async on(event: MessageEvent, message: CommandMessage): Promise<void> {
-    if (
-      event !== 'CREATE' ||
-      !this.help.commandName.includes(message.args[0])
-    ) {
+  async on(
+    event: MessageEvent,
+    message: CommandMessage<typeof SCHEMA>
+  ): Promise<void> {
+    if (event !== 'CREATE') {
       return;
     }
 

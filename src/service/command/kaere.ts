@@ -10,6 +10,7 @@ import type {
 } from './command-message.js';
 import { Reservation, ReservationTime } from '../../model/reservation.js';
 import { addDays, isBefore, setHours, setMinutes, setSeconds } from 'date-fns';
+
 import type { EmbedMessage } from '../../model/embed-message.js';
 import type { Snowflake } from '../../model/id.js';
 import type { VoiceConnectionFactory } from '../voice-connection.js';
@@ -80,9 +81,53 @@ export interface ReservationRepository {
 }
 
 const timeFormatErrorMessage: EmbedMessage = {
-  title: '日時の形式が読めないよ。',
+  title: '時刻の形式として読めないよ。',
   description: '`HH:MM` の形式で指定してくれないかな。'
 };
+
+const TIME_OPTIONS = [
+  {
+    type: 'STRING',
+    name: '時刻',
+    description: '[HH]:[MM] 形式の時刻'
+  }
+] as const;
+
+const SCHEMA = {
+  names: ['kaere'],
+  subCommands: {
+    bed: {
+      type: 'SUB_COMMAND_GROUP',
+      subCommands: {
+        enable: {
+          type: 'SUB_COMMAND'
+        },
+        disable: {
+          type: 'SUB_COMMAND'
+        },
+        status: {
+          type: 'SUB_COMMAND'
+        }
+      }
+    },
+    reserve: {
+      type: 'SUB_COMMAND_GROUP',
+      subCommands: {
+        add: {
+          type: 'SUB_COMMAND',
+          params: TIME_OPTIONS
+        },
+        cancel: {
+          type: 'SUB_COMMAND',
+          params: TIME_OPTIONS
+        },
+        list: {
+          type: 'SUB_COMMAND'
+        }
+      }
+    }
+  }
+} as const;
 
 /**
  * `kaere` コマンドでボイスチャンネルの参加者に切断を促す機能。
@@ -91,20 +136,13 @@ const timeFormatErrorMessage: EmbedMessage = {
  * @class KaereCommand
  * @implements {MessageEventResponder<CommandMessage>}
  */
-export class KaereCommand implements CommandResponder {
+export class KaereCommand implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'Kaere一葉',
     description:
-      'VC内の人類に就寝を促すよ。引数なしで即起動。どの方式でもコマンド発行者がVCに居ないと動かないよ',
-    commandName: ['kaere'],
-    argsFormat: [
-      {
-        name: 'モード',
-        description:
-          '`bed` または `reserve` を指定して、サブコマンドを続けてね。詳しいヘルプは `kaere help` まで'
-      }
-    ]
+      'VC内の人類に就寝を促すよ。引数なしで即起動。どの方式でもコマンド発行者がVCに居ないと動かないよ'
   };
+  readonly schema = SCHEMA;
 
   constructor(
     private readonly deps: {
@@ -122,15 +160,15 @@ export class KaereCommand implements CommandResponder {
     });
   }
 
-  async on(event: MessageEvent, message: CommandMessage): Promise<void> {
+  async on(
+    event: MessageEvent,
+    message: CommandMessage<typeof SCHEMA>
+  ): Promise<void> {
     if (event !== 'CREATE') {
       return;
     }
     const { args } = message;
-    if (args.length < 1 || args[0] !== 'kaere') {
-      return;
-    }
-    if (args.length === 1) {
+    if (!args.subCommand) {
       const roomId = message.senderVoiceChannelId;
       if (!roomId) {
         await message.reply({
@@ -143,23 +181,12 @@ export class KaereCommand implements CommandResponder {
       await this.start(message.senderGuildId, roomId);
       return;
     }
-    switch (args[1]) {
+    switch (args.subCommand.name) {
       case 'bed':
         return this.handleBedCommand(message);
       case 'reserve':
         return this.handleReserveCommand(message);
     }
-    await message.reply({
-      title: 'Kaereヘルプ',
-      description: `
-引数無しだと即座にKaereするよ。
-- \`bed enable\`/\`bed disable\`: 強制切断モードの有効/無効化
-- \`bed status\`: 強制切断モードの状態の確認
-- \`reserve add [HH]:[MM]\`: Kaereの開始を指定時刻で予約
-- \`reserve cancel [HH]:[MM]\`: 指定時刻の予約をキャンセル
-- \`reserve list\`: 予約リストの一覧
-`
-    });
   }
 
   private bedModeEnabled = false;
@@ -191,8 +218,10 @@ export class KaereCommand implements CommandResponder {
     this.doingKaere = false;
   }
 
-  private async handleBedCommand(message: CommandMessage): Promise<void> {
-    switch (message.args[2]) {
+  private async handleBedCommand(
+    message: CommandMessage<typeof SCHEMA>
+  ): Promise<void> {
+    switch (message.args.subCommand.subCommand.name) {
       case 'enable':
         this.bedModeEnabled = true;
         await message.reply({
@@ -222,8 +251,10 @@ export class KaereCommand implements CommandResponder {
     });
   }
 
-  private async handleReserveCommand(message: CommandMessage): Promise<void> {
-    switch (message.args[2]) {
+  private async handleReserveCommand(
+    message: CommandMessage<typeof SCHEMA>
+  ): Promise<void> {
+    switch (message.args.subCommand.subCommand.name) {
       case 'add':
         {
           const roomId = message.senderVoiceChannelId;
@@ -234,7 +265,9 @@ export class KaereCommand implements CommandResponder {
             });
             return;
           }
-          const time = ReservationTime.fromHoursMinutes(message.args[3]);
+          const time = ReservationTime.fromHoursMinutes(
+            message.args.subCommand.subCommand.params[0]
+          );
           if (!time) {
             await message.reply(timeFormatErrorMessage);
             return;
@@ -260,7 +293,9 @@ export class KaereCommand implements CommandResponder {
         return;
       case 'cancel':
         {
-          const time = ReservationTime.fromHoursMinutes(message.args[3]);
+          const time = ReservationTime.fromHoursMinutes(
+            message.args.subCommand.subCommand.params[0]
+          );
           if (!time) {
             await message.reply(timeFormatErrorMessage);
             return;

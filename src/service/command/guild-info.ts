@@ -3,6 +3,7 @@ import type {
   CommandResponder,
   HelpInfo
 } from './command-message.js';
+
 import type { MessageEvent } from '../../runner/message.js';
 import type { Snowflake } from '../../model/id.js';
 import { createTimestamp } from '../../model/create-timestamp.js';
@@ -69,21 +70,25 @@ export interface GuildStatsRepository {
   fetchGuildStats(): Promise<GuildStats | null>;
 }
 
-export class GuildInfo implements CommandResponder {
+const SCHEMA = {
+  names: ['guildinfo', 'serverinfo'],
+  subCommands: {}
+} as const;
+
+export class GuildInfo implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ギルド秘書艦',
-    description: '限界開発鯖の情報を持ってくるよ',
-    commandName: ['guildinfo', 'serverinfo'],
-    argsFormat: []
+    description: '限界開発鯖の情報を持ってくるよ'
   };
+  readonly schema = SCHEMA;
 
   constructor(private readonly repo: GuildStatsRepository) {}
 
-  async on(event: MessageEvent, message: CommandMessage): Promise<void> {
-    if (
-      event !== 'CREATE' ||
-      !this.help.commandName.includes(message.args[0])
-    ) {
+  async on(
+    event: MessageEvent,
+    message: CommandMessage<typeof SCHEMA>
+  ): Promise<void> {
+    if (event !== 'CREATE') {
       return;
     }
 

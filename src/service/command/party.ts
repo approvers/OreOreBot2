@@ -13,6 +13,7 @@ import type {
   VoiceConnectionFactory
 } from '../voice-connection.js';
 import { addHours, getMinutes, setMinutes, setSeconds } from 'date-fns';
+
 import type { EmbedMessage } from '../../model/embed-message.js';
 
 const partyStarting: EmbedMessage = {
@@ -50,6 +51,44 @@ export interface RandomGenerator {
   pick<T>(array: readonly T[]): T;
 }
 
+const SCHEMA = {
+  names: ['party'],
+  subCommands: {
+    enable: {
+      type: 'SUB_COMMAND'
+    },
+    disable: {
+      type: 'SUB_COMMAND'
+    },
+    status: {
+      type: 'SUB_COMMAND'
+    },
+    time: {
+      type: 'SUB_COMMAND',
+      params: [
+        {
+          type: 'INTEGER',
+          name: '開始する分',
+          description:
+            '次にゲリラを始める分を指定できるよ。指定しなかったり負数を指定したらランダムになるよ。',
+          defaultValue: -1
+        }
+      ]
+    },
+    set: {
+      type: 'SUB_COMMAND',
+      params: [
+        {
+          type: 'CHOICES',
+          name: '曲',
+          description: '次の Party で再生する曲を指定できるよ。',
+          choices: assetKeys
+        }
+      ]
+    }
+  }
+} as const;
+
 /**
  * `party` コマンドで押し掛けPartyする機能。
  *
@@ -57,16 +96,13 @@ export interface RandomGenerator {
  * @class PartyCommand
  * @implements {MessageEventResponder<CommandMessage>}
  */
-export class PartyCommand implements CommandResponder {
+export class PartyCommand implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'Party一葉',
     description:
-      'VC内の人類に押しかけてPartyを開くよ。引数なしで即起動。どの方式でもコマンド発行者がVCに居ないと動かないよ',
-    commandName: ['party'],
-    argsFormat: [
-      { name: 'サブコマンド', description: '詳しくは `party help` まで' }
-    ]
+      'VC内の人類に押しかけてPartyを開くよ。引数なしで即起動。どの方式でもコマンド発行者がVCに居ないと動かないよ'
   };
+  readonly schema = SCHEMA;
 
   constructor(
     private readonly deps: {
@@ -81,19 +117,19 @@ export class PartyCommand implements CommandResponder {
   private connection: VoiceConnection<AssetKey> | null = null;
   private randomizedEnabled = false;
 
-  async on(event: MessageEvent, message: CommandMessage): Promise<void> {
+  async on(
+    event: MessageEvent,
+    message: CommandMessage<typeof SCHEMA>
+  ): Promise<void> {
     if (event !== 'CREATE') {
       return;
     }
     const { args } = message;
-    if (args.length < 1 || args[0] !== 'party') {
-      return;
-    }
-    if (args.length === 1) {
+    if (!args.subCommand) {
       await this.startPartyImmediately(message);
       return;
     }
-    switch (args[1]) {
+    switch (args.subCommand.name) {
       case 'disable':
         this.stopRandomized();
         await message.reply({ title: 'ゲリラを無効化しておいたよ。' });
@@ -109,9 +145,9 @@ export class PartyCommand implements CommandResponder {
         return;
       case 'time':
         {
-          let minutes: number;
-          if (args.length === 3) {
-            minutes = parseInt(args[2], 10) % 60;
+          let [minutes] = args.subCommand.params;
+          if (0 <= args.subCommand.params[0]) {
+            minutes = minutes % 60;
           } else {
             minutes = this.deps.random.minutes();
           }
@@ -123,31 +159,12 @@ export class PartyCommand implements CommandResponder {
         return;
       case 'set':
         {
-          const musicKey = args[2];
-          if (!(assetKeys as readonly string[]).includes(musicKey)) {
-            await message.reply({
-              title: 'BGMを設定できなかった。',
-              description: `以下のいずれかを指定してね。\n${assetKeys
-                .map((key) => `- ${key}`)
-                .join('\n')}`
-            });
-            return;
-          }
-          this.nextMusicKey = musicKey as AssetKey;
+          const musicKey = assetKeys[args.subCommand.params[0]];
+          this.nextMusicKey = musicKey;
           await message.reply({ title: 'BGMを設定したよ。' });
         }
         return;
     }
-    await message.reply({
-      title: 'Party一葉ヘルプ',
-      description: `
-引数無しだと即座にPartyするよ。
-- \`enable\`/\`disable\`: ゲリラモードの有効/無効化
-- \`status\`: ゲリラモードの状態の確認
-- \`time\`: ゲリラモードの参加時刻を上書き指定
-- \`set\`: 次のPartyの曲を上書き指定
-`
-    });
   }
 
   private generateNextKey(): AssetKey {
@@ -160,7 +177,7 @@ export class PartyCommand implements CommandResponder {
   }
 
   private async startPartyImmediately(
-    message: CommandMessage
+    message: CommandMessage<typeof SCHEMA>
   ): Promise<'BREAK' | 'CONTINUE'> {
     if (this.connection) {
       return 'BREAK';
@@ -199,7 +216,10 @@ export class PartyCommand implements CommandResponder {
     return setSeconds(nextTime, 0);
   }
 
-  private startPartyAt(minutes: number, message: CommandMessage) {
+  private startPartyAt(
+    minutes: number,
+    message: CommandMessage<typeof SCHEMA>
+  ) {
     this.deps.scheduleRunner.runOnNextTime(
       'party-once',
       async () => {
@@ -210,7 +230,7 @@ export class PartyCommand implements CommandResponder {
     );
   }
 
-  private activateRandomized(message: CommandMessage) {
+  private activateRandomized(message: CommandMessage<typeof SCHEMA>) {
     this.randomizedEnabled = true;
     this.deps.scheduleRunner.runOnNextTime(
       'party-random',
