@@ -107,12 +107,15 @@ export type ParamsValues<S> = S extends readonly [infer H, ...infer R]
  */
 export interface SubCommand<P> {
   type: 'SUB_COMMAND';
-  params: P;
+  params?: P;
 }
 
 export const isValidSubCommand = <P extends readonly Param[]>(
   sc: SubCommand<P>
 ): boolean => {
+  if (!sc.params) {
+    return true;
+  }
   const lastRequiredParam = sc.params.reduce(
     (prev, curr, idx) => ('defaultValue' in curr ? prev : idx),
     0
@@ -135,7 +138,7 @@ export const assertValidSubCommand = <P extends readonly Param[]>(
 
 export type SubCommandEntries = Record<
   string,
-  SubCommand<Param[]> | SubCommandGroup<Record<string, unknown>>
+  SubCommand<readonly Param[]> | SubCommandGroup<Record<string, unknown>>
 >;
 
 /**
