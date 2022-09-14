@@ -30,7 +30,8 @@ export class UserInfo implements CommandResponder {
     argsFormat: [
       {
         name: 'ユーザーID',
-        description: 'このIDのロールを調べるよ'
+        description:
+          'このIDのロールを調べるよ。`me`と入力すると自分が対象になるよ。'
       }
     ]
   };
@@ -42,7 +43,8 @@ export class UserInfo implements CommandResponder {
       return;
     }
 
-    const [command, userId] = message.args;
+    const [command, arg] = message.args;
+    const userId = fetchUserId(arg, message.senderId);
 
     if (!this.help.commandName.includes(command)) {
       return;
@@ -131,6 +133,12 @@ export class UserInfo implements CommandResponder {
   }
 }
 
+function fetchUserId(arg: string, senderId: string): string {
+  if (arg === 'me') {
+    return senderId;
+  }
+  return arg;
+}
 function createHoistRoleDisplay(hoistRoleId: Snowflake | undefined): string {
   if (!hoistRoleId) {
     return 'なし';

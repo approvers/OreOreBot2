@@ -5,7 +5,7 @@ import { createMockMessage } from './command-message.js';
 
 describe('UserInfo', () => {
   afterEach(() => {
-    vi.resetAllMocks();
+    vi.restoreAllMocks();
   });
 
   const repo: UserStatsRepository = {
@@ -35,6 +35,70 @@ describe('UserInfo', () => {
       createMockMessage(
         {
           args: ['userinfo', '586824421470109716']
+        },
+        fn
+      )
+    );
+
+    expect(fn).toHaveBeenCalledWith({
+      title: 'ユーザーの情報',
+      description: '司令官、頼まれていた <@586824421470109716> の情報だよ',
+      fields: [
+        {
+          name: 'ID',
+          value: '586824421470109716',
+          inline: true
+        },
+        {
+          name: '表示名',
+          value: 'める',
+          inline: true
+        },
+        {
+          name: 'ユーザー名+Discord Tag',
+          value: 'm2en#0092',
+          inline: true
+        },
+        {
+          name: 'プロフィールカラー',
+          value: 'f08f8f',
+          inline: true
+        },
+        {
+          name: 'ユーザ種別',
+          value: '人類',
+          inline: true
+        },
+        {
+          name: 'メンバーリストの分類ロール',
+          value: '<@&865951894173515786>',
+          inline: true
+        },
+        {
+          name: 'サーバー参加日時',
+          value: `<t:20050>(<t:20050:R>)`,
+          inline: true
+        },
+        {
+          name: 'アカウント作成日時',
+          value: `<t:20050>(<t:20050:R>)`,
+          inline: true
+        }
+      ]
+    });
+    expect(fetchStats).toHaveBeenCalledOnce();
+  });
+
+  it('gets info self', async () => {
+    const fetchStats = vi.spyOn(repo, 'fetchUserStats');
+    const fn = vi.fn();
+
+    await userInfo.on(
+      'CREATE',
+      createMockMessage(
+        {
+          args: ['userinfo', 'me'],
+          senderId: '586824421470109716' as Snowflake
         },
         fn
       )
