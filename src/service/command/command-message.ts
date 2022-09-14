@@ -105,7 +105,7 @@ export type CommandResponder<S extends Schema<Record<string, unknown>>> =
 
 export const createMockMessage = <S extends Schema<Record<string, unknown>>>(
   args: Readonly<ParsedSchema<S>>,
-  reply?: (message: EmbedMessage) => Promise<SentMessage | void>,
+  reply?: (message: EmbedMessage) => void | Promise<SentMessage | void>,
   partial?: Readonly<Partial<Omit<CommandMessage<S>, 'reply'>>>
 ): CommandMessage<S> => ({
   senderId: '279614913129742338' as Snowflake,
