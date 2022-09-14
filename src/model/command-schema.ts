@@ -105,15 +105,14 @@ export type ParamValue<P extends Param> = P extends BooleanParam
   ? string[]
   : string;
 
-export type ParamsValues<S> = (
-  S extends () => readonly Param[] extends () => infer R ? R : never
-    ? true
-    : false
-) extends (
-  readonly Param[] extends () => S extends () => infer R ? R : never
-    ? true
-    : false
-)
+// From https://github.com/type-challenges/type-challenges/blob/48346888871d9fdbbd7b315ad73a529987dd59a1/utils/index.d.ts#L7-L9
+type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y
+  ? 1
+  : 2
+  ? true
+  : false;
+
+export type ParamsValues<S> = Equal<S, readonly Param[]> extends true
   ? unknown[]
   : S extends readonly [infer H, ...infer R]
   ? H extends Param
