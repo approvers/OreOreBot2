@@ -7,6 +7,7 @@ import {
   MessageActionRowComponentBuilder
 } from 'discord.js';
 import type { Middleware, RawMessage } from '../middleware.js';
+import { Schema, makeError } from '../../../model/command-schema.js';
 
 import type { BoldItalicCop } from '../../../service/bold-italic-cop.js';
 import type { CommandMessage } from '../../../service/command/command-message.js';
@@ -14,11 +15,10 @@ import type { DeletionObservable } from '../../../service/deletion-repeater.js';
 import type { EditingObservable } from '../../../service/difference-detector.js';
 import type { EmbedPage } from '../../../model/embed-message.js';
 import type { EmojiSeqObservable } from '../../../service/emoji-seq-react.js';
-import type { Schema } from '../../../model/command-schema.js';
 import type { Snowflake } from '../../../model/id.js';
 import type { TypoObservable } from '../../../service/command/typo-record.js';
 import { convertEmbed } from '../../embed-convert.js';
-import { parseStringsOrThrow } from './message-convert/schema.js';
+import { parseStrings } from './message-convert/schema.js';
 
 const getAuthorSnowflake = (message: RawMessage): Snowflake =>
   (message.author?.id || 'unknown') as Snowflake;
@@ -161,7 +161,12 @@ export const prefixMiddleware =
       throw new Error('the message does not have the prefix');
     }
     const args = message.content?.trim().slice(prefix.length).split(SPACES);
-    const parsedArgs = parseStringsOrThrow(args, schema);
+    const [tag, parsedArgs] = parseStrings(args, schema);
+    if (tag === 'Err') {
+      const error = makeError(parsedArgs);
+      await message.reply(error.message);
+      throw error;
+    }
     const command: CommandMessage<S> = {
       senderId: getAuthorSnowflake(message),
       senderGuildId: message.guildId as Snowflake,
