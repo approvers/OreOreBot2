@@ -38,7 +38,10 @@ export class Meme implements CommandResponder<typeof SCHEMA> {
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const { args } = message;
-    const [[commandName, ...commandArgs]] = args.params;
+    const {
+      name: commandName,
+      params: [commandArgs]
+    } = args;
     const meme = memesByCommandName[commandName];
     if (!meme) {
       return;
