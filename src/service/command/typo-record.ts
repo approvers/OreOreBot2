@@ -154,13 +154,7 @@ export class TypoReporter implements CommandResponder<typeof SCHEMA> {
     );
   }
 
-  async on(
-    event: MessageEvent,
-    message: CommandMessage<typeof SCHEMA>
-  ): Promise<void> {
-    if (event !== 'CREATE') {
-      return;
-    }
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const { senderId, senderName, args } = message;
 
     if (!args.subCommand) {

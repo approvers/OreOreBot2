@@ -2,7 +2,7 @@ import { RoleCreate, RoleCreateManager } from './role-create.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { createMockMessage } from './command-message.js';
-import { parseStringsOrThrow } from '../../adaptor/proxy/middleware/message-convert/schema.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 
 describe('Create a role', () => {
   afterEach(() => {
@@ -21,7 +21,6 @@ describe('Create a role', () => {
     const fn = vi.fn();
 
     await createRole.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(
           ['rolecreate', newRoleName, newRoleColor],
@@ -49,7 +48,6 @@ describe('Create a role', () => {
     const fn = vi.fn();
 
     await createRole.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(
           ['rolecreate', newRoleName, newRoleColor],
@@ -77,7 +75,6 @@ describe('Create a role', () => {
     const fn = vi.fn();
 
     await createRole.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(
           ['rolecreate', newRoleName, newRoleColor],
@@ -104,7 +101,6 @@ describe('Create a role', () => {
     const fn = vi.fn();
 
     await createRole.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(
           ['rolecreate', newRoleName, 'fffffff'],
@@ -128,7 +124,6 @@ describe('Create a role', () => {
     const fn = vi.fn();
 
     await createRole.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(
           ['rolecreate', newRoleName, '#ffffff'],

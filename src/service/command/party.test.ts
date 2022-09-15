@@ -4,7 +4,7 @@ import { afterAll, describe, expect, it, vi } from 'vitest';
 import type { EmbedMessage } from '../../model/embed-message.js';
 import { ScheduleRunner } from '../../runner/index.js';
 import { createMockMessage } from './command-message.js';
-import { parseStringsOrThrow } from '../../adaptor/proxy/middleware/message-convert/schema.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 
 const random: RandomGenerator = {
   minutes: () => 42,
@@ -26,7 +26,6 @@ describe('party ichiyo', () => {
 
   it('with no options', async () => {
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['party'], responder.schema),
         (message) => {
@@ -41,7 +40,6 @@ describe('party ichiyo', () => {
 
   it('use case of party', async () => {
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['party', 'status'], responder.schema),
         (message) => {
@@ -52,7 +50,6 @@ describe('party ichiyo', () => {
       )
     );
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['party', 'enable'], responder.schema),
         (message) => {
@@ -63,7 +60,6 @@ describe('party ichiyo', () => {
       )
     );
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['party', 'status'], responder.schema),
         (message) => {
@@ -74,7 +70,6 @@ describe('party ichiyo', () => {
       )
     );
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['party', 'disable'], responder.schema),
         (message) => {
@@ -85,7 +80,6 @@ describe('party ichiyo', () => {
       )
     );
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['party', 'status'], responder.schema),
         (message) => {
@@ -100,7 +94,6 @@ describe('party ichiyo', () => {
   it('party time', async () => {
     const fn = vi.fn(() => Promise.resolve());
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['party', 'time'], responder.schema),
         fn
@@ -114,7 +107,6 @@ describe('party ichiyo', () => {
   it('party specified time', async () => {
     const fn = vi.fn(() => Promise.resolve());
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['party', 'time', '36'], responder.schema),
         fn
@@ -129,7 +121,6 @@ describe('party ichiyo', () => {
     const fn = vi.fn();
     const reply = vi.fn<[EmbedMessage]>(() => Promise.resolve({ edit: fn }));
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['party', 'enable'], responder.schema),
         reply,

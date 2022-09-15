@@ -2,7 +2,7 @@ import { RoleInfo, RoleStatsRepository } from './role-info.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { createMockMessage } from './command-message.js';
-import { parseStringsOrThrow } from '../../adaptor/proxy/middleware/message-convert/schema.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 
 describe('RoleRank', () => {
   afterEach(() => {
@@ -29,7 +29,6 @@ describe('RoleRank', () => {
     const fn = vi.fn();
 
     await roleInfo.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['roleinfo', '101'], roleInfo.schema),
         fn
@@ -76,7 +75,6 @@ describe('RoleRank', () => {
     const fn = vi.fn();
 
     await roleInfo.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['roleinfo', '100'], roleInfo.schema),
         fn
@@ -95,7 +93,6 @@ describe('RoleRank', () => {
     const fn = vi.fn();
 
     await roleInfo.on(
-      'DELETE',
       createMockMessage(
         parseStringsOrThrow(['roleinfo', '101'], roleInfo.schema),
         fn

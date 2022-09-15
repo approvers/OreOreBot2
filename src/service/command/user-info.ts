@@ -4,7 +4,6 @@ import type {
   HelpInfo
 } from './command-message.js';
 
-import type { MessageEvent } from '../../runner/message.js';
 import type { Snowflake } from '../../model/id.js';
 import { createTimestamp } from '../../model/create-timestamp.js';
 
@@ -46,14 +45,7 @@ export class UserInfo implements CommandResponder<typeof SCHEMA> {
 
   constructor(private readonly repo: UserStatsRepository) {}
 
-  async on(
-    event: MessageEvent,
-    message: CommandMessage<typeof SCHEMA>
-  ): Promise<void> {
-    if (event !== 'CREATE') {
-      return;
-    }
-
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const [arg] = message.args.params;
     const userId = fetchUserId(arg, message.senderId);
 

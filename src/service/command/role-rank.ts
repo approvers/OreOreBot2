@@ -4,8 +4,6 @@ import type {
   HelpInfo
 } from './command-message.js';
 
-import type { MessageEvent } from '../../runner/message.js';
-
 export interface MemberWithRole {
   displayName: string;
   roles: number;
@@ -29,14 +27,7 @@ export class RoleRank implements CommandResponder<typeof SCHEMA> {
 
   constructor(private readonly repo: MembersWithRoleRepository) {}
 
-  async on(
-    event: MessageEvent,
-    message: CommandMessage<typeof SCHEMA>
-  ): Promise<void> {
-    if (event !== 'CREATE') {
-      return;
-    }
-
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const members = await this.repo.fetchMembersWithRole();
     members.sort((a, b) => b.roles - a.roles);
     members.splice(5);

@@ -3,7 +3,7 @@ import { expect, it, vi } from 'vitest';
 
 import { JudgingCommand } from './judging.js';
 import { createMockMessage } from './command-message.js';
-import { parseStringsOrThrow } from '../../adaptor/proxy/middleware/message-convert/schema.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 
 it('use case of jd', async () => {
   const responder = new JudgingCommand({
@@ -13,7 +13,6 @@ it('use case of jd', async () => {
   const fn = vi.fn();
 
   await responder.on(
-    'CREATE',
     createMockMessage(
       parseStringsOrThrow(['jd'], responder.schema),
       (embed) => {
@@ -47,7 +46,6 @@ it('use case of judge', async () => {
   const fn = vi.fn();
 
   await responder.on(
-    'CREATE',
     createMockMessage(
       parseStringsOrThrow(['judge', '1', 'WWW'], responder.schema),
       (embed) => {
@@ -74,7 +72,6 @@ it('max number of cases', async () => {
   });
 
   await responder.on(
-    'CREATE',
     createMockMessage(
       parseStringsOrThrow(['jd', '1'], responder.schema),
       (embed) => {
@@ -86,7 +83,6 @@ it('max number of cases', async () => {
     )
   );
   await responder.on(
-    'CREATE',
     createMockMessage(
       parseStringsOrThrow(['jd', '64'], responder.schema),
       (embed) => {

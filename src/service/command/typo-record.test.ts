@@ -11,7 +11,7 @@ import EventEmitter from 'node:events';
 import { ScheduleRunner } from '../../runner/index.js';
 import type { Snowflake } from '../../model/id.js';
 import { createMockMessage } from './command-message.js';
-import { parseStringsOrThrow } from '../../adaptor/proxy/middleware/message-convert/schema.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 
 class MockRepository extends EventEmitter implements TypoRepository {
   private db = new InMemoryTypoRepository();
@@ -72,9 +72,7 @@ it('must not react', async () => {
 
 describe('typo record command', () => {
   const clock = new MockClock(new Date(0));
-  const db = new InMemoryTypoRepository();
   const runner = new ScheduleRunner(clock);
-  const responder = new TypoReporter(db, clock, runner);
 
   afterAll(() => runner.killAll());
 
@@ -87,7 +85,6 @@ describe('typo record command', () => {
 
     const responder = new TypoReporter(db, clock, runner);
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['typo'], responder.schema),
         (message) => {
@@ -99,7 +96,6 @@ describe('typo record command', () => {
       )
     );
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(
           ['typo', 'by', '279614913129742338'],
@@ -115,22 +111,12 @@ describe('typo record command', () => {
     );
   });
 
-  it('must not reply', async () => {
-    const fn = vi.fn();
-    await responder.on(
-      'DELETE',
-      createMockMessage(parseStringsOrThrow(['typo'], responder.schema), fn)
-    );
-    expect(fn).not.toHaveBeenCalled();
-  });
-
   it('clear typos on next day', async () => {
     const db = new InMemoryTypoRepository();
     await db.addTypo('279614913129742338' as Snowflake, 'foo');
     await db.addTypo('279614913129742338' as Snowflake, 'hoge');
     const responder = new TypoReporter(db, clock, runner);
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['typo'], responder.schema),
         (message) => {
@@ -148,7 +134,6 @@ describe('typo record command', () => {
     runner.consume();
 
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['typo'], responder.schema),
         (message) => {

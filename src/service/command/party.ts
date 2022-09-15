@@ -1,8 +1,4 @@
-import type {
-  Clock,
-  MessageEvent,
-  ScheduleRunner
-} from '../../runner/index.js';
+import type { Clock, ScheduleRunner } from '../../runner/index.js';
 import type {
   CommandMessage,
   CommandResponder,
@@ -117,13 +113,7 @@ export class PartyCommand implements CommandResponder<typeof SCHEMA> {
   private connection: VoiceConnection<AssetKey> | null = null;
   private randomizedEnabled = false;
 
-  async on(
-    event: MessageEvent,
-    message: CommandMessage<typeof SCHEMA>
-  ): Promise<void> {
-    if (event !== 'CREATE') {
-      return;
-    }
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const { args } = message;
     if (!args.subCommand) {
       await this.startPartyImmediately(message);

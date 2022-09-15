@@ -4,8 +4,6 @@ import type {
   HelpInfo
 } from './command-message.js';
 
-import type { MessageEvent } from '../../runner/message.js';
-
 export type RoleIcon =
   | {
       isUnicode: true;
@@ -49,13 +47,7 @@ export class RoleInfo implements CommandResponder<typeof SCHEMA> {
 
   constructor(private readonly repo: RoleStatsRepository) {}
 
-  async on(
-    event: MessageEvent,
-    message: CommandMessage<typeof SCHEMA>
-  ): Promise<void> {
-    if (event !== 'CREATE') {
-      return;
-    }
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const [roleId] = message.args.params;
 
     const stats = await this.repo.fetchStats(roleId);

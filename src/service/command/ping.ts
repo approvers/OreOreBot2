@@ -4,8 +4,6 @@ import type {
   HelpInfo
 } from './command-message.js';
 
-import type { MessageEvent } from '../../runner/index.js';
-
 export interface Ping {
   /**
    * WebSocketのping値
@@ -27,14 +25,7 @@ export class PingCommand implements CommandResponder<typeof SCHEMA> {
 
   constructor(private readonly ping: Ping) {}
 
-  async on(
-    event: MessageEvent,
-    message: CommandMessage<typeof SCHEMA>
-  ): Promise<void> {
-    if (event !== 'CREATE') {
-      return;
-    }
-
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     await message.reply({
       title: 'Ping',
       url: 'https://discordstatus.com/',

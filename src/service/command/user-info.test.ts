@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import type { Snowflake } from '../../model/id.js';
 import { createMockMessage } from './command-message.js';
-import { parseStringsOrThrow } from '../../adaptor/proxy/middleware/message-convert/schema.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 
 describe('UserInfo', () => {
   afterEach(() => {
@@ -33,7 +33,6 @@ describe('UserInfo', () => {
     const fn = vi.fn();
 
     await userInfo.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(
           ['userinfo', '586824421470109716'],
@@ -97,7 +96,6 @@ describe('UserInfo', () => {
     const fn = vi.fn();
 
     await userInfo.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['userinfo'], userInfo.schema),
         fn,
@@ -161,7 +159,6 @@ describe('UserInfo', () => {
     const fn = vi.fn();
 
     await userInfo.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(
           ['userinfo', '354996809447505920'],

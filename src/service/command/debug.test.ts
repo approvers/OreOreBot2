@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import type { Snowflake } from '../../model/id.js';
 import { createMockMessage } from './command-message.js';
-import { parseStringsOrThrow } from '../../adaptor/proxy/middleware/message-convert/schema.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 
 describe('debug', () => {
   afterEach(() => {
@@ -21,7 +21,6 @@ describe('debug', () => {
       .mockImplementation(() => Promise.resolve('🅰️ Hoge'));
     const reply = vi.fn();
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['debug', '1423523'], responder.schema),
         reply,
@@ -47,7 +46,6 @@ console.log(\`Hello, \${name}!\`);
       );
     const reply = vi.fn();
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['debug', '1423523'], responder.schema),
         reply,
@@ -73,7 +71,6 @@ console.log(\`Hello, \${name}!\`);
     const getMessageContent = vi.spyOn(repo, 'getMessageContent');
     const reply = vi.fn();
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['debug', '1423523'], responder.schema),
         reply,
@@ -87,22 +84,5 @@ console.log(\`Hello, \${name}!\`);
       title: '指定のメッセージが見つからなかったよ',
       description: 'そのメッセージがこのチャンネルにあるかどうか確認してね。'
     });
-  });
-
-  it('does not react on deletion', async () => {
-    const getMessageContent = vi.spyOn(repo, 'getMessageContent');
-    const reply = vi.fn();
-    await responder.on(
-      'DELETE',
-      createMockMessage(
-        parseStringsOrThrow(['debug', '1423523'], responder.schema),
-        reply,
-        {
-          senderChannelId: '8623233' as Snowflake
-        }
-      )
-    );
-    expect(getMessageContent).not.toHaveBeenCalled();
-    expect(reply).not.toHaveBeenCalled();
   });
 });

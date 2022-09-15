@@ -4,7 +4,6 @@ import type {
   HelpInfo
 } from './command-message.js';
 
-import type { MessageEvent } from '../../runner/message.js';
 import type { Snowflake } from '../../model/id.js';
 
 export interface MessageRepository {
@@ -38,14 +37,7 @@ export class DebugCommand implements CommandResponder<typeof SCHEMA> {
 
   constructor(private readonly repo: MessageRepository) {}
 
-  async on(
-    event: MessageEvent,
-    message: CommandMessage<typeof SCHEMA>
-  ): Promise<void> {
-    if (event !== 'CREATE') {
-      return;
-    }
-
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const {
       params: [messageId]
     } = message.args;

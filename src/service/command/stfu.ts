@@ -4,7 +4,6 @@ import type {
   HelpInfo
 } from './command-message.js';
 
-import type { MessageEvent } from '../../runner/index.js';
 import type { Snowflake } from '../../model/id.js';
 
 /**
@@ -56,14 +55,7 @@ export class SheriffCommand implements CommandResponder<typeof SCHEMA> {
 
   constructor(private readonly sheriff: Sheriff) {}
 
-  async on(
-    event: MessageEvent,
-    message: CommandMessage<typeof SCHEMA>
-  ): Promise<void> {
-    if (event !== 'CREATE') {
-      return;
-    }
-
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const [toRemove] = message.args.params;
     for (let i = 0; i < toRemove; ++i) {
       const channel = message.senderChannelId;

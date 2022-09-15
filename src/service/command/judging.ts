@@ -10,8 +10,6 @@ import {
   waitingJudgingEmoji
 } from '../../model/judging-status.js';
 
-import type { MessageEvent } from '../../runner/index.js';
-
 /**
  * `JudgingCommand` のための乱数生成器。
  *
@@ -83,14 +81,7 @@ export class JudgingCommand implements CommandResponder<typeof SCHEMA> {
 
   constructor(private readonly rng: RandomGenerator) {}
 
-  async on(
-    event: MessageEvent,
-    message: CommandMessage<typeof SCHEMA>
-  ): Promise<void> {
-    if (event !== 'CREATE') {
-      return;
-    }
-
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const {
       params: [count, result, errorFromStart]
     } = message.args;

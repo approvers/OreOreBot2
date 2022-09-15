@@ -11,16 +11,11 @@ import {
   MessageProxy,
   MessageUpdateProxy,
   VoiceRoomProxy,
-  middlewareForCommand,
   middlewareForMessage,
   middlewareForUpdateMessage,
   roleProxy
 } from '../adaptor/index.js';
 import { Client, GatewayIntentBits, version } from 'discord.js';
-import type {
-  CommandMessage,
-  CommandResponder
-} from '../service/command/command-message.js';
 import {
   EmojiResponseRunner,
   MessageResponseRunner,
@@ -40,7 +35,10 @@ import {
   allRoleResponder,
   registerAllCommandResponder
 } from '../service/index.js';
+
 import type { AssetKey } from '../service/command/party.js';
+import { CommandRunner } from '../runner/command.js';
+import { DiscordCommandProxy } from '../adaptor/proxy/command.js';
 import { DiscordMemberStats } from '../adaptor/discord/member-stats.js';
 import { DiscordMessageRepository } from '../adaptor/discord/message-repo.js';
 import { DiscordRoleManager } from '../adaptor/discord/role.js';
@@ -126,10 +124,8 @@ if (features.includes('MESSAGE_UPDATE')) {
 
 const scheduleRunner = new ScheduleRunner(clock);
 
-const commandRunner: MessageResponseRunner<CommandMessage, CommandResponder> =
-  new MessageResponseRunner(
-    new MessageProxy(client, middlewareForCommand(PREFIX))
-  );
+const commandProxy = new DiscordCommandProxy(client, PREFIX);
+const commandRunner = new CommandRunner(commandProxy);
 const stats = new DiscordMemberStats(client, GUILD_ID as Snowflake);
 
 // ほとんど変わらないことが予想され環境変数で管理する必要性が薄いので、ハードコードした。

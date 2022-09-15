@@ -4,10 +4,6 @@ import {
   RandomGenerator as PartyRng
 } from './command/party.js';
 import type { Clock, ScheduleRunner } from '../runner/schedule.js';
-import type {
-  CommandMessage,
-  CommandResponder
-} from './command/command-message.js';
 import { DebugCommand, MessageRepository } from './command/debug.js';
 import { GetVersionCommand, VersionFetcher } from './command/version.js';
 import { GuildInfo, GuildStatsRepository } from './command/guild-info.js';
@@ -28,9 +24,10 @@ import { Sheriff, SheriffCommand } from './command/stfu.js';
 import { TypoReporter, TypoRepository } from './command/typo-record.js';
 import { UserInfo, UserStatsRepository } from './command/user-info.js';
 
+import type { CommandResponder } from './command/command-message.js';
+import type { CommandRunner } from '../runner/command.js';
 import { HelpCommand } from './command/help.js';
 import { Meme } from './command/meme.js';
-import type { MessageResponseRunner } from '../runner/message.js';
 import type { VoiceConnectionFactory } from './voice-connection.js';
 
 export const registerAllCommandResponder = ({
@@ -60,10 +57,7 @@ export const registerAllCommandResponder = ({
   scheduleRunner: ScheduleRunner;
   random: PartyRng & RandomGenerator;
   roomController: VoiceRoomController;
-  commandRunner: MessageResponseRunner<
-    CommandMessage<Schema<Record<string, unknown>, readonly Param[]>>,
-    CommandResponder<Schema<Record<string, unknown>, readonly Param[]>>
-  >;
+  commandRunner: CommandRunner;
   stats: MemberStats;
   sheriff: Sheriff;
   ping: Ping;

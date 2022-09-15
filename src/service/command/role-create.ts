@@ -4,8 +4,6 @@ import type {
   HelpInfo
 } from './command-message.js';
 
-import type { MessageEvent } from '../../runner/message.js';
-
 export interface RoleCreateManager {
   createRole(
     roleName: string,
@@ -43,14 +41,7 @@ export class RoleCreate implements CommandResponder<typeof SCHEMA> {
 
   constructor(private readonly manager: RoleCreateManager) {}
 
-  async on(
-    event: MessageEvent,
-    message: CommandMessage<typeof SCHEMA>
-  ): Promise<void> {
-    if (event !== 'CREATE') {
-      return;
-    }
-
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const [roleName, roleColor] = message.args.params;
     if (!roleColor.match(HEX_FORMAT)) {
       await message.reply({

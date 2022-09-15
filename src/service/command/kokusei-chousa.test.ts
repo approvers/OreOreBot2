@@ -1,8 +1,8 @@
-import { expect, it, vi } from 'vitest';
+import { expect, it } from 'vitest';
 
 import { KokuseiChousa } from './kokusei-chousa.js';
 import { createMockMessage } from './command-message.js';
-import { parseStringsOrThrow } from '../../adaptor/proxy/middleware/message-convert/schema.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 
 it('use case of kokusei-chousa', async () => {
   const responder = new KokuseiChousa({
@@ -14,7 +14,6 @@ it('use case of kokusei-chousa', async () => {
     }
   });
   await responder.on(
-    'CREATE',
     createMockMessage(
       parseStringsOrThrow(['kokusei'], responder.schema),
       (message) => {
@@ -38,22 +37,4 @@ it('use case of kokusei-chousa', async () => {
       }
     )
   );
-});
-
-it('delete message', async () => {
-  const responder = new KokuseiChousa({
-    allMemberCount(): Promise<number> {
-      return Promise.resolve(100);
-    },
-    botMemberCount(): Promise<number> {
-      return Promise.resolve(50);
-    }
-  });
-  const fn = vi.fn();
-  await responder.on(
-    'DELETE',
-    createMockMessage(parseStringsOrThrow(['kokusei'], responder.schema), fn)
-  );
-
-  expect(fn).not.toHaveBeenCalled();
 });

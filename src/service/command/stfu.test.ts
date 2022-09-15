@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import type { Snowflake } from '../../model/id.js';
 import { createMockMessage } from './command-message.js';
-import { parseStringsOrThrow } from '../../adaptor/proxy/middleware/message-convert/schema.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 
 describe('stfu', () => {
   afterEach(() => {
@@ -18,7 +18,6 @@ describe('stfu', () => {
     const fn = vi.fn();
     const react = vi.fn<[string]>(() => Promise.resolve());
     await responder.on(
-      'CREATE',
       createMockMessage(parseStringsOrThrow(['stfu'], responder.schema), fn, {
         react
       })
@@ -37,7 +36,6 @@ describe('stfu', () => {
     const fn = vi.fn();
     const react = vi.fn<[string]>(() => Promise.resolve());
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['stfu', '25'], responder.schema),
         fn,
@@ -54,17 +52,5 @@ describe('stfu', () => {
       50
     );
     expect(react).toHaveBeenCalledWith('👌');
-  });
-
-  it('delete message', async () => {
-    const executeMessage = vi.spyOn(sheriff, 'executeMessage');
-    const fn = vi.fn();
-    await responder.on(
-      'DELETE',
-      createMockMessage(parseStringsOrThrow(['stfu'], responder.schema), fn)
-    );
-
-    expect(fn).not.toHaveBeenCalled();
-    expect(executeMessage).not.toHaveBeenCalled();
   });
 });

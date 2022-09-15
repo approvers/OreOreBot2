@@ -3,12 +3,9 @@ import type {
   CommandResponder,
   HelpInfo
 } from './command-message.js';
-import type {
-  MessageEvent,
-  MessageResponseRunner
-} from '../../runner/index.js';
 import type { Param, Schema } from '../../model/command-schema.js';
 
+import type { CommandRunner } from '../../runner/command.js';
 import type { EmbedPage } from '../../model/embed-message.js';
 
 const SCHEMA = {
@@ -23,20 +20,9 @@ export class HelpCommand implements CommandResponder<typeof SCHEMA> {
   };
   readonly schema = SCHEMA;
 
-  constructor(
-    private readonly runner: MessageResponseRunner<
-      CommandMessage<Schema<Record<string, unknown>, readonly Param[]>>,
-      CommandResponder<Schema<Record<string, unknown>, readonly Param[]>>
-    >
-  ) {}
+  constructor(private readonly runner: CommandRunner) {}
 
-  async on(
-    event: MessageEvent,
-    message: CommandMessage<typeof SCHEMA>
-  ): Promise<void> {
-    if (event !== 'CREATE') {
-      return;
-    }
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const helpAndSchema = this.runner
       .getResponders()
       .map((responder) => ({ ...responder.help, ...responder.schema }));
@@ -61,7 +47,7 @@ export class HelpCommand implements CommandResponder<typeof SCHEMA> {
           : `[${name}=${String(defaultValue)}]`,
         description
       ]) ?? [];
-    const argsDecrptions = patternsWithDesc
+    const argsDescriptions = patternsWithDesc
       .map(([argPattern, description]) => `\`${argPattern}\`: ${description}`)
       .join('\n');
     const patterns = patternsWithDesc.map(([pattern]) => pattern);
@@ -69,7 +55,7 @@ export class HelpCommand implements CommandResponder<typeof SCHEMA> {
       title,
       description: `${description}
 \`${names.join('/')}${['', ...patterns].join(' ')}\`
-${argsDecrptions}`
+${argsDescriptions}`
     };
   }
 }

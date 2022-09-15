@@ -1,7 +1,6 @@
 import type { EmbedMessage, EmbedPage } from '../../model/embed-message.js';
 import type { ParsedSchema, Schema } from '../../model/command-schema.js';
 
-import type { MessageEventResponder } from '../../runner/index.js';
 import type { Snowflake } from '../../model/id.js';
 
 /**
@@ -97,11 +96,11 @@ export interface HelpInfo {
   description: string;
 }
 
-export type CommandResponder<S extends Schema<Record<string, unknown>>> =
-  MessageEventResponder<CommandMessage<S>> & {
-    help: Readonly<HelpInfo>;
-    schema: Readonly<S>;
-  };
+export interface CommandResponder<S extends Schema<Record<string, unknown>>> {
+  help: Readonly<HelpInfo>;
+  schema: Readonly<S>;
+  on(message: CommandMessage<S>): Promise<void>;
+}
 
 export const createMockMessage = <S extends Schema<Record<string, unknown>>>(
   args: Readonly<ParsedSchema<S>>,

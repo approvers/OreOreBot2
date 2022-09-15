@@ -4,8 +4,6 @@ import type {
   HelpInfo
 } from './command-message.js';
 
-import type { MessageEvent } from '../../runner/index.js';
-
 export interface MemberStats {
   allMemberCount(): Promise<number>;
   botMemberCount(): Promise<number>;
@@ -32,14 +30,7 @@ export class KokuseiChousa implements CommandResponder<typeof SCHEMA> {
 
   constructor(private readonly stats: MemberStats) {}
 
-  async on(
-    event: MessageEvent,
-    message: CommandMessage<typeof SCHEMA>
-  ): Promise<void> {
-    if (event !== 'CREATE') {
-      return;
-    }
-
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const botMemberCount = await this.stats.botMemberCount();
     const allMemberCount = await this.stats.allMemberCount();
     const peopleCount = allMemberCount - botMemberCount;

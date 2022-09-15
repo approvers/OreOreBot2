@@ -9,7 +9,7 @@ import {
   SubCommandEntries,
   SubCommandGroup,
   makeError
-} from '../../../../model/command-schema.js';
+} from '../../../model/command-schema.js';
 
 const DIGITS = /^\d+$/;
 

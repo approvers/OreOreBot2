@@ -1,8 +1,4 @@
-import type {
-  Clock,
-  MessageEvent,
-  ScheduleRunner
-} from '../../runner/index.js';
+import type { Clock, ScheduleRunner } from '../../runner/index.js';
 import type {
   CommandMessage,
   CommandResponder,
@@ -160,13 +156,7 @@ export class KaereCommand implements CommandResponder<typeof SCHEMA> {
     });
   }
 
-  async on(
-    event: MessageEvent,
-    message: CommandMessage<typeof SCHEMA>
-  ): Promise<void> {
-    if (event !== 'CREATE') {
-      return;
-    }
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const { args } = message;
     if (!args.subCommand) {
       const roomId = message.senderVoiceChannelId;
@@ -221,7 +211,7 @@ export class KaereCommand implements CommandResponder<typeof SCHEMA> {
   private async handleBedCommand(
     message: CommandMessage<typeof SCHEMA>
   ): Promise<void> {
-    switch (message.args.subCommand.subCommand.name) {
+    switch (message.args.subCommand?.subCommand.name) {
       case 'enable':
         this.bedModeEnabled = true;
         await message.reply({
@@ -254,7 +244,7 @@ export class KaereCommand implements CommandResponder<typeof SCHEMA> {
   private async handleReserveCommand(
     message: CommandMessage<typeof SCHEMA>
   ): Promise<void> {
-    switch (message.args.subCommand.subCommand.name) {
+    switch (message.args.subCommand?.subCommand.name) {
       case 'add':
         {
           const roomId = message.senderVoiceChannelId;

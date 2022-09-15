@@ -4,8 +4,6 @@ import type {
   HelpInfo
 } from './command-message.js';
 
-import type { MessageEvent } from '../../runner/index.js';
-
 export interface VersionFetcher {
   version: string;
 }
@@ -24,13 +22,7 @@ export class GetVersionCommand implements CommandResponder<typeof SCHEMA> {
 
   constructor(private readonly fetcher: VersionFetcher) {}
 
-  async on(
-    event: MessageEvent,
-    message: CommandMessage<typeof SCHEMA>
-  ): Promise<void> {
-    if (event !== 'CREATE') {
-      return;
-    }
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const { version } = this.fetcher;
     await message.reply({
       title: 'はらちょバージョン',

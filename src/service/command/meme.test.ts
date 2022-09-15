@@ -2,14 +2,13 @@ import { Meme, sanitizeArgs } from './meme.js';
 import { describe, expect, it, vi } from 'vitest';
 
 import { createMockMessage } from './command-message.js';
-import { parseStringsOrThrow } from '../../adaptor/proxy/middleware/message-convert/schema.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 
 describe('meme', () => {
   const responder = new Meme();
 
   it('use case of hukueki', async () => {
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['hukueki', 'こるく'], responder.schema),
         (message) => {
@@ -26,7 +25,6 @@ describe('meme', () => {
 
   it('use case of lolicon', async () => {
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['lolicon', 'こるく'], responder.schema),
         (message) => {
@@ -43,7 +41,6 @@ describe('meme', () => {
 
   it('use case of dousurya', async () => {
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['dousurya', 'こるく'], responder.schema),
         (message) => {
@@ -54,7 +51,6 @@ describe('meme', () => {
       )
     );
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['dousureba', 'こるく'], responder.schema),
         (message) => {
@@ -68,7 +64,6 @@ describe('meme', () => {
 
   it('use case of takopi', async () => {
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['takopi', 'こるく'], responder.schema),
         (message) => {
@@ -85,7 +80,6 @@ describe('meme', () => {
 
   it('use case of takopi (-f)', async () => {
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['takopi', '-f', 'こるく'], responder.schema),
         (message) => {
@@ -102,7 +96,6 @@ describe('meme', () => {
 
   it('use case of n', async () => {
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(
           ['n', 'テスト前に課題もやらないで原神してて'],
@@ -119,7 +112,6 @@ describe('meme', () => {
 
   it('use case of web3', async () => {
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['web3', 'Rust'], responder.schema),
         (message) => {
@@ -134,7 +126,6 @@ describe('meme', () => {
 
   it('use case of moeta', async () => {
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['moeta', '雪'], responder.schema),
         (message) => {
@@ -149,7 +140,6 @@ describe('meme', () => {
 
   it('args space', async () => {
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(
           ['lolicon', 'こるく', 'にえっちを申し込む'],
@@ -169,7 +159,6 @@ describe('meme', () => {
 
   it('args null (hukueki)', async () => {
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['hukueki'], responder.schema),
         (message) => {
@@ -184,7 +173,6 @@ describe('meme', () => {
 
   it('args null (lolicon)', async () => {
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['lolicon'], responder.schema),
         (message) => {
@@ -199,7 +187,6 @@ describe('meme', () => {
 
   it('args null (dousureba)', async () => {
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['dousureba'], responder.schema),
         (message) => {
@@ -214,7 +201,6 @@ describe('meme', () => {
 
   it('args null (takopi)', async () => {
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['takopi'], responder.schema),
         (message) => {
@@ -229,7 +215,6 @@ describe('meme', () => {
 
   it('args null (n)', async () => {
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['n'], responder.schema),
         (message) => {
@@ -245,7 +230,6 @@ describe('meme', () => {
 
   it('args null (web3)', async () => {
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['web3'], responder.schema),
         (message) => {
@@ -261,7 +245,6 @@ describe('meme', () => {
 
   it('args null (moeta)', async () => {
     await responder.on(
-      'CREATE',
       createMockMessage(
         parseStringsOrThrow(['moeta'], responder.schema),
         (message) => {
@@ -278,7 +261,6 @@ describe('meme', () => {
   it('delete message', async () => {
     const fn = vi.fn();
     await responder.on(
-      'DELETE',
       createMockMessage(
         parseStringsOrThrow(['fukueki', 'こるく'], responder.schema),
         fn

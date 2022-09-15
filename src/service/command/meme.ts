@@ -5,7 +5,6 @@ import type {
 } from './command-message.js';
 
 import type { MemeTemplate } from '../../model/meme-template.js';
-import type { MessageEvent } from '../../runner/index.js';
 import { memes } from './meme/index.js';
 import parse from 'cli-argparse';
 
@@ -37,11 +36,7 @@ export class Meme implements CommandResponder<typeof SCHEMA> {
   };
   readonly schema = SCHEMA;
 
-  async on(
-    event: MessageEvent,
-    message: CommandMessage<typeof SCHEMA>
-  ): Promise<void> {
-    if (event !== 'CREATE') return;
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const { args } = message;
     const [[commandName, ...commandArgs]] = args.params;
     const meme = memesByCommandName[commandName];

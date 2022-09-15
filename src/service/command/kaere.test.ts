@@ -7,7 +7,7 @@ import { KaereCommand, type KaereMusicKey } from './kaere.js';
 import { expect, it, vi } from 'vitest';
 import { ScheduleRunner } from '../../runner/index.js';
 import { createMockMessage } from './command-message.js';
-import { parseStringsOrThrow } from '../../adaptor/proxy/middleware/message-convert/schema.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 
 it('use case of kaere', async () => {
   const fn = vi.fn();
@@ -26,12 +26,10 @@ it('use case of kaere', async () => {
   });
 
   await responder.on(
-    'CREATE',
     createMockMessage(parseStringsOrThrow(['kaere'], responder.schema))
   );
 
   await responder.on(
-    'CREATE',
     createMockMessage(
       parseStringsOrThrow(['kaere', 'bed', 'status'], responder.schema),
       (message) => {
@@ -42,7 +40,6 @@ it('use case of kaere', async () => {
     )
   );
   await responder.on(
-    'CREATE',
     createMockMessage(
       parseStringsOrThrow(['kaere', 'bed', 'enable'], responder.schema),
       (message) => {
@@ -53,7 +50,6 @@ it('use case of kaere', async () => {
     )
   );
   await responder.on(
-    'CREATE',
     createMockMessage(
       parseStringsOrThrow(['kaere', 'bed', 'status'], responder.schema),
       (message) => {
@@ -64,7 +60,6 @@ it('use case of kaere', async () => {
     )
   );
   await responder.on(
-    'CREATE',
     createMockMessage(
       parseStringsOrThrow(['kaere', 'bed', 'disable'], responder.schema),
       (message) => {
@@ -75,7 +70,6 @@ it('use case of kaere', async () => {
     )
   );
   await responder.on(
-    'CREATE',
     createMockMessage(
       parseStringsOrThrow(['kaere', 'bed', 'status'], responder.schema),
       (message) => {
@@ -87,7 +81,6 @@ it('use case of kaere', async () => {
   );
 
   await responder.on(
-    'CREATE',
     createMockMessage(
       parseStringsOrThrow(
         ['kaere', 'reserve', 'add', '01:0'],
@@ -102,7 +95,6 @@ it('use case of kaere', async () => {
     )
   );
   await responder.on(
-    'CREATE',
     createMockMessage(
       parseStringsOrThrow(['kaere', 'reserve', 'list'], responder.schema),
       (message) => {
@@ -114,7 +106,6 @@ it('use case of kaere', async () => {
     )
   );
   await responder.on(
-    'CREATE',
     createMockMessage(
       parseStringsOrThrow(
         ['kaere', 'reserve', 'cancel', '01:0'],
@@ -129,7 +120,6 @@ it('use case of kaere', async () => {
     )
   );
   await responder.on(
-    'CREATE',
     createMockMessage(
       parseStringsOrThrow(['kaere', 'reserve', 'list'], responder.schema),
       (message) => {

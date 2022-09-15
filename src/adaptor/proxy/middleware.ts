@@ -1,10 +1,7 @@
 import type { Message, PartialMessage } from 'discord.js';
-import {
-  observableMiddleware,
-  prefixMiddleware
-} from './middleware/message-convert.js';
 
 import { botFilter } from './middleware/bot-filter.js';
+import { observableMiddleware } from './middleware/message-convert.js';
 
 export type RawMessage = Message | PartialMessage;
 
@@ -45,9 +42,6 @@ const sameMessageFilter: Middleware<
 
 export const middlewareForMessage = () =>
   connectMiddleware(botFilter, observableMiddleware);
-
-export const middlewareForCommand = (prefix: string) =>
-  connectMiddleware(botFilter, prefixMiddleware(prefix));
 
 export const middlewareForUpdateMessage = () =>
   connectMiddleware(sameMessageFilter, liftTuple(middlewareForMessage()));
