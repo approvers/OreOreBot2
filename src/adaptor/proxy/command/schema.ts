@@ -104,7 +104,7 @@ const parseParams = <P extends readonly Param[]>(
         values.push(param.choices.indexOf(arg));
         break;
       case 'VARIADIC':
-        values.push(arg, ...args);
+        values.push([arg, ...args]);
         break;
     }
   }
