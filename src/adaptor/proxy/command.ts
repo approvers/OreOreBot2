@@ -174,6 +174,8 @@ const replyPages = (message: RawMessage) => async (pages: EmbedPage[]) => {
     await interaction.update({ embeds: [generatePage(currentPage)] });
   });
   collector.on('end', async () => {
-    await paginated.edit({ components: [CONTROLS_DISABLED] });
+    if (paginated.editable) {
+      await paginated.edit({ components: [CONTROLS_DISABLED] });
+    }
   });
 };
