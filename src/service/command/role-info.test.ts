@@ -6,7 +6,7 @@ import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 
 describe('RoleRank', () => {
   afterEach(() => {
-    vi.resetAllMocks();
+    vi.restoreAllMocks();
   });
 
   const repo: RoleStatsRepository = {
@@ -86,20 +86,5 @@ describe('RoleRank', () => {
       description: '指定のIDのロールが見つからないみたい……'
     });
     expect(fetchStats).toHaveBeenCalledOnce();
-  });
-
-  it('does not react on deletion', async () => {
-    const fetchStats = vi.spyOn(repo, 'fetchStats');
-    const fn = vi.fn();
-
-    await roleInfo.on(
-      createMockMessage(
-        parseStringsOrThrow(['roleinfo', '101'], roleInfo.schema),
-        fn
-      )
-    );
-
-    expect(fn).not.toBeCalled();
-    expect(fetchStats).not.toHaveBeenCalled();
   });
 });

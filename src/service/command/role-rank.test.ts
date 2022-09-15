@@ -6,7 +6,7 @@ import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 
 describe('RoleRank', () => {
   afterEach(() => {
-    vi.resetAllMocks();
+    vi.restoreAllMocks();
   });
 
   const repo: MembersWithRoleRepository = {
@@ -74,17 +74,5 @@ describe('RoleRank', () => {
       ]
     });
     expect(fetchMembersWithRole).toHaveBeenCalledOnce();
-  });
-
-  it('does not react on deletion', async () => {
-    const fetchMembersWithRole = vi.spyOn(repo, 'fetchMembersWithRole');
-    const fn = vi.fn();
-
-    await roleRank.on(
-      createMockMessage(parseStringsOrThrow(['rolerank'], roleRank.schema), fn)
-    );
-
-    expect(fn).not.toBeCalled();
-    expect(fetchMembersWithRole).not.toHaveBeenCalled();
   });
 });
