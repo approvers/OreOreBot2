@@ -275,30 +275,32 @@ export const makeError = (error: ParseError): Error => {
   let message: string;
   switch (error[0]) {
     case 'INVALID_DATA':
-      message = `${error[1]} 型の値を期待しましたが、${String(
+      message = `\`${error[1]}\` 型の値を期待したけど、\`${String(
         error[2]
-      )} を受け取りました`;
+      )}\` がやって来たよ`;
       break;
     case 'NEED_MORE_ARGS':
-      message = `このコマンドの実行にはもっと引数が必要です`;
+      message = `このコマンドの実行にはもっと引数が必要みたい`;
       break;
     case 'OUT_OF_RANGE':
-      message = `値 ${String(error[3])} が範囲 ${error[1] ?? '-∞'} ~ ${
-        error[2] ?? '∞'
-      } の外でした`;
+      message = `値 \`${String(error[3])}\` が範囲 \`${
+        error[1] ?? '-∞'
+      }\` ~ \`${error[2] ?? '∞'}\` の外だったよ`;
       break;
     case 'UNKNOWN_CHOICE':
-      message = `${String(error[2])} が選択肢 ${error[1].join(
-        ', '
-      )} の中にありませんでした`;
+      message = `\`${String(error[2])}\` が選択肢 ${error[1]
+        .map((command) => `\`${command}\``)
+        .join(', ')} の中に無いよ`;
       break;
     case 'UNKNOWN_COMMAND':
-      message = `コマンド ${String(
+      message = `コマンド \`${String(
         error[2]
-      )} は利用可能なコマンド ${error[1].join(', ')} の中に存在しませんでした`;
+      )}\` は利用可能なコマンド ${error[1]
+        .map((command) => `\`${command}\``)
+        .join(', ')} の中に無いよ`;
       break;
     case 'OTHERS':
-      message = '不明なエラーが発生しました';
+      message = '不明なエラーが発生しちゃった。多分バグだよ';
       break;
   }
   return new Error(message);
