@@ -50,7 +50,7 @@ export class DiscordCommandProxy implements CommandProxy {
     await message.fetch();
 
     if (!message.content?.trimStart().startsWith(this.prefix)) {
-      throw new Error('the message does not have the prefix');
+      return;
     }
     const args = message.content
       ?.trim()
