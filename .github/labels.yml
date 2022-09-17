@@ -36,6 +36,8 @@
   color: 'f0dc59'
 - name: 'good first issue'
   color: '69f5a8'
+- name: 'released'
+  color: '32F2AF'
 - name: 'Need more Hibikiness'
   description: 'I need more Hibikiness in the message'
   color: 'DEAFEE'
