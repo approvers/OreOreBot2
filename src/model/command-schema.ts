@@ -300,7 +300,8 @@ export const makeError = (error: ParseError): Error => {
         .join(', ')} の中に無いよ`;
       break;
     case 'OTHERS':
-      message = '不明なエラーが発生しちゃった。多分バグだよ';
+      message =
+        '不明なエラーが発生しちゃった。多分バグだよ。バグ報告はこちらから https://github.com/approvers/OreOreBot2/issues/new/choose';
       break;
   }
   return new Error(message);
