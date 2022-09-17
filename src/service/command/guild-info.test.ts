@@ -1,7 +1,9 @@
 import { GuildInfo, GuildStatsRepository } from './guild-info.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import type { Snowflake } from '../../model/id.js';
 import { createMockMessage } from './command-message.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 
 describe('GuildInfo', () => {
   afterEach(() => {
@@ -37,11 +39,8 @@ describe('GuildInfo', () => {
     const fn = vi.fn();
 
     await guildInfo.on(
-      'CREATE',
       createMockMessage(
-        {
-          args: ['guildinfo']
-        },
+        parseStringsOrThrow(['guildinfo'], guildInfo.schema),
         fn
       )
     );
@@ -130,11 +129,8 @@ describe('GuildInfo', () => {
     const fn = vi.fn();
 
     await guildInfo.on(
-      'CREATE',
       createMockMessage(
-        {
-          args: ['guildinfo']
-        },
+        parseStringsOrThrow(['guildinfo'], guildInfo.schema),
         fn
       )
     );

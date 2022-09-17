@@ -3,29 +3,26 @@ import type {
   CommandResponder,
   HelpInfo
 } from './command-message.js';
-import type { MessageEvent } from '../../runner/index.js';
 
 export interface VersionFetcher {
   version: string;
 }
 
-export class GetVersionCommand implements CommandResponder {
+const SCHEMA = {
+  names: ['version'],
+  subCommands: {}
+} as const;
+
+export class GetVersionCommand implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
-    commandName: ['version'],
     title: 'はらちょバージョン',
-    description: '現在の私のバージョンを出力するよ。',
-    argsFormat: []
+    description: '現在の私のバージョンを出力するよ。'
   };
+  readonly schema = SCHEMA;
 
   constructor(private readonly fetcher: VersionFetcher) {}
 
-  async on(event: MessageEvent, message: CommandMessage): Promise<void> {
-    if (event !== 'CREATE') {
-      return;
-    }
-    if (!this.help.commandName.includes(message.args[0])) {
-      return;
-    }
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const { version } = this.fetcher;
     await message.reply({
       title: 'はらちょバージョン',

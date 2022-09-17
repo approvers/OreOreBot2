@@ -1,10 +1,12 @@
 import { MembersWithRoleRepository, RoleRank } from './role-rank.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import { createMockMessage } from './command-message.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 
 describe('RoleRank', () => {
   afterEach(() => {
-    vi.resetAllMocks();
+    vi.restoreAllMocks();
   });
 
   const repo: MembersWithRoleRepository = {
@@ -43,13 +45,7 @@ describe('RoleRank', () => {
     const fn = vi.fn();
 
     await roleRank.on(
-      'CREATE',
-      createMockMessage(
-        {
-          args: ['rolerank']
-        },
-        fn
-      )
+      createMockMessage(parseStringsOrThrow(['rolerank'], roleRank.schema), fn)
     );
 
     expect(fn).toHaveBeenCalledWith({
@@ -78,23 +74,5 @@ describe('RoleRank', () => {
       ]
     });
     expect(fetchMembersWithRole).toHaveBeenCalledOnce();
-  });
-
-  it('does not react on deletion', async () => {
-    const fetchMembersWithRole = vi.spyOn(repo, 'fetchMembersWithRole');
-    const fn = vi.fn();
-
-    await roleRank.on(
-      'DELETE',
-      createMockMessage(
-        {
-          args: ['rolerank']
-        },
-        fn
-      )
-    );
-
-    expect(fn).not.toBeCalled();
-    expect(fetchMembersWithRole).not.toHaveBeenCalled();
   });
 });

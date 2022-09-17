@@ -1,7 +1,9 @@
 import { DebugCommand, MessageRepository } from './debug.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import type { Snowflake } from '../../model/id.js';
 import { createMockMessage } from './command-message.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 
 describe('debug', () => {
   afterEach(() => {
@@ -17,15 +19,14 @@ describe('debug', () => {
     const getMessageContent = vi
       .spyOn(repo, 'getMessageContent')
       .mockImplementation(() => Promise.resolve('🅰️ Hoge'));
-    const reply = vi.fn(() => Promise.resolve());
+    const reply = vi.fn();
     await responder.on(
-      'CREATE',
       createMockMessage(
+        parseStringsOrThrow(['debug', '1423523'], responder.schema),
+        reply,
         {
-          args: ['debug', '1423523'],
           senderChannelId: '8623233' as Snowflake
-        },
-        reply
+        }
       )
     );
     expect(getMessageContent).toHaveBeenCalledWith('8623233', '1423523');
@@ -43,15 +44,14 @@ describe('debug', () => {
 console.log(\`Hello, \${name}!\`);
 \`\`\``)
       );
-    const reply = vi.fn(() => Promise.resolve());
+    const reply = vi.fn();
     await responder.on(
-      'CREATE',
       createMockMessage(
+        parseStringsOrThrow(['debug', '1423523'], responder.schema),
+        reply,
         {
-          args: ['debug', '1423523'],
           senderChannelId: '8623233' as Snowflake
-        },
-        reply
+        }
       )
     );
     expect(getMessageContent).toHaveBeenCalledWith('8623233', '1423523');
@@ -69,15 +69,14 @@ console.log(\`Hello, \${name}!\`);
 
   it('errors on message not found', async () => {
     const getMessageContent = vi.spyOn(repo, 'getMessageContent');
-    const reply = vi.fn(() => Promise.resolve());
+    const reply = vi.fn();
     await responder.on(
-      'CREATE',
       createMockMessage(
+        parseStringsOrThrow(['debug', '1423523'], responder.schema),
+        reply,
         {
-          args: ['debug', '1423523'],
           senderChannelId: '8623233' as Snowflake
-        },
-        reply
+        }
       )
     );
     expect(getMessageContent).toHaveBeenCalledWith('8623233', '1423523');
@@ -85,47 +84,5 @@ console.log(\`Hello, \${name}!\`);
       title: '指定のメッセージが見つからなかったよ',
       description: 'そのメッセージがこのチャンネルにあるかどうか確認してね。'
     });
-  });
-
-  it('does not react to another command', async () => {
-    const getMessageContent = vi.spyOn(repo, 'getMessageContent');
-    const reply = vi.fn(() => Promise.resolve());
-    await responder.on(
-      'CREATE',
-      createMockMessage(
-        {
-          args: ['party']
-        },
-        reply
-      )
-    );
-    await responder.on(
-      'DELETE',
-      createMockMessage(
-        {
-          args: ['party']
-        },
-        reply
-      )
-    );
-    expect(getMessageContent).not.toHaveBeenCalled();
-    expect(reply).not.toHaveBeenCalled();
-  });
-
-  it('does not react on deletion', async () => {
-    const getMessageContent = vi.spyOn(repo, 'getMessageContent');
-    const reply = vi.fn(() => Promise.resolve());
-    await responder.on(
-      'DELETE',
-      createMockMessage(
-        {
-          args: ['debug', '1423523'],
-          senderChannelId: '8623233' as Snowflake
-        },
-        reply
-      )
-    );
-    expect(getMessageContent).not.toHaveBeenCalled();
-    expect(reply).not.toHaveBeenCalled();
   });
 });

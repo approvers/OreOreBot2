@@ -1,6 +1,8 @@
 import { RoleCreate, RoleCreateManager } from './role-create.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import { createMockMessage } from './command-message.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 
 describe('Create a role', () => {
   afterEach(() => {
@@ -19,11 +21,11 @@ describe('Create a role', () => {
     const fn = vi.fn();
 
     await createRole.on(
-      'CREATE',
       createMockMessage(
-        {
-          args: ['rolecreate', newRoleName, newRoleColor]
-        },
+        parseStringsOrThrow(
+          ['rolecreate', newRoleName, newRoleColor],
+          createRole.schema
+        ),
         fn
       )
     );
@@ -46,11 +48,11 @@ describe('Create a role', () => {
     const fn = vi.fn();
 
     await createRole.on(
-      'CREATE',
       createMockMessage(
-        {
-          args: ['rolecreate', newRoleName, newRoleColor]
-        },
+        parseStringsOrThrow(
+          ['rolecreate', newRoleName, newRoleColor],
+          createRole.schema
+        ),
         fn
       )
     );
@@ -73,11 +75,11 @@ describe('Create a role', () => {
     const fn = vi.fn();
 
     await createRole.on(
-      'CREATE',
       createMockMessage(
-        {
-          args: ['rolecreate', newRoleName, newRoleColor]
-        },
+        parseStringsOrThrow(
+          ['rolecreate', newRoleName, newRoleColor],
+          createRole.schema
+        ),
         fn
       )
     );
@@ -93,61 +95,17 @@ describe('Create a role', () => {
     );
   });
 
-  it('Missing argument(rolename)', async () => {
-    const createGuildRole = vi.spyOn(manager, 'createRole');
-    const fn = vi.fn();
-
-    await createRole.on(
-      'CREATE',
-      createMockMessage(
-        {
-          args: ['rolecreate']
-        },
-        fn
-      )
-    );
-
-    expect(fn).toHaveBeenCalledWith({
-      title: 'コマンド形式エラー',
-      description: '引数にロール名の文字列を指定してね'
-    });
-    expect(createGuildRole).not.toHaveBeenCalled();
-  });
-
-  it('Missing argument(rolecolor)', async () => {
-    const newRoleName = 'かわえもんのおねえさん';
-    const createGuildRole = vi.spyOn(manager, 'createRole');
-    const fn = vi.fn();
-
-    await createRole.on(
-      'CREATE',
-      createMockMessage(
-        {
-          args: ['rolecreate', newRoleName]
-        },
-        fn
-      )
-    );
-
-    expect(fn).toHaveBeenCalledWith({
-      title: 'コマンド形式エラー',
-      description:
-        '引数にロールの色の[HEX](https://htmlcolorcodes.com/)を指定してね'
-    });
-    expect(createGuildRole).not.toHaveBeenCalled();
-  });
-
   it('HEX Error (rolecolor)', async () => {
     const newRoleName = 'かわえもんのおねえさん';
     const createGuildRole = vi.spyOn(manager, 'createRole');
     const fn = vi.fn();
 
     await createRole.on(
-      'CREATE',
       createMockMessage(
-        {
-          args: ['rolecreate', newRoleName, 'fffffff']
-        },
+        parseStringsOrThrow(
+          ['rolecreate', newRoleName, 'fffffff'],
+          createRole.schema
+        ),
         fn
       )
     );
@@ -166,11 +124,11 @@ describe('Create a role', () => {
     const fn = vi.fn();
 
     await createRole.on(
-      'CREATE',
       createMockMessage(
-        {
-          args: ['rolecreate', newRoleName, '#ffffff']
-        },
+        parseStringsOrThrow(
+          ['rolecreate', newRoleName, '#ffffff'],
+          createRole.schema
+        ),
         fn
       )
     );

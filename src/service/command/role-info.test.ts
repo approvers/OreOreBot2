@@ -1,10 +1,12 @@
 import { RoleInfo, RoleStatsRepository } from './role-info.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import { createMockMessage } from './command-message.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 
 describe('RoleRank', () => {
   afterEach(() => {
-    vi.resetAllMocks();
+    vi.restoreAllMocks();
   });
 
   const repo: RoleStatsRepository = {
@@ -27,11 +29,8 @@ describe('RoleRank', () => {
     const fn = vi.fn();
 
     await roleInfo.on(
-      'CREATE',
       createMockMessage(
-        {
-          args: ['roleinfo', '101']
-        },
+        parseStringsOrThrow(['roleinfo', '101'], roleInfo.schema),
         fn
       )
     );
@@ -71,37 +70,13 @@ describe('RoleRank', () => {
     expect(fetchStats).toHaveBeenCalledOnce();
   });
 
-  it('errors with no arg', async () => {
-    const fetchStats = vi.spyOn(repo, 'fetchStats');
-    const fn = vi.fn();
-
-    await roleInfo.on(
-      'CREATE',
-      createMockMessage(
-        {
-          args: ['roleinfo']
-        },
-        fn
-      )
-    );
-
-    expect(fn).toHaveBeenCalledWith({
-      title: 'コマンド形式エラー',
-      description: '引数にロールIDの文字列を指定してね'
-    });
-    expect(fetchStats).not.toHaveBeenCalled();
-  });
-
   it('errors with invalid id', async () => {
     const fetchStats = vi.spyOn(repo, 'fetchStats');
     const fn = vi.fn();
 
     await roleInfo.on(
-      'CREATE',
       createMockMessage(
-        {
-          args: ['roleinfo', '100']
-        },
+        parseStringsOrThrow(['roleinfo', '100'], roleInfo.schema),
         fn
       )
     );
@@ -111,23 +86,5 @@ describe('RoleRank', () => {
       description: '指定のIDのロールが見つからないみたい……'
     });
     expect(fetchStats).toHaveBeenCalledOnce();
-  });
-
-  it('does not react on deletion', async () => {
-    const fetchStats = vi.spyOn(repo, 'fetchStats');
-    const fn = vi.fn();
-
-    await roleInfo.on(
-      'DELETE',
-      createMockMessage(
-        {
-          args: ['roleinfo', '101']
-        },
-        fn
-      )
-    );
-
-    expect(fn).not.toBeCalled();
-    expect(fetchStats).not.toHaveBeenCalled();
   });
 });

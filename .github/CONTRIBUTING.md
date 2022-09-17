@@ -42,10 +42,9 @@ import { Meme } from './meme.js';
 import { createMockMessage } from './command-message.js';
 
 it('use case of hukueki', async () => {
-  const fn = vi.fn<[EmbedMessage]>(() => Promise.resolve());
+  const fn = vi.fn();
   const responder = new Meme();
   await responder.on(
-    'CREATE',
     createMockMessage(
       {
         args: ['hukueki', 'こるく']

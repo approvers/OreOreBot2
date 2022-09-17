@@ -1,5 +1,6 @@
 import type { EmbedMessage, EmbedPage } from '../../model/embed-message.js';
-import type { MessageEventResponder } from '../../runner/index.js';
+import type { ParsedSchema, Schema } from '../../model/command-schema.js';
+
 import type { Snowflake } from '../../model/id.js';
 
 /**
@@ -7,8 +8,9 @@ import type { Snowflake } from '../../model/id.js';
  *
  * @export
  * @interface CommandMessage
+ * @template S スキーマの型
  */
-export interface CommandMessage {
+export interface CommandMessage<S extends Schema<Record<string, unknown>>> {
   /**
    * コマンドの送信者の ID。
    *
@@ -50,12 +52,12 @@ export interface CommandMessage {
   senderName: string;
 
   /**
-   * コマンドの引数リスト。
+   * パースされたコマンドの引数。
    *
-   * @type {readonly string[]}
+   * @type {Readonly<ParsedSchema<S>>}
    * @memberof CommandMessage
    */
-  args: readonly string[];
+  args: Readonly<ParsedSchema<S>>;
 
   /**
    * このメッセージに `message` の内容で返信する。
@@ -92,28 +94,25 @@ export interface SentMessage {
 export interface HelpInfo {
   title: string;
   description: string;
-  commandName: string[];
-  argsFormat: {
-    name: string;
-    description: string;
-    defaultValue?: string;
-  }[];
 }
 
-export type CommandResponder = MessageEventResponder<CommandMessage> & {
+export interface CommandResponder<S extends Schema<Record<string, unknown>>> {
   help: Readonly<HelpInfo>;
-};
+  schema: Readonly<S>;
+  on(message: CommandMessage<S>): Promise<void>;
+}
 
-export const createMockMessage = (
-  partial: Readonly<Partial<CommandMessage>>,
-  reply?: (message: EmbedMessage) => Promise<SentMessage | void>
-): CommandMessage => ({
+export const createMockMessage = <S extends Schema<Record<string, unknown>>>(
+  args: Readonly<ParsedSchema<S>>,
+  reply?: (message: EmbedMessage) => void | Promise<SentMessage | void>,
+  partial?: Readonly<Partial<Omit<CommandMessage<S>, 'reply'>>>
+): CommandMessage<S> => ({
   senderId: '279614913129742338' as Snowflake,
   senderGuildId: '683939861539192860' as Snowflake,
   senderChannelId: '711127633810817026' as Snowflake,
   senderVoiceChannelId: '683939861539192865' as Snowflake,
   senderName: 'Mikuroさいな',
-  args: [],
+  args,
   reply: reply
     ? async (mes) =>
         (await reply(mes)) || {

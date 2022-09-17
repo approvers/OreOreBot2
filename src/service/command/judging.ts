@@ -9,7 +9,6 @@ import {
   isJudgingStatus,
   waitingJudgingEmoji
 } from '../../model/judging-status.js';
-import type { MessageEvent } from '../../runner/index.js';
 
 /**
  * `JudgingCommand` のための乱数生成器。
@@ -39,6 +38,33 @@ export interface RandomGenerator {
 
 const JUDGING_TITLE = '***†HARACHO ONLINE JUDGING SYSTEM†***';
 
+const SCHEMA = {
+  names: ['jd', 'judge'],
+  subCommands: {},
+  params: [
+    {
+      type: 'INTEGER',
+      name: 'テスト数',
+      description: '判定のアニメーションに使うテストケースの数、最大値は 64',
+      minValue: 1,
+      maxValue: 64,
+      defaultValue: 5
+    },
+    {
+      type: 'STRING',
+      name: '判定結果',
+      description: 'アニメーション終了後の判定',
+      defaultValue: 'AC'
+    },
+    {
+      type: 'BOOLEAN',
+      name: '全失敗',
+      description: 'すべての判定結果を失敗にするかどうか',
+      defaultValue: false
+    }
+  ]
+} as const;
+
 /**
  * `judge` コマンドで競技プログラミングの判定をシミュレートする。
  *
@@ -46,47 +72,22 @@ const JUDGING_TITLE = '***†HARACHO ONLINE JUDGING SYSTEM†***';
  * @class JudgingCommand
  * @implements {MessageEventResponder<CommandMessage>}
  */
-export class JudgingCommand implements CommandResponder {
+export class JudgingCommand implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: JUDGING_TITLE,
-    description: 'プログラムが適格かどうか判定してあげるよ',
-    commandName: ['jd', 'judge'],
-    argsFormat: [
-      {
-        name: 'テストケースの数',
-        description: '判定のアニメーションに使うテストケースの数、最大値は 64',
-        defaultValue: '5'
-      },
-      {
-        name: '判定結果',
-        description: 'アニメーション終了後の判定',
-        defaultValue: 'AC'
-      }
-    ]
+    description: 'プログラムが適格かどうか判定してあげるよ'
   };
+  readonly schema = SCHEMA;
 
   constructor(private readonly rng: RandomGenerator) {}
 
-  async on(event: MessageEvent, message: CommandMessage): Promise<void> {
-    if (event !== 'CREATE') {
-      return;
-    }
-
-    const [commandName, countArg = '5', result = 'AC', errorFromStartArg] =
-      message.args;
-    if (!['jd', 'judge'].includes(commandName)) {
-      return;
-    }
-    const count = parseInt(countArg, 10);
-    if (Number.isNaN(count) || count <= 0 || 64 < count) {
-      await message.reply({
-        title: '回数の指定が 1 以上 64 以下の整数じゃないよ。'
-      });
-      return;
-    }
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
+    const {
+      params: [count, result, errorFromStart]
+    } = message.args;
 
     if (!isJudgingStatus(result)) {
-      await this.reject({ message, count, errorFromStartArg, result });
+      await this.reject({ message, count, errorFromStart, result });
       return;
     }
     if (result === 'AC') {
@@ -103,12 +104,12 @@ export class JudgingCommand implements CommandResponder {
     await this.reject({
       message,
       count,
-      errorFromStartArg,
+      errorFromStart,
       result: emojiOf(result)
     });
   }
 
-  private async accept(message: CommandMessage, count: number) {
+  private async accept(message: CommandMessage<typeof SCHEMA>, count: number) {
     const sent = await message.reply({
       title: JUDGING_TITLE,
       description: `0 / ${count} ${waitingJudgingEmoji}`
@@ -130,12 +131,12 @@ export class JudgingCommand implements CommandResponder {
   private async reject({
     message,
     count,
-    errorFromStartArg,
+    errorFromStart,
     result
   }: {
-    message: CommandMessage;
+    message: CommandMessage<typeof SCHEMA>;
     count: number;
-    errorFromStartArg: string;
+    errorFromStart: boolean;
     result: string;
   }) {
     const sent = await message.reply({
@@ -143,7 +144,6 @@ export class JudgingCommand implements CommandResponder {
       description: `0 / ${count} ${waitingJudgingEmoji}`
     });
 
-    const errorFromStart = errorFromStartArg == '-all';
     const errorAt = errorFromStart ? 1 : this.rng.uniform(1, count + 1);
 
     for (let i = 1; i <= count - 1; ++i) {

@@ -3,7 +3,7 @@ import type {
   CommandResponder,
   HelpInfo
 } from './command-message.js';
-import type { MessageEvent } from '../../runner/message.js';
+
 import type { Snowflake } from '../../model/id.js';
 
 export interface MessageRepository {
@@ -13,33 +13,35 @@ export interface MessageRepository {
   ): Promise<string | undefined>;
 }
 
+const SCHEMA = {
+  names: ['debug'],
+  subCommands: {},
+  params: [
+    {
+      type: 'MESSAGE',
+      name: 'メッセージID',
+      description: 'デバッグ表示したいメッセージのID'
+    }
+  ]
+} as const;
+
 const TRIPLE_BACK_QUOTES = /```/g;
 
-export class DebugCommand implements CommandResponder {
+export class DebugCommand implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'デバッガーはらちょ',
     description:
-      'メッセージIDを渡すと、同じチャンネル内にあればそれをコードブロックとして表示するよ',
-    commandName: ['debug'],
-    argsFormat: [
-      {
-        name: 'messageId',
-        description: 'デバッグ表示したいメッセージのID'
-      }
-    ]
+      'メッセージIDを渡すと、同じチャンネル内にあればそれをコードブロックとして表示するよ'
   };
+  readonly schema = SCHEMA;
 
   constructor(private readonly repo: MessageRepository) {}
 
-  async on(event: MessageEvent, message: CommandMessage): Promise<void> {
-    if (event !== 'CREATE') {
-      return;
-    }
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
+    const {
+      params: [messageId]
+    } = message.args;
 
-    const [commandName, messageId] = message.args;
-    if (!this.help.commandName.includes(commandName)) {
-      return;
-    }
     const content = await this.repo.getMessageContent(
       message.senderChannelId,
       messageId as Snowflake

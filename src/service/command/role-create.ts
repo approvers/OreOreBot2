@@ -3,7 +3,6 @@ import type {
   CommandResponder,
   HelpInfo
 } from './command-message.js';
-import type { MessageEvent } from '../../runner/message.js';
 
 export interface RoleCreateManager {
   createRole(
@@ -13,52 +12,38 @@ export interface RoleCreateManager {
   ): Promise<void>;
 }
 
-export class RoleCreate implements CommandResponder {
+const HEX_FORMAT = /^#?[0-9a-fA-F]{6}$/m;
+
+const SCHEMA = {
+  names: ['rolecreate'],
+  subCommands: {},
+  params: [
+    {
+      type: 'STRING',
+      name: 'ロール名',
+      description: '作成するロールの名前を指定してね'
+    },
+    {
+      type: 'STRING',
+      name: 'ロールの色',
+      description:
+        '作成するロールの色を[HEX](https://htmlcolorcodes.com/)で指定してね'
+    }
+  ]
+} as const;
+
+export class RoleCreate implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ロール作成',
-    description: 'ロールを作成するよ',
-    commandName: ['rolecreate'],
-    argsFormat: [
-      {
-        name: 'ロール名',
-        description: '作成するロールの名前を指定してね'
-      },
-      {
-        name: 'ロールの色',
-        description:
-          '作成するロールの色を[HEX](https://htmlcolorcodes.com/)で指定してね'
-      }
-    ]
+    description: 'ロールを作成するよ'
   };
+  readonly schema = SCHEMA;
 
   constructor(private readonly manager: RoleCreateManager) {}
 
-  async on(event: MessageEvent, message: CommandMessage): Promise<void> {
-    if (event !== 'CREATE') {
-      return;
-    }
-    const [command, roleName, roleColor] = message.args;
-    if (!this.help.commandName.includes(command)) {
-      return;
-    }
-
-    if (typeof roleName !== 'string') {
-      await message.reply({
-        title: 'コマンド形式エラー',
-        description: '引数にロール名の文字列を指定してね'
-      });
-      return;
-    }
-    if (typeof roleColor !== 'string') {
-      await message.reply({
-        title: 'コマンド形式エラー',
-        description:
-          '引数にロールの色の[HEX](https://htmlcolorcodes.com/)を指定してね'
-      });
-      return;
-    }
-
-    if (!roleColor.match(/^#?[0-9a-fA-F]{6}$/m)) {
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
+    const [roleName, roleColor] = message.args.params;
+    if (!roleColor.match(HEX_FORMAT)) {
       await message.reply({
         title: 'コマンド形式エラー',
         description:

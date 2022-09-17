@@ -3,7 +3,7 @@ import type {
   CommandResponder,
   HelpInfo
 } from './command-message.js';
-import type { MessageEvent } from '../../runner/message.js';
+
 import type { Snowflake } from '../../model/id.js';
 import { createTimestamp } from '../../model/create-timestamp.js';
 
@@ -21,34 +21,33 @@ export interface UserStatsRepository {
   fetchUserStats(userId: string): Promise<UserStats | null>;
 }
 
-export class UserInfo implements CommandResponder {
+const SCHEMA = {
+  names: ['userinfo'],
+  subCommands: {},
+  params: [
+    {
+      type: 'USER',
+      name: 'ユーザーID',
+      description:
+        'このIDのロールを調べるよ。何も入力しないと自分が対象になるよ。',
+      defaultValue: 'me'
+    }
+  ]
+} as const;
+
+export class UserInfo implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ユーザー秘書艦',
     description:
-      '指定したユーザーの情報を調べてくるよ。限界開発鯖のメンバーしか検索できないから注意してね。',
-    commandName: ['userinfo'],
-    argsFormat: [
-      {
-        name: 'ユーザーID',
-        description:
-          'このIDのロールを調べるよ。`me`と入力すると自分が対象になるよ。'
-      }
-    ]
+      '指定したユーザーの情報を調べてくるよ。限界開発鯖のメンバーしか検索できないから注意してね。'
   };
+  readonly schema = SCHEMA;
 
   constructor(private readonly repo: UserStatsRepository) {}
 
-  async on(event: MessageEvent, message: CommandMessage): Promise<void> {
-    if (event !== 'CREATE') {
-      return;
-    }
-
-    const [command, arg] = message.args;
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
+    const [arg] = message.args.params;
     const userId = fetchUserId(arg, message.senderId);
-
-    if (!this.help.commandName.includes(command)) {
-      return;
-    }
 
     if (typeof userId !== 'string') {
       await message.reply({

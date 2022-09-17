@@ -11,6 +11,7 @@ import type {
   HelpInfo
 } from './command-message.js';
 import { addDays, setHours, setMinutes } from 'date-fns';
+
 import type { Snowflake } from '../../model/id.js';
 
 /**
@@ -109,7 +110,23 @@ const typoRecordResetTask =
     return next6OClock(clock);
   };
 
-const DIGITS = /^[0-9]+$/;
+const SCHEMA = {
+  names: ['typo'],
+  subCommands: {
+    by: {
+      type: 'SUB_COMMAND',
+      params: [
+        {
+          type: 'USER',
+          name: '表示するユーザID',
+          description:
+            'この後にユーザ ID を入れると, そのユーザ ID の今日の Typo を表示するよ',
+          defaultValue: 'me'
+        }
+      ]
+    }
+  }
+} as const;
 
 /**
  * `typo` コマンドで今日の Typo 一覧を返信する。
@@ -118,19 +135,12 @@ const DIGITS = /^[0-9]+$/;
  * @class TypoReporter
  * @implements {MessageEventResponder<CommandMessage>}
  */
-export class TypoReporter implements CommandResponder {
+export class TypoReporter implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: '今日のTypo',
-    description: '「〜だカス」をTypoとして一日間記録するよ',
-    commandName: ['typo'],
-    argsFormat: [
-      {
-        name: 'by',
-        description:
-          'この後にユーザ ID を入れると, そのユーザ ID の今日の Typo を表示するよ'
-      }
-    ]
+    description: '「〜だカス」をTypoとして一日間記録するよ'
   };
+  readonly schema = SCHEMA;
 
   constructor(
     private readonly repo: TypoRepository,
@@ -144,49 +154,19 @@ export class TypoReporter implements CommandResponder {
     );
   }
 
-  async on(event: MessageEvent, message: CommandMessage): Promise<void> {
-    if (event !== 'CREATE') {
-      return;
-    }
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const { senderId, senderName, args } = message;
-    if (args.length < 1 || args[0] !== 'typo') {
-      return;
-    }
-    if (args.length === 1) {
+
+    if (!args.subCommand) {
       await this.replyTypos(message, senderId, senderName);
       return;
     }
-    if (2 <= args.length && args[1] === 'by') {
-      const userId: string | undefined = args[2];
-      if (!userId) {
-        await message.reply({
-          title: '入力形式エラー',
-          description: '`typo by <id>` の形式で入力してね'
-        });
-        return;
-      }
-      if (!DIGITS.test(userId)) {
-        await message.reply({
-          title: '入力形式エラー',
-          description: 'ユーザ ID は整数を入力してね'
-        });
-        return;
-      }
-      await this.replyTypos(message, userId as Snowflake, `<@${userId}>`);
-      return;
-    }
-    await message.reply({
-      title: 'Typoヘルプ',
-      description: `
-- 引数なし: あなたの今日のTypoを表示するよ
-- \`by <ユーザID>\`: そのIDの人の今日のTypoを表示するよ
-`
-    });
-    return;
+    const [userId] = args.subCommand.params;
+    await this.replyTypos(message, userId as Snowflake, `<@${userId}>`);
   }
 
   private async replyTypos(
-    message: CommandMessage,
+    message: CommandMessage<typeof SCHEMA>,
     senderId: Snowflake,
     senderName: string
   ) {

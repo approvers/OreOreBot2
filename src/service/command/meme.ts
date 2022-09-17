@@ -3,8 +3,8 @@ import type {
   CommandResponder,
   HelpInfo
 } from './command-message.js';
+
 import type { MemeTemplate } from '../../model/meme-template.js';
-import type { MessageEvent } from '../../runner/index.js';
 import { memes } from './meme/index.js';
 import parse from 'cli-argparse';
 
@@ -15,23 +15,33 @@ const memesByCommandName: Record<
   memes.flatMap((meme) => meme.commandNames.map((name) => [name, meme]))
 );
 
-export class Meme implements CommandResponder {
+const SCHEMA = {
+  names: memes.flatMap((meme) => meme.commandNames),
+  subCommands: {},
+  params: [
+    {
+      type: 'VARIADIC',
+      name: '引数リスト',
+      description:
+        '各構文ごとの引数リスト。--help で各コマンドのヘルプが見られるよ',
+      defaultValue: []
+    }
+  ]
+} as const;
+
+export class Meme implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ミーム構文機能',
-    description: '何これ……引数のテキストを構文にはめ込むみたいだよ',
-    commandName: memes.flatMap((meme) => meme.commandNames),
-    argsFormat: [
-      {
-        name: '--help',
-        description: 'その構文ごとの詳細なヘルプを表示します'
-      }
-    ]
+    description: '何これ……引数のテキストを構文にはめ込むみたいだよ'
   };
+  readonly schema = SCHEMA;
 
-  async on(event: MessageEvent, message: CommandMessage): Promise<void> {
-    if (event !== 'CREATE') return;
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const { args } = message;
-    const [commandName, ...commandArgs] = args;
+    const {
+      name: commandName,
+      params: [commandArgs]
+    } = args;
     const meme = memesByCommandName[commandName];
     if (!meme) {
       return;

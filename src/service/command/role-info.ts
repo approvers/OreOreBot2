@@ -3,7 +3,6 @@ import type {
   CommandResponder,
   HelpInfo
 } from './command-message.js';
-import type { MessageEvent } from '../../runner/message.js';
 
 export type RoleIcon =
   | {
@@ -27,36 +26,29 @@ export interface RoleStatsRepository {
   fetchStats(roleId: string): Promise<RoleStats | null>;
 }
 
-export class RoleInfo implements CommandResponder {
+const SCHEMA = {
+  names: ['roleinfo'],
+  subCommands: {},
+  params: [
+    {
+      type: 'ROLE',
+      name: 'ロールID',
+      description: 'このIDのロールを調べるよ'
+    }
+  ]
+} as const;
+
+export class RoleInfo implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ロール秘書艦',
-    description: '指定したロールの情報を調べてくるよ',
-    commandName: ['roleinfo'],
-    argsFormat: [
-      {
-        name: 'ロールID',
-        description: 'このIDのロールを調べるよ'
-      }
-    ]
+    description: '指定したロールの情報を調べてくるよ'
   };
+  readonly schema = SCHEMA;
 
   constructor(private readonly repo: RoleStatsRepository) {}
 
-  async on(event: MessageEvent, message: CommandMessage): Promise<void> {
-    if (event !== 'CREATE') {
-      return;
-    }
-    const [command, roleId] = message.args;
-    if (!this.help.commandName.includes(command)) {
-      return;
-    }
-    if (typeof roleId !== 'string') {
-      await message.reply({
-        title: 'コマンド形式エラー',
-        description: '引数にロールIDの文字列を指定してね'
-      });
-      return;
-    }
+  async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
+    const [roleId] = message.args.params;
 
     const stats = await this.repo.fetchStats(roleId);
     if (!stats) {
