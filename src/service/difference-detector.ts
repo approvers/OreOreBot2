@@ -17,13 +17,13 @@ export interface EditingObservable {
   readonly content: string;
 
   /**
-   * `message` のメッセージをこのメッセージと同じチャンネルに送信する。
+   * すぐ消えてしまう `message` のメッセージをこのメッセージと同じチャンネルに送信する。
    *
    * @param {string} message
    * @returns {Promise}
    * @memberof Observable
    */
-  sendToSameChannel(message: string): Promise<void>;
+  sendEphemeralToSameChannel(message: string): Promise<void>;
 }
 
 const diffComposer = (before: string, after: string): string => {
@@ -56,7 +56,7 @@ export class DifferenceDetector
     if (composed === '') {
       return;
     }
-    await after.sendToSameChannel(`見てたぞ
+    await after.sendEphemeralToSameChannel(`見てたぞ
 \`\`\`diff
 ${composed}\`\`\``);
   }

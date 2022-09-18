@@ -1,4 +1,5 @@
 import { expect, it, vi } from 'vitest';
+
 import { DifferenceDetector } from './difference-detector.js';
 
 it('react to edited message', async () => {
@@ -8,11 +9,11 @@ it('react to edited message', async () => {
     'UPDATE',
     {
       content: 'LGBT',
-      sendToSameChannel: fn
+      sendEphemeralToSameChannel: fn
     },
     {
       content: 'LGTM',
-      sendToSameChannel: (message) => {
+      sendEphemeralToSameChannel: (message) => {
         expect(message).toEqual(`見てたぞ
 \`\`\`diff
 - LGBT
@@ -28,14 +29,14 @@ it('react to edited message', async () => {
       content: `pika
 peka
 `,
-      sendToSameChannel: fn
+      sendEphemeralToSameChannel: fn
     },
     {
       content: `pika
 peka
 poka
 `,
-      sendToSameChannel: (message) => {
+      sendEphemeralToSameChannel: (message) => {
         expect(message).toEqual(`見てたぞ
 \`\`\`diff
 + poka
@@ -49,11 +50,11 @@ poka
     {
       content: `草
 草`,
-      sendToSameChannel: fn
+      sendEphemeralToSameChannel: fn
     },
     {
       content: `草`,
-      sendToSameChannel: (message) => {
+      sendEphemeralToSameChannel: (message) => {
         expect(message).toEqual(`見てたぞ
 \`\`\`diff
 - 草
@@ -70,7 +71,7 @@ poka
 松屋
 やよい軒
 ロッテリア ロイヤルホスト`,
-      sendToSameChannel: fn
+      sendEphemeralToSameChannel: fn
     },
     {
       content: `山陰に無い店
@@ -78,7 +79,7 @@ poka
 やよい軒
 ロッテリア ロイヤルホスト
 サイゼリヤ(鳥取にはある)`,
-      sendToSameChannel: (message) => {
+      sendEphemeralToSameChannel: (message) => {
         expect(message).toEqual(`見てたぞ
 \`\`\`diff
 + サイゼリヤ(鳥取にはある)

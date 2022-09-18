@@ -23,13 +23,13 @@ export interface DeletionObservable {
   readonly content: string;
 
   /**
-   * `message` のメッセージをこのメッセージと同じチャンネルに送信する。
+   * すぐ消えてしまう `message` のメッセージをこのメッセージと同じチャンネルに送信する。
    *
    * @param {string} message
    * @returns {Promise}
    * @memberof Observable
    */
-  sendToSameChannel(message: string): Promise<void>;
+  sendEphemeralToSameChannel(message: string): Promise<void>;
 }
 
 /**
@@ -58,7 +58,7 @@ export class DeletionRepeater<M extends DeletionObservable>
       return;
     }
 
-    await message.sendToSameChannel(`${author}さん、メッセージを削除しましたね？私は見ていましたよ。内容も知っています。
+    await message.sendEphemeralToSameChannel(`${author}さん、メッセージを削除しましたね？私は見ていましたよ。内容も知っています。
 \`\`\`
 ${content}
 \`\`\``);
