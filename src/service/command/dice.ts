@@ -58,12 +58,19 @@ export class DiceCommand implements CommandResponder<typeof SCHEMA> {
       });
       return;
     }
-    const [diceFaces, diceNum] = arg.toLowerCase().split('d', 2);
+    const [arg1, arg2] = arg.toLowerCase().split('d', 2);
+    const diceFaces = parseInt(arg1);
+    const diceNum = parseInt(arg2);
 
-    const diceResult = this.diceQueen.roll(
-      parseInt(diceFaces),
-      parseInt(diceNum)
-    );
+    if (diceFaces >= 20 && diceNum >= 100 && diceFaces * diceNum >= 200) {
+      await message.reply({
+        title: '引数が大きすぎるよ',
+        description: 'ダイスは20面100個以下、最大値が200までの処理にしてね。'
+      });
+      return;
+    }
+
+    const diceResult = this.diceQueen.roll(diceFaces, diceNum);
     const diceSum = diceResult.reduce((a, x) => a + x);
 
     await message.reply({
