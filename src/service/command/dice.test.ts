@@ -43,20 +43,77 @@ describe('dice', () => {
     expect(roll).toHaveBeenCalledOnce();
   });
 
-  it('case of 100D500', async () => {
+  it('case of 101D20', async () => {
     const roll = vi.spyOn(diceQueen, 'roll');
     const fn = vi.fn();
 
     await diceCommand.on(
       createMockMessage(
-        parseStringsOrThrow(['dice', '100D500'], diceCommand.schema),
+        parseStringsOrThrow(['dice', '101D20'], diceCommand.schema),
         fn
       )
     );
 
     expect(fn).toHaveBeenCalledWith({
-      title: '引数が大きすぎるよ',
-      description: 'ダイスは100面20個以下、最大値が2000までの処理にしてね。'
+      title: '引数が範囲外だよ',
+      description:
+        'ダイスは非負整数で100面20個以下、最大値が2000までの処理にしてね。'
+    });
+    expect(roll).toBeCalledTimes(0);
+  });
+
+  it('case of 100D21', async () => {
+    const roll = vi.spyOn(diceQueen, 'roll');
+    const fn = vi.fn();
+
+    await diceCommand.on(
+      createMockMessage(
+        parseStringsOrThrow(['dice', '100D21'], diceCommand.schema),
+        fn
+      )
+    );
+
+    expect(fn).toHaveBeenCalledWith({
+      title: '引数が範囲外だよ',
+      description:
+        'ダイスは非負整数で100面20個以下、最大値が2000までの処理にしてね。'
+    });
+    expect(roll).toBeCalledTimes(0);
+  });
+
+  it('case of 0D6', async () => {
+    const roll = vi.spyOn(diceQueen, 'roll');
+    const fn = vi.fn();
+
+    await diceCommand.on(
+      createMockMessage(
+        parseStringsOrThrow(['dice', '0D6'], diceCommand.schema),
+        fn
+      )
+    );
+
+    expect(fn).toHaveBeenCalledWith({
+      title: '引数が範囲外だよ',
+      description:
+        'ダイスは非負整数で100面20個以下、最大値が2000までの処理にしてね。'
+    });
+    expect(roll).toBeCalledTimes(0);
+  });
+
+  it('case of 10D6d50', async () => {
+    const roll = vi.spyOn(diceQueen, 'roll');
+    const fn = vi.fn();
+
+    await diceCommand.on(
+      createMockMessage(
+        parseStringsOrThrow(['dice', '10D6d50'], diceCommand.schema),
+        fn
+      )
+    );
+
+    expect(fn).toHaveBeenCalledWith({
+      title: 'コマンド形式エラー',
+      description: '引数の形は`<num>d<num>`をとる必要があるよ。'
     });
     expect(roll).toBeCalledTimes(0);
   });
