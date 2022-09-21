@@ -110,7 +110,8 @@ describe('dice', () => {
 
     expect(fn).toHaveBeenCalledWith({
       title: 'コマンド形式エラー',
-      description: '引数の形は`<num>d<num>`をとる必要があるよ。'
+      description:
+        '引数の形は`<num>d<num>`をとる必要があるよ。`<num>`は非負整数にしてね。'
     });
     expect(roll).toBeCalledTimes(0);
   });
