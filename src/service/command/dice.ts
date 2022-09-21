@@ -89,7 +89,7 @@ export class DiceCommand implements CommandResponder<typeof SCHEMA> {
       await message.reply({
         title: '引数が範囲外だよ',
         description:
-          'ダイスは非負整数で100面20個以下、最大値が2000までの処理にしてね。'
+          'ダイスは非負整数で100面20個以下にしてね。'
       });
       return;
     }
