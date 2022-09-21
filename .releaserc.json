@@ -13,7 +13,10 @@
           "v{{major}}.{{minor}}"
         ],
         "dockerRegistry": "ghcr.io",
-        "dockerProject": "approvers"
+        "dockerProject": "approvers",
+        "dockerArgs": {
+          "GIT_TAG": "{{git_tag}}"
+        }
       }
     ]
   ],
