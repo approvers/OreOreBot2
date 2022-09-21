@@ -56,8 +56,7 @@ describe('dice', () => {
 
     expect(fn).toHaveBeenCalledWith({
       title: '引数が範囲外だよ',
-      description:
-        'ダイスは非負整数で100面20個以下、最大値が2000までの処理にしてね。'
+      description: 'ダイスは非負整数で100面20個以下にしてね。'
     });
     expect(roll).toBeCalledTimes(0);
   });
@@ -75,8 +74,7 @@ describe('dice', () => {
 
     expect(fn).toHaveBeenCalledWith({
       title: '引数が範囲外だよ',
-      description:
-        'ダイスは非負整数で100面20個以下、最大値が2000までの処理にしてね。'
+      description: 'ダイスは非負整数で100面20個以下にしてね。'
     });
     expect(roll).toBeCalledTimes(0);
   });
@@ -94,8 +92,7 @@ describe('dice', () => {
 
     expect(fn).toHaveBeenCalledWith({
       title: '引数が範囲外だよ',
-      description:
-        'ダイスは非負整数で100面20個以下、最大値が2000までの処理にしてね。'
+      description: 'ダイスは非負整数で100面20個以下にしてね。'
     });
     expect(roll).toBeCalledTimes(0);
   });
