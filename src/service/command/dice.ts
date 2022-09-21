@@ -26,7 +26,7 @@ const SCHEMA = {
       type: 'STRING',
       name: 'ダイスロール設定',
       description:
-        'どのダイスを何個振るかの指定。6面ダイス2個であれば ‘!dice 2d6`のように入力してね',
+        'どのダイスを何個振るかの指定。6面ダイス2個であれば ‘!dice 2d6`または`!d 2D6`のように入力してね。',
       defaultValue: '1d100'
     }
   ]
