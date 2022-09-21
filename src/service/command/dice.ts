@@ -32,6 +32,8 @@ const SCHEMA = {
   ]
 } as const;
 
+const regExState = /^(?<num>\d+)[dD](?<faces>\d+)$/;
+
 /**
  * 'dice' コマンドで
  *
@@ -49,7 +51,6 @@ export class DiceCommand implements CommandResponder<typeof SCHEMA> {
   constructor(private readonly diceQueen: DiceQueen) {}
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
-    const regExState = /^(?<num>\d+)[dD](?<faces>\d+)$/;
     const [arg] = message.args.params;
 
     const matchResult = regExState.exec(arg);
