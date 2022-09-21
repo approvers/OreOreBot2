@@ -63,6 +63,15 @@ export class DiceCommand implements CommandResponder<typeof SCHEMA> {
     }
     const arg1 = matchResult.groups?.num;
     const arg2 = matchResult.groups?.faces;
+
+    if (!(arg1 !== undefined && arg2 !== undefined)) {
+      await message.reply({
+        title: 'コマンド形式エラー',
+        description: '引数の形は`<num>d<num>`をとる必要があるよ。'
+      });
+      return;
+    }
+
     const diceNum = parseInt(arg1, 10);
     const diceFaces = parseInt(arg2, 10);
 
