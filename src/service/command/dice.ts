@@ -12,10 +12,10 @@ export interface DiceQueen {
   /**
    *
    * @param {number} faces
-   * @param {number} HowManyRoll
+   * @param {number} howManyRolls
    * @return {Array<number>}
    */
-  roll(faces: number, HowManyRoll: number): Array<number>;
+  roll(faces: number, howManyRolls: number): Array<number>;
 }
 
 const SCHEMA = {
