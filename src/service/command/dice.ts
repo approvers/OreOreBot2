@@ -58,7 +58,8 @@ export class DiceCommand implements CommandResponder<typeof SCHEMA> {
     if (matchResult == null) {
       await message.reply({
         title: 'コマンド形式エラー',
-        description: '引数の形は`<num>d<num>`をとる必要があるよ。'
+        description:
+          '引数の形は`<num>d<num>`をとる必要があるよ。`<num>`は非負整数にしてね。'
       });
       return;
     }
