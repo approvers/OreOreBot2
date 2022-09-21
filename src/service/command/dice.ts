@@ -68,7 +68,8 @@ export class DiceCommand implements CommandResponder<typeof SCHEMA> {
     if (arg1 === undefined || arg2 === undefined) {
       await message.reply({
         title: 'コマンド形式エラー',
-        description: '引数の形は`<num>d<num>`をとる必要があるよ。'
+        description:
+          '引数の形は`<num>d<num>`をとる必要があるよ。`<num>`は非負整数にしてね。'
       });
       return;
     }
@@ -77,19 +78,11 @@ export class DiceCommand implements CommandResponder<typeof SCHEMA> {
     const diceFaces = parseInt(arg2, 10);
 
     if (
-      !(
-        1 <= diceFaces &&
-        diceFaces <= 100 &&
-        1 <= diceNum &&
-        diceNum <= 20 &&
-        1 <= diceFaces * diceNum &&
-        diceFaces * diceNum <= 2000
-      )
+      !(1 <= diceFaces && diceFaces <= 100 && 1 <= diceNum && diceNum <= 20)
     ) {
       await message.reply({
         title: '引数が範囲外だよ',
-        description:
-          'ダイスは非負整数で100面20個以下にしてね。'
+        description: 'ダイスは非負整数で100面20個以下にしてね。'
       });
       return;
     }
