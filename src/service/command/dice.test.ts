@@ -56,7 +56,7 @@ describe('dice', () => {
 
     expect(fn).toHaveBeenCalledWith({
       title: '引数が大きすぎるよ',
-      description: 'ダイスは20面100個以下、最大値が200までの処理にしてね。'
+      description: 'ダイスは100面20個以下、最大値が2000までの処理にしてね。'
     });
     expect(roll).toBeCalledTimes(0);
   });
