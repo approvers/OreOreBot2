@@ -49,23 +49,37 @@ export class DiceCommand implements CommandResponder<typeof SCHEMA> {
   constructor(private readonly diceQueen: DiceQueen) {}
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
+    const regExState = /^(?<num>\d+)[dD](?<faces>\d+)$/;
     const [arg] = message.args.params;
 
-    if (arg.match(/^(?!a-c,e-z)*$/)) {
+    const matchResult = regExState.exec(arg);
+
+    if (matchResult == null) {
       await message.reply({
         title: 'コマンド形式エラー',
         description: '引数の形は`<num>d<num>`をとる必要があるよ。'
       });
       return;
     }
-    const [arg1, arg2] = arg.toLowerCase().split('d', 2);
-    const diceNum = parseInt(arg1);
-    const diceFaces = parseInt(arg2);
+    const arg1 = matchResult.groups?.num;
+    const arg2 = matchResult.groups?.faces;
+    const diceNum = parseInt(arg1, 10);
+    const diceFaces = parseInt(arg2, 10);
 
-    if (diceFaces * diceNum >= 2000) {
+    if (
+      !(
+        1 <= diceFaces &&
+        diceFaces <= 100 &&
+        1 <= diceNum &&
+        diceNum <= 20 &&
+        1 <= diceFaces * diceNum &&
+        diceFaces * diceNum <= 2000
+      )
+    ) {
       await message.reply({
-        title: '引数が大きすぎるよ',
-        description: 'ダイスは100面20個以下、最大値が2000までの処理にしてね。'
+        title: '引数が範囲外だよ',
+        description:
+          'ダイスは非負整数で100面20個以下、最大値が2000までの処理にしてね。'
       });
       return;
     }
