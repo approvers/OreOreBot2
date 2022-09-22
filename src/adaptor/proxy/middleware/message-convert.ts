@@ -27,8 +27,23 @@ const observableMessage = (
   authorId: getAuthorSnowflake(raw),
   author: raw.author?.username || '名無し',
   content: raw.content || '',
-  async sendToSameChannel(message: string): Promise<void> {
-    await raw.channel.send(message);
+  async sendEphemeralToSameChannel(message: string): Promise<void> {
+    const FIVE_SECONDS_MS = 5000;
+    const sent = await raw.channel.send(message);
+
+    void sent
+      .awaitReactions({
+        time: FIVE_SECONDS_MS,
+        max: 1,
+        filter: (_reaction, user) => !user.bot,
+        dispose: true,
+        errors: ['time']
+      })
+      .catch(async () => {
+        if (sent.deletable) {
+          await sent.delete();
+        }
+      });
   },
   async replyMessage(message): Promise<void> {
     await raw.reply(message);

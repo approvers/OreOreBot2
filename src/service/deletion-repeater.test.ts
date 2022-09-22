@@ -1,4 +1,5 @@
 import { expect, it, vi } from 'vitest';
+
 import { DeletionRepeater } from './deletion-repeater.js';
 
 it('react to deleted message', async () => {
@@ -6,7 +7,7 @@ it('react to deleted message', async () => {
   await responder.on('DELETE', {
     author: 'Baba',
     content: 'Wall Is Stop',
-    sendToSameChannel: (message) => {
+    sendEphemeralToSameChannel: (message) => {
       expect(message)
         .toEqual(`Babaさん、メッセージを削除しましたね？私は見ていましたよ。内容も知っています。
 \`\`\`
@@ -23,7 +24,7 @@ it('must not react', async () => {
   await responder.on('CREATE', {
     author: 'Baba',
     content: 'Wall Is Not Stop',
-    sendToSameChannel: fn
+    sendEphemeralToSameChannel: fn
   });
   expect(fn).not.toHaveBeenCalled();
 });
@@ -36,7 +37,7 @@ it("must not react if it's ignore target", async () => {
   await responder.on('DELETE', {
     author: 'Baba',
     content: 'Wall Is Stop',
-    sendToSameChannel: fn
+    sendEphemeralToSameChannel: fn
   });
   expect(fn).not.toHaveBeenCalled();
 });
@@ -48,7 +49,7 @@ it("must react if it's not ignore target", async () => {
   await responder.on('DELETE', {
     author: 'Baba',
     content: 'Wall Is Not Stop',
-    sendToSameChannel: (message) => {
+    sendEphemeralToSameChannel: (message) => {
       expect(message)
         .toEqual(`Babaさん、メッセージを削除しましたね？私は見ていましたよ。内容も知っています。
 \`\`\`
