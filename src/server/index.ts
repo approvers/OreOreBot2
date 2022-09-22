@@ -161,7 +161,8 @@ if (features.includes('COMMAND')) {
     roleRepo: roleManager,
     userRepo: stats,
     guildRepo: stats,
-    roleCreateRepo: roleManager
+    roleCreateRepo: roleManager,
+    queen: new MathRandomGenerator()
   });
 }
 

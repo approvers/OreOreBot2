@@ -5,6 +5,7 @@ import {
 } from './command/party.js';
 import type { Clock, ScheduleRunner } from '../runner/schedule.js';
 import { DebugCommand, MessageRepository } from './command/debug.js';
+import { DiceCommand, DiceQueen } from './command/dice.js';
 import { GetVersionCommand, VersionFetcher } from './command/version.js';
 import { GuildInfo, GuildStatsRepository } from './command/guild-info.js';
 import { JudgingCommand, RandomGenerator } from './command/judging.js';
@@ -48,7 +49,8 @@ export const registerAllCommandResponder = ({
   roleRepo,
   userRepo,
   guildRepo,
-  roleCreateRepo
+  roleCreateRepo,
+  queen
 }: {
   typoRepo: TypoRepository;
   reservationRepo: ReservationRepository;
@@ -68,6 +70,7 @@ export const registerAllCommandResponder = ({
   userRepo: UserStatsRepository;
   guildRepo: GuildStatsRepository;
   roleCreateRepo: RoleCreateManager;
+  queen: DiceQueen;
 }) => {
   const allResponders = [
     new TypoReporter(typoRepo, clock, scheduleRunner),
@@ -91,7 +94,8 @@ export const registerAllCommandResponder = ({
     new RoleInfo(roleRepo),
     new UserInfo(userRepo),
     new GuildInfo(guildRepo),
-    new RoleCreate(roleCreateRepo)
+    new RoleCreate(roleCreateRepo),
+    new DiceCommand(queen)
   ];
   for (const responder of allResponders) {
     commandRunner.addResponder(
