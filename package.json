@@ -40,7 +40,7 @@
     "date-fns": "^2.29.3",
     "difflib-ts": "^1.0.3",
     "discord.js": "^14.0.2",
-    "dotenv": "^16.0.2",
+    "dotenv": "^16.0.3",
     "nanoid": "^4.0.0",
     "tweetnacl": "^1.0.3",
     "yaml": "^2.1.1"
