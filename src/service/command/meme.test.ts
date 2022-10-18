@@ -286,7 +286,7 @@ describe('meme', () => {
           expect(message).toStrictEqual({
             title: '引数が不足してるみたいだ。',
             description:
-              'はらちょのミーム機能を使うときは引数を忘れない方がいい - 健常者エミュレータ事例集Wiki'
+              'はらちょのミーム機能を使うときは引数を忘れてはいけない - 健常者エミュレータ事例集Wiki'
           });
         }
       )
