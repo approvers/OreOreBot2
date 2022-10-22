@@ -34,7 +34,7 @@
     ]
   },
   "dependencies": {
-    "@discordjs/opus": "^0.8.0",
+    "@discordjs/opus": "^0.9.0",
     "@discordjs/voice": "^0.13.0",
     "cli-argparse": "^1.1.2",
     "date-fns": "^2.29.3",
@@ -47,12 +47,12 @@
   },
   "devDependencies": {
     "@codedependant/semantic-release-docker": "^4.1.0",
-    "@types/node": "^18.11.0",
+    "@types/node": "^18.11.3",
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.40.1",
     "@vitest/coverage-c8": "^0.24.3",
     "c8": "^7.12.0",
-    "esbuild": "^0.15.11",
+    "esbuild": "^0.15.12",
     "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-markdown": "^3.0.0",
