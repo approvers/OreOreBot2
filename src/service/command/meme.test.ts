@@ -138,6 +138,26 @@ describe('meme', () => {
     );
   });
 
+  it('use case of kenjou', async () => {
+    await responder.on(
+      createMockMessage(
+        parseStringsOrThrow(
+          [
+            'kenjou',
+            'ホテルのオートロックの鍵は部屋に置きっぱなしにしないほうがいい'
+          ],
+          responder.schema
+        ),
+        (message) => {
+          expect(message).toStrictEqual({
+            description:
+              'ホテルのオートロックの鍵は部屋に置きっぱなしにしないほうがいい - 健常者エミュレータ事例集Wiki'
+          });
+        }
+      )
+    );
+  });
+
   it('args space', async () => {
     await responder.on(
       createMockMessage(
@@ -252,6 +272,21 @@ describe('meme', () => {
             title: '引数が不足してるみたいだ。',
             description:
               '[元ネタ](https://twitter.com/yuki_yuigishi/status/1555557259798687744)'
+          });
+        }
+      )
+    );
+  });
+
+  it('args null (kenjou)', async () => {
+    await responder.on(
+      createMockMessage(
+        parseStringsOrThrow(['kenjou'], responder.schema),
+        (message) => {
+          expect(message).toStrictEqual({
+            title: '引数が不足してるみたいだ。',
+            description:
+              'はらちょのミーム機能を使うときは引数を忘れない方がいい - 健常者エミュレータ事例集Wiki'
           });
         }
       )
