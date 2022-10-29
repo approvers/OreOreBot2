@@ -6,7 +6,7 @@ import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 
 describe('dice', () => {
   const diceQueen: DiceQueen = {
-    roll: (face, num) => [...new Array<undefined>(face)].map(() => num)
+    roll: (face, num) => [...new Array<undefined>(num)].map(() => face)
   };
   const diceCommand = new DiceCommand(diceQueen);
 
