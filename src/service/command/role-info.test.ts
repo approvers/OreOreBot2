@@ -45,11 +45,6 @@ describe('RoleRank', () => {
           inline: true
         },
         {
-          name: '作成日時',
-          value: `<t:20200>`,
-          inline: true
-        },
-        {
           name: '所属人数',
           value: `3人`,
           inline: true
@@ -62,6 +57,11 @@ describe('RoleRank', () => {
         {
           name: 'カラーコード',
           value: '1a1d1a',
+          inline: true
+        },
+        {
+          name: '作成日時',
+          value: `<t:20200>(<t:20200:R>)`,
           inline: true
         }
       ],

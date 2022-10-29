@@ -22,7 +22,7 @@ export interface UserStatsRepository {
 }
 
 const SCHEMA = {
-  names: ['userinfo'],
+  names: ['userinfo', 'user'],
   subCommands: {},
   params: [
     {
