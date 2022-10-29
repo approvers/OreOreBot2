@@ -3,6 +3,7 @@ import type {
   CommandResponder,
   HelpInfo
 } from './command-message.js';
+import { createTimestamp } from '../../model/create-timestamp.js';
 
 export type RoleIcon =
   | {
@@ -66,16 +67,10 @@ export class RoleInfo implements CommandResponder<typeof SCHEMA> {
     { color, createdAt, icon, numOfMembersBelonged, position }: RoleStats,
     roleId: string
   ) {
-    const timeStampSeconds = Math.floor(createdAt.getTime() / 1000);
     const fields = [
       {
         name: 'ID',
         value: `${roleId}`,
-        inline: true
-      },
-      {
-        name: '作成日時',
-        value: `<t:${timeStampSeconds}>`,
         inline: true
       },
       {
@@ -91,6 +86,11 @@ export class RoleInfo implements CommandResponder<typeof SCHEMA> {
       {
         name: 'カラーコード',
         value: color,
+        inline: true
+      },
+      {
+        name: '作成日時',
+        value: createTimestamp(createdAt),
         inline: true
       }
     ];
