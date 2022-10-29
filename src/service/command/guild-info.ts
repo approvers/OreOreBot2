@@ -70,7 +70,7 @@ export interface GuildStatsRepository {
 }
 
 const SCHEMA = {
-  names: ['guildinfo', 'serverinfo'],
+  names: ['guildinfo', 'serverinfo', 'guild', 'server'],
   subCommands: {}
 } as const;
 

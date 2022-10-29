@@ -27,7 +27,7 @@ export interface RoleStatsRepository {
 }
 
 const SCHEMA = {
-  names: ['roleinfo'],
+  names: ['roleinfo', 'role'],
   subCommands: {},
   params: [
     {
