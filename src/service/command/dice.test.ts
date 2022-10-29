@@ -43,6 +43,42 @@ describe('dice', () => {
     expect(roll).toHaveBeenCalledOnce();
   });
 
+  it('case of verbose mode false', async () => {
+    const roll = vi.spyOn(diceQueen, 'roll');
+    const fn = vi.fn();
+
+    await diceCommand.on(
+      createMockMessage(
+        parseStringsOrThrow(['dice', '2d6', 'false'], diceCommand.schema),
+        fn
+      )
+    );
+
+    expect(fn).toHaveBeenCalledWith({
+      title: '運命のダイスロール！',
+      description: '2d6 => 12'
+    });
+    expect(roll).toHaveBeenCalledOnce();
+  });
+
+  it('case of verbose mode true', async () => {
+    const roll = vi.spyOn(diceQueen, 'roll');
+    const fn = vi.fn();
+
+    await diceCommand.on(
+      createMockMessage(
+        parseStringsOrThrow(['dice', '2d6', 'true'], diceCommand.schema),
+        fn
+      )
+    );
+
+    expect(fn).toHaveBeenCalledWith({
+      title: '運命のダイスロール！',
+      description: '2d6 => 12 (6, 6)'
+    });
+    expect(roll).toHaveBeenCalledOnce();
+  });
+
   it('case of 101D20', async () => {
     const roll = vi.spyOn(diceQueen, 'roll');
     const fn = vi.fn();

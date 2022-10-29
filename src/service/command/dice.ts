@@ -28,6 +28,12 @@ const SCHEMA = {
       description:
         'どのダイスを何個振るかの指定。6面ダイス2個であれば ‘!dice 2d6`または`!d 2D6`のように入力してね。',
       defaultValue: '1d100'
+    },
+    {
+      type: 'BOOLEAN',
+      name: '詳細表示',
+      description: '各ダイスの出目を表示させるかどうか。',
+      defaultValue: false
     }
   ]
 } as const;
