@@ -18,6 +18,11 @@ export interface DiceQueen {
   roll(faces: number, howManyRolls: number): Array<number>;
 }
 
+const regExState = /^(?<num>\d+)[dD](?<faces>\d+)$/;
+
+const modes = ['simple', 'verbose'] as const;
+const choices = [...modes.map((elem) => elem[0]), ...modes] as const;
+
 const SCHEMA = {
   names: ['d', 'dice'],
   subCommands: {},
@@ -29,24 +34,16 @@ const SCHEMA = {
         'どのダイスを何個振るかの指定。6面ダイス2個であれば ‘!dice 2d6`または`!d 2D6`のように入力してね。',
       defaultValue: '1d100'
     },
-    /**
-     * モード追加時の注意
-     * n種類目のコマンドを追加する場合(e.g.: simple -> c, verbose -> cocの場合)、
-     * choices: [...<simple format> ,'c' , ...<verbose format>, 'coc']
-     *
-     */
     {
       type: 'CHOICES',
       name: '詳細モード',
       description:
         '各ダイスの出目を表示させるかどうか。デフォルトは省略します。省略表示: `s`, `simple` 、詳細表示: `v`, `verbose`',
       defaultValue: 0,
-      choices: ['s', 'v', 'simple', 'verbose']
+      choices: choices
     }
   ]
 } as const;
-
-const regExState = /^(?<num>\d+)[dD](?<faces>\d+)$/;
 
 /**
  * 'dice' コマンドで
