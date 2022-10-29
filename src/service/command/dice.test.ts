@@ -49,7 +49,7 @@ describe('dice', () => {
 
     await diceCommand.on(
       createMockMessage(
-        parseStringsOrThrow(['dice', '2d6', 'false'], diceCommand.schema),
+        parseStringsOrThrow(['dice', '2d6'], diceCommand.schema),
         fn
       )
     );
@@ -67,16 +67,34 @@ describe('dice', () => {
 
     await diceCommand.on(
       createMockMessage(
-        parseStringsOrThrow(['dice', '2d6', 'true'], diceCommand.schema),
+        parseStringsOrThrow(['dice', '2d6', 'v'], diceCommand.schema),
         fn
       )
     );
 
     expect(fn).toHaveBeenCalledWith({
       title: '運命のダイスロール！',
-      description: '2d6 => 12 (6, 6)'
+      description: '2d6 => 12 = (6 + 6)'
     });
     expect(roll).toHaveBeenCalledOnce();
+  });
+
+  it('case of invalid mode', async () => {
+    const roll = vi.spyOn(diceQueen, 'roll');
+    const fn = vi.fn();
+
+    await diceCommand.on(
+      createMockMessage(
+        parseStringsOrThrow(['dice', '2d6', 'f'], diceCommand.schema),
+        fn
+      )
+    );
+
+    expect(fn).toHaveBeenCalledWith({
+      title: '不正な引数が見つかったよ',
+      description: '詳細設定の引数は`v`か`s`にしてね。'
+    });
+    expect(roll).toBeCalledTimes(0);
   });
 
   it('case of 101D20', async () => {
