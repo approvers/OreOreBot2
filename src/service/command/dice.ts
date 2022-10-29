@@ -31,8 +31,9 @@ const SCHEMA = {
     },
     {
       type: 'CHOICES',
-      name: '詳細表示',
-      description: '各ダイスの出目を表示させるかどうか。',
+      name: '詳細モード',
+      description:
+        '各ダイスの出目を表示させるかどうか。デフォルトは省略します。省略表示: `s`, `simple` 、詳細表示: `v`, `verbose`',
       defaultValue: 0,
       choices: ['s', 'v', 'simple', 'verbose']
     }
