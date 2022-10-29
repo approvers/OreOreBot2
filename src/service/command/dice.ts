@@ -18,6 +18,11 @@ export interface DiceQueen {
   roll(faces: number, howManyRolls: number): Array<number>;
 }
 
+const regExState = /^(?<num>\d+)[dD](?<faces>\d+)$/;
+
+const modes = ['simple', 'verbose'] as const;
+const choices = [...modes.map((elem) => elem[0]), ...modes] as const;
+
 const SCHEMA = {
   names: ['d', 'dice'],
   subCommands: {},
@@ -28,11 +33,17 @@ const SCHEMA = {
       description:
         'どのダイスを何個振るかの指定。6面ダイス2個であれば ‘!dice 2d6`または`!d 2D6`のように入力してね。',
       defaultValue: '1d100'
+    },
+    {
+      type: 'CHOICES',
+      name: '詳細モード',
+      description:
+        '各ダイスの出目を表示させるかどうか。デフォルトは省略します。省略表示: `s`, `simple` 、詳細表示: `v`, `verbose`',
+      defaultValue: 0,
+      choices: choices
     }
   ]
 } as const;
-
-const regExState = /^(?<num>\d+)[dD](?<faces>\d+)$/;
 
 /**
  * 'dice' コマンドで
@@ -51,7 +62,7 @@ export class DiceCommand implements CommandResponder<typeof SCHEMA> {
   constructor(private readonly diceQueen: DiceQueen) {}
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
-    const [arg] = message.args.params;
+    const [arg, verbose] = message.args.params;
 
     const matchResult = regExState.exec(arg);
 
@@ -91,9 +102,19 @@ export class DiceCommand implements CommandResponder<typeof SCHEMA> {
     const diceResult = this.diceQueen.roll(diceFaces, diceNum);
     const diceSum = diceResult.reduce((a, x) => a + x);
 
-    await message.reply({
-      title: '運命のダイスロール！',
-      description: `${arg} => ${diceSum}`
-    });
+    switch (verbose % (SCHEMA.params[1].choices.length / 2)) {
+      case 0:
+        await message.reply({
+          title: '運命のダイスロール！',
+          description: `${arg} => ${diceSum}`
+        });
+        break;
+      case 1:
+        await message.reply({
+          title: '運命のダイスロール！',
+          description: `${arg} => ${diceSum} = (${diceResult.join(' + ')})`
+        });
+        break;
+    }
   }
 }

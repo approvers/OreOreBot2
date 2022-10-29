@@ -6,7 +6,7 @@ import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 
 describe('dice', () => {
   const diceQueen: DiceQueen = {
-    roll: (face, num) => [...new Array<undefined>(face)].map(() => num)
+    roll: (face, num) => [...new Array<undefined>(num)].map(() => face)
   };
   const diceCommand = new DiceCommand(diceQueen);
 
@@ -39,6 +39,42 @@ describe('dice', () => {
     expect(fn).toHaveBeenCalledWith({
       title: '運命のダイスロール！',
       description: '1d100 => 100'
+    });
+    expect(roll).toHaveBeenCalledOnce();
+  });
+
+  it('case of verbose mode false', async () => {
+    const roll = vi.spyOn(diceQueen, 'roll');
+    const fn = vi.fn();
+
+    await diceCommand.on(
+      createMockMessage(
+        parseStringsOrThrow(['dice', '2d6'], diceCommand.schema),
+        fn
+      )
+    );
+
+    expect(fn).toHaveBeenCalledWith({
+      title: '運命のダイスロール！',
+      description: '2d6 => 12'
+    });
+    expect(roll).toHaveBeenCalledOnce();
+  });
+
+  it('case of verbose mode true', async () => {
+    const roll = vi.spyOn(diceQueen, 'roll');
+    const fn = vi.fn();
+
+    await diceCommand.on(
+      createMockMessage(
+        parseStringsOrThrow(['dice', '2d6', 'v'], diceCommand.schema),
+        fn
+      )
+    );
+
+    expect(fn).toHaveBeenCalledWith({
+      title: '運命のダイスロール！',
+      description: '2d6 => 12 = (6 + 6)'
     });
     expect(roll).toHaveBeenCalledOnce();
   });
