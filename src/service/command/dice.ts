@@ -57,7 +57,7 @@ export class DiceCommand implements CommandResponder<typeof SCHEMA> {
   constructor(private readonly diceQueen: DiceQueen) {}
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
-    const [arg] = message.args.params;
+    const [arg, verbose] = message.args.params;
 
     const matchResult = regExState.exec(arg);
 
@@ -97,9 +97,16 @@ export class DiceCommand implements CommandResponder<typeof SCHEMA> {
     const diceResult = this.diceQueen.roll(diceFaces, diceNum);
     const diceSum = diceResult.reduce((a, x) => a + x);
 
-    await message.reply({
-      title: '運命のダイスロール！',
-      description: `${arg} => ${diceSum}`
-    });
+    if (!verbose) {
+      await message.reply({
+        title: '運命のダイスロール！',
+        description: `${arg} => ${diceSum}`
+      });
+    } else {
+      await message.reply({
+        title: '運命のダイスロール！',
+        description: `${arg} => ${diceSum} (${diceResult.join(', ')})`
+      });
+    }
   }
 }
