@@ -79,24 +79,6 @@ describe('dice', () => {
     expect(roll).toHaveBeenCalledOnce();
   });
 
-  it('case of invalid mode', async () => {
-    const roll = vi.spyOn(diceQueen, 'roll');
-    const fn = vi.fn();
-
-    await diceCommand.on(
-      createMockMessage(
-        parseStringsOrThrow(['dice', '2d6', 'f'], diceCommand.schema),
-        fn
-      )
-    );
-
-    expect(fn).toHaveBeenCalledWith({
-      title: '不正な引数が見つかったよ',
-      description: '詳細設定の引数は`v`か`s`にしてね。'
-    });
-    expect(roll).toBeCalledTimes(0);
-  });
-
   it('case of 101D20', async () => {
     const roll = vi.spyOn(diceQueen, 'roll');
     const fn = vi.fn();

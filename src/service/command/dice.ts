@@ -30,10 +30,11 @@ const SCHEMA = {
       defaultValue: '1d100'
     },
     {
-      type: 'STRING',
+      type: 'CHOICES',
       name: '詳細表示',
       description: '各ダイスの出目を表示させるかどうか。',
-      defaultValue: 's'
+      defaultValue: 0,
+      choices: ['s', 'v', 'simple', 'verbose']
     }
   ]
 } as const;
@@ -94,25 +95,17 @@ export class DiceCommand implements CommandResponder<typeof SCHEMA> {
       return;
     }
 
-    if (verbose !== 's' && verbose !== 'v') {
-      await message.reply({
-        title: '不正な引数が見つかったよ',
-        description: '詳細設定の引数は`v`か`s`にしてね。'
-      });
-      return;
-    }
-
     const diceResult = this.diceQueen.roll(diceFaces, diceNum);
     const diceSum = diceResult.reduce((a, x) => a + x);
 
-    if (verbose === 'v') {
+    if (verbose === 1 || verbose === 3) {
       await message.reply({
         title: '運命のダイスロール！',
         description: `${arg} => ${diceSum} = (${diceResult.join(' + ')})`
       });
     }
 
-    if (verbose === 's') {
+    if (verbose === 0 || verbose === 2) {
       await message.reply({
         title: '運命のダイスロール！',
         description: `${arg} => ${diceSum}`
