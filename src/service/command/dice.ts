@@ -29,6 +29,12 @@ const SCHEMA = {
         'どのダイスを何個振るかの指定。6面ダイス2個であれば ‘!dice 2d6`または`!d 2D6`のように入力してね。',
       defaultValue: '1d100'
     },
+    /**
+     * モード追加時の注意
+     * n種類目のコマンドを追加する場合(e.g.: simple -> c, verbose -> cocの場合)、
+     * choices: [...<simple format> ,'c' , ...<verbose format>, 'coc']
+     *
+     */
     {
       type: 'CHOICES',
       name: '詳細モード',
@@ -99,18 +105,19 @@ export class DiceCommand implements CommandResponder<typeof SCHEMA> {
     const diceResult = this.diceQueen.roll(diceFaces, diceNum);
     const diceSum = diceResult.reduce((a, x) => a + x);
 
-    if (verbose === 1 || verbose === 3) {
-      await message.reply({
-        title: '運命のダイスロール！',
-        description: `${arg} => ${diceSum} = (${diceResult.join(' + ')})`
-      });
-    }
-
-    if (verbose === 0 || verbose === 2) {
-      await message.reply({
-        title: '運命のダイスロール！',
-        description: `${arg} => ${diceSum}`
-      });
+    switch (verbose % (SCHEMA.params[1].choices.length / 2)) {
+      case 0:
+        await message.reply({
+          title: '運命のダイスロール！',
+          description: `${arg} => ${diceSum}`
+        });
+        break;
+      case 1:
+        await message.reply({
+          title: '運命のダイスロール！',
+          description: `${arg} => ${diceSum} = (${diceResult.join(' + ')})`
+        });
+        break;
     }
   }
 }
