@@ -1,6 +1,7 @@
 import type { MessageEvent, MessageEventResponder } from '../runner/index.js';
 
-const boldItalic = /\*\*\*/g;
+// 一つでも含まれていればよいため、最短マッチを行う
+const boldItalic = /\*\*\*(?:.+?)\*\*\*/g;
 
 export interface BoldItalicCop {
   /**
@@ -25,7 +26,7 @@ export class BoldItalicCopReporter
     if (event !== 'CREATE') return;
     const boldItalicSize = message.content.match(boldItalic);
     if (!boldItalicSize) return;
-    if (boldItalicSize.length >= 2) {
+    if (boldItalicSize.length >= 1) {
       await message.replyMessage({
         content: 'Bold-Italic警察だ!!! <:haracho:684424533997912096>'
       });
