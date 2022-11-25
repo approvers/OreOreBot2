@@ -1,4 +1,4 @@
-- pattern: 響
+- pattern: (?<!影)響
   emojisToSend:
     - <:haracho:684424533997912096>
 - pattern: ぴちょん
@@ -12,7 +12,7 @@
 - pattern: 磯(崎|﨑)
   emojisToSend:
     - <:isozaki_kirito:836249519632023623>
-- pattern: カス
+- pattern: (?<![ァ-ヴー])カス(?![ァ-ヴー])
   emojisToSend:
     - <:ks:845281735897645066>
 - pattern: Python
