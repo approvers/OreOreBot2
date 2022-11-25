@@ -158,6 +158,23 @@ describe('meme', () => {
     );
   });
 
+  it('use case of koume', async () => {
+    await responder.on(
+      createMockMessage(
+        parseStringsOrThrow(
+          ['koume', 'RSA鍵を登録した', 'ed25519'],
+          responder.schema
+        ),
+        (message) => {
+          expect(message).toStrictEqual({
+            description:
+              'RSA鍵を登録したと思ったら〜♪\ned25519でした〜♪\nチクショー！！ #まいにちチクショー'
+          });
+        }
+      )
+    );
+  });
+
   it('args space', async () => {
     await responder.on(
       createMockMessage(
@@ -287,6 +304,21 @@ describe('meme', () => {
             title: '引数が不足してるみたいだ。',
             description:
               'はらちょのミーム機能を使うときは引数を忘れない方がいい - 健常者エミュレータ事例集Wiki'
+          });
+        }
+      )
+    );
+  });
+
+  it('args null (koume)', async () => {
+    await responder.on(
+      createMockMessage(
+        parseStringsOrThrow(['koume'], responder.schema),
+        (message) => {
+          expect(message).toStrictEqual({
+            title: '引数が不足してるみたいだ。',
+            description:
+              'MEMEを表示しようと思ったら〜♪ 引数が足りませんでした〜♪ チクショー！！'
           });
         }
       )
