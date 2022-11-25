@@ -9,6 +9,6 @@ export const koume: MemeTemplate<never, never> = {
     'MEMEを表示しようと思ったら〜♪ 引数が足りませんでした〜♪ チクショー！！',
   generate(args) {
     const [option1, option2] = args.body.split(' ');
-    return `${option1}と思ったら〜♪\n${option2}でした〜♪\nチクショー！！ #まいにちチクショー`;
+    return `${option1}と思ったら〜♪\n\n${option2}でした〜♪\n\nチクショー！！　#まいにちチクショー`;
   }
 };
