@@ -94,6 +94,25 @@ describe('meme', () => {
     );
   });
 
+  it('use case of takopi (-c)', async () => {
+    await responder.on(
+      createMockMessage(
+        parseStringsOrThrow(
+          ['takopi', '-c', 'こるく いっそう'],
+          responder.schema
+        ),
+        (message) => {
+          expect(message).toStrictEqual({
+            description: `りにあ「こるく、出して」\nいっそう「わ、わかんないっピ.......」`
+          });
+        },
+        {
+          senderName: 'りにあ'
+        }
+      )
+    );
+  });
+
   it('use case of n', async () => {
     await responder.on(
       createMockMessage(
