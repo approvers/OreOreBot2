@@ -1,6 +1,7 @@
 import { dousurya } from './dousurya.js';
 import { hukueki } from './hukueki.js';
 import { kenjou } from './kenjou.js';
+import { koume } from './koume.js';
 import { lolicon } from './lolicon.js';
 import { moeta } from './moeta.js';
 import { n } from './n.js';
@@ -17,5 +18,6 @@ export const memes = [
   nigetane,
   web3,
   moeta,
-  kenjou
+  kenjou,
+  koume
 ];
