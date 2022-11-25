@@ -10,6 +10,6 @@ export const koume: MemeTemplate<never, never> = {
   generate(args) {
     const option1 = args.body.split(' ')[0];
     const option2 = args.body.split(' ')[1];
-    return `${option1}と思ったら〜♪\n${option2}でした〜♪\nチクショー！！`;
+    return `${option1}と思ったら〜♪\n${option2}でした〜♪\nチクショー！！ #まいにちチクショー`;
   }
 };
