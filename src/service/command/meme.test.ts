@@ -168,7 +168,7 @@ describe('meme', () => {
         (message) => {
           expect(message).toStrictEqual({
             description:
-              'RSA鍵を登録したと思ったら〜♪\ned25519でした〜♪\nチクショー！！ #まいにちチクショー'
+              'RSA鍵を登録したと思ったら〜♪\n\ned25519でした〜♪\n\nチクショー！！　#まいにちチクショー'
           });
         }
       )
