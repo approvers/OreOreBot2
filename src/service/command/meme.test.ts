@@ -98,7 +98,7 @@ describe('meme', () => {
     await responder.on(
       createMockMessage(
         parseStringsOrThrow(
-          ['takopi', '-c', 'こるく いっそう'],
+          ['takopi', '-c', 'こるく', 'いっそう'],
           responder.schema
         ),
         (message) => {
