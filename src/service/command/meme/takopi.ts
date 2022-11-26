@@ -9,7 +9,7 @@ export const takopi: MemeTemplate<
 > = {
   commandNames: ['takopi'],
   description:
-    '「〜、出して」\n`-f` で教員と自分の名前の位置を反対にします。\n`-c`で教員の名前も変更可能です。\n([idea: フライさん](https://github.com/approvers/OreOreBot2/issues/90))',
+    '「〜、出して」\n`-f` で教員と自分の名前の位置を反対にします。\n`-c <教員の名前> <出すもの>`で教員の名前も変更可能です。\n([idea: フライさん](https://github.com/approvers/OreOreBot2/issues/90))',
   flagsKeys: takopiFlags,
   optionsKeys: takopiOptions,
   errorMessage: '(引数が)わ、わかんないっピ.......',
