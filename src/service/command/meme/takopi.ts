@@ -1,7 +1,6 @@
 import type { MemeTemplate } from '../../../model/meme-template.js';
 
 const takopiFlags = ['f'] as const;
-//waiting merge #586
 const takopiOptions = ['c'] as const;
 
 export const takopi: MemeTemplate<
