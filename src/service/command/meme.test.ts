@@ -103,6 +103,25 @@ describe('meme', () => {
         ),
         (message) => {
           expect(message).toStrictEqual({
+            description: `こるく「いっそう、出して」\nりにあ「わ、わかんないっピ.......」`
+          });
+        },
+        {
+          senderName: 'りにあ'
+        }
+      )
+    );
+  });
+
+  it('use case of takopi (-f, -c)', async () => {
+    await responder.on(
+      createMockMessage(
+        parseStringsOrThrow(
+          ['takopi', '-f', '-c', 'こるく', 'いっそう'],
+          responder.schema
+        ),
+        (message) => {
+          expect(message).toStrictEqual({
             description: `りにあ「いっそう、出して」\nこるく「わ、わかんないっピ.......」`
           });
         },
