@@ -1,4 +1,4 @@
-name: Release
+name: Release PR
 on:
   workflow_dispatch:
   schedule:
