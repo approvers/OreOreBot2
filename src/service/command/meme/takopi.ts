@@ -14,10 +14,17 @@ export const takopi: MemeTemplate<
   optionsKeys: takopiOptions,
   errorMessage: '(引数が)わ、わかんないっピ.......',
   generate(args, author) {
-    if (args.options.c)
-      return `${author}「${args.body}、出して」\n${args.options.c}「わ、わかんないっピ.......」`;
-    if (args.flags.f)
-      return `${author}「${args.body}、出して」\n教員「わ、わかんないっピ.......」`;
-    return `教員「${args.body}、出して」\n${author}「わ、わかんないっピ.......」`;
+    const takopiArgs = {
+      takopi: author,
+      shizuka: args.options.c ?? '教員',
+      goods: args.body ?? '課題'
+    };
+
+    if (args.flags.f) {
+      const temp: string = takopiArgs.takopi;
+      takopiArgs.takopi = takopiArgs.shizuka;
+      takopiArgs.shizuka = temp;
+    }
+    return `${takopiArgs.shizuka}「${takopiArgs.goods}、出して」\n${takopiArgs.takopi}「わ、わかんないっピ.......」`;
   }
 };
