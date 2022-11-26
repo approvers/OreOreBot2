@@ -19,5 +19,5 @@ runs:
     - name: Build and publish Docker Images to GitHub Container registry
       uses: VaultVulp/gp-docker-action@1.5.0
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ github.token }}
         image-name: oreorebot2
