@@ -1,0 +1,23 @@
+name: Publish
+description: Publish the Docker package
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: "16"
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+
+    - uses: docker/setup-buildx-action@v2.2.1
+
+    - name: Build and publish Docker Images to GitHub Container registry
+      uses: VaultVulp/gp-docker-action@1.5.0
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        image-name: oreorebot2
