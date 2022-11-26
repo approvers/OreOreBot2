@@ -94,6 +94,58 @@ describe('meme', () => {
     );
   });
 
+  it('use case of takopi (-c)', async () => {
+    await responder.on(
+      createMockMessage(
+        parseStringsOrThrow(
+          ['takopi', '-c', 'こるく', 'いっそう'],
+          responder.schema
+        ),
+        (message) => {
+          expect(message).toStrictEqual({
+            description: `こるく「いっそう、出して」\nりにあ「わ、わかんないっピ.......」`
+          });
+        },
+        {
+          senderName: 'りにあ'
+        }
+      )
+    );
+  });
+
+  it('use case of takopi (-f, -c)', async () => {
+    await responder.on(
+      createMockMessage(
+        parseStringsOrThrow(
+          ['takopi', '-f', '-c', 'こるく', 'いっそう'],
+          responder.schema
+        ),
+        (message) => {
+          expect(message).toStrictEqual({
+            description: `りにあ「いっそう、出して」\nこるく「わ、わかんないっピ.......」`
+          });
+        },
+        {
+          senderName: 'りにあ'
+        }
+      )
+    );
+  });
+
+  it('few arguments of takopi (-c)', async () => {
+    await responder.on(
+      createMockMessage(
+        parseStringsOrThrow(['takopi', '-c', 'こるく'], responder.schema),
+        (message) => {
+          expect(message).toStrictEqual({
+            description: '(引数が)わ、わかんないっピ.......',
+            title: '引数が不足してるみたいだ。'
+          });
+        }
+      )
+    );
+  });
+
   it('use case of n', async () => {
     await responder.on(
       createMockMessage(
