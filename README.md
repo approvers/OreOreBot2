@@ -78,6 +78,8 @@ OreOreBot2 の [Discussions](https://github.com/approvers/OreOreBot2/discussions
 
 ```shell
 git clone https://github.com/approvers/OreOreBot2.git
+cd OreOreBot2
+yarn install
 yarn build
 yarn start
 ```
@@ -85,3 +87,15 @@ yarn start
 `yarn start` での起動時に上記の環境変数を指定してください。`.env` でも指定できます。
 
 `yarn dev` を使用することでコンパイルせずに起動することもできます。
+
+### Docker での起動
+
+Docker・Docker Compose が利用可能であるとします。
+
+```shell
+git clone https://github.com/approvers/OreOreBot2.git
+cd OreOreBot2
+docker compose up -d
+```
+
+`.env` で環境変数を設定してから `docker compose up -d` を実行してください。
