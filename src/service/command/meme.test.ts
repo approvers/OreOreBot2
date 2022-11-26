@@ -132,6 +132,20 @@ describe('meme', () => {
     );
   });
 
+  it('few arguments of takopi (-c)', async () => {
+    await responder.on(
+      createMockMessage(
+        parseStringsOrThrow(['takopi', '-c', 'こるく'], responder.schema),
+        (message) => {
+          expect(message).toStrictEqual({
+            description: '(引数が)わ、わかんないっピ.......',
+            title: '引数が不足してるみたいだ。'
+          });
+        }
+      )
+    );
+  });
+
   it('use case of n', async () => {
     await responder.on(
       createMockMessage(
