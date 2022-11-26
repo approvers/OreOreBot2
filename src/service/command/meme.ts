@@ -47,7 +47,11 @@ export class Meme implements CommandResponder<typeof SCHEMA> {
       return;
     }
     const sanitizedArgs = sanitizeArgs(commandArgs);
-    const { flags, options, unparsed } = parse(sanitizedArgs);
+    const hyphen = (key: string) => (key.length <= 1 ? `-${key}` : `--${key}`);
+    const { flags, options, unparsed } = parse(sanitizedArgs, {
+      flags: meme.flagsKeys.map(hyphen),
+      options: meme.optionsKeys.map(hyphen)
+    });
     const body = unparsed.join(' ');
     if (flags['help'] || options['help']) {
       await message.reply({
