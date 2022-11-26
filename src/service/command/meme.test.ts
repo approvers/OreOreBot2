@@ -103,7 +103,7 @@ describe('meme', () => {
         ),
         (message) => {
           expect(message).toStrictEqual({
-            description: `りにあ「こるく、出して」\nいっそう「わ、わかんないっピ.......」`
+            description: `りにあ「いっそう、出して」\nこるく「わ、わかんないっピ.......」`
           });
         },
         {
