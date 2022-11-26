@@ -1,0 +1,8 @@
+version: "3.9"
+
+services:
+  oreorebot2:
+    image: ghcr.io/approvers/oreorebot2:latest
+    restart: always
+    env_file:
+      - .env
