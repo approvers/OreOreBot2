@@ -21,3 +21,8 @@ jobs:
       - name: Publish the Docker package
         if: steps.release.outputs.release_created
         uses: ./.github/actions/publish
+        with:
+          major: ${{ steps.release.outputs.major }}
+          minor: ${{ steps.release.outputs.minor }}
+          patch: ${{ steps.release.outputs.patch }}
+          sha: ${{ steps.release.outputs.sha }}
