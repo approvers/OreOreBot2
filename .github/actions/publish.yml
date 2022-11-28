@@ -40,8 +40,8 @@ runs:
       with:
         push: true
         tags: |
-          ${{ github.repository }}:latest
-          ${{ github.repository }}:${{ github.sha }}
-          ${{ github.repository }}:${{ inputs.major }}
-          ${{ github.repository }}:${{ inputs.major }}.${{ inputs.minor }}
-          ${{ github.repository }}:${{ inputs.major }}.${{ inputs.minor }}.${{ inputs.patch }}
+          ghcr.io/${{ github.repository }}:latest
+          ghcr.io/${{ github.repository }}:${{ github.sha }}
+          ghcr.io/${{ github.repository }}:${{ inputs.major }}
+          ghcr.io/${{ github.repository }}:${{ inputs.major }}.${{ inputs.minor }}
+          ghcr.io/${{ github.repository }}:${{ inputs.major }}.${{ inputs.minor }}.${{ inputs.patch }}
