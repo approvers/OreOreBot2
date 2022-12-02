@@ -7,39 +7,6 @@ import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 describe('meme', () => {
   const responder = new Meme();
 
-  it('args space', async () => {
-    await responder.on(
-      createMockMessage(
-        parseStringsOrThrow(
-          ['lolicon', 'こるく', 'にえっちを申し込む'],
-          responder.schema
-        ),
-        (message) => {
-          expect(message).toStrictEqual({
-            description: `だから僕はこるく にえっちを申し込むを辞めた - める (Music Video)`
-          });
-        },
-        {
-          senderName: 'める'
-        }
-      )
-    );
-  });
-
-  it('args null (hukueki)', async () => {
-    await responder.on(
-      createMockMessage(
-        parseStringsOrThrow(['hukueki'], responder.schema),
-        (message) => {
-          expect(message).toStrictEqual({
-            description: '服役できなかった。',
-            title: '引数が不足してるみたいだ。'
-          });
-        }
-      )
-    );
-  });
-
   it('args null (lolicon)', async () => {
     await responder.on(
       createMockMessage(
