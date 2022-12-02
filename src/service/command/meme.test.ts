@@ -7,20 +7,6 @@ import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 describe('meme', () => {
   const responder = new Meme();
 
-  it('use case of web3', async () => {
-    await responder.on(
-      createMockMessage(
-        parseStringsOrThrow(['web3', 'Rust'], responder.schema),
-        (message) => {
-          expect(message).toStrictEqual({
-            description:
-              '```\n「いちばんやさしいRustの教本」 - インプレス \n```'
-          });
-        }
-      )
-    );
-  });
-
   it('use case of moeta', async () => {
     await responder.on(
       createMockMessage(
