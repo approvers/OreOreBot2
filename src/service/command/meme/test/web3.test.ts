@@ -7,16 +7,29 @@ import { parseStringsOrThrow } from '../../../../adaptor/proxy/command/schema.js
 describe('meme', () => {
   const responder = new Meme();
 
-  it('use case of n', async () => {
+  it('use case of web3', async () => {
     await responder.on(
       createMockMessage(
-        parseStringsOrThrow(
-          ['n', 'テスト前に課題もやらないで原神してて'],
-          responder.schema
-        ),
+        parseStringsOrThrow(['web3', 'Rust'], responder.schema),
         (message) => {
           expect(message).toStrictEqual({
-            description: `テスト前に課題もやらないで原神しててNった`
+            description:
+              '```\n「いちばんやさしいRustの教本」 - インプレス \n```'
+          });
+        }
+      )
+    );
+  });
+
+  it('args null (web3)', async () => {
+    await responder.on(
+      createMockMessage(
+        parseStringsOrThrow(['web3'], responder.schema),
+        (message) => {
+          expect(message).toStrictEqual({
+            title: '引数が不足してるみたいだ。',
+            description:
+              'TCP/IP、SMTP、HTTPはGoogleやAmazonに独占されています。'
           });
         }
       )

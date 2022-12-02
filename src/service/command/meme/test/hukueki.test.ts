@@ -22,4 +22,18 @@ describe('meme', () => {
       )
     );
   });
+
+  it('args null (hukueki)', async () => {
+    await responder.on(
+      createMockMessage(
+        parseStringsOrThrow(['hukueki'], responder.schema),
+        (message) => {
+          expect(message).toStrictEqual({
+            description: '服役できなかった。',
+            title: '引数が不足してるみたいだ。'
+          });
+        }
+      )
+    );
+  });
 });

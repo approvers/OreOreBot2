@@ -90,4 +90,18 @@ describe('meme', () => {
       )
     );
   });
+
+  it('args null (takopi)', async () => {
+    await responder.on(
+      createMockMessage(
+        parseStringsOrThrow(['takopi'], responder.schema),
+        (message) => {
+          expect(message).toStrictEqual({
+            description: '(引数が)わ、わかんないっピ.......',
+            title: '引数が不足してるみたいだ。'
+          });
+        }
+      )
+    );
+  });
 });

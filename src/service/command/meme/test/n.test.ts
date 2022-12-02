@@ -22,4 +22,19 @@ describe('meme', () => {
       )
     );
   });
+
+  it('args null (n)', async () => {
+    await responder.on(
+      createMockMessage(
+        parseStringsOrThrow(['n'], responder.schema),
+        (message) => {
+          expect(message).toStrictEqual({
+            title: '引数が不足してるみたいだ。',
+            description:
+              'このままだと <@521958252280545280> みたいに留年しちゃう....'
+          });
+        }
+      )
+    );
+  });
 });
