@@ -7,22 +7,6 @@ import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 describe('meme', () => {
   const responder = new Meme();
 
-  it('use case of n', async () => {
-    await responder.on(
-      createMockMessage(
-        parseStringsOrThrow(
-          ['n', 'テスト前に課題もやらないで原神してて'],
-          responder.schema
-        ),
-        (message) => {
-          expect(message).toStrictEqual({
-            description: `テスト前に課題もやらないで原神しててNった`
-          });
-        }
-      )
-    );
-  });
-
   it('use case of web3', async () => {
     await responder.on(
       createMockMessage(
