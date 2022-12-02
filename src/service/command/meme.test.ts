@@ -8,7 +8,7 @@ describe('meme', () => {
   const responder = new Meme();
 
   /**
-   * 各Memeのテストケースは /src/service/command/meme/test に移動しています。
+   * 各Memeのテストケースは src/service/command/meme/test に移動しています。
    * https://github.com/approvers/OreOreBot2/pull/600
    */
 
