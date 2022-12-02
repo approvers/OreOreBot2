@@ -20,4 +20,19 @@ describe('meme', () => {
       )
     );
   });
+
+  it('args null (moeta)', async () => {
+    await responder.on(
+      createMockMessage(
+        parseStringsOrThrow(['moeta'], responder.schema),
+        (message) => {
+          expect(message).toStrictEqual({
+            title: '引数が不足してるみたいだ。',
+            description:
+              '[元ネタ](https://twitter.com/yuki_yuigishi/status/1555557259798687744)'
+          });
+        }
+      )
+    );
+  });
 });

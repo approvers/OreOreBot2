@@ -23,4 +23,19 @@ describe('meme', () => {
       )
     );
   });
+
+  it('args null (koume)', async () => {
+    await responder.on(
+      createMockMessage(
+        parseStringsOrThrow(['koume'], responder.schema),
+        (message) => {
+          expect(message).toStrictEqual({
+            title: '引数が不足してるみたいだ。',
+            description:
+              'MEMEを表示しようと思ったら〜♪ 引数が足りませんでした〜♪ チクショー！！'
+          });
+        }
+      )
+    );
+  });
 });

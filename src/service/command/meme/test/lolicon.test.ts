@@ -25,4 +25,18 @@ describe('meme', () => {
       )
     );
   });
+
+  it('args null (lolicon)', async () => {
+    await responder.on(
+      createMockMessage(
+        parseStringsOrThrow(['lolicon'], responder.schema),
+        (message) => {
+          expect(message).toStrictEqual({
+            description: 'こるくはロリコンをやめられなかった。',
+            title: '引数が不足してるみたいだ。'
+          });
+        }
+      )
+    );
+  });
 });

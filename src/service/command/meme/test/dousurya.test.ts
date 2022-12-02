@@ -29,4 +29,18 @@ describe('meme', () => {
       )
     );
   });
+
+  it('args null (dousureba)', async () => {
+    await responder.on(
+      createMockMessage(
+        parseStringsOrThrow(['dousureba'], responder.schema),
+        (message) => {
+          expect(message).toStrictEqual({
+            description: 'どうしようもない。',
+            title: '引数が不足してるみたいだ。'
+          });
+        }
+      )
+    );
+  });
 });
