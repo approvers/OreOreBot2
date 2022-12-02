@@ -7,26 +7,6 @@ import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 describe('meme', () => {
   const responder = new Meme();
 
-  it('use case of kenjou', async () => {
-    await responder.on(
-      createMockMessage(
-        parseStringsOrThrow(
-          [
-            'kenjou',
-            'ホテルのオートロックの鍵は部屋に置きっぱなしにしないほうがいい'
-          ],
-          responder.schema
-        ),
-        (message) => {
-          expect(message).toStrictEqual({
-            description:
-              'ホテルのオートロックの鍵は部屋に置きっぱなしにしないほうがいい - 健常者エミュレータ事例集Wiki'
-          });
-        }
-      )
-    );
-  });
-
   it('use case of koume', async () => {
     await responder.on(
       createMockMessage(
