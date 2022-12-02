@@ -7,38 +7,6 @@ import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 describe('meme', () => {
   const responder = new Meme();
 
-  it('use case of hukueki', async () => {
-    await responder.on(
-      createMockMessage(
-        parseStringsOrThrow(['hukueki', 'こるく'], responder.schema),
-        (message) => {
-          expect(message).toStrictEqual({
-            description:
-              'ねぇ、将来何してるだろうね\n' +
-              'こるくはしてないといいね\n' +
-              '困らないでよ'
-          });
-        }
-      )
-    );
-  });
-
-  it('use case of lolicon', async () => {
-    await responder.on(
-      createMockMessage(
-        parseStringsOrThrow(['lolicon', 'こるく'], responder.schema),
-        (message) => {
-          expect(message).toStrictEqual({
-            description: `だから僕はこるくを辞めた - める (Music Video)`
-          });
-        },
-        {
-          senderName: 'める'
-        }
-      )
-    );
-  });
-
   it('use case of dousurya', async () => {
     await responder.on(
       createMockMessage(
