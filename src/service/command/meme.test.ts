@@ -7,6 +7,11 @@ import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 describe('meme', () => {
   const responder = new Meme();
 
+  /**
+   * 各Memeのテストケースは /src/service/command/meme/test に移動しています。
+   * https://github.com/approvers/OreOreBot2/pull/600
+   */
+
   it('delete message', async () => {
     const fn = vi.fn();
     await responder.on(
