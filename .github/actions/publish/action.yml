@@ -25,6 +25,7 @@ runs:
       with:
         node-version: "16"
     - name: Install dependencies
+      shell: bash
       run: yarn install --frozen-lockfile
 
     - uses: docker/setup-buildx-action@v2.2.1
@@ -41,7 +42,7 @@ runs:
         push: true
         tags: |
           ghcr.io/${{ github.repository }}:latest
-          ghcr.io/${{ github.repository }}:${{ github.sha }}
+          ghcr.io/${{ github.repository }}:${{ inputs.sha }}
           ghcr.io/${{ github.repository }}:${{ inputs.major }}
           ghcr.io/${{ github.repository }}:${{ inputs.major }}.${{ inputs.minor }}
           ghcr.io/${{ github.repository }}:${{ inputs.major }}.${{ inputs.minor }}.${{ inputs.patch }}
