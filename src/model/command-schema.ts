@@ -128,14 +128,12 @@ export type ParamsValues<S> = Equal<S, readonly Param[]> extends true
  * @export
  * @interface SubCommand
  */
-export interface SubCommand<P> {
+export interface SubCommand {
   type: 'SUB_COMMAND';
-  params?: P;
+  params?: readonly Param[];
 }
 
-export const isValidSubCommand = <P extends readonly Param[]>(
-  sc: SubCommand<P>
-): boolean => {
+export const isValidSubCommand = (sc: SubCommand): boolean => {
   if (!sc.params) {
     return true;
   }
@@ -156,19 +154,14 @@ export const isValidSubCommand = <P extends readonly Param[]>(
   return lastRequiredParam < firstOptionalParam;
 };
 
-export const assertValidSubCommand = <P extends readonly Param[]>(
-  sc: SubCommand<P>
-): void => {
+export const assertValidSubCommand = (sc: SubCommand): void => {
   if (!isValidSubCommand(sc)) {
     console.dir(sc);
     throw new Error('assertion failure');
   }
 };
 
-export type SubCommandEntries = Record<
-  string,
-  SubCommand<readonly Param[]> | SubCommandGroup<Record<string, unknown>>
->;
+export type SubCommandEntries = Record<string, SubCommand | SubCommandGroup>;
 
 /**
  * サブコマンドが属するグループ。これ単体ではコマンドとして実行できない。
@@ -176,9 +169,9 @@ export type SubCommandEntries = Record<
  * @export
  * @interface SubCommandGroup
  */
-export interface SubCommandGroup<S> {
+export interface SubCommandGroup {
   type: 'SUB_COMMAND_GROUP';
-  subCommands: Readonly<S>;
+  subCommands: SubCommandEntries;
 }
 
 /**
@@ -189,10 +182,10 @@ export interface SubCommandGroup<S> {
  * @export
  * @interface Schema
  */
-export interface Schema<S = Record<string, unknown>, P = readonly Param[]> {
+export interface Schema {
   names: readonly string[];
-  subCommands: Readonly<S>;
-  params?: P;
+  subCommands: SubCommandEntries;
+  params?: readonly Param[];
 }
 
 /**
@@ -215,23 +208,19 @@ export type ParsedSchema<S extends Schema> = {
  * @typedef ParsedParameter
  * @template S コマンドスキーマの型
  */
-export type ParsedParameter<S> = S extends SubCommand<infer P>
+export type ParsedParameter<S> = S extends SubCommand
   ? {
       type: 'PARAMS';
-      params: ParamsValues<P>;
+      params: ParamsValues<Params<S>>;
     }
-  : S extends SubCommandGroup<infer R>
-  ? R extends SubCommandEntries
-    ? {
-        type: 'SUB_COMMAND';
-        subCommand: ParsedSubCommand<R>;
-      }
-    : never
+  : S extends SubCommandGroup
+  ? {
+      type: 'SUB_COMMAND';
+      subCommand: ParsedSubCommand<SubCommands<S>>;
+    }
   : never;
 
-export type HasSubCommand =
-  | Schema<Record<string, never>>
-  | SubCommandGroup<Record<string, never>>;
+export type HasSubCommand = Schema | SubCommandGroup;
 
 /**
  * コマンドのスキーマ `S` のサブコマンドのみに対応するパース結果の型を返す。
@@ -246,10 +235,12 @@ export type ParsedSubCommand<E> = {
   } & ParsedParameter<E[K]>;
 }[keyof E];
 
-export type SubCommands<S> = S extends Schema<infer C>
-  ? C
-  : S extends SubCommandGroup<infer C>
-  ? C
+export type Params<S> = S extends { params: readonly Param[] }
+  ? S['params']
+  : never;
+
+export type SubCommands<S> = S extends { subCommands: SubCommandEntries }
+  ? S['subCommands']
   : never;
 
 /**
