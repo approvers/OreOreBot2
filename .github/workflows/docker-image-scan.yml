@@ -3,7 +3,11 @@
 name: trivy scan
 
 # プッシュ時に実行する
-on: push
+on:
+  push:
+    branches:
+      - master
+  pull_request:
 
 jobs:
   build:
