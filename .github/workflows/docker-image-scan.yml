@@ -1,0 +1,38 @@
+# Dockerfileで定義されているDocker ImageをTrivyでスキャンし、GitHub Security にスキャン結果を送信します。
+
+name: trivy scan
+
+# mainブランチにプッシュ時とリリースが行われたときに実行する
+on:
+  push:
+    branches:
+      - main
+  release:
+    types:
+      - published
+
+jobs:
+  build:
+    name: build docker image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build an image from Dockerfile
+        run: |
+          docket build ./ -t oreorebot2
+  scan:
+    name: scan docker image by Trivy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "oreorebot2"
+          format: "sarif"
+          output: "trivy-results.sarif"
+
+      - name: Upload Trivy scan results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: "trivy-results.sarif"
