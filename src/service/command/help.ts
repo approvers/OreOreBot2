@@ -3,10 +3,10 @@ import type {
   CommandResponder,
   HelpInfo
 } from './command-message.js';
-import type { Param, Schema } from '../../model/command-schema.js';
 
 import type { CommandRunner } from '../../runner/command.js';
 import type { EmbedPage } from '../../model/embed-message.js';
+import type { Schema } from '../../model/command-schema.js';
 
 const SCHEMA = {
   names: ['help', 'h'],
@@ -37,9 +37,7 @@ export class HelpCommand implements CommandResponder<typeof SCHEMA> {
     description,
     names,
     params
-  }: Readonly<
-    HelpInfo & Schema<Record<string, unknown>, readonly Param[]>
-  >): EmbedPage {
+  }: Readonly<HelpInfo & Schema>): EmbedPage {
     const patternsWithDesc: [string, string][] =
       params?.map(({ name, description, defaultValue }) => [
         defaultValue === undefined
