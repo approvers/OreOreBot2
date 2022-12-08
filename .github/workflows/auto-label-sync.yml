@@ -1,3 +1,5 @@
+# .github/labels.yml で定義されたラベルを同期します
+
 name: Auto label sync
 
 

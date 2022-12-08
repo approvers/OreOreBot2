@@ -1,3 +1,5 @@
+# Coverageのレポートを作成、送信します。
+
 name: Code coverage
 
 on:

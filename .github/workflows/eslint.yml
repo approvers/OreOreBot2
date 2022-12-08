@@ -1,3 +1,5 @@
+# 作成されたプルリクエストに対してeslintを実行します。
+
 name: run eslint
 
 on:

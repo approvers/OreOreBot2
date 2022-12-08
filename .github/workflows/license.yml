@@ -1,3 +1,5 @@
+# 作成されたプルリクエストに対してライセンスの変更がないか確認します。
+
 name: run license-checker
 
 on:

@@ -1,3 +1,5 @@
+# 作成されたプルリクエストに対してPrettierを実行します。
+
 name: run prettier
 
 on:

@@ -1,3 +1,5 @@
+# OreOreBot2 のDockerfile等をプッシュし、リリースします。
+
 name: Release
 on:
   push:
