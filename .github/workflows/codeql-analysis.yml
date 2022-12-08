@@ -1,3 +1,5 @@
+# CodeQLによるスキャンを行います。
+
 name: run codeql analysis
 
 on:

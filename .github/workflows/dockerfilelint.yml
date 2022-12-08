@@ -1,3 +1,5 @@
+# 作成されたプルリクエストに対してDockerfileに変更があればhadolintを実行します。
+
 name: dockerfile lint
 
 on:
