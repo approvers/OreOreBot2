@@ -20,7 +20,7 @@ jobs:
 
       - name: Build an image from Dockerfile
         run: |
-          docket build ./ -t oreorebot2
+          docker build ./ -t oreorebot2
   scan:
     name: scan docker image by Trivy
     runs-on: ubuntu-latest
