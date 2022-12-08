@@ -2,14 +2,8 @@
 
 name: trivy scan
 
-# mainブランチにプッシュ時とリリースが行われたときに実行する
-on:
-  push:
-    branches:
-      - main
-  release:
-    types:
-      - published
+# プッシュ時に実行する
+on: push
 
 jobs:
   build:
