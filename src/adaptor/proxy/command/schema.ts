@@ -1,13 +1,13 @@
 import {
-  Param,
+  Params,
   ParamsValues,
   ParseError,
   ParsedSchema,
   ParsedSubCommand,
   Schema,
   SubCommand,
-  SubCommandEntries,
   SubCommandGroup,
+  SubCommands,
   makeError
 } from '../../../model/command-schema.js';
 
@@ -18,12 +18,12 @@ const hasOwn = <O extends Record<PropertyKey, unknown>>(
   key: PropertyKey
 ): key is keyof O => Object.hasOwn(object, key);
 
-const parseParams = <P extends readonly Param[]>(
+const parseParams = <S extends Schema | SubCommand>(
   args: string[],
-  schema: Schema<Record<string, unknown>, P> | SubCommand<P>
-): ['Ok', ParamsValues<P>] | ['Err', ParseError] => {
+  schema: S
+): ['Ok', ParamsValues<Params<S>>] | ['Err', ParseError] => {
   if (!schema.params) {
-    return ['Ok', [] as ParamsValues<P>];
+    return ['Ok', [] as ParamsValues<Params<S>>];
   }
   const values: unknown[] = [];
   for (const param of schema.params) {
@@ -108,13 +108,17 @@ const parseParams = <P extends readonly Param[]>(
         break;
     }
   }
-  return ['Ok', values as ParamsValues<P>];
+  return ['Ok', values as ParamsValues<Params<S>>];
 };
 
-const parseSubCommand = <E>(
+const isSubCommandGroup = (subCommand: {
+  type?: string;
+}): subCommand is SubCommandGroup => subCommand.type === 'SUB_COMMAND_GROUP';
+
+const parseSubCommand = <S extends Schema | SubCommandGroup>(
   args: string[],
-  schema: Schema<E> | SubCommandGroup<E>
-): ['Ok', ParsedSubCommand<E>] | ['Err', ParseError] => {
+  schema: S
+): ['Ok', ParsedSubCommand<SubCommands<S>>] | ['Err', ParseError] => {
   const subCommandNames = Object.getOwnPropertyNames(schema.subCommands);
   const arg = args.shift();
 
@@ -126,9 +130,9 @@ const parseSubCommand = <E>(
     if (!hasOwn(schema.subCommands, arg)) {
       return ['Err', ['UNKNOWN_COMMAND', Object.keys(schema.subCommands), arg]];
     }
-    const subCommandKey: keyof E = arg;
+    const subCommandKey: keyof SubCommands<S> = arg;
 
-    const subCommand = schema.subCommands[subCommandKey];
+    const subCommand = (schema.subCommands as SubCommands<S>)[subCommandKey];
     if (
       !(
         typeof subCommand === 'object' &&
@@ -138,11 +142,8 @@ const parseSubCommand = <E>(
     ) {
       return ['Err', ['OTHERS', 'unreachable']];
     }
-    if (subCommand['type'] === 'SUB_COMMAND_GROUP') {
-      const subSubCommand = parseSubCommand(
-        args,
-        subCommand as SubCommandGroup<SubCommandEntries>
-      );
+    if (isSubCommandGroup(subCommand)) {
+      const subSubCommand = parseSubCommand(args, subCommand);
       if (subSubCommand[0] === 'Err') {
         return subSubCommand;
       }
@@ -152,7 +153,7 @@ const parseSubCommand = <E>(
           name: subCommandKey,
           type: 'SUB_COMMAND',
           subCommand: subSubCommand[1]
-        } as unknown as ParsedSubCommand<E>
+        } as unknown as ParsedSubCommand<SubCommands<S>>
       ];
     }
     const params = parseParams(args, subCommand);
@@ -165,17 +166,13 @@ const parseSubCommand = <E>(
         name: subCommandKey,
         type: 'PARAMS',
         params: params[1]
-      } as ParsedSubCommand<E>
+      } as unknown as ParsedSubCommand<SubCommands<S>>
     ];
   }
   return ['Err', ['UNKNOWN_COMMAND', Object.keys(schema.subCommands), arg]];
 };
 
-export const parseStrings = <
-  E,
-  P extends readonly Param[],
-  S extends Schema<E, P>
->(
+export const parseStrings = <S extends Schema>(
   args: string[],
   schema: S
 ): ['Ok', ParsedSchema<S>] | ['Err', ParseError] => {
@@ -225,11 +222,7 @@ export const parseStrings = <
   return subCommandRes;
 };
 
-export const parseStringsOrThrow = <
-  E,
-  P extends readonly Param[],
-  S extends Schema<E, P>
->(
+export const parseStringsOrThrow = <S extends Schema>(
   args: string[],
   schema: S
 ): ParsedSchema<S> => {

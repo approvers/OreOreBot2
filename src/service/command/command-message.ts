@@ -10,7 +10,7 @@ import type { Snowflake } from '../../model/id.js';
  * @interface CommandMessage
  * @template S スキーマの型
  */
-export interface CommandMessage<S extends Schema<Record<string, unknown>>> {
+export interface CommandMessage<S extends Schema> {
   /**
    * コマンドの送信者の ID。
    *
@@ -96,13 +96,13 @@ export interface HelpInfo {
   description: string;
 }
 
-export interface CommandResponder<S extends Schema<Record<string, unknown>>> {
+export interface CommandResponder<S extends Schema> {
   help: Readonly<HelpInfo>;
   schema: Readonly<S>;
   on(message: CommandMessage<S>): Promise<void>;
 }
 
-export const createMockMessage = <S extends Schema<Record<string, unknown>>>(
+export const createMockMessage = <S extends Schema>(
   args: Readonly<ParsedSchema<S>>,
   reply?: (message: EmbedMessage) => void | Promise<SentMessage | void>,
   partial?: Readonly<Partial<Omit<CommandMessage<S>, 'reply'>>>

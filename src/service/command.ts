@@ -17,7 +17,6 @@ import {
 } from './command/kaere.js';
 import { KokuseiChousa, MemberStats } from './command/kokusei-chousa.js';
 import { MembersWithRoleRepository, RoleRank } from './command/role-rank.js';
-import type { Param, Schema } from '../model/command-schema.js';
 import { Ping, PingCommand } from './command/ping.js';
 import { RoleCreate, RoleCreateManager } from './command/role-create.js';
 import { RoleInfo, RoleStatsRepository } from './command/role-info.js';
@@ -29,6 +28,7 @@ import type { CommandResponder } from './command/command-message.js';
 import type { CommandRunner } from '../runner/command.js';
 import { HelpCommand } from './command/help.js';
 import { Meme } from './command/meme.js';
+import type { Schema } from '../model/command-schema.js';
 import type { VoiceConnectionFactory } from './voice-connection.js';
 
 export const registerAllCommandResponder = ({
@@ -99,9 +99,7 @@ export const registerAllCommandResponder = ({
   ];
   for (const responder of allResponders) {
     commandRunner.addResponder(
-      responder as unknown as CommandResponder<
-        Schema<Record<string, unknown>, readonly Param[]>
-      >
+      responder as unknown as CommandResponder<Schema>
     );
   }
 };
