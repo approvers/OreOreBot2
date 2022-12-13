@@ -1,12 +1,10 @@
 import type { VersionFetcher } from '../../service/command/version.js';
-import { readFileSync } from 'node:fs';
+import pkg from '../../../package.json';
 
 export class GenVersionFetcher implements VersionFetcher {
   public readonly version: string;
 
   constructor() {
-    this.version = readFileSync('./build/version.txt')
-      .toString('utf-8', 0, 100)
-      .trim();
+    this.version = pkg.version;
   }
 }
