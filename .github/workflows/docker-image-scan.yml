@@ -2,7 +2,7 @@
 
 name: trivy scan
 
-# プッシュ時に実行する
+# プッシュ時とプルリクエスト時に実行する
 on:
   push:
     branches:
@@ -10,7 +10,7 @@ on:
   pull_request:
 
 jobs:
-  build:
+  scan:
     name: build docker image
     runs-on: ubuntu-latest
     steps:
@@ -18,11 +18,8 @@ jobs:
 
       - name: Build an image from Dockerfile
         run: |
-          docker build ./ -t oreorebot2
-  scan:
-    name: scan docker image by Trivy
-    runs-on: ubuntu-latest
-    steps:
+          docker build -t oreorebot2 .
+
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.8.0
         with:
