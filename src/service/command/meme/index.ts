@@ -6,6 +6,7 @@ import { lolicon } from './lolicon.js';
 import { moeta } from './moeta.js';
 import { n } from './n.js';
 import { nigetane } from './nigetane.js';
+import { ojaru } from './ojaru.js';
 import { takopi } from './takopi.js';
 import { web3 } from './web3.js';
 
@@ -19,5 +20,6 @@ export const memes = [
   web3,
   moeta,
   kenjou,
-  koume
+  koume,
+  ojaru
 ];
