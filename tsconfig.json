@@ -4,7 +4,7 @@
     "target": "ESNext",
     "module": "node16",
     "outDir": "./build",
-    "rootDir": "./src",
+    "rootDir": ".",
     "noEmit": true,
     "removeComments": true,
     "skipLibCheck": true,
@@ -24,5 +24,6 @@
     "importsNotUsedAsValues": "error",
     "typeRoots": ["./node_modules/@types", "./src/typings"]
   },
-  "include": ["src/**/*.ts"]
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
 }
