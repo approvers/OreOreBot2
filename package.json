@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@discordjs/opus": "^0.9.0",
-    "@discordjs/voice": "^0.13.0",
+    "@discordjs/voice": "^0.14.0",
     "cli-argparse": "^1.1.2",
     "date-fns": "^2.29.3",
     "difflib-ts": "^1.0.3",
