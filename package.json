@@ -8,10 +8,7 @@
   "author": "approvers <info@approvers.dev>",
   "scripts": {
     "start": "node ./build/index.js",
-    "predev": "yarn gen-version",
     "dev": "ts-node --esm ./src/server/index.ts",
-    "gen-version": "make-dir build && git describe --tags --abbrev=0 > build/version.txt",
-    "prebuild": "yarn gen-version",
     "build": "esbuild ./src/server/index.ts --bundle --platform=node  --target=node16 --format=esm --external:./node_modules/* --outfile=build/index.js",
     "format": "prettier --write \"src/**/*.{js,ts,md}\"",
     "check": "prettier --check \"src/**/*.{js,ts,md}\" && tsc -p . --noEmit",
