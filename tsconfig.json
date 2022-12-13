@@ -2,7 +2,7 @@
   "compileOnSave": true,
   "compilerOptions": {
     "target": "ESNext",
-    "module": "node16",
+    "module": "NodeNext",
     "outDir": "./build",
     "rootDir": ".",
     "noEmit": true,
