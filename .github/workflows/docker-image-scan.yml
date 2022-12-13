@@ -11,7 +11,7 @@ on:
 
 jobs:
   scan:
-    name: build docker image
+    name: Scan by Trivy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
