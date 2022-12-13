@@ -25,6 +25,7 @@ jobs:
         with:
           image-ref: "oreorebot2"
           format: "sarif"
+          security-checks: vuln
           output: "trivy-results.sarif"
 
       - name: Upload Trivy scan results to GitHub Security
