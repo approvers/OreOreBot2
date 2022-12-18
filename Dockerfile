@@ -6,9 +6,8 @@ SHELL ["/bin/bash", "-c"]
 WORKDIR /src
 
 # node-gyp requires Python and basic packages needed to compile C libs
-# Use tini to avoid PID 1 problem
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends python3=3.9.2-3 build-essential=12.9 tini=0.19.0-1 \
+    && apt-get install -y --no-install-recommends python3=3.9.2-3 build-essential=12.9 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -34,5 +33,5 @@ WORKDIR /app
 
 COPY --from=build /build .
 
-ENTRYPOINT ["/usr/bin/tini", "--"]
-CMD ["node", "build/index.js"]
+ENTRYPOINT ["node"]
+CMD ["build/index.js"]
