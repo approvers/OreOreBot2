@@ -43,6 +43,6 @@ runs:
         tags: |
           ghcr.io/approvers/oreorebot2:latest
           ghcr.io/approvers/oreorebot2:${{ inputs.sha }}
-          ghcr.io/approvers/oreorebot2:${{ inputs.major }}
-          ghcr.io/approvers/oreorebot2:${{ inputs.major }}.${{ inputs.minor }}
-          ghcr.io/approvers/oreorebot2:${{ inputs.major }}.${{ inputs.minor }}.${{ inputs.patch }}
+          ghcr.io/approvers/oreorebot2:v${{ inputs.major }}
+          ghcr.io/approvers/oreorebot2:v${{ inputs.major }}.${{ inputs.minor }}
+          ghcr.io/approvers/oreorebot2:v${{ inputs.major }}.${{ inputs.minor }}.${{ inputs.patch }}
