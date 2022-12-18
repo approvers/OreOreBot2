@@ -193,6 +193,12 @@ if (features.includes('EMOJI')) {
   emojiRunner.addResponder(allEmojiResponder(output));
 }
 
+// PID 1 問題のためのシグナルハンドラ
+process.on('SIGTERM', () => {
+  client.destroy();
+  process.exit(0);
+});
+
 client.once('ready', () => {
   readyLog(client);
 });
