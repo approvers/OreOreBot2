@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.30.2](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.30.1...oreorebot2-v1.30.2) (2022-12-18)
+
+
+### Bug Fixes
+
+* Add signal handler for PID 1 problem ([#640](https://github.com/approvers/OreOreBot2/issues/640)) ([aa557e2](https://github.com/approvers/OreOreBot2/commit/aa557e2dc6de08f6288b21fa7078391b604dfaa5))
+* **build:** Revert tini ([#638](https://github.com/approvers/OreOreBot2/issues/638)) ([53da704](https://github.com/approvers/OreOreBot2/commit/53da7040198f8076dfee5770354a70fdc38f2314))
+
 ## [1.30.1](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.30.0...oreorebot2-v1.30.1) (2022-12-18)
 
 
