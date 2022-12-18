@@ -6,23 +6,26 @@ SHELL ["/bin/bash", "-c"]
 WORKDIR /src
 
 # node-gyp requires Python and basic packages needed to compile C libs
+# Use tini to avoid PID 1 problem
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends python3=3.9.2-3 build-essential=12.9 \
+    && apt-get install -y --no-install-recommends python3=3.9.2-3 build-essential=12.9 tini=0.19.0-1 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 COPY package.json yarn.lock ./
-RUN yarn
+RUN yarn install --frozen-lockfile
 COPY . .
 RUN yarn build
 
 WORKDIR /build
 RUN cp -r /src/{build,assets,package.json,yarn.lock} . \
-    && yarn install --production=true
+    && yarn install --frozen-lockfile --production=true
 
 
-FROM gcr.io/distroless/nodejs:18
-
+FROM ubuntu:jammy-20221130
+COPY --from=build /usr/local/include/ /usr/local/include/
+COPY --from=build /usr/local/lib/ /usr/local/lib/
+COPY --from=build /usr/local/bin/ /usr/local/bin/
 COPY --from=ffmpeg /ffmpeg /usr/local/bin/
 
 LABEL org.opencontainers.image.source=https://github.com/approvers/OreOreBot2
@@ -31,4 +34,5 @@ WORKDIR /app
 
 COPY --from=build /build .
 
-CMD ["build/index.js"]
+ENTRYPOINT ["/usr/bin/tini", "--"]
+CMD ["node", "build/index.js"]
