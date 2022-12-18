@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.30.1](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.30.0...oreorebot2-v1.30.1) (2022-12-18)
+
+
+### Bug Fixes
+
+* invaild docker image tag ([#635](https://github.com/approvers/OreOreBot2/issues/635)) ([c1bfc68](https://github.com/approvers/OreOreBot2/commit/c1bfc68cc9594a38a1bf4a0d51782815020288e6))
+
 ## 1.30.0 (2022-12-18)
 
 
