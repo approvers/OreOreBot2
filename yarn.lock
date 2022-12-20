@@ -367,12 +367,7 @@
   dependencies:
     "@types/chai" "*"
 
-"@types/chai@*", "@types/chai@^4.3.3":
-  version "4.3.3"
-  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.3.tgz#3c90752792660c4b562ad73b3fbd68bf3bc7ae07"
-  integrity sha512-hC7OMnszpxhZPduX+m+nrx+uFoLkWOMiR4oa/AZF3MuSETYTZmFfJAHqZEM8MVlvfG7BEUcgvtwoCTxBp6hm3g==
-
-"@types/chai@^4.3.4":
+"@types/chai@*", "@types/chai@^4.3.4":
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.4.tgz#e913e8175db8307d78b4e8fa690408ba6b65dee4"
   integrity sha512-KnRanxnpfpjUTqTCXslZSEdLfXExwgNxYPdiO2WGUj8+HDjFi8R3k5RVKPeSCzLjCcshCAtVO2QBbVuAV4kTnw==
@@ -768,19 +763,6 @@ camelcase@^6.3.0:
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-6.3.0.tgz#5685b95eb209ac9c0c177467778c9c84df58ba9a"
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
-chai@^4.3.6:
-  version "4.3.6"
-  resolved "https://registry.yarnpkg.com/chai/-/chai-4.3.6.tgz#ffe4ba2d9fa9d6680cc0b370adae709ec9011e9c"
-  integrity sha512-bbcp3YfHCUzMOvKqsztczerVgBKSsEijCySNlHHbX3VG1nskvqjz5Rfso1gGwD6w6oOV3eI60pKuMOV5MV7p3Q==
-  dependencies:
-    assertion-error "^1.1.0"
-    check-error "^1.0.2"
-    deep-eql "^3.0.1"
-    get-func-name "^2.0.0"
-    loupe "^2.3.1"
-    pathval "^1.1.1"
-    type-detect "^4.0.5"
-
 chai@^4.3.7:
   version "4.3.7"
   resolved "https://registry.yarnpkg.com/chai/-/chai-4.3.7.tgz#ec63f6df01829088e8bf55fca839bcd464a8ec51"
@@ -977,13 +959,6 @@ decamelize@^5.0.0:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-5.0.1.tgz#db11a92e58c741ef339fb0a2868d8a06a9a7b1e9"
   integrity sha512-VfxadyCECXgQlkoEAjeghAr5gY3Hf+IKjKb+X8tGVDtveCjN+USwprd2q3QXBR9T1+x2DG0XZF5/w+7HAtSaXA==
-
-deep-eql@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/deep-eql/-/deep-eql-3.0.1.tgz#dfc9404400ad1c8fe023e7da1df1c147c4b444df"
-  integrity sha512-+QeIQyN5ZuO+3Uk5DYh6/1eKO0m0YmJFGNmFHGACpf1ClL1nmlV/p4gNgbl2pJGxgXb4faqo6UE+M5ACEMyVcw==
-  dependencies:
-    type-detect "^4.0.0"
 
 deep-eql@^4.1.2:
   version "4.1.3"
@@ -3203,7 +3178,7 @@ vite-node@0.26.0:
   optionalDependencies:
     fsevents "~2.3.2"
 
-vitest@0.26.0:
+vitest@0.26.0, vitest@^0.26.0:
   version "0.26.0"
   resolved "https://registry.yarnpkg.com/vitest/-/vitest-0.26.0.tgz#8670ca2c36772d2f102968ad9d6faf14cceb0094"
   integrity sha512-5kUnms5WOa0qrDCJePEPB13v9mhr+ZT1Qy0qNg0eVj1X7/Fx4GY4L1e5s3OH+BQ/J7M5WtaKsUGv9l1pbC7v2Q==
@@ -3223,26 +3198,6 @@ vitest@0.26.0:
     tinyspy "^1.0.2"
     vite "^3.0.0 || ^4.0.0"
     vite-node "0.26.0"
-
-vitest@^0.25.7:
-  version "0.25.7"
-  resolved "https://registry.yarnpkg.com/vitest/-/vitest-0.25.7.tgz#dbb384907a56265fe0ce95149803a4c839388174"
-  integrity sha512-lJ+Ue+v8kHl2JzjaKHJ9u5Yo/loU7zrWK2/Whn8OKQjtq5G7nkeWfXuq3elZaC8xKdkdIuWiiIicaNBG1F5yzg==
-  dependencies:
-    "@types/chai" "^4.3.3"
-    "@types/chai-subset" "^1.3.3"
-    "@types/node" "*"
-    acorn "^8.8.0"
-    acorn-walk "^8.2.0"
-    chai "^4.3.6"
-    debug "^4.3.4"
-    local-pkg "^0.4.2"
-    source-map "^0.6.1"
-    strip-literal "^1.0.0"
-    tinybench "^2.3.1"
-    tinypool "^0.3.0"
-    tinyspy "^1.0.2"
-    vite "^3.0.0 || ^4.0.0"
 
 webidl-conversions@^3.0.0:
   version "3.0.1"
