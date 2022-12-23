@@ -5,8 +5,11 @@ name: trivy scan
 # プッシュ時とプルリクエスト時に実行する
 on:
   push:
-    branches:
-      - main
+    # Dependabot のプッシュでの Workflows は読み取り専用権限として実行される
+    # 上記の場合、Code Scanning は使用できないため Dependabot のプッシュはスキャン対象に含めない
+    - '!dependabot/**/main/**'
+    - main
+  # プルリクエストは今まで通り、Dependabot のコミットであってもスキャン可能
   pull_request:
 
 jobs:
@@ -23,12 +26,12 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.8.0
         with:
-          image-ref: "oreorebot2"
-          format: "sarif"
+          image-ref: 'oreorebot2'
+          format: 'sarif'
           security-checks: vuln
-          output: "trivy-results.sarif"
+          output: 'trivy-results.sarif'
 
       - name: Upload Trivy scan results to GitHub Security
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: "trivy-results.sarif"
+          sarif_file: 'trivy-results.sarif'
