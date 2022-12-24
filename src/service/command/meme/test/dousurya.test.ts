@@ -18,16 +18,6 @@ describe('meme', () => {
         }
       )
     );
-    await responder.on(
-      createMockMessage(
-        parseStringsOrThrow(['dousureba', 'こるく'], responder.schema),
-        (message) => {
-          expect(message).toStrictEqual({
-            description: `限界みたいな鯖に住んでるこるくはどうすりゃいいですか？`
-          });
-        }
-      )
-    );
   });
 
   it('args null (dousureba)', async () => {
