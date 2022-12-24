@@ -7,7 +7,7 @@ import { parseStringsOrThrow } from '../../../../adaptor/proxy/command/schema.js
 describe('meme', () => {
   const responder = new Meme();
 
-  it('use case of dousurya', async () => {
+  it('use case of nine', async () => {
     await responder.on(
       createMockMessage(
         parseStringsOrThrow(['nine', '限界開発鯖', 'オタク'], responder.schema),
@@ -20,7 +20,7 @@ describe('meme', () => {
     );
   });
 
-  it('args null (dousureba)', async () => {
+  it('args null (nine)', async () => {
     await responder.on(
       createMockMessage(
         parseStringsOrThrow(['nine'], responder.schema),
