@@ -1,6 +1,6 @@
 # Dockerfileで定義されているDocker ImageをTrivyでスキャンし、GitHub Security にスキャン結果を送信します。
 
-name: trivy scan
+name: Trivy scan
 
 # プッシュ時とプルリクエスト時に実行する
 on:

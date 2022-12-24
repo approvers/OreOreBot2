@@ -1,15 +1,16 @@
 # 作成されたプルリクエストに対し、.github/labeler.yml で定義されたラベルを自動付与します。
 
-name: auto labeler
-on:
-  - pull_request_target
+name: Labeler
+
+on: pull_request_target
 
 jobs:
   auto-label:
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
-    runs-on: ubuntu-latest
+
     steps:
       - uses: actions/labeler@v4
         with:

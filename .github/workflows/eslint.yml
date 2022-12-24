@@ -1,6 +1,6 @@
 # 作成されたプルリクエストに対してeslintを実行します。
 
-name: run eslint
+name: eslint
 
 on:
   pull_request:
