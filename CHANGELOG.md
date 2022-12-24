@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.31.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.30.2...oreorebot2-v1.31.0) (2022-12-24)
+
+
+### Features
+
+* 人は話し方が9割ジェネレーターの追加 ([#648](https://github.com/approvers/OreOreBot2/issues/648)) ([8cbe9cf](https://github.com/approvers/OreOreBot2/commit/8cbe9cffc02155561eb9bc9c0dd532896281fdc3))
+
 ## [1.30.2](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.30.1...oreorebot2-v1.30.2) (2022-12-18)
 
 
