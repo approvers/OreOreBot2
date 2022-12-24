@@ -8,6 +8,10 @@ describe('meme', () => {
   const responder = new Meme();
 
   it('use case of dousurya', async () => {
+    /**
+     * !dousurya と !dousureba のテストケースです。
+     * 一見同じように見えるが、違うので重複してたからと削除しないよう注意してほしい
+     */
     await responder.on(
       createMockMessage(
         parseStringsOrThrow(['dousurya', 'こるく'], responder.schema),
