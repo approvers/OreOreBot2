@@ -18,6 +18,6 @@ jobs:
           node-version: '16'
 
       - name: Install packages
-        run: yarn install
+        run: yarn install --frozen-lockfile
       - name: Prettier#check
         run: yarn run check

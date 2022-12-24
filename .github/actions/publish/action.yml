@@ -24,6 +24,7 @@ runs:
       uses: actions/setup-node@v3
       with:
         node-version: '16'
+
     - name: Install dependencies
       shell: bash
       run: yarn install --frozen-lockfile
