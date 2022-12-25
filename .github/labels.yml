@@ -26,6 +26,8 @@
   color: 'ee9cff'
 - name: 'workflow (gh-actions)'
   color: 'ee9cff'
+- name: 'dependencies'
+  color: 'ee9cff'
 - name: 'renovate: update(npm)'
   color: 'ee9cff'
 - name: 'renovate: update(gh-actions)'
