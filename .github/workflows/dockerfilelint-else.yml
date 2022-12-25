@@ -3,7 +3,7 @@ name: dockerfile lint
 on:
   pull_request:
     paths-ignore:
-      - ./Dockerfile
+      - 'Dockerfile'
 
 jobs:
   lint:

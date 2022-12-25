@@ -1,11 +1,11 @@
 # 作成されたプルリクエストに対してDockerfileに変更があればhadolintを実行します。
 
-name: dockerfile lint
+name: Dockerfile lint
 
 on:
   pull_request:
     paths:
-      - ./Dockerfile
+      - 'Dockerfile'
 
 jobs:
   lint:

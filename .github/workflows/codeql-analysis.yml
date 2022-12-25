@@ -1,6 +1,6 @@
 # CodeQLによるスキャンを行います。
 
-name: run codeql analysis
+name: CodeQL analysis
 
 on:
   push:
