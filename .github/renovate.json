@@ -21,10 +21,6 @@
     {
       "matchDatasources": ["dockerfile", "docker-compose"],
       "labels": ["renovate: update(docker)"]
-    },
-    {
-      "matchUpdateTypes": ["major"],
-      "automerge": false
     }
   ],
   "npm": {
