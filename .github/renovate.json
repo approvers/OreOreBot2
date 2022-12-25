@@ -11,17 +11,14 @@
   },
   "packageRules": [
     {
-      "enable": true,
       "matchDatasources": ["npm"],
       "labels": ["renovate: update(npm)"]
     },
     {
-      "enable": true,
       "matchDatasources": ["github-actions"],
       "labels": ["renovate: update(gh-actions)"]
     },
     {
-      "enable": true,
       "matchDatasources": ["dockerfile", "docker-compose"],
       "labels": ["renovate: update(docker)"]
     },
