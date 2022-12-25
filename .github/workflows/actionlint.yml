@@ -1,11 +1,12 @@
 # GitHub Workflowsに関するプルリクエストに対し、reviewdogのlintを実行します。
 
-name: actionlint
+name: Actionlint
 
 on:
   pull_request:
     paths:
-      - '.github/workflows/**'
+      - '.github/workflows/*.yml'
+      - '.github/actions/**/action.yml'
 
 jobs:
   actionlint:
@@ -13,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: actionlint
         uses: reviewdog/action-actionlint@v1.35.0
         with:

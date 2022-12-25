@@ -1,6 +1,6 @@
 # 作成されたプルリクエストに対してライセンスの変更がないか確認します。
 
-name: run license-checker
+name: License checker
 
 on:
   pull_request:
@@ -11,7 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: yarn
+
       - name: Install packages
-        run: yarn install
+        run: yarn install --frozen-lockfile
       - name: license-checker
         run: npx @guidesmiths/license-checker --failOn /GPL/ --disableReport
