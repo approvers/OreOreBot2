@@ -1,0 +1,45 @@
+{
+  "reviewers": ["m2en", "MikuroXina"],
+  "ignoreTests": false,
+  "automerge": true,
+  "dependencyDashboard": true,
+  "semanticCommits": "enabled",
+  "fetchReleaseNotes": true,
+  "enabledManagers": ["npm", "github-actions", "dockerfile", "docker-compose"],
+  "major": {
+    "automerge": false
+  },
+  "packageRules": [
+    {
+      "enable": true,
+      "matchDatasources": ["npm"],
+      "labels": ["renovate: update(npm)"]
+    },
+    {
+      "enable": true,
+      "matchDatasources": ["github-actions"],
+      "labels": ["renovate: update(gh-actions)"]
+    },
+    {
+      "enable": true,
+      "matchDatasources": ["dockerfile", "docker-compose"],
+      "labels": ["renovate: update(docker)"]
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    }
+  ],
+  "npm": {
+    "stabilityDays": 3
+  },
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "automerge": true,
+    "labels": ["security"],
+    "assignees": [
+      "m2en", "MikuroXina"
+    ]
+  },
+  "schedule": ["every weekday"]
+}
