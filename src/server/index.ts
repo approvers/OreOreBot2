@@ -45,7 +45,7 @@ import { DiscordRoleManager } from '../adaptor/discord/role.js';
 import { DiscordSheriff } from '../adaptor/discord/sheriff.js';
 import { DiscordWS } from '../adaptor/discord/ws.js';
 import { GenVersionFetcher } from '../adaptor/version/fetch.js';
-import type { GyokuonAssestKey } from '../service/command/gyokuon.js';
+import type { GyokuonAssetKey } from '../service/command/gyokuon.js';
 import type { KaereMusicKey } from '../service/command/kaere.js';
 import type { Snowflake } from '../model/id.js';
 import dotenv from 'dotenv';
@@ -139,7 +139,7 @@ if (features.includes('COMMAND')) {
     typoRepo,
     reservationRepo,
     factory: new DiscordVoiceConnectionFactory<
-      AssetKey | KaereMusicKey | GyokuonAssestKey
+      AssetKey | KaereMusicKey | GyokuonAssetKey
     >(client, {
       COFFIN_INTRO: join('assets', 'party', 'coffin-intro.mp3'),
       COFFIN_DROP: join('assets', 'party', 'coffin-drop.mp3'),
