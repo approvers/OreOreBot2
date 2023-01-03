@@ -5,7 +5,7 @@ import { MockVoiceConnectionFactory } from '../../adaptor/index.js';
 import { createMockMessage } from './command-message.js';
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 
-it('use case of kaere', async () => {
+it('use case of gyokuon', async () => {
   const fn = vi.fn();
   const connectionFactory = new MockVoiceConnectionFactory<GyokuonAssetKey>();
   const responder = new GyokuonCommand({
