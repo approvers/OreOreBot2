@@ -146,8 +146,7 @@ if (features.includes('COMMAND')) {
       KAKAPO: join('assets', 'party', 'kakapo.mp3'),
       KAKUSIN_DAISUKE: join('assets', 'party', 'kakusin-daisuke.mp3'),
       NEROYO: join('assets', 'kaere', 'neroyo.mp3'),
-      // FIXME: 元々映像ファイルだったものをMacで変換しただけなので、他のアセットと合わせるためにmp3に変換すべきかもしれない
-      GYOKUON: join('assets', 'gyokuon', 'gyokuon.m4a')
+      GYOKUON: join('assets', 'gyokuon', 'gyokuon.mp3')
     }),
     clock,
     scheduleRunner,
