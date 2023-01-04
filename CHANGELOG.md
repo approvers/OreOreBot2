@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.32.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.31.0...oreorebot2-v1.32.0) (2023-01-04)
+
+
+### Features
+
+* こるくの玉音放送機能の追加 ([#658](https://github.com/approvers/OreOreBot2/issues/658)) ([3166fc7](https://github.com/approvers/OreOreBot2/commit/3166fc7f8a4b3f8e10c58d828292ae0d3bca7e1a))
+
 ## [1.31.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.30.2...oreorebot2-v1.31.0) (2022-12-24)
 
 
