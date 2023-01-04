@@ -45,6 +45,7 @@ import { DiscordRoleManager } from '../adaptor/discord/role.js';
 import { DiscordSheriff } from '../adaptor/discord/sheriff.js';
 import { DiscordWS } from '../adaptor/discord/ws.js';
 import { GenVersionFetcher } from '../adaptor/version/fetch.js';
+import type { GyokuonAssetKey } from '../service/command/gyokuon.js';
 import type { KaereMusicKey } from '../service/command/kaere.js';
 import type { Snowflake } from '../model/id.js';
 import dotenv from 'dotenv';
@@ -137,16 +138,16 @@ if (features.includes('COMMAND')) {
   registerAllCommandResponder({
     typoRepo,
     reservationRepo,
-    factory: new DiscordVoiceConnectionFactory<AssetKey | KaereMusicKey>(
-      client,
-      {
-        COFFIN_INTRO: join('assets', 'party', 'coffin-intro.mp3'),
-        COFFIN_DROP: join('assets', 'party', 'coffin-drop.mp3'),
-        KAKAPO: join('assets', 'party', 'kakapo.mp3'),
-        KAKUSIN_DAISUKE: join('assets', 'party', 'kakusin-daisuke.mp3'),
-        NEROYO: join('assets', 'kaere', 'neroyo.mp3')
-      }
-    ),
+    factory: new DiscordVoiceConnectionFactory<
+      AssetKey | KaereMusicKey | GyokuonAssetKey
+    >(client, {
+      COFFIN_INTRO: join('assets', 'party', 'coffin-intro.mp3'),
+      COFFIN_DROP: join('assets', 'party', 'coffin-drop.mp3'),
+      KAKAPO: join('assets', 'party', 'kakapo.mp3'),
+      KAKUSIN_DAISUKE: join('assets', 'party', 'kakusin-daisuke.mp3'),
+      NEROYO: join('assets', 'kaere', 'neroyo.mp3'),
+      GYOKUON: join('assets', 'gyokuon', 'gyokuon.mp3')
+    }),
     clock,
     scheduleRunner,
     random: new MathRandomGenerator(),

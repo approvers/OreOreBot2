@@ -8,6 +8,7 @@ import { DebugCommand, MessageRepository } from './command/debug.js';
 import { DiceCommand, DiceQueen } from './command/dice.js';
 import { GetVersionCommand, VersionFetcher } from './command/version.js';
 import { GuildInfo, GuildStatsRepository } from './command/guild-info.js';
+import { GyokuonAssetKey, GyokuonCommand } from './command/gyokuon.js';
 import { JudgingCommand, RandomGenerator } from './command/judging.js';
 import {
   KaereCommand,
@@ -54,7 +55,7 @@ export const registerAllCommandResponder = ({
 }: {
   typoRepo: TypoRepository;
   reservationRepo: ReservationRepository;
-  factory: VoiceConnectionFactory<AssetKey | KaereMusicKey>;
+  factory: VoiceConnectionFactory<AssetKey | KaereMusicKey | GyokuonAssetKey>;
   clock: Clock;
   scheduleRunner: ScheduleRunner;
   random: PartyRng & RandomGenerator;
@@ -81,6 +82,10 @@ export const registerAllCommandResponder = ({
       clock,
       scheduleRunner,
       repo: reservationRepo
+    }),
+    new GyokuonCommand({
+      connectionFactory: factory,
+      controller: roomController
     }),
     new JudgingCommand(random),
     new Meme(),
