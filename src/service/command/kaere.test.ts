@@ -26,7 +26,15 @@ it('use case of kaere', async () => {
   });
 
   await responder.on(
-    createMockMessage(parseStringsOrThrow(['kaere'], responder.schema))
+    createMockMessage(
+      parseStringsOrThrow(['kaere'], responder.schema),
+      (message) => {
+        expect(message).toStrictEqual({
+          title: '提督、もうこんな時間だよ',
+          description: '早く寝よう'
+        });
+      }
+    )
   );
 
   await responder.on(
