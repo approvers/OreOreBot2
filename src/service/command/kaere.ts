@@ -168,11 +168,12 @@ export class KaereCommand implements CommandResponder<typeof SCHEMA> {
         });
         return;
       }
-      await this.start(message.senderGuildId, roomId);
+
       await message.reply({
         title: '提督、もうこんな時間だよ',
         description: '早く寝よう'
       });
+      await this.start(message.senderGuildId, roomId);
       return;
     }
     switch (args.subCommand.name) {

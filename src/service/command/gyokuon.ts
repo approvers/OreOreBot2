@@ -46,11 +46,11 @@ export class GyokuonCommand implements CommandResponder<typeof SCHEMA> {
       return;
     }
 
-    await this.start(message.senderGuildId, roomId);
     await message.reply({
       title: 'こるく天皇の玉音放送だよ',
       description: '全鯖民に対しての大詔だから椅子から立って聞いてね'
     });
+    await this.start(message.senderGuildId, roomId);
     return;
   }
 
