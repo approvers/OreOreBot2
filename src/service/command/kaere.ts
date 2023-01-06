@@ -9,6 +9,7 @@ import { addDays, isBefore, setHours, setMinutes, setSeconds } from 'date-fns';
 
 import type { EmbedMessage } from '../../model/embed-message.js';
 import type { Snowflake } from '../../model/id.js';
+import type { StandardOutput } from '../output.js';
 import type { VoiceConnectionFactory } from '../voice-connection.js';
 
 export type KaereMusicKey = 'NEROYO';
@@ -147,7 +148,8 @@ export class KaereCommand implements CommandResponder<typeof SCHEMA> {
       clock: Clock;
       scheduleRunner: ScheduleRunner;
       repo: ReservationRepository;
-    }
+    },
+    private readonly stdout: StandardOutput
   ) {
     void deps.repo.all().then((all) => {
       for (const reservation of all) {
@@ -169,7 +171,7 @@ export class KaereCommand implements CommandResponder<typeof SCHEMA> {
         return;
       }
 
-      await message.reply({
+      await this.stdout.sendEmbed({
         title: '提督、もうこんな時間だよ',
         description: '早く寝よう'
       });

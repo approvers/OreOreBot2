@@ -129,6 +129,7 @@ const scheduleRunner = new ScheduleRunner(clock);
 const commandProxy = new DiscordCommandProxy(client, PREFIX);
 const commandRunner = new CommandRunner(commandProxy);
 const stats = new DiscordMemberStats(client, GUILD_ID as Snowflake);
+const output = new DiscordOutput(client, mainChannelId);
 
 // ほとんど変わらないことが予想され環境変数で管理する必要性が薄いので、ハードコードした。
 const KAWAEMON_ID = '391857452360007680' as Snowflake;
@@ -163,7 +164,8 @@ if (features.includes('COMMAND')) {
     userRepo: stats,
     guildRepo: stats,
     roleCreateRepo: roleManager,
-    queen: new MathRandomGenerator()
+    queen: new MathRandomGenerator(),
+    stdout: output
   });
 }
 
@@ -172,7 +174,6 @@ const provider = new VoiceRoomProxy<VoiceChannelParticipant>(
   (voiceState) => new DiscordParticipant(voiceState)
 );
 const voiceRoomRunner = new VoiceRoomResponseRunner(provider);
-const output = new DiscordOutput(client, mainChannelId);
 if (features.includes('VOICE_ROOM')) {
   voiceRoomRunner.addResponder(new VoiceDiff(output));
 }
