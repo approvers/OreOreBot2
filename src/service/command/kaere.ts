@@ -171,10 +171,6 @@ export class KaereCommand implements CommandResponder<typeof SCHEMA> {
         return;
       }
 
-      await this.stdout.sendEmbed({
-        title: '提督、もうこんな時間だよ',
-        description: '早く寝よう'
-      });
       await this.start(message.senderGuildId, roomId);
       return;
     }
@@ -202,6 +198,10 @@ export class KaereCommand implements CommandResponder<typeof SCHEMA> {
     connection.onDisconnected(() => {
       this.doingKaere = false;
       return false;
+    });
+    await this.stdout.sendEmbed({
+      title: '提督、もうこんな時間だよ',
+      description: '早く寝よう'
     });
     await connection.playToEnd('NEROYO');
     if (this.bedModeEnabled) {
