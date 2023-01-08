@@ -19,6 +19,6 @@ jobs:
           cache: yarn
 
       - name: Install packages
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
       - name: license-checker
         run: npx @guidesmiths/license-checker --failOn /GPL/ --disableReport

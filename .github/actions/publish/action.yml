@@ -28,7 +28,7 @@ runs:
 
     - name: Install dependencies
       shell: bash
-      run: yarn install --frozen-lockfile
+      run: yarn install --immutable
 
     - uses: docker/setup-buildx-action@v2.2.1
 
