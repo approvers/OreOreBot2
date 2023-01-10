@@ -11,10 +11,9 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p .yarn/releases
-COPY package.json yarn.lock .yarn/releases/yarn-3.3.1.cjs .yarnrc.yml ./
+COPY .yarn/releases/ ./.yarn/releases/
+COPY package.json yarn.lock .yarnrc.yml ./
 
-RUN mv yarn-3.3.1.cjs .yarn/releases/
 RUN yarn install --immutable
 
 COPY . .
