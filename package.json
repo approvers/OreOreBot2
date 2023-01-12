@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node ./build/index.js",
     "dev": "ts-node --esm ./src/server/index.ts",
-    "build": "esbuild ./src/server/index.ts --bundle --platform=node  --target=node16 --format=esm --external:./node_modules/* --outfile=build/index.js",
+    "build": "esbuild ./src/server/index.ts --bundle --platform=node  --target=node16 --format=esm --packages=external --outfile=build/index.js",
     "format": "prettier --write \"src/**/*.{js,ts,md}\"",
     "check": "prettier --check \"src/**/*.{js,ts,md}\" && tsc -p . --noEmit",
     "eslint": "eslint \"src/**/*.{js,ts,md}\"",
@@ -21,8 +21,7 @@
     "lint-staged": "lint-staged"
   },
   "engines": {
-    "node": ">=14.16",
-    "yarn": "1.x"
+    "node": ">=14.16"
   },
   "lint-staged": {
     "*.{js,ts,md}": [
@@ -30,6 +29,7 @@
       "prettier --write"
     ]
   },
+  "packageManager": "yarn@3.3.1",
   "dependencies": {
     "@discordjs/opus": "^0.9.0",
     "@discordjs/voice": "^0.14.0",
@@ -49,7 +49,7 @@
     "@typescript-eslint/parser": "^5.45.1",
     "@vitest/coverage-c8": "^0.26.0",
     "c8": "^7.12.0",
-    "esbuild": "^0.16.4",
+    "esbuild": "^0.16.16",
     "eslint": "^8.30.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-markdown": "^3.0.0",

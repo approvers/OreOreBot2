@@ -11,14 +11,17 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+COPY .yarn/releases/ ./.yarn/releases/
+COPY package.json yarn.lock .yarnrc.yml ./
+
+RUN yarn install --immutable
+
 COPY . .
 RUN yarn build
 
 WORKDIR /build
 RUN cp -r /src/{build,assets,package.json,yarn.lock} . \
-    && yarn install --frozen-lockfile --production=true
+    && yarn install --immutable --production=true
 
 
 FROM ubuntu:jammy-20221130
