@@ -15,6 +15,7 @@ import type {
 import { Schema, makeError } from '../../model/command-schema.js';
 import type { EmbedPage } from '../../model/embed-message.js';
 import type { RawMessage } from './middleware.js';
+import type { ReplyPagesOptions } from '../../service/command/command-message.js';
 import type { Snowflake } from '../../model/id.js';
 import { convertEmbed } from '../embed-convert.js';
 import { parseStrings } from './command/schema.js';
@@ -132,50 +133,61 @@ const CONTROLS_DISABLED: APIActionRowComponent<APIMessageActionRowComponent> =
 const pagesFooter = (currentPage: number, pagesLength: number) =>
   `ページ ${currentPage + 1}/${pagesLength}`;
 
-const replyPages = (message: RawMessage) => async (pages: EmbedPage[]) => {
-  if (pages.length === 0) {
-    throw new Error('pages must not be empty array');
-  }
+const replyPages =
+  (message: RawMessage) =>
+  async (pages: EmbedPage[], options?: ReplyPagesOptions) => {
+    if (pages.length === 0) {
+      throw new Error('pages must not be empty array');
+    }
 
-  const generatePage = (index: number) =>
-    convertEmbed(pages[index]).setFooter({
-      text: pagesFooter(index, pages.length)
+    const generatePage = (index: number) =>
+      convertEmbed(pages[index]).setFooter({
+        text: pagesFooter(index, pages.length)
+      });
+
+    const paginated = await message.reply({
+      embeds: [generatePage(0)],
+      components: [CONTROLS]
     });
 
-  const paginated = await message.reply({
-    embeds: [generatePage(0)],
-    components: [CONTROLS]
-  });
+    const collector = paginated.createMessageComponentCollector({
+      time: ONE_MINUTE_MS
+    });
 
-  const collector = paginated.createMessageComponentCollector({
-    time: ONE_MINUTE_MS
-  });
+    const isLimitedToPaginate = options?.usersCanPaginate !== undefined;
 
-  let currentPage = 0;
-  collector.on('collect', async (interaction) => {
-    switch (interaction.customId) {
-      case 'prev':
-        if (0 < currentPage) {
-          currentPage -= 1;
-        } else {
-          currentPage = pages.length - 1;
-        }
-        break;
-      case 'next':
-        if (currentPage < pages.length - 1) {
-          currentPage += 1;
-        } else {
-          currentPage = 0;
-        }
-        break;
-      default:
+    let currentPage = 0;
+    collector.on('collect', async (interaction) => {
+      if (
+        isLimitedToPaginate &&
+        !options?.usersCanPaginate?.includes(interaction.user.id as Snowflake)
+      ) {
         return;
-    }
-    await interaction.update({ embeds: [generatePage(currentPage)] });
-  });
-  collector.on('end', async () => {
-    if (paginated.editable) {
-      await paginated.edit({ components: [CONTROLS_DISABLED] });
-    }
-  });
-};
+      }
+
+      switch (interaction.customId) {
+        case 'prev':
+          if (0 < currentPage) {
+            currentPage -= 1;
+          } else {
+            currentPage = pages.length - 1;
+          }
+          break;
+        case 'next':
+          if (currentPage < pages.length - 1) {
+            currentPage += 1;
+          } else {
+            currentPage = 0;
+          }
+          break;
+        default:
+          return;
+      }
+      await interaction.update({ embeds: [generatePage(currentPage)] });
+    });
+    collector.on('end', async () => {
+      if (paginated.editable) {
+        await paginated.edit({ components: [CONTROLS_DISABLED] });
+      }
+    });
+  };

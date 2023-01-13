@@ -4,6 +4,22 @@ import type { ParsedSchema, Schema } from '../../model/command-schema.js';
 import type { Snowflake } from '../../model/id.js';
 
 /**
+ * `CommandMessage.replyPages` のオプション。
+ *
+ * @export
+ * @interface ReplyPagesOptions
+ */
+export interface ReplyPagesOptions {
+  /**
+   * ページネーションのボタンを操作できるユーザの ID のリスト。
+   *
+   * @type {readonly Snowflake[]}
+   * @memberof ReplyPagesOptions
+   */
+  readonly usersCanPaginate?: readonly Snowflake[];
+}
+
+/**
  * コマンド形式のメッセージの抽象。
  *
  * @export
@@ -73,7 +89,7 @@ export interface CommandMessage<S extends Schema> {
    * @param pages
    * @memberof CommandMessage
    */
-  replyPages(pages: EmbedPage[]): Promise<void>;
+  replyPages(pages: EmbedPage[], options?: ReplyPagesOptions): Promise<void>;
 
   /**
    * このメッセージに `emoji` の絵文字でリアクションする。
