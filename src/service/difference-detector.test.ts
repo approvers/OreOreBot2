@@ -15,10 +15,7 @@ it('react to edited message', async () => {
       content: 'LGTM',
       sendEphemeralToSameChannel: (message) => {
         expect(message).toEqual(`見てたぞ
-\`\`\`diff
-- LGBT
-+ LGTM
-\`\`\``);
+> LG~~B~~T*M*`);
         return Promise.resolve();
       }
     }
@@ -38,9 +35,10 @@ poka
 `,
       sendEphemeralToSameChannel: (message) => {
         expect(message).toEqual(`見てたぞ
-\`\`\`diff
-+ poka
-\`\`\``);
+> pika
+> peka
+> *poka*
+> `);
         return Promise.resolve();
       }
     }
@@ -56,9 +54,8 @@ poka
       content: `草`,
       sendEphemeralToSameChannel: (message) => {
         expect(message).toEqual(`見てたぞ
-\`\`\`diff
-- 草
-\`\`\``);
+> 草
+> ~~草~~`);
         return Promise.resolve();
       }
     }
@@ -81,12 +78,41 @@ poka
 サイゼリヤ(鳥取にはある)`,
       sendEphemeralToSameChannel: (message) => {
         expect(message).toEqual(`見てたぞ
-\`\`\`diff
-+ サイゼリヤ(鳥取にはある)
-\`\`\``);
+> 山陰に無い店
+> 松屋
+> やよい軒
+> ロッテリア ロイヤルホスト
+> *サイゼリヤ(鳥取にはある)*`);
         return Promise.resolve();
       }
     }
   );
+
+  await responder.on(
+    'UPDATE',
+    {
+      content: `waw
+wiw
+wuw
+wew
+wow`,
+      sendEphemeralToSameChannel: fn
+    },
+    {
+      content: `waw
+wuw
+wow`,
+      sendEphemeralToSameChannel: (message) => {
+        expect(message).toEqual(`見てたぞ
+> waw
+> w~~iw~~
+> ~~w~~uw
+> w~~ew~~
+> ~~w~~ow`);
+        return Promise.resolve();
+      }
+    }
+  );
+
   expect(fn).not.toHaveBeenCalled();
 });
