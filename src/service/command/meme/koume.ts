@@ -2,7 +2,7 @@ import type { MemeTemplate } from '../../../model/meme-template.js';
 
 export const koume: MemeTemplate<never, never> = {
   commandNames: ['koume'],
-  description: 'チクショー！！ `#毎日チクショー`',
+  description: '〜と思ったら〜♪\n\n〜でした〜♪\n\n引数は2つ必要です。',
   flagsKeys: [],
   optionsKeys: [],
   errorMessage:
