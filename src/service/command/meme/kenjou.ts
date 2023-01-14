@@ -3,7 +3,7 @@ import type { MemeTemplate } from '../../../model/meme-template.js';
 export const kenjou: MemeTemplate<never, never> = {
   commandNames: ['kenjou'],
   description:
-    '[健常者エミュレーター](https://healthy-person-emulator.memo.wiki/)の構文ジェネレーター',
+    '[健常者エミュレーター](https://healthy-person-emulator.memo.wiki/)の構文ジェネレーター。\n健常者エミュレーターWikiにありそうなタイトルを指定すればうまくいきます。',
   flagsKeys: [],
   optionsKeys: [],
   errorMessage:
