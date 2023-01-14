@@ -29,7 +29,9 @@ export class HelpCommand implements CommandResponder<typeof SCHEMA> {
     const pages: EmbedPage[] = helpAndSchema.map((helpScheme) =>
       this.buildField(helpScheme)
     );
-    await message.replyPages(pages);
+    await message.replyPages(pages, {
+      usersCanPaginate: [message.senderId]
+    });
   }
 
   private buildField({
