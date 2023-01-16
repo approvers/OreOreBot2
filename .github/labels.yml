@@ -40,5 +40,4 @@
   description: 'I need more Hibikiness in the message'
   color: 'DEAFEE'
 - name: 'feature request'
-  description: 'This issue or pull request is invalid'
   color: 'f0dc59'
