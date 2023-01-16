@@ -11,7 +11,7 @@ body:
       label: バグレポートの提出を行う前に
       description: バグレポートの提出を行う前に以下の項目を確認してください
       options:
-        - label: すでに[同じバグを報告するIssue](https://github.com/approvers/OreOreBot2/issues?q=is%3Aissue+is%3Aopen+label%3Abug)が存在しないか確認しましたか?
+        - label: すでに[同じバグを報告するIssue](https://github.com/approvers/OreOreBot2/issues)が存在しないか確認しましたか?
           required: true
         - label: セキュリティーに関する不具合ではありませんか? セキュリティーに関する不具合はIssueで報告せず[適切な方法](https://github.com/approvers/OreOreBot2/security/policy#reporting-a-vulnerability)で報告してください
           required: true
