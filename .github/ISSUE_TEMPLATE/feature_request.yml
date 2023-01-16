@@ -1,0 +1,37 @@
+name: 機能要望
+description: OreOreBot2の機能の要望を行う
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        🚀 機能要望の提出ありがとうございます
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: 機能要望の提出を行う前に
+      description: 機能要望の提出を行う前に以下の項目を確認してください
+      options:
+        - label: すでに[同じ機能要望を行うIssue](https://github.com/approvers/OreOreBot2/issues?q=)が存在しないか確認しましたか?
+          required: true
+        - label: この要望を実現する保証はありません。よろしいですか?
+          required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: 要望の概要
+      description: 要望の概要を記載してください。
+      render: Text
+    validations:
+      required: true
+  - type: textarea
+    id: substitute
+    attributes:
+      label: 代替え案
+      render: Text
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: 追加情報
+      description: その他、追記しておきたい情報を記載してください。
+      render: Text
