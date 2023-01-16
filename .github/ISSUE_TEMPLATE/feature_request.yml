@@ -14,7 +14,7 @@ body:
       options:
         - label: すでに[同じ機能要望を行うIssue](https://github.com/approvers/OreOreBot2/issues)が存在しないか確認しましたか?
           required: true
-        - label: 必ずしもこの機能要望を実装するとは限りません。
+        - label: この要望を実現する保証はありません。
           required: true
   - type: textarea
     id: description
