@@ -1,6 +1,6 @@
 name: 機能要望
 description: OreOreBot2の機能の要望を行う
-labels: ["feature request", "enhancement"]
+labels: ["enhancement"]
 body:
   - type: markdown
     attributes:
