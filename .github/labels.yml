@@ -39,5 +39,3 @@
 - name: 'Need more Hibikiness'
   description: 'I need more Hibikiness in the message'
   color: 'DEAFEE'
-- name: 'feature request'
-  color: 'f0dc59'
