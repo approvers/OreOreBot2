@@ -12,7 +12,7 @@ body:
       label: 機能要望の提出を行う前に
       description: 機能要望の提出を行う前に以下の項目を確認してください
       options:
-        - label: すでに[同じ機能要望を行うIssue](https://github.com/approvers/OreOreBot2/issues)が存在しないか確認しましたか?
+        - label: すでに[同じ機能要望を行うIssue](https://github.com/approvers/OreOreBot2/issues?q=)が存在しないか確認しましたか?
           required: true
         - label: この要望を実現する保証はありません。
           required: true
