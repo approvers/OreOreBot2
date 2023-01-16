@@ -21,6 +21,8 @@ body:
       label: バグの詳細
       description: バグの詳細を記載してください。
       render: Text
+    validations:
+      required: true
   - type: textarea
     id: reproduction
     attributes:
@@ -30,17 +32,23 @@ body:
         1.
         2.
         3.
+    validations:
+      required: true
   - type: textarea
     id: anticipation
     attributes:
       label: 期待する動作
       description: 期待する動作を記載してください。
+    validations:
+      required: true
   - type: textarea
     id: version
     attributes:
       label: はらちょのバージョン
       description: はらちょのバージョンを記載してください。(バージョンは起動時他, `!version` コマンドで確認できます)
       placeholder: `vX.Y.Z`
+    validations:
+      required: true
   - type: textarea
     id: additional-information
     attributes:
