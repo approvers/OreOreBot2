@@ -47,7 +47,7 @@ body:
       label: はらちょのバージョン
       description: はらちょのバージョンを記載してください。(バージョンは起動時他, `!version` コマンドで確認できます)
       placeholder: |
-　　　　　　`vX.Y.Z`
+        `vX.Y.Z`
     validations:
       required: true
   - type: textarea
