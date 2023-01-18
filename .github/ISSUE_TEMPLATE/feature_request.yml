@@ -21,17 +21,14 @@ body:
     attributes:
       label: 要望の概要
       description: 要望の概要を記載してください。
-      render: Text
     validations:
       required: true
   - type: textarea
     id: substitute
     attributes:
       label: 代替え案
-      render: Text
   - type: textarea
     id: additional-information
     attributes:
       label: 追加情報
       description: その他、追記しておきたい情報を記載してください。
-      render: Text
