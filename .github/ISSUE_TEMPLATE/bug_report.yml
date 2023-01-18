@@ -20,7 +20,6 @@ body:
     attributes:
       label: バグの詳細
       description: バグの詳細を記載してください。
-      render: Text
     validations:
       required: true
   - type: textarea
@@ -47,7 +46,8 @@ body:
       label: はらちょのバージョン
       description: はらちょのバージョンを記載してください。(バージョンは起動時他, `!version` コマンドで確認できます)
       placeholder: |
-        `vX.Y.Z`
+        vX.Y.Z
+      render: Text
     validations:
       required: true
   - type: textarea
@@ -55,4 +55,3 @@ body:
     attributes:
       label: 追加情報
       description: その他、追記しておきたい情報を記載してください。
-      render: Text
