@@ -1,7 +1,7 @@
-import { ChannelType, type Client, EmbedBuilder } from 'discord.js';
+import { ChannelType, type Client } from 'discord.js';
 import type { EmbedMessage } from '../../model/embed-message.js';
-import { PERSONAL_COLOR } from '../../server/index.js';
 import type { StandardOutput } from '../../service/output.js';
+import { convertEmbed } from '../embed-convert.js';
 
 export class DiscordOutput implements StandardOutput {
   constructor(
@@ -15,38 +15,9 @@ export class DiscordOutput implements StandardOutput {
       throw new Error(`the channel (${this.channelId}) is not text channel`);
     }
 
-    const made = buildEmbed(embed);
+    const made = convertEmbed(embed);
     await channel.send({
       embeds: [made]
     });
   }
-}
-
-function buildEmbed(embed: EmbedMessage) {
-  const makeEmbed = new EmbedBuilder();
-  const { title, description, fields, url, footer, thumbnail, author, color } =
-    embed;
-  if (author) {
-    makeEmbed.setAuthor({ name: author.name, iconURL: author.iconUrl });
-  }
-  if (description) {
-    makeEmbed.setDescription(description);
-  }
-  if (fields) {
-    makeEmbed.setFields(fields);
-  }
-  if (footer) {
-    makeEmbed.setFooter({ text: footer });
-  }
-  if (title) {
-    makeEmbed.setTitle(title);
-  }
-  if (url) {
-    makeEmbed.setURL(url);
-  }
-  if (thumbnail) {
-    makeEmbed.setThumbnail(thumbnail.url);
-  }
-  makeEmbed.setColor(color ?? PERSONAL_COLOR);
-  return makeEmbed;
 }
