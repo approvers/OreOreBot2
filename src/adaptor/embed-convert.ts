@@ -1,6 +1,9 @@
 import { EmbedBuilder } from 'discord.js';
 import type { EmbedMessage } from '../model/embed-message.js';
-import { PERSONAL_COLOR } from '../server/index.js';
+
+// はらちょのパーソナルカラー
+// https://github.com/approvers/OreOreBot2/issues/675
+export const PERSONAL_COLOR = 0x00b7c4;
 
 export const convertEmbed = ({
   author,
