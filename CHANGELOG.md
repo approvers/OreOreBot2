@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.33.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.32.0...oreorebot2-v1.33.0) (2023-01-19)
+
+
+### Features
+
+* パーティーのBGMにマクドナルドのポテトが揚がる音(ティロリサウンド)を追加 ([#678](https://github.com/approvers/OreOreBot2/issues/678)) ([b6aeaad](https://github.com/approvers/OreOreBot2/commit/b6aeaad871dc3a1af140e1ab241fdc1380666229))
+* ボイスチャンネル関連の機能で成功時にメッセージを送信する ([#661](https://github.com/approvers/OreOreBot2/issues/661)) ([60a9d0a](https://github.com/approvers/OreOreBot2/commit/60a9d0aaa6790b77f1ef4db860d85130387ee6d2))
+* 埋め込みカラーをパーソナルカラーに ([#679](https://github.com/approvers/OreOreBot2/issues/679)) ([9329ec9](https://github.com/approvers/OreOreBot2/commit/9329ec9521148e8b088091e2b3400a032356ca41))
+
+
+### Bug Fixes
+
+* Bug report のform configを修正 ([#673](https://github.com/approvers/OreOreBot2/issues/673)) ([41b06fa](https://github.com/approvers/OreOreBot2/commit/41b06fae467697877f87563d4f6a994f3b85f9d0))
+* meme description ([#670](https://github.com/approvers/OreOreBot2/issues/670)) ([5802e0d](https://github.com/approvers/OreOreBot2/commit/5802e0df7e67319bb146d38c25249d14c663b030))
+* ヘルプコマンドのボタンをコマンド発行者しか押せないように修正 ([#666](https://github.com/approvers/OreOreBot2/issues/666)) ([8d04ec8](https://github.com/approvers/OreOreBot2/commit/8d04ec8720a96ccb190e9ef6b65fafe938ac4e9c))
+
 ## [1.32.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.31.0...oreorebot2-v1.32.0) (2023-01-04)
 
 
