@@ -27,18 +27,16 @@ it('use case of kaere', async () => {
     }
   };
 
-  const responder = new KaereCommand(
-    {
-      connectionFactory,
-      controller: {
-        disconnectAllUsersIn: fn
-      },
-      clock,
-      scheduleRunner,
-      repo
+  const responder = new KaereCommand({
+    connectionFactory,
+    controller: {
+      disconnectAllUsersIn: fn
     },
-    output
-  );
+    clock,
+    scheduleRunner,
+    stdout: output,
+    repo
+  });
 
   await responder.on(
     createMockMessage(

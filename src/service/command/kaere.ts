@@ -147,9 +147,9 @@ export class KaereCommand implements CommandResponder<typeof SCHEMA> {
       controller: VoiceRoomController;
       clock: Clock;
       scheduleRunner: ScheduleRunner;
+      stdout: StandardOutput;
       repo: ReservationRepository;
-    },
-    private readonly stdout: StandardOutput
+    }
   ) {
     void deps.repo.all().then((all) => {
       for (const reservation of all) {
@@ -199,7 +199,7 @@ export class KaereCommand implements CommandResponder<typeof SCHEMA> {
       this.doingKaere = false;
       return false;
     });
-    await this.stdout.sendEmbed({
+    await this.deps.stdout.sendEmbed({
       title: '提督、もうこんな時間だよ',
       description: '早く寝よう'
     });
