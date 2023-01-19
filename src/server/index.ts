@@ -145,6 +145,7 @@ if (features.includes('COMMAND')) {
       COFFIN_DROP: join('assets', 'party', 'coffin-drop.mp3'),
       KAKAPO: join('assets', 'party', 'kakapo.mp3'),
       KAKUSIN_DAISUKE: join('assets', 'party', 'kakusin-daisuke.mp3'),
+      POTETO: join('assets', 'party', 'poteto.mp3'),
       NEROYO: join('assets', 'kaere', 'neroyo.mp3'),
       GYOKUON: join('assets', 'gyokuon', 'gyokuon.mp3')
     }),

@@ -21,7 +21,8 @@ const assetKeys = [
   'COFFIN_INTRO',
   'COFFIN_DROP',
   'KAKAPO',
-  'KAKUSIN_DAISUKE'
+  'KAKUSIN_DAISUKE',
+  'POTETO'
 ] as const;
 
 export type AssetKey = typeof assetKeys[number];
