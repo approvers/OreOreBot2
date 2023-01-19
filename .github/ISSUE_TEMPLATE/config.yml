@@ -1,4 +1,4 @@
-blank_issues_enabled: false
+blank_issues_enabled: true
 contact_links:
   - name: Discord
     url: https://support.discord.com/hc/ja/requests/new?ticket_form_id=360006586013

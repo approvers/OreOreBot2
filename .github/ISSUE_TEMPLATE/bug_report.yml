@@ -1,0 +1,57 @@
+name: バグ報告
+description: OreOreBot2のバグを報告する
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: 🐛 バグレポートの提出ありがとうございます
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: バグレポートの提出を行う前に
+      description: バグレポートの提出を行う前に以下の項目を確認してください
+      options:
+        - label: すでに[同じバグを報告するIssue](https://github.com/approvers/OreOreBot2/issues?q=)が存在しないか確認しましたか?
+          required: true
+        - label: セキュリティーに関する不具合ではありませんか? セキュリティーに関する不具合はIssueで報告せず[適切な方法](https://github.com/approvers/OreOreBot2/security/policy#reporting-a-vulnerability)で報告してください
+          required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: バグの詳細
+      description: バグの詳細を記載してください。
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 再現方法
+      description: バグを再現する手順を記載してください。
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: anticipation
+    attributes:
+      label: 期待する動作
+      description: 期待する動作を記載してください。
+    validations:
+      required: true
+  - type: textarea
+    id: version
+    attributes:
+      label: はらちょのバージョン
+      description: はらちょのバージョンを記載してください。(バージョンは起動時他, `!version` コマンドで確認できます)
+      placeholder: |
+        vX.Y.Z
+      render: Text
+    validations:
+      required: true
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: 追加情報
+      description: その他、追記しておきたい情報を記載してください。
