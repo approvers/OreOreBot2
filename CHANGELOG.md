@@ -12,8 +12,8 @@
 
 ### Bug Fixes
 
-* Bug report のform configを修正 ([#673](https://github.com/approvers/OreOreBot2/issues/673)) ([41b06fa](https://github.com/approvers/OreOreBot2/commit/41b06fae467697877f87563d4f6a994f3b85f9d0))
-* meme description ([#670](https://github.com/approvers/OreOreBot2/issues/670)) ([5802e0d](https://github.com/approvers/OreOreBot2/commit/5802e0df7e67319bb146d38c25249d14c663b030))
+* バグレポートが利用できない問題の修正 ([#673](https://github.com/approvers/OreOreBot2/issues/673)) ([41b06fa](https://github.com/approvers/OreOreBot2/commit/41b06fae467697877f87563d4f6a994f3b85f9d0))
+* `!help` で表示されるミームの説明を追加 ([#670](https://github.com/approvers/OreOreBot2/issues/670)) ([5802e0d](https://github.com/approvers/OreOreBot2/commit/5802e0df7e67319bb146d38c25249d14c663b030))
 * ヘルプコマンドのボタンをコマンド発行者しか押せないように修正 ([#666](https://github.com/approvers/OreOreBot2/issues/666)) ([8d04ec8](https://github.com/approvers/OreOreBot2/commit/8d04ec8720a96ccb190e9ef6b65fafe938ac4e9c))
 
 ## [1.32.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.31.0...oreorebot2-v1.32.0) (2023-01-04)
