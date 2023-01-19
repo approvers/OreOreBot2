@@ -1,15 +1,16 @@
 import { EmbedBuilder } from 'discord.js';
 import type { EmbedMessage } from '../model/embed-message.js';
+import { PERSONAL_COLOR } from '../server/index.js';
 
 export const convertEmbed = ({
   author,
-  color,
   description,
   fields,
   footer,
   title,
   thumbnail,
-  url
+  url,
+  color
 }: EmbedMessage): EmbedBuilder => {
   const embed = new EmbedBuilder();
   if (author) {
@@ -18,9 +19,6 @@ export const convertEmbed = ({
       url: author.url,
       iconURL: author.iconUrl
     });
-  }
-  if (color) {
-    embed.setColor(color);
   }
   if (description) {
     embed.setDescription(description);
@@ -42,5 +40,6 @@ export const convertEmbed = ({
   if (url) {
     embed.setURL(url);
   }
+  embed.setColor(color ?? PERSONAL_COLOR);
   return embed;
 };
