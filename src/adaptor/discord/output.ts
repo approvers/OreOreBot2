@@ -1,5 +1,6 @@
 import { ChannelType, type Client, EmbedBuilder } from 'discord.js';
 import type { EmbedMessage } from '../../model/embed-message.js';
+import { PERSONAL_COLOR } from '../../server/index.js';
 import type { StandardOutput } from '../../service/output.js';
 
 export class DiscordOutput implements StandardOutput {
@@ -23,13 +24,10 @@ export class DiscordOutput implements StandardOutput {
 
 function buildEmbed(embed: EmbedMessage) {
   const makeEmbed = new EmbedBuilder();
-  const { title, color, description, fields, url, footer, thumbnail, author } =
+  const { title, description, fields, url, footer, thumbnail, author, color } =
     embed;
   if (author) {
     makeEmbed.setAuthor({ name: author.name, iconURL: author.iconUrl });
-  }
-  if (color) {
-    makeEmbed.setColor(color);
   }
   if (description) {
     makeEmbed.setDescription(description);
@@ -49,5 +47,6 @@ function buildEmbed(embed: EmbedMessage) {
   if (thumbnail) {
     makeEmbed.setThumbnail(thumbnail.url);
   }
+  makeEmbed.setColor(color ?? PERSONAL_COLOR);
   return makeEmbed;
 }

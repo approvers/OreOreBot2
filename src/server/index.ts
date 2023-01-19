@@ -73,7 +73,7 @@ const features = FEATURE.split(',');
 
 // はらちょのパーソナルカラー
 // https://github.com/approvers/OreOreBot2/issues/675
-const PERSONAL_COLOR = 0x00b7c4;
+export const PERSONAL_COLOR = 0x00b7c4;
 
 const intents = [
   GatewayIntentBits.Guilds, // GUILD_CREATE による初期化

@@ -25,7 +25,6 @@ export class VoiceDiff
       await this.stdout.sendEmbed({
         title: userName + 'が' + channelName + 'に入りました',
         description: '何かが始まる予感がする。',
-        color: 0x1e63e9,
         author: { name: 'はらちょからのお知らせ' },
         thumbnail: { url: userAvatar }
       });
@@ -36,7 +35,6 @@ export class VoiceDiff
       await this.stdout.sendEmbed({
         title: userName + 'が' + channelName + 'から抜けました',
         description: 'あいつは良い奴だったよ...',
-        color: 0x1e63e9,
         author: { name: 'はらちょからのお知らせ' },
         thumbnail: { url: userAvatar }
       });
