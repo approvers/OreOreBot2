@@ -9,6 +9,7 @@ import { addDays, isBefore, setHours, setMinutes, setSeconds } from 'date-fns';
 
 import type { EmbedMessage } from '../../model/embed-message.js';
 import type { Snowflake } from '../../model/id.js';
+import type { StandardOutput } from '../output.js';
 import type { VoiceConnectionFactory } from '../voice-connection.js';
 
 export type KaereMusicKey = 'NEROYO';
@@ -146,6 +147,7 @@ export class KaereCommand implements CommandResponder<typeof SCHEMA> {
       controller: VoiceRoomController;
       clock: Clock;
       scheduleRunner: ScheduleRunner;
+      stdout: StandardOutput;
       repo: ReservationRepository;
     }
   ) {
@@ -168,6 +170,7 @@ export class KaereCommand implements CommandResponder<typeof SCHEMA> {
         });
         return;
       }
+
       await this.start(message.senderGuildId, roomId);
       return;
     }
@@ -195,6 +198,10 @@ export class KaereCommand implements CommandResponder<typeof SCHEMA> {
     connection.onDisconnected(() => {
       this.doingKaere = false;
       return false;
+    });
+    await this.deps.stdout.sendEmbed({
+      title: '提督、もうこんな時間だよ',
+      description: '早く寝よう'
     });
     await connection.playToEnd('NEROYO');
     if (this.bedModeEnabled) {

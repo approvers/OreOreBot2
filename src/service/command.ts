@@ -30,6 +30,7 @@ import type { CommandRunner } from '../runner/command.js';
 import { HelpCommand } from './command/help.js';
 import { Meme } from './command/meme.js';
 import type { Schema } from '../model/command-schema.js';
+import type { StandardOutput } from './output.js';
 import type { VoiceConnectionFactory } from './voice-connection.js';
 
 export const registerAllCommandResponder = ({
@@ -51,7 +52,8 @@ export const registerAllCommandResponder = ({
   userRepo,
   guildRepo,
   roleCreateRepo,
-  queen
+  queen,
+  stdout
 }: {
   typoRepo: TypoRepository;
   reservationRepo: ReservationRepository;
@@ -72,6 +74,7 @@ export const registerAllCommandResponder = ({
   guildRepo: GuildStatsRepository;
   roleCreateRepo: RoleCreateManager;
   queen: DiceQueen;
+  stdout: StandardOutput;
 }) => {
   const allResponders = [
     new TypoReporter(typoRepo, clock, scheduleRunner),
@@ -81,6 +84,7 @@ export const registerAllCommandResponder = ({
       controller: roomController,
       clock,
       scheduleRunner,
+      stdout,
       repo: reservationRepo
     }),
     new GyokuonCommand({

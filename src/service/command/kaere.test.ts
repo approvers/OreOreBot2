@@ -6,6 +6,7 @@ import {
 import { KaereCommand, type KaereMusicKey } from './kaere.js';
 import { expect, it, vi } from 'vitest';
 import { ScheduleRunner } from '../../runner/index.js';
+import type { StandardOutput } from '../output.js';
 import { createMockMessage } from './command-message.js';
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 
@@ -15,6 +16,17 @@ it('use case of kaere', async () => {
   const clock = new MockClock(new Date(0));
   const scheduleRunner = new ScheduleRunner(clock);
   const repo = new InMemoryReservationRepository();
+
+  const output: StandardOutput = {
+    sendEmbed(message) {
+      expect(message).toStrictEqual({
+        title: '提督、もうこんな時間だよ',
+        description: '早く寝よう'
+      });
+      return Promise.resolve();
+    }
+  };
+
   const responder = new KaereCommand({
     connectionFactory,
     controller: {
@@ -22,11 +34,20 @@ it('use case of kaere', async () => {
     },
     clock,
     scheduleRunner,
+    stdout: output,
     repo
   });
 
   await responder.on(
-    createMockMessage(parseStringsOrThrow(['kaere'], responder.schema))
+    createMockMessage(
+      parseStringsOrThrow(['kaere'], responder.schema),
+      (message) => {
+        expect(message).toStrictEqual({
+          title: '提督、もうこんな時間だよ',
+          description: '早く寝よう'
+        });
+      }
+    )
   );
 
   await responder.on(

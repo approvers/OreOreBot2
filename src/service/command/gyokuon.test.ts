@@ -1,5 +1,5 @@
 import { GyokuonAssetKey, GyokuonCommand } from './gyokuon.js';
-import { it, vi } from 'vitest';
+import { expect, it, vi } from 'vitest';
 
 import { MockVoiceConnectionFactory } from '../../adaptor/index.js';
 import { createMockMessage } from './command-message.js';
@@ -16,6 +16,14 @@ it('use case of gyokuon', async () => {
   });
 
   await responder.on(
-    createMockMessage(parseStringsOrThrow(['gyokuon'], responder.schema))
+    createMockMessage(
+      parseStringsOrThrow(['gyokuon'], responder.schema),
+      (message) => {
+        expect(message).toStrictEqual({
+          title: 'こるく天皇の玉音放送だよ',
+          description: '全鯖民に対しての大詔だから椅子から立って聞いてね'
+        });
+      }
+    )
   );
 });
