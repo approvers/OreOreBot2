@@ -22,7 +22,7 @@ const assetKeys = [
   'COFFIN_DROP',
   'KAKAPO',
   'KAKUSIN_DAISUKE',
-  'POTETO'
+  'POTATO'
 ] as const;
 
 export type AssetKey = typeof assetKeys[number];
