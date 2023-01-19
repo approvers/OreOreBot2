@@ -1,15 +1,19 @@
 import { EmbedBuilder } from 'discord.js';
 import type { EmbedMessage } from '../model/embed-message.js';
 
+// はらちょのパーソナルカラー
+// https://github.com/approvers/OreOreBot2/issues/675
+export const PERSONAL_COLOR = 0x00b7c4;
+
 export const convertEmbed = ({
   author,
-  color,
   description,
   fields,
   footer,
   title,
   thumbnail,
-  url
+  url,
+  color
 }: EmbedMessage): EmbedBuilder => {
   const embed = new EmbedBuilder();
   if (author) {
@@ -18,9 +22,6 @@ export const convertEmbed = ({
       url: author.url,
       iconURL: author.iconUrl
     });
-  }
-  if (color) {
-    embed.setColor(color);
   }
   if (description) {
     embed.setDescription(description);
@@ -42,5 +43,6 @@ export const convertEmbed = ({
   if (url) {
     embed.setURL(url);
   }
+  embed.setColor(color ?? PERSONAL_COLOR);
   return embed;
 };
