@@ -9,7 +9,7 @@ import { nigetane } from './nigetane.js';
 import { nine } from './nine.js';
 import { ojaru } from './ojaru.js';
 import { takopi } from './takopi.js';
-import { tsureteike } from './tureteike.js';
+import { tsureteike } from './tsureteike.js';
 import { web3 } from './web3.js';
 
 export const memes = [
