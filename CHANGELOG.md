@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.34.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.33.0...oreorebot2-v1.34.0) (2023-01-21)
+
+
+### Features
+
+* プログラマ狩り構文の追加 ([#683](https://github.com/approvers/OreOreBot2/issues/683)) ([d923a3a](https://github.com/approvers/OreOreBot2/commit/d923a3ad96e5da6163eb6c8b3d3a1dedcb0e6b98))
+
 ## [1.33.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.32.0...oreorebot2-v1.33.0) (2023-01-19)
 
 
