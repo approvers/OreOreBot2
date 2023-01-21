@@ -7,13 +7,13 @@ export const tsureteike: MemeTemplate<never, never> = {
   optionsKeys: [],
   errorMessage: '構文ミスだ、問答無用で連れて行け',
   generate(args) {
-    const [option1, option2, option3, option4, option5] = args.body.split(' ');
+    const [target, question, a, b, c] = args.body.split(' ');
     const option = {
-      target: option1,
-      question: option2,
-      a: option3,
-      b: option4,
-      c: option5
+      target,
+      question,
+      a,
+      b,
+      c
     };
     return makeTureteike(option);
   }
