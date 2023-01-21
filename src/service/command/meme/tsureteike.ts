@@ -2,7 +2,7 @@ import type { MemeTemplate } from '../../../model/meme-template.js';
 
 export const tsureteike: MemeTemplate<never, never> = {
   commandNames: ['tsureteike', 'hunt'],
-  description: `「この中に〜はいるか 連れて行け」\ne.x) \`!tsureteike プログラマ Rustは知っているか? ゲームですか? 錆のこと? 🦀\``,
+  description: `「この中に〜はいるか 連れて行け」\nex.) \`!tsureteike プログラマ Rustは知っているか? ゲームですか? 錆のこと? 🦀\``,
   flagsKeys: [],
   optionsKeys: [],
   errorMessage: '構文ミスだ、問答無用で連れて行け',
