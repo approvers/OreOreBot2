@@ -27,6 +27,6 @@ interface TsureteikeArgs {
   c: string;
 }
 
-function makeTureteike(option: TsureteikeArgs) {
-  return `「この中に${option.target}はいるか」\nA,B,C「いません」\n「${option.question}」\nA「${option.a}」\nB「${option.b}」\nC「${option.c}」\n「いたぞ、Cを連れて行け」`;
+function makeTureteike({ target, question, a, b, c }: TsureteikeArgs) {
+  return `「この中に${target}はいるか」\nA,B,C「いません」\n「${question}」\nA「${a}」\nB「${b}」\nC「${c}」\n「いたぞ、Cを連れて行け」`;
 }
