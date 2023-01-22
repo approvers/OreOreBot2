@@ -15,9 +15,14 @@ parserOptions:
 plugins:
   - "@typescript-eslint"
   - "markdown"
+  - "simple-import-sort"
+  - "import"
 rules:
-  "sort-imports": "error"
+  "simple-import-sort/imports": "error"
+  "simple-import-sort/exports": "error"
   "max-params": "error"
+  "import/first": "error"
+  "import/no-duplicates": "error"
 overrides:
   - files: ["**/*.md"]
     processor: "markdown/markdown"
