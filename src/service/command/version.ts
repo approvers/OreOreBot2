@@ -26,7 +26,11 @@ export class GetVersionCommand implements CommandResponder<typeof SCHEMA> {
     const { version } = this.fetcher;
     await message.reply({
       title: 'はらちょバージョン',
-      description: `[${version}](https://github.com/approvers/OreOreBot2/releases/tag/${version}) だよ。`,
+      /**
+       * v1.30.0以降、全てのTagの先頭には "oreorebot2-" という文字列が付与されるようになったため、ハードコーディングで対応
+       * https://github.com/approvers/OreOreBot2/tags
+       */
+      description: `[${version}](https://github.com/approvers/OreOreBot2/releases/tag/oreorebot2-v${version}) だよ。`,
       url: `https://github.com/approvers/OreOreBot2/releases`
     });
   }
