@@ -23,6 +23,9 @@ rules:
   "max-params": "error"
   "import/first": "error"
   "import/no-duplicates": "error"
+  # TODO: 必要に応じてルールを追加する
+  #  https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/order.md
+  "import/order": [2, { "alphabetize": { "order": "asc" } }]
 overrides:
   - files: ["**/*.md"]
     processor: "markdown/markdown"
