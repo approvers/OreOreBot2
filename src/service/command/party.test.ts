@@ -1,10 +1,11 @@
-import { type AssetKey, PartyCommand, type RandomGenerator } from './party.js';
-import { MockClock, MockVoiceConnectionFactory } from '../../adaptor/index.js';
 import { afterAll, describe, expect, it, vi } from 'vitest';
+
+import { MockClock, MockVoiceConnectionFactory } from '../../adaptor/index.js';
+import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 import type { EmbedMessage } from '../../model/embed-message.js';
 import { ScheduleRunner } from '../../runner/index.js';
 import { createMockMessage } from './command-message.js';
-import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
+import { type AssetKey, type RandomGenerator, PartyCommand } from './party.js';
 
 const random: RandomGenerator = {
   minutes: () => 42,

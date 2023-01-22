@@ -1,4 +1,5 @@
 import type { Client } from 'discord.js';
+
 import type { Ping } from '../../service/command/ping.js';
 
 export class DiscordWS implements Ping {

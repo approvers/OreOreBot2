@@ -1,8 +1,8 @@
-import { RoleCreate, RoleCreateManager } from './role-create.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { createMockMessage } from './command-message.js';
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
+import { createMockMessage } from './command-message.js';
+import { RoleCreate, RoleCreateManager } from './role-create.js';
 
 describe('Create a role', () => {
   afterEach(() => {

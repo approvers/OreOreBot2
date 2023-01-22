@@ -1,14 +1,12 @@
-import {
-  AssetKey,
-  PartyCommand,
-  RandomGenerator as PartyRng
-} from './command/party.js';
+import type { Schema } from '../model/command-schema.js';
+import type { CommandRunner } from '../runner/command.js';
 import type { Clock, ScheduleRunner } from '../runner/schedule.js';
+import type { CommandResponder } from './command/command-message.js';
 import { DebugCommand, MessageRepository } from './command/debug.js';
 import { DiceCommand, DiceQueen } from './command/dice.js';
-import { GetVersionCommand, VersionFetcher } from './command/version.js';
 import { GuildInfo, GuildStatsRepository } from './command/guild-info.js';
 import { GyokuonAssetKey, GyokuonCommand } from './command/gyokuon.js';
+import { HelpCommand } from './command/help.js';
 import { JudgingCommand, RandomGenerator } from './command/judging.js';
 import {
   KaereCommand,
@@ -17,19 +15,20 @@ import {
   VoiceRoomController
 } from './command/kaere.js';
 import { KokuseiChousa, MemberStats } from './command/kokusei-chousa.js';
-import { MembersWithRoleRepository, RoleRank } from './command/role-rank.js';
+import { Meme } from './command/meme.js';
+import {
+  AssetKey,
+  PartyCommand,
+  RandomGenerator as PartyRng
+} from './command/party.js';
 import { Ping, PingCommand } from './command/ping.js';
 import { RoleCreate, RoleCreateManager } from './command/role-create.js';
 import { RoleInfo, RoleStatsRepository } from './command/role-info.js';
+import { MembersWithRoleRepository, RoleRank } from './command/role-rank.js';
 import { Sheriff, SheriffCommand } from './command/stfu.js';
 import { TypoReporter, TypoRepository } from './command/typo-record.js';
 import { UserInfo, UserStatsRepository } from './command/user-info.js';
-
-import type { CommandResponder } from './command/command-message.js';
-import type { CommandRunner } from '../runner/command.js';
-import { HelpCommand } from './command/help.js';
-import { Meme } from './command/meme.js';
-import type { Schema } from '../model/command-schema.js';
+import { GetVersionCommand, VersionFetcher } from './command/version.js';
 import type { StandardOutput } from './output.js';
 import type { VoiceConnectionFactory } from './voice-connection.js';
 

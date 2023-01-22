@@ -1,9 +1,9 @@
-import { emojiOf, waitingJudgingEmoji } from '../../model/judging-status.js';
 import { expect, it, vi } from 'vitest';
 
-import { JudgingCommand } from './judging.js';
-import { createMockMessage } from './command-message.js';
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
+import { emojiOf, waitingJudgingEmoji } from '../../model/judging-status.js';
+import { createMockMessage } from './command-message.js';
+import { JudgingCommand } from './judging.js';
 
 it('use case of jd', async () => {
   const responder = new JudgingCommand({

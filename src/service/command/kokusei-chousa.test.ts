@@ -1,8 +1,8 @@
 import { expect, it } from 'vitest';
 
-import { KokuseiChousa } from './kokusei-chousa.js';
-import { createMockMessage } from './command-message.js';
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
+import { createMockMessage } from './command-message.js';
+import { KokuseiChousa } from './kokusei-chousa.js';
 
 it('use case of kokusei-chousa', async () => {
   const responder = new KokuseiChousa({

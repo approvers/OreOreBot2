@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+
 import { EmojiSeqReact } from './emoji-seq-react.js';
 
 describe('EmojiSeqReact', () => {

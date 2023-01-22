@@ -1,10 +1,9 @@
+import type { Snowflake } from '../../model/id.js';
 import type {
   CommandMessage,
   CommandResponder,
   HelpInfo
 } from './command-message.js';
-
-import type { Snowflake } from '../../model/id.js';
 
 /**
  * 'SheriffCommandのための削除機能。

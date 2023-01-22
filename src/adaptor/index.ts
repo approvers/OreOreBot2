@@ -1,4 +1,6 @@
 export * from './clock.js';
+export * from './discord/output.js';
+export * from './discord/participant.js';
 export * from './discord/voice.js';
 export * from './embed-convert.js';
 export * from './in-memory-reservation.js';
@@ -6,5 +8,3 @@ export * from './in-memory-typo.js';
 export * from './mock-voice.js';
 export * from './proxy.js';
 export * from './random.js';
-export * from './discord/participant.js';
-export * from './discord/output.js';

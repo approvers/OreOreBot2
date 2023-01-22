@@ -1,3 +1,15 @@
+import { join } from 'node:path';
+
+import { generateDependencyReport } from '@discordjs/voice';
+import { Client, GatewayIntentBits, version } from 'discord.js';
+import dotenv from 'dotenv';
+
+import { DiscordMemberStats } from '../adaptor/discord/member-stats.js';
+import { DiscordMessageRepository } from '../adaptor/discord/message-repo.js';
+import { DiscordRoleManager } from '../adaptor/discord/role.js';
+import { DiscordSheriff } from '../adaptor/discord/sheriff.js';
+import { DiscordWS } from '../adaptor/discord/ws.js';
+import { loadEmojiSeqYaml } from '../adaptor/emoji-seq-loader.js';
 import {
   ActualClock,
   DiscordOutput,
@@ -10,12 +22,15 @@ import {
   MathRandomGenerator,
   MessageProxy,
   MessageUpdateProxy,
-  VoiceRoomProxy,
   middlewareForMessage,
   middlewareForUpdateMessage,
-  roleProxy
+  roleProxy,
+  VoiceRoomProxy
 } from '../adaptor/index.js';
-import { Client, GatewayIntentBits, version } from 'discord.js';
+import { DiscordCommandProxy } from '../adaptor/proxy/command.js';
+import { GenVersionFetcher } from '../adaptor/version/fetch.js';
+import type { Snowflake } from '../model/id.js';
+import { CommandRunner } from '../runner/command.js';
 import {
   EmojiResponseRunner,
   MessageResponseRunner,
@@ -24,10 +39,9 @@ import {
   ScheduleRunner,
   VoiceRoomResponseRunner
 } from '../runner/index.js';
-import {
-  type VoiceChannelParticipant,
-  VoiceDiff
-} from '../service/voice-diff.js';
+import type { GyokuonAssetKey } from '../service/command/gyokuon.js';
+import type { KaereMusicKey } from '../service/command/kaere.js';
+import type { AssetKey } from '../service/command/party.js';
 import {
   allEmojiResponder,
   allMessageEventResponder,
@@ -35,24 +49,11 @@ import {
   allRoleResponder,
   registerAllCommandResponder
 } from '../service/index.js';
-
-import type { AssetKey } from '../service/command/party.js';
-import { CommandRunner } from '../runner/command.js';
-import { DiscordCommandProxy } from '../adaptor/proxy/command.js';
-import { DiscordMemberStats } from '../adaptor/discord/member-stats.js';
-import { DiscordMessageRepository } from '../adaptor/discord/message-repo.js';
-import { DiscordRoleManager } from '../adaptor/discord/role.js';
-import { DiscordSheriff } from '../adaptor/discord/sheriff.js';
-import { DiscordWS } from '../adaptor/discord/ws.js';
-import { GenVersionFetcher } from '../adaptor/version/fetch.js';
-import type { GyokuonAssetKey } from '../service/command/gyokuon.js';
-import type { KaereMusicKey } from '../service/command/kaere.js';
-import type { Snowflake } from '../model/id.js';
-import dotenv from 'dotenv';
+import {
+  type VoiceChannelParticipant,
+  VoiceDiff
+} from '../service/voice-diff.js';
 import { extractEnv } from './extract-env.js';
-import { generateDependencyReport } from '@discordjs/voice';
-import { join } from 'node:path';
-import { loadEmojiSeqYaml } from '../adaptor/emoji-seq-loader.js';
 
 dotenv.config();
 const {

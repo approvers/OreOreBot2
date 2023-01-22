@@ -1,24 +1,25 @@
 import {
   type APIActionRowComponent,
   type APIMessageActionRowComponent,
+  type MessageActionRowComponentBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
   Client,
-  Message,
-  type MessageActionRowComponentBuilder
+  Message
 } from 'discord.js';
+
+import { makeError, Schema } from '../../model/command-schema.js';
+import type { EmbedPage } from '../../model/embed-message.js';
+import type { Snowflake } from '../../model/id.js';
 import type {
   CommandProxy,
   MessageCreateListener
 } from '../../runner/command.js';
-import { Schema, makeError } from '../../model/command-schema.js';
-import type { EmbedPage } from '../../model/embed-message.js';
-import type { RawMessage } from './middleware.js';
 import type { ReplyPagesOptions } from '../../service/command/command-message.js';
-import type { Snowflake } from '../../model/id.js';
 import { convertEmbed } from '../embed-convert.js';
 import { parseStrings } from './command/schema.js';
+import type { RawMessage } from './middleware.js';
 
 const SPACES = /\s+/;
 

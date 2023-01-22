@@ -1,6 +1,5 @@
-import type { EmbedMessage, EmbedPage } from '../../model/embed-message.js';
 import type { ParsedSchema, Schema } from '../../model/command-schema.js';
-
+import type { EmbedMessage, EmbedPage } from '../../model/embed-message.js';
 import type { Snowflake } from '../../model/id.js';
 
 /**

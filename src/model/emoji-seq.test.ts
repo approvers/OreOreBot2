@@ -1,5 +1,6 @@
-import { EmojiSeq, EmojiSeqSet } from './emoji-seq.js';
 import { describe, expect, it } from 'vitest';
+
+import { EmojiSeq, EmojiSeqSet } from './emoji-seq.js';
 
 describe('EmojiSeq', () => {
   it('throws Error on invalid parameter', () => {

@@ -1,27 +1,27 @@
-import {
-  type BoldItalicCop,
-  BoldItalicCopReporter
-} from './bold-italic-cop.js';
-import {
-  type DeletionObservable,
-  DeletionRepeater
-} from './deletion-repeater.js';
-import { EmojiSeqObservable, EmojiSeqReact } from './emoji-seq-react.js';
-import { KawaemonHasAllRoles, RoleManager } from './kawaemon-has-all-roles.js';
-import {
-  type TypoObservable,
-  TypoRecorder,
-  type TypoRepository
-} from './command/typo-record.js';
+import type { Snowflake } from '../model/id.js';
 import {
   composeEmojiEventResponders,
   composeMessageEventResponders,
   composeMessageUpdateEventResponders,
   composeRoleEventResponders
 } from '../runner/index.js';
+import {
+  type BoldItalicCop,
+  BoldItalicCopReporter
+} from './bold-italic-cop.js';
+import {
+  type TypoObservable,
+  type TypoRepository,
+  TypoRecorder
+} from './command/typo-record.js';
+import {
+  type DeletionObservable,
+  DeletionRepeater
+} from './deletion-repeater.js';
 import { DifferenceDetector } from './difference-detector.js';
 import { EmojiLog } from './emoji-log.js';
-import type { Snowflake } from '../model/id.js';
+import { EmojiSeqObservable, EmojiSeqReact } from './emoji-seq-react.js';
+import { KawaemonHasAllRoles, RoleManager } from './kawaemon-has-all-roles.js';
 import type { StandardOutput } from './output.js';
 
 const stfuIgnorePredicate = (content: string): boolean => content === '!stfu';

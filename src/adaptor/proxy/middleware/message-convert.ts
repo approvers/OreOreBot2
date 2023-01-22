@@ -1,11 +1,10 @@
-import type { Middleware, RawMessage } from '../middleware.js';
-
+import type { Snowflake } from '../../../model/id.js';
 import type { BoldItalicCop } from '../../../service/bold-italic-cop.js';
+import type { TypoObservable } from '../../../service/command/typo-record.js';
 import type { DeletionObservable } from '../../../service/deletion-repeater.js';
 import type { EditingObservable } from '../../../service/difference-detector.js';
 import type { EmojiSeqObservable } from '../../../service/emoji-seq-react.js';
-import type { Snowflake } from '../../../model/id.js';
-import type { TypoObservable } from '../../../service/command/typo-record.js';
+import type { Middleware, RawMessage } from '../middleware.js';
 
 const getAuthorSnowflake = (message: RawMessage): Snowflake =>
   (message.author?.id || 'unknown') as Snowflake;

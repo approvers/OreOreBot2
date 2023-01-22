@@ -1,11 +1,11 @@
+import type { Schema } from '../../model/command-schema.js';
+import type { Snowflake } from '../../model/id.js';
+import type { VoiceConnectionFactory } from '../voice-connection.js';
 import type {
   CommandMessage,
   CommandResponder,
   HelpInfo
 } from './command-message.js';
-import type { Schema } from '../../model/command-schema.js';
-import type { Snowflake } from '../../model/id.js';
-import type { VoiceConnectionFactory } from '../voice-connection.js';
 import type { VoiceRoomController } from './kaere.js';
 
 export type GyokuonAssetKey = 'GYOKUON';

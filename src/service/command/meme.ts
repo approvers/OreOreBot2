@@ -1,12 +1,12 @@
+import parse from 'cli-argparse';
+
+import type { MemeTemplate } from '../../model/meme-template.js';
 import type {
   CommandMessage,
   CommandResponder,
   HelpInfo
 } from './command-message.js';
-
-import type { MemeTemplate } from '../../model/meme-template.js';
 import { memes } from './meme/index.js';
-import parse from 'cli-argparse';
 
 const memesByCommandName: Record<
   string,

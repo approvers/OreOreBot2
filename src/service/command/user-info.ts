@@ -1,11 +1,10 @@
+import { createTimestamp } from '../../model/create-timestamp.js';
+import type { Snowflake } from '../../model/id.js';
 import type {
   CommandMessage,
   CommandResponder,
   HelpInfo
 } from './command-message.js';
-
-import type { Snowflake } from '../../model/id.js';
-import { createTimestamp } from '../../model/create-timestamp.js';
 
 export interface UserStats {
   color: string;
