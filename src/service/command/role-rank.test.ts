@@ -1,8 +1,8 @@
-import { MembersWithRoleRepository, RoleRank } from './role-rank.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { createMockMessage } from './command-message.js';
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
+import { createMockMessage } from './command-message.js';
+import { MembersWithRoleRepository, RoleRank } from './role-rank.js';
 
 describe('RoleRank', () => {
   afterEach(() => {

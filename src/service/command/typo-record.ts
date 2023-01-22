@@ -1,3 +1,6 @@
+import { addDays, setHours, setMinutes } from 'date-fns';
+
+import type { Snowflake } from '../../model/id.js';
 import type {
   Clock,
   MessageEvent,
@@ -10,9 +13,6 @@ import type {
   CommandResponder,
   HelpInfo
 } from './command-message.js';
-import { addDays, setHours, setMinutes } from 'date-fns';
-
-import type { Snowflake } from '../../model/id.js';
 
 /**
  * 監視するメッセージの抽象。

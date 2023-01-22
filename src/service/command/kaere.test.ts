@@ -1,14 +1,15 @@
+import { expect, it, vi } from 'vitest';
+
 import {
   InMemoryReservationRepository,
   MockClock,
   MockVoiceConnectionFactory
 } from '../../adaptor/index.js';
-import { KaereCommand, type KaereMusicKey } from './kaere.js';
-import { expect, it, vi } from 'vitest';
+import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 import { ScheduleRunner } from '../../runner/index.js';
 import type { StandardOutput } from '../output.js';
 import { createMockMessage } from './command-message.js';
-import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
+import { type KaereMusicKey, KaereCommand } from './kaere.js';
 
 it('use case of kaere', async () => {
   const fn = vi.fn();

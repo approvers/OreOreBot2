@@ -1,6 +1,7 @@
 import { ChannelType, Client } from 'discord.js';
-import type { MessageRepository } from '../../service/command/debug.js';
+
 import type { Snowflake } from '../../model/id.js';
+import type { MessageRepository } from '../../service/command/debug.js';
 
 export class DiscordMessageRepository implements MessageRepository {
   constructor(private readonly client: Client) {}

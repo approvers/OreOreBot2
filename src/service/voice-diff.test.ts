@@ -1,4 +1,5 @@
 import { expect, it } from 'vitest';
+
 import type { StandardOutput } from './output.js';
 import { VoiceDiff } from './voice-diff.js';
 

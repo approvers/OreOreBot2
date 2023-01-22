@@ -1,9 +1,9 @@
+import { createTimestamp } from '../../model/create-timestamp.js';
 import type {
   CommandMessage,
   CommandResponder,
   HelpInfo
 } from './command-message.js';
-import { createTimestamp } from '../../model/create-timestamp.js';
 
 export type RoleIcon =
   | {

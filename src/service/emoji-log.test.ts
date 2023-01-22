@@ -1,4 +1,5 @@
 import { expect, it, vi } from 'vitest';
+
 import { EmojiLog } from './emoji-log.js';
 
 it('create emoji', async () => {

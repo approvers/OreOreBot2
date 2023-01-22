@@ -1,5 +1,5 @@
-import type { MessageEvent, MessageEventResponder } from '../runner/message.js';
 import { EmojiSeqSet } from '../model/emoji-seq.js';
+import type { MessageEvent, MessageEventResponder } from '../runner/message.js';
 
 export interface EmojiSeqObservable {
   content: string;

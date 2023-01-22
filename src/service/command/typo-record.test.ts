@@ -1,17 +1,18 @@
-import { InMemoryTypoRepository, MockClock } from '../../adaptor/index.js';
-import {
-  TypoRecorder,
-  TypoReporter,
-  type TypoRepository
-} from './typo-record.js';
+import EventEmitter from 'node:events';
+
 import { addDays, setHours, setMinutes } from 'date-fns';
 import { afterAll, describe, expect, it, vi } from 'vitest';
 
-import EventEmitter from 'node:events';
-import { ScheduleRunner } from '../../runner/index.js';
-import type { Snowflake } from '../../model/id.js';
-import { createMockMessage } from './command-message.js';
+import { InMemoryTypoRepository, MockClock } from '../../adaptor/index.js';
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
+import type { Snowflake } from '../../model/id.js';
+import { ScheduleRunner } from '../../runner/index.js';
+import { createMockMessage } from './command-message.js';
+import {
+  type TypoRepository,
+  TypoRecorder,
+  TypoReporter
+} from './typo-record.js';
 
 class MockRepository extends EventEmitter implements TypoRepository {
   private db = new InMemoryTypoRepository();

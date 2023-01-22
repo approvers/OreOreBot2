@@ -1,4 +1,5 @@
 import { Differ } from 'difflib-ts';
+
 import type { MessageUpdateEventResponder } from '../runner/index.js';
 
 /**

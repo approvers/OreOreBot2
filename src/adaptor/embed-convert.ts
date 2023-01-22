@@ -1,4 +1,5 @@
 import { EmbedBuilder } from 'discord.js';
+
 import type { EmbedMessage } from '../model/embed-message.js';
 
 // はらちょのパーソナルカラー

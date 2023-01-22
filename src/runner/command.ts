@@ -1,9 +1,8 @@
+import type { Schema } from '../model/command-schema.js';
 import type {
   CommandMessage,
   CommandResponder
 } from '../service/command/command-message.js';
-
-import type { Schema } from '../model/command-schema.js';
 
 export type MessageCreateListener = (
   message: CommandMessage<Schema>

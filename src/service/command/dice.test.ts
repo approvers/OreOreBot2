@@ -1,8 +1,8 @@
-import { DiceCommand, DiceQueen } from './dice.js';
 import { describe, expect, it, vi } from 'vitest';
 
-import { createMockMessage } from './command-message.js';
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
+import { createMockMessage } from './command-message.js';
+import { DiceCommand, DiceQueen } from './dice.js';
 
 describe('dice', () => {
   const diceQueen: DiceQueen = {

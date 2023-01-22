@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+
 import { BoldItalicCopReporter } from './bold-italic-cop.js';
 
 describe('bold italic cop', () => {

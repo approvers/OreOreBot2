@@ -1,12 +1,11 @@
+import type { Schema } from '../../model/command-schema.js';
+import type { EmbedPage } from '../../model/embed-message.js';
+import type { CommandRunner } from '../../runner/command.js';
 import type {
   CommandMessage,
   CommandResponder,
   HelpInfo
 } from './command-message.js';
-
-import type { CommandRunner } from '../../runner/command.js';
-import type { EmbedPage } from '../../model/embed-message.js';
-import type { Schema } from '../../model/command-schema.js';
 
 const SCHEMA = {
   names: ['help', 'h'],

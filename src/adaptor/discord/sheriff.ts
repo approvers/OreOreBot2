@@ -1,6 +1,7 @@
 import { ChannelType, Client } from 'discord.js';
-import type { Sheriff } from '../../service/command/stfu.js';
+
 import type { Snowflake } from '../../model/id.js';
+import type { Sheriff } from '../../service/command/stfu.js';
 
 export class DiscordSheriff implements Sheriff {
   private queue: (() => void)[] = [];

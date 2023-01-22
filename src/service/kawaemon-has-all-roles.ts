@@ -1,5 +1,5 @@
-import type { RoleEvent, RoleEventResponder } from '../runner/index.js';
 import type { Snowflake } from '../model/id.js';
+import type { RoleEvent, RoleEventResponder } from '../runner/index.js';
 import type { StandardOutput } from './output.js';
 
 export interface NewRole {

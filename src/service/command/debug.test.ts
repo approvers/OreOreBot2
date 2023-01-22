@@ -1,9 +1,9 @@
-import { DebugCommand, MessageRepository } from './debug.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
+import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 import type { Snowflake } from '../../model/id.js';
 import { createMockMessage } from './command-message.js';
-import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
+import { DebugCommand, MessageRepository } from './debug.js';
 
 describe('debug', () => {
   afterEach(() => {

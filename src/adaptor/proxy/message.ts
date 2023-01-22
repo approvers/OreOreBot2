@@ -1,9 +1,10 @@
+import type { Client } from 'discord.js';
+
 import type {
   MessageEventProvider,
   MessageUpdateEventProvider
 } from '../../runner/index.js';
 import type { Middleware, RawMessage } from './middleware.js';
-import type { Client } from 'discord.js';
 
 export type MessageHandler<M> = (message: M) => Promise<void>;
 
