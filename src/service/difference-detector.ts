@@ -1,4 +1,4 @@
-import { Differ } from 'difflib-ts';
+import diff from 'fast-diff';
 
 import type { MessageUpdateEventResponder } from '../runner/index.js';
 
@@ -28,18 +28,26 @@ export interface EditingObservable {
 }
 
 const diffComposer = (before: string, after: string): string => {
-  const differ = new Differ();
-  const changes = differ.compare(before.split('\n'), after.split('\n'));
   let composed = '';
-  for (const change of changes) {
-    if (change.startsWith('-')) {
-      if (composed !== '') {
-        composed += '---------------------------------\n';
-      }
-      composed += `${change.trimEnd()}\n`;
+  const beforeLines: (string | undefined)[] = before.split('\n');
+  const afterLines: (string | undefined)[] = after.split('\n');
+  for (let i = 0; i < Math.max(beforeLines.length, afterLines.length); ++i) {
+    if (i != 0) {
+      composed += '\n';
     }
-    if (change.startsWith('+')) {
-      composed += `${change.trimEnd()}\n`;
+    const changes = diff(beforeLines[i] ?? '', afterLines[i] ?? '');
+    for (const [type, diff] of changes) {
+      switch (type) {
+        case -1:
+          composed += `~~${diff}~~`;
+          break;
+        case 0:
+          composed += diff;
+          break;
+        case 1:
+          composed += `*${diff}*`;
+          break;
+      }
     }
   }
   return composed;
@@ -57,8 +65,8 @@ export class DifferenceDetector
     if (composed === '') {
       return;
     }
-    await after.sendEphemeralToSameChannel(`見てたぞ
-\`\`\`diff
-${composed}\`\`\``);
+    await after.sendEphemeralToSameChannel(
+      `見てたぞ\n${composed}`.replaceAll('\n', '\n> ')
+    );
   }
 }

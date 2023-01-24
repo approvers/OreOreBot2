@@ -4,8 +4,8 @@ const takopiFlags = ['f'] as const;
 const takopiOptions = ['c'] as const;
 
 export const takopi: MemeTemplate<
-  typeof takopiFlags[number],
-  typeof takopiOptions[number]
+  (typeof takopiFlags)[number],
+  (typeof takopiOptions)[number]
 > = {
   commandNames: ['takopi'],
   description:

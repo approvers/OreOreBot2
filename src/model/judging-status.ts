@@ -9,7 +9,7 @@ export const judgingStatuses = [
   'AC'
 ] as const;
 
-export type JudgingStatus = typeof judgingStatuses[number];
+export type JudgingStatus = (typeof judgingStatuses)[number];
 
 export function isJudgingStatus(str: string): str is JudgingStatus {
   return (judgingStatuses as readonly string[]).includes(str);
