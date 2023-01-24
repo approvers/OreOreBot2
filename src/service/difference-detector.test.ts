@@ -105,10 +105,10 @@ wow`,
       sendEphemeralToSameChannel: (message) => {
         expect(message).toEqual(`見てたぞ
 > waw
-> w~~iw~~
-> ~~w~~uw
-> w~~ew~~
-> ~~w~~ow`);
+> w~~i~~*u*w
+> w~~u~~*o*w
+> ~~wew~~
+> ~~wow~~`);
         return Promise.resolve();
       }
     }
