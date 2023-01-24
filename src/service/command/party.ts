@@ -25,7 +25,7 @@ const assetKeys = [
   'POTATO'
 ] as const;
 
-export type AssetKey = typeof assetKeys[number];
+export type AssetKey = (typeof assetKeys)[number];
 
 export interface RandomGenerator {
   /**

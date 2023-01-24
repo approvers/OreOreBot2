@@ -2,7 +2,7 @@ import type { MemeTemplate } from '../../../model/meme-template.js';
 
 const ojaruFlags = ['g'] as const;
 
-export const ojaru: MemeTemplate<typeof ojaruFlags[number], never> = {
+export const ojaru: MemeTemplate<(typeof ojaruFlags)[number], never> = {
   commandNames: ['ojaru'],
   description:
     'あっぱれおじゃる様！見事ミーム構文を使いこなされました！`-g`オプションを使用なさってデンボの口調の変更も可能でございます！',
