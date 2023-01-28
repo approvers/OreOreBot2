@@ -18,6 +18,8 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+# 変更されたファイル名の中にアスタリスクが含まれていたら拒否する
+
 name: Invalid character checker for NTFS
 on:
   - pull_request
