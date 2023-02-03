@@ -63,7 +63,7 @@
 
 # R - Renovate
 
-- name: 'R-Update(Docker)'
+- name: 'R-Update(docker)'
   description: 'Renovate: update docker-image'
   color: '4d68b3'
 - name: 'R-Update(gh-actions)'
