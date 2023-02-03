@@ -37,13 +37,10 @@
 
 # N - Needs
 - name: 'N-Discussion'
-  description: 'Needs: Discussion - Discussion is needed'
+  description: 'Needs: Discussion is needed'
   color: 'ff2929'
 - name: 'N-More information'
-  description: 'Needs: More information - Additional information is required.'
-  color: 'ff2929'
-- name: 'N-Needs specific case'
-  description: 'Needs: Meets specific case'
+  description: 'Needs: Additional information is required'
   color: 'ff2929'
 
 # S - Status
@@ -55,13 +52,13 @@
   description: 'Status: This Issue is invalid'
   color: 'fcee6f'
 - name: 'S-Wrong'
-  description: 'Status: This Issue is wrong.'
+  description: 'Status: This Issue is wrong'
   color: 'fcee6f'
 - name: 'S-Wontfix'
   description: 'Status: This Issue is not supported'
   color: 'fcee6f'
 - name: 'S-confirmation'
-  description: 'Status: Needs to be verified by reviewer.'
+  description: 'Status: Needs to be verified by reviewer'
   color: 'fcee6f'
 
 # R - Renovate
