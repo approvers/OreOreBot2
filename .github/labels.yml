@@ -29,32 +29,6 @@
   description: 'Priority: High'
   color: 'f79d6d'
 
-# N - Needs
-- name: 'N-Discussion'
-  description: 'Needs: Discussion is needed'
-  color: 'ff2929'
-- name: 'N-More information'
-  description: 'Needs: Additional information is required'
-  color: 'ff2929'
-
-# S - Status
-
-- name: 'S-Duplicate'
-  description: 'Status: This Issue is a duplicate'
-  color: 'fcee6f'
-- name: 'S-Invalid'
-  description: 'Status: This Issue is invalid'
-  color: 'fcee6f'
-- name: 'S-Wrong'
-  description: 'Status: This Issue is wrong'
-  color: 'fcee6f'
-- name: 'S-Wontfix'
-  description: 'Status: This Issue is not supported'
-  color: 'fcee6f'
-- name: 'S-confirmation'
-  description: 'Status: Needs to be verified by reviewer'
-  color: 'fcee6f'
-
 # R - Renovate
 
 - name: 'R-Update(docker)'
