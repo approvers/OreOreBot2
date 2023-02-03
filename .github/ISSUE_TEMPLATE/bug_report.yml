@@ -1,6 +1,6 @@
 name: バグ報告
 description: OreOreBot2のバグを報告する
-labels: ["bug"]
+labels: ["C-bug"]
 body:
   - type: markdown
     attributes:
