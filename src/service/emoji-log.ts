@@ -1,9 +1,10 @@
+import type { Snowflake } from '../model/id.js';
 import type { EmojiEventResponder, RoleEvent } from '../runner/index.js';
 import type { StandardOutput } from './output.js';
 
 export interface EmojiData {
   emoji: string;
-  emojiAuthorId: string | undefined;
+  emojiAuthorId: Snowflake;
 }
 
 export class EmojiLog implements EmojiEventResponder<EmojiData> {
