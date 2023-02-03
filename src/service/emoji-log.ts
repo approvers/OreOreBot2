@@ -1,5 +1,5 @@
 import type { Snowflake } from '../model/id.js';
-import type { EmojiEventResponder, RoleEvent } from '../runner/index.js';
+import type { EmojiEvent, EmojiEventResponder } from '../runner/index.js';
 import type { StandardOutput } from './output.js';
 
 export interface EmojiData {
@@ -9,7 +9,7 @@ export interface EmojiData {
 
 export class EmojiLog implements EmojiEventResponder<EmojiData> {
   constructor(private readonly output: StandardOutput) {}
-  async on(event: RoleEvent, role: EmojiData): Promise<void> {
+  async on(event: EmojiEvent, role: EmojiData): Promise<void> {
     if (event !== 'CREATE') {
       return;
     }
