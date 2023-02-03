@@ -28,12 +28,6 @@
 - name: 'P-high'
   description: 'Priority: High'
   color: 'f79d6d'
-- name: 'P-medium'
-  description: 'Priority: Medium'
-  color: 'f79d6d'
-- name: 'P-low'
-  description: 'Priority: Low'
-  color: 'f79d6d'
 
 # N - Needs
 - name: 'N-Discussion'
