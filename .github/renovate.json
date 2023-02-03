@@ -14,15 +14,15 @@
   "packageRules": [
     {
       "matchDatasources": ["npm"],
-      "labels": ["renovate: update(npm)"]
+      "labels": ["R-Update(npm)"]
     },
     {
       "matchDatasources": ["github-actions"],
-      "labels": ["renovate: update(gh-actions)"]
+      "labels": ["R-Update(gh-actions)"]
     },
     {
       "matchDatasources": ["dockerfile", "docker-compose"],
-      "labels": ["renovate: update(docker)"]
+      "labels": ["R-Update(Docker)"]
     }
   ],
   "npm": {
@@ -31,7 +31,7 @@
   "vulnerabilityAlerts": {
     "enabled": true,
     "automerge": true,
-    "labels": ["security"],
+    "labels": ["C-security"],
     "assignees": [
       "m2en", "MikuroXina"
     ]

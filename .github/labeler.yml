@@ -1,2 +1,2 @@
-workflow (gh-actions):
+C-GitHub Actions:
   - .github/workflows/*.yml
