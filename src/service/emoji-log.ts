@@ -9,22 +9,25 @@ export interface EmojiData {
 
 export class EmojiLog implements EmojiEventResponder<EmojiData> {
   constructor(private readonly output: StandardOutput) {}
-  async on(event: EmojiEvent, role: EmojiData): Promise<void> {
+  async on(
+    event: EmojiEvent,
+    { emoji, emojiAuthorId }: EmojiData
+  ): Promise<void> {
     if (event !== 'CREATE') {
       return;
     }
 
-    if (role.emojiAuthorId == undefined) {
+    if (emojiAuthorId == undefined) {
       await this.output.sendEmbed({
         title: '絵文字警察',
-        description: `誰かが ${role.emoji} を作成しました`
+        description: `誰かが ${emoji} を作成しました`
       });
       return;
     }
 
     await this.output.sendEmbed({
       title: '絵文字警察',
-      description: `<@${role.emojiAuthorId}> が ${role.emoji} を作成しました`
+      description: `<@${emojiAuthorId}> が ${emoji} を作成しました`
     });
   }
 }
