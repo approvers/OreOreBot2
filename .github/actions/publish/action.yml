@@ -25,7 +25,6 @@ runs:
       uses: docker/metadata-action@v4
       with:
         images: |
-          approvers/oreorebot2
           ghcr.io/approvers/oreorebot2
         tags: |
           type=schedule
