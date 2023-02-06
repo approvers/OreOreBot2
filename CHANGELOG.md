@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.35.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.34.0...oreorebot2-v1.35.0) (2023-02-06)
+
+
+### Features
+
+* メッセージの変更差分の改善 ([#669](https://github.com/approvers/OreOreBot2/issues/669)) ([e3950be](https://github.com/approvers/OreOreBot2/commit/e3950bebd5693848fa5798fc2ff64cf74f5b069b))
+
+
+### Bug Fixes
+
+* break embed links displayed in `!version` ([#687](https://github.com/approvers/OreOreBot2/issues/687)) ([8cf8bc1](https://github.com/approvers/OreOreBot2/commit/8cf8bc16b4b71c76807b3ad84d0db41e529368a5))
+* 引数の型を EmojiEvent に修正 ([#700](https://github.com/approvers/OreOreBot2/issues/700)) ([bfc69ff](https://github.com/approvers/OreOreBot2/commit/bfc69ff09c4cc0491adfedbabd50386e30c18bf4))
+* 絵文字の作成者を取得するように修正 ([#699](https://github.com/approvers/OreOreBot2/issues/699)) ([800c6c1](https://github.com/approvers/OreOreBot2/commit/800c6c149c51c1338ba14bee2f62ed5e1db23fd3))
+
 ## [1.34.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.33.0...oreorebot2-v1.34.0) (2023-01-21)
 
 
