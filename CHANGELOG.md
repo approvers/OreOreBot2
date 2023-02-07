@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.36.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.35.0...oreorebot2-v1.36.0) (2023-02-07)
+
+
+### Features
+
+* コンピューターの天才、9つのC言語を操る のMEMEを追加 ([#712](https://github.com/approvers/OreOreBot2/issues/712)) ([861d42d](https://github.com/approvers/OreOreBot2/commit/861d42dec9aa0c42e4bb7e1a961fa24eb05c71de))
+* 首相の否定的な考えMEMEを追加 ([#713](https://github.com/approvers/OreOreBot2/issues/713)) ([d059bd5](https://github.com/approvers/OreOreBot2/commit/d059bd5a56a53dc16bded843ad3d143694062e94))
+
 ## [1.35.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.34.0...oreorebot2-v1.35.0) (2023-02-06)
 
 
