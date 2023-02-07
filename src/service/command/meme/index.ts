@@ -9,6 +9,7 @@ import { n } from './n.js';
 import { nigetane } from './nigetane.js';
 import { nine } from './nine.js';
 import { ojaru } from './ojaru.js';
+import { syakai } from './syakai.js';
 import { takopi } from './takopi.js';
 import { tsureteike } from './tsureteike.js';
 import { web3 } from './web3.js';
@@ -27,5 +28,6 @@ export const memes = [
   ojaru,
   nine,
   tsureteike,
+  syakai,
   clang
 ];
