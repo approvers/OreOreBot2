@@ -1,4 +1,4 @@
-import { cLang } from './c-lang.js';
+import { clang } from './clang.js';
 import { dousurya } from './dousurya.js';
 import { hukueki } from './hukueki.js';
 import { kenjou } from './kenjou.js';
@@ -27,5 +27,5 @@ export const memes = [
   ojaru,
   nine,
   tsureteike,
-  cLang
+  clang
 ];

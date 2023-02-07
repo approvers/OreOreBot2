@@ -1,6 +1,6 @@
 import type { MemeTemplate } from '../../../model/meme-template.js';
 
-export const cLang: MemeTemplate<never, never> = {
+export const clang: MemeTemplate<never, never> = {
   commandNames: ['clang', 'c'],
   description: '〜の天才\n9つの〜を操る',
   flagsKeys: [],
