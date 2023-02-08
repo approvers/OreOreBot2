@@ -14,15 +14,15 @@ RUN apt-get update \
 COPY .yarn/releases/ ./.yarn/releases/
 COPY package.json yarn.lock .yarnrc.yml ./
 
-RUN yarn install --immutable
+RUN npx --quiet pinst --disable \
+    && yarn install --immutable \
+    && yarn cache clean
 
 COPY . .
 RUN yarn build
 
 WORKDIR /build
-RUN cp -r /src/{build,assets,package.json,yarn.lock} . \
-    && yarn install --immutable --production=true
-
+RUN cp -r /src/{build,assets,package.json,yarn.lock} .
 
 FROM ubuntu:jammy-20221130
 COPY --from=build /usr/local/include/ /usr/local/include/
