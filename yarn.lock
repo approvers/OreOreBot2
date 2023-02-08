@@ -2805,7 +2805,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:^8.0.0":
+"husky@npm:^8.0.2":
   version: 8.0.3
   resolution: "husky@npm:8.0.3"
   bin:
@@ -3989,7 +3989,7 @@ __metadata:
     eslint-plugin-markdown: ^3.0.0
     eslint-plugin-simple-import-sort: ^10.0.0
     fast-diff: ^1.2.0
-    husky: ^8.0.0
+    husky: ^8.0.2
     lint-staged: ^13.1.0
     make-dir-cli: ^3.0.0
     nanoid: ^4.0.0
