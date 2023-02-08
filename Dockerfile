@@ -14,7 +14,8 @@ RUN apt-get update \
 COPY .yarn/releases/ ./.yarn/releases/
 COPY package.json yarn.lock .yarnrc.yml ./
 
-RUN yarn install --immutable
+RUN npx --quiet pinst --disable \
+    && yarn install --immutable
 
 COPY . .
 RUN yarn build
