@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.36.1](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.36.0...oreorebot2-v1.36.1) (2023-02-08)
+
+
+### Bug Fixes
+
+* **dice:** ヘルプ内のクォートを修正 ([#720](https://github.com/approvers/OreOreBot2/issues/720)) ([5df0c29](https://github.com/approvers/OreOreBot2/commit/5df0c29eda7df163dcc6118b24f42e488b8f7c83))
+
 ## [1.36.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.35.0...oreorebot2-v1.36.0) (2023-02-07)
 
 
