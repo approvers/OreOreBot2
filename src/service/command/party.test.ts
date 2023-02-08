@@ -5,7 +5,7 @@ import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 import type { EmbedMessage } from '../../model/embed-message.js';
 import { ScheduleRunner } from '../../runner/index.js';
 import { createMockMessage } from './command-message.js';
-import { type AssetKey, PartyCommand,type RandomGenerator } from './party.js';
+import { type AssetKey, PartyCommand, type RandomGenerator } from './party.js';
 
 const random: RandomGenerator = {
   minutes: () => 42,

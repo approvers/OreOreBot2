@@ -6,7 +6,8 @@ import {
   ButtonStyle,
   Client,
   Message,
-  type MessageActionRowComponentBuilder} from 'discord.js';
+  type MessageActionRowComponentBuilder
+} from 'discord.js';
 
 import { makeError, Schema } from '../../model/command-schema.js';
 import type { EmbedPage } from '../../model/embed-message.js';

@@ -12,7 +12,8 @@ import {
   ChannelType,
   type Client,
   PermissionsBitField,
-  type VoiceBasedChannel} from 'discord.js';
+  type VoiceBasedChannel
+} from 'discord.js';
 
 import type { Snowflake } from '../../model/id.js';
 import type { VoiceRoomController } from '../../service/command/kaere.js';

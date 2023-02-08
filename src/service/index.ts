@@ -12,7 +12,8 @@ import {
 import {
   type TypoObservable,
   TypoRecorder,
-  type TypoRepository} from './command/typo-record.js';
+  type TypoRepository
+} from './command/typo-record.js';
 import {
   type DeletionObservable,
   DeletionRepeater

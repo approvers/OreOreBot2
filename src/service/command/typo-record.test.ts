@@ -11,7 +11,8 @@ import { createMockMessage } from './command-message.js';
 import {
   TypoRecorder,
   TypoReporter,
-  type TypoRepository} from './typo-record.js';
+  type TypoRepository
+} from './typo-record.js';
 
 class MockRepository extends EventEmitter implements TypoRepository {
   private db = new InMemoryTypoRepository();
