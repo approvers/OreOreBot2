@@ -46,9 +46,34 @@ export class ChannelInfo implements CommandResponder<typeof SCHEMA> {
     if (!baseStats) {
       await message.reply({
         title: '引数エラー',
-        description: '指定したIDのチャンネルが見つからないみたい……'
+        description: '指定したIDのチャンネルが見つからないみたい...'
       });
       return;
+    }
+
+    switch (baseStats.rawType) {
+      case 0:
+      case 4: {
+        // カテゴリーとテキストチャンネル
+        break;
+      }
+      case 2: {
+        // ボイスチャンネル
+        break;
+      }
+      case 11:
+      case 12: {
+        // スレッドチャンネル
+        break;
+      }
+      default: {
+        await message.reply({
+          title: '検索エラー',
+          description:
+            '指定したIDのチャンネルは私が把握できないタイプだったから調べられなかった...'
+        });
+        break;
+      }
     }
   }
 }
