@@ -1,12 +1,12 @@
 import {
+  ActionRowBuilder,
   type APIActionRowComponent,
   type APIMessageActionRowComponent,
-  type MessageActionRowComponentBuilder,
-  ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
   Client,
-  Message
+  Message,
+  type MessageActionRowComponentBuilder
 } from 'discord.js';
 
 import { makeError, Schema } from '../../model/command-schema.js';

@@ -9,9 +9,9 @@ import type { Snowflake } from '../../model/id.js';
 import { ScheduleRunner } from '../../runner/index.js';
 import { createMockMessage } from './command-message.js';
 import {
-  type TypoRepository,
   TypoRecorder,
-  TypoReporter
+  TypoReporter,
+  type TypoRepository
 } from './typo-record.js';
 
 class MockRepository extends EventEmitter implements TypoRepository {

@@ -11,8 +11,8 @@ import {
 } from './bold-italic-cop.js';
 import {
   type TypoObservable,
-  type TypoRepository,
-  TypoRecorder
+  TypoRecorder,
+  type TypoRepository
 } from './command/typo-record.js';
 import {
   type DeletionObservable,
