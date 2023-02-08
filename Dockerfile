@@ -15,7 +15,7 @@ COPY .yarn/releases/ ./.yarn/releases/
 COPY package.json yarn.lock .yarnrc.yml ./
 
 RUN npx --quiet pinst --disable \
-    && yarn install --immutable --production=true \
+    && yarn install --immutable \
     && yarn cache clean
 
 COPY . .
