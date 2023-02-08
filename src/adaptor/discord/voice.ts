@@ -1,18 +1,18 @@
 import {
   type AudioPlayer,
-  type VoiceConnection as RawVoiceConnection,
   AudioPlayerStatus,
   createAudioPlayer,
   createAudioResource,
   entersState,
   joinVoiceChannel,
+  type VoiceConnection as RawVoiceConnection,
   VoiceConnectionStatus
 } from '@discordjs/voice';
 import {
-  type Client,
-  type VoiceBasedChannel,
   ChannelType,
-  PermissionsBitField
+  type Client,
+  PermissionsBitField,
+  type VoiceBasedChannel
 } from 'discord.js';
 
 import type { Snowflake } from '../../model/id.js';

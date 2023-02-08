@@ -9,7 +9,7 @@ import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 import { ScheduleRunner } from '../../runner/index.js';
 import type { StandardOutput } from '../output.js';
 import { createMockMessage } from './command-message.js';
-import { type KaereMusicKey, KaereCommand } from './kaere.js';
+import { KaereCommand, type KaereMusicKey } from './kaere.js';
 
 it('use case of kaere', async () => {
   const fn = vi.fn();

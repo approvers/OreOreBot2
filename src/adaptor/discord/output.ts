@@ -1,4 +1,4 @@
-import { type Client, ChannelType } from 'discord.js';
+import { ChannelType, type Client } from 'discord.js';
 
 import type { EmbedMessage } from '../../model/embed-message.js';
 import type { StandardOutput } from '../../service/output.js';
