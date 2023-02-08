@@ -17,8 +17,8 @@
     "fix": "yarn run format && yarn run eslint:fix",
     "test": "vitest run",
     "coverage": "vitest run --coverage",
-    "prepare": "husky install",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "postinstall": "husky install"
   },
   "engines": {
     "node": ">=14.16"
@@ -55,7 +55,7 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-markdown": "^3.0.0",
     "eslint-plugin-simple-import-sort": "^9.0.0",
-    "husky": "^8.0.2",
+    "husky": "^8.0.0",
     "lint-staged": "^13.1.0",
     "make-dir-cli": "^3.0.0",
     "prettier": "^2.8.1",
