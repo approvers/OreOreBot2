@@ -35,6 +35,8 @@ export interface BaseChannelStats {
   id: Snowflake;
   url: string;
   type: ChannelType;
+  // numberで比較できるように
+  rawType: number;
   position: number; // チャンネルリスト上の位置
   manageable: boolean; // モデレーション操作可能か
   viewable: boolean;
