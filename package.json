@@ -17,8 +17,8 @@
     "fix": "yarn run format && yarn run eslint:fix",
     "test": "vitest run",
     "coverage": "vitest run --coverage",
-    "prepare": "husky install",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "postinstall": "husky install"
   },
   "engines": {
     "node": ">=14.16"
