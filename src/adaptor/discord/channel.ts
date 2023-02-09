@@ -16,7 +16,7 @@ const mappingChannelTypes: Record<GuildBasedChannel['type'], ChannelType> = {
   15: 'Forum'
 };
 
-export class DiscordChannelManager implements ChannelStatsRepository {
+export class DiscordChannelRepository implements ChannelStatsRepository {
   constructor(
     private readonly client: Client,
     private readonly guildId: Snowflake
