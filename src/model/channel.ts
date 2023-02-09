@@ -1,5 +1,3 @@
-import type { Snowflake } from './id.js';
-
 /**
  * 限界開発鯖はコミュニティサーバーではないので以下のチャンネルは2023-02-09現在利用できないため、個別のStatsは生やさない。
  * アナウンスチャンネル, アナウンスチャンネル(スレッド), ディレクトリチャンネル, フォーラムチャンネル, ステージチャンネル
@@ -32,11 +30,8 @@ export type ThreadAutoArchiveDuration = '1h' | '1d' | '3d' | '1w';
 export interface BaseChannelStats {
   name: string;
   createAt: Date;
-  id: Snowflake;
   url: string;
   type: ChannelType;
-  // numberで比較できるように
-  rawType: number;
   position: number; // チャンネルリスト上の位置
   manageable: boolean; // モデレーション操作可能か
   viewable: boolean;
