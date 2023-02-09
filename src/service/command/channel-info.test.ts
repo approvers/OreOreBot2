@@ -16,7 +16,7 @@ describe('ChannelInfo', () => {
         id === '101'
           ? {
               name: '無法地帯',
-              createAt: new Date(20200101),
+              createdAt: new Date(20200101),
               url: 'https://discord.com/channels/683939861539192860/690909527461199922',
               type: 'Text',
               administrable: true,
@@ -86,7 +86,7 @@ describe('ChannelInfo', () => {
 
     expect(fn).toHaveBeenCalledWith({
       title: '引数エラー',
-      description: '指定のIDのチャンネルが見つからないみたい...'
+      description: '指定したIDのチャンネルが見つからないみたい...'
     });
     expect(fetchStats).toHaveBeenCalledOnce();
   });

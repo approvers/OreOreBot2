@@ -81,7 +81,7 @@ export class ChannelInfo implements CommandResponder<typeof SCHEMA> {
 
     return {
       title: 'チャンネルの情報',
-      description: `司令官、頼まれていた <#${channelId}>の情報だよ`,
+      description: `司令官、頼まれていた <#${channelId}> の情報だよ`,
       fields
     };
   }
