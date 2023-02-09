@@ -22,7 +22,7 @@ COPY . .
 RUN yarn build
 
 WORKDIR /build
-RUN cp -r /src/{build,assets,package.json,yarn.lock} .
+RUN cp -r /src/{build,assets,package.json,yarn.lock,node_modules} .
 
 FROM ubuntu:jammy-20221130
 COPY --from=build /usr/local/include/ /usr/local/include/
