@@ -1,8 +1,4 @@
-import type {
-  BaseChannelStats,
-  ThreadChannelStats,
-  VoiceChannelStats
-} from '../../model/channel.js';
+import type { BaseChannelStats } from '../../model/channel.js';
 import { createTimestamp } from '../../model/create-timestamp.js';
 import type {
   CommandMessage,
@@ -11,11 +7,7 @@ import type {
 } from './command-message.js';
 
 export interface ChannelStatsRepository {
-  fetchBaseChannelStats(channelId: string): Promise<BaseChannelStats | null>;
-  fetchVoiceChannelStats(channelId: string): Promise<VoiceChannelStats | null>;
-  fetchThreadChannelStats(
-    channelId: string
-  ): Promise<ThreadChannelStats | null>;
+  fetchChanelStats(channelId: string): Promise<BaseChannelStats | null>;
 }
 
 const SCHEMA = {
@@ -43,8 +35,8 @@ export class ChannelInfo implements CommandResponder<typeof SCHEMA> {
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const [channelId] = message.args.params;
 
-    const baseStats = await this.repo.fetchBaseChannelStats(channelId);
-    if (!baseStats) {
+    const stats = await this.repo.fetchChanelStats(channelId);
+    if (!stats) {
       await message.reply({
         title: '引数エラー',
         description: '指定したIDのチャンネルが見つからないみたい...'
@@ -52,10 +44,10 @@ export class ChannelInfo implements CommandResponder<typeof SCHEMA> {
       return;
     }
 
-    await message.reply(this.buildBaseEmbed(baseStats, channelId));
+    await message.reply(this.buildEmbed(stats, channelId));
   }
 
-  private buildBaseEmbed(
+  private buildEmbed(
     {
       name,
       createAt,
