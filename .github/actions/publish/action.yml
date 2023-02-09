@@ -27,11 +27,11 @@ runs:
         images: |
           ghcr.io/approvers/oreorebot2
         tags: |
-          type=semver,pattern=v{{version}}
-          type=semver,pattern=v{{major}}.{{minor}}
-          type=semver,pattern=v{{major}}
+          v${{ inputs.major }}.${{ inputs.minor }}.${{ inputs.patch }}
+          v${{ inputs.major }}.${{ inputs.minor }}
+          v${{ inputs.major }}
+          ${{ inputs.sha }}
           type=raw,value=latest,enable={{is_default_branch}}
-          type=sha,format=long,prefix=
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
