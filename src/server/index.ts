@@ -174,7 +174,7 @@ if (features.includes('COMMAND')) {
     roleCreateRepo: roleManager,
     queen: new MathRandomGenerator(),
     stdout: output,
-    channelManager: channelManager
+    channelManager
   });
 }
 
