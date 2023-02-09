@@ -3,6 +3,7 @@ import type {
   ThreadChannelStats,
   VoiceChannelStats
 } from '../../model/channel.js';
+import { createTimestamp } from '../../model/create-timestamp.js';
 import type {
   CommandMessage,
   CommandResponder,
@@ -51,29 +52,63 @@ export class ChannelInfo implements CommandResponder<typeof SCHEMA> {
       return;
     }
 
-    switch (baseStats.rawType) {
-      case 0:
-      case 4: {
-        // カテゴリーとテキストチャンネル
-        break;
+    await message.reply(this.buildBaseEmbed(baseStats, channelId));
+  }
+
+  private buildBaseEmbed(
+    {
+      name,
+      createAt,
+      url,
+      type,
+      position,
+      manageable,
+      viewable
+    }: BaseChannelStats,
+    channelId: string
+  ) {
+    const fields = [
+      {
+        name: 'チャンネル名',
+        value: `[${name}](${url})`,
+        inline: true
+      },
+      {
+        name: 'チャンネルID',
+        value: `${channelId}`,
+        inline: true
+      },
+      {
+        name: 'チャンネルタイプ',
+        value: `${type}`,
+        inline: true
+      },
+      {
+        name: 'ポジション',
+        value: `${position}`,
+        inline: true
+      },
+      {
+        name: '管理可能か',
+        value: manageable ? '可能' : '不可能',
+        inline: true
+      },
+      {
+        name: '表示可能か',
+        value: viewable ? '可能' : '不可能',
+        inline: true
+      },
+      {
+        name: '作成日時',
+        value: createTimestamp(createAt),
+        inline: true
       }
-      case 2: {
-        // ボイスチャンネル
-        break;
-      }
-      case 11:
-      case 12: {
-        // スレッドチャンネル
-        break;
-      }
-      default: {
-        await message.reply({
-          title: '検索エラー',
-          description:
-            '指定したIDのチャンネルは私が把握できないタイプだったから調べられなかった...'
-        });
-        break;
-      }
-    }
+    ];
+
+    return {
+      title: 'チャンネルの情報',
+      description: `司令官、頼まれていた <#${channelId}>の情報だよ`,
+      fields
+    };
   }
 }
