@@ -29,7 +29,7 @@ export interface BaseChannelStats {
   createAt?: Date;
   url: string;
   type: ChannelType;
-  manageable: boolean; // モデレーション操作可能か
+  administrable: boolean;
   viewable: boolean;
 }
 
