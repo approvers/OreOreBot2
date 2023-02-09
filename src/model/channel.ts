@@ -26,7 +26,7 @@ export type ThreadAutoArchiveDuration = '1h' | '1d' | '3d' | '1w';
 // 全チャンネルタイプに対応したStats
 export interface BaseChannelStats {
   name: string;
-  createAt?: Date;
+  createdAt?: Date;
   url: string;
   type: ChannelType;
   administrable: boolean;
