@@ -1,14 +1,14 @@
 // 全チャンネルタイプ
 export type ChannelType =
-  | 'Text' // ID: 0
-  | 'Voice' // ID: 2
-  | 'Category' // ID: 4
-  | 'Announce' // ID: 5
-  | 'Announce(Thread)' // ID: 10
-  | 'Thread(Public)' // ID: 11
-  | 'Thread(Private)' // ID: 12
-  | 'Stage' // ID: 13
-  | 'Forum'; // ID: 15
+  | 'Text'
+  | 'Voice'
+  | 'Category'
+  | 'Announce'
+  | 'Announce(Thread)'
+  | 'Thread(Public)'
+  | 'Thread(Private)'
+  | 'Stage'
+  | 'Forum';
 
 // チャンネルが持つ詳細情報
 export interface ChannelStats {
