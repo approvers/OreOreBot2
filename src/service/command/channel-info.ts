@@ -7,7 +7,7 @@ import type {
 } from './command-message.js';
 
 export interface ChannelStatsRepository {
-  fetchChanelStats(channelId: string): Promise<BaseChannelStats | null>;
+  fetchStats(channelId: string): Promise<BaseChannelStats | null>;
 }
 
 const SCHEMA = {
@@ -35,7 +35,7 @@ export class ChannelInfo implements CommandResponder<typeof SCHEMA> {
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const [channelId] = message.args.params;
 
-    const stats = await this.repo.fetchChanelStats(channelId);
+    const stats = await this.repo.fetchStats(channelId);
     if (!stats) {
       await message.reply({
         title: '引数エラー',
@@ -48,15 +48,7 @@ export class ChannelInfo implements CommandResponder<typeof SCHEMA> {
   }
 
   private buildEmbed(
-    {
-      name,
-      createAt,
-      url,
-      type,
-      position,
-      manageable,
-      viewable
-    }: BaseChannelStats,
+    { name, createAt, url, type, manageable, viewable }: BaseChannelStats,
     channelId: string
   ) {
     const fields = [
@@ -73,11 +65,6 @@ export class ChannelInfo implements CommandResponder<typeof SCHEMA> {
       {
         name: 'チャンネルタイプ',
         value: `${type}`,
-        inline: true
-      },
-      {
-        name: 'ポジション',
-        value: `${position}`,
         inline: true
       },
       {

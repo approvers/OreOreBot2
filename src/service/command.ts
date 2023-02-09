@@ -1,6 +1,7 @@
 import type { Schema } from '../model/command-schema.js';
 import type { CommandRunner } from '../runner/command.js';
 import type { Clock, ScheduleRunner } from '../runner/schedule.js';
+import { ChannelInfo, ChannelStatsRepository } from './command/channel-info.js';
 import type { CommandResponder } from './command/command-message.js';
 import { DebugCommand, MessageRepository } from './command/debug.js';
 import { DiceCommand, DiceQueen } from './command/dice.js';
@@ -52,7 +53,8 @@ export const registerAllCommandResponder = ({
   guildRepo,
   roleCreateRepo,
   queen,
-  stdout
+  stdout,
+  channelManager
 }: {
   typoRepo: TypoRepository;
   reservationRepo: ReservationRepository;
@@ -74,6 +76,7 @@ export const registerAllCommandResponder = ({
   roleCreateRepo: RoleCreateManager;
   queen: DiceQueen;
   stdout: StandardOutput;
+  channelManager: ChannelStatsRepository;
 }) => {
   const allResponders = [
     new TypoReporter(typoRepo, clock, scheduleRunner),
@@ -103,7 +106,8 @@ export const registerAllCommandResponder = ({
     new UserInfo(userRepo),
     new GuildInfo(guildRepo),
     new RoleCreate(roleCreateRepo),
-    new DiceCommand(queen)
+    new DiceCommand(queen),
+    new ChannelInfo(channelManager)
   ];
   for (const responder of allResponders) {
     commandRunner.addResponder(
