@@ -1,4 +1,4 @@
-import type { BaseChannelStats } from '../../model/channel.js';
+import type { ChannelStats } from '../../model/channel.js';
 import { createTimestamp } from '../../model/create-timestamp.js';
 import type {
   CommandMessage,
@@ -7,7 +7,7 @@ import type {
 } from './command-message.js';
 
 export interface ChannelStatsRepository {
-  fetchStats(channelId: string): Promise<BaseChannelStats | null>;
+  fetchStats(channelId: string): Promise<ChannelStats | null>;
 }
 
 const SCHEMA = {
@@ -48,7 +48,7 @@ export class ChannelInfo implements CommandResponder<typeof SCHEMA> {
   }
 
   private buildEmbed(
-    { name, createAt, url, type, manageable, viewable }: BaseChannelStats,
+    { name, createAt, url, type, manageable, viewable }: ChannelStats,
     channelId: string
   ) {
     const fields = [

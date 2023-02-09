@@ -1,6 +1,6 @@
 import type { Client, GuildBasedChannel } from 'discord.js';
 
-import type { BaseChannelStats, ChannelType } from '../../model/channel.js';
+import type { ChannelStats, ChannelType } from '../../model/channel.js';
 import type { Snowflake } from '../../model/id.js';
 import type { ChannelStatsRepository } from '../../service/command/channel-info.js';
 
@@ -22,7 +22,7 @@ export class DiscordChannelManager implements ChannelStatsRepository {
     private readonly guildId: Snowflake
   ) {}
 
-  async fetchStats(channelId: string): Promise<BaseChannelStats | null> {
+  async fetchStats(channelId: string): Promise<ChannelStats | null> {
     const guild = await this.client.guilds.fetch(this.guildId);
     if (!guild.available) {
       throw new Error('guild unavailable');

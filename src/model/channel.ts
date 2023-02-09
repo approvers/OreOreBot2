@@ -17,8 +17,8 @@ export type ChannelType =
   | 'ステージチャンネル' // ID: 13
   | 'フォーラムチャンネル'; // ID: 15
 
-// 全チャンネルタイプに対応したStats
-export interface BaseChannelStats {
+// チャンネルが持つ詳細情報
+export interface ChannelStats {
   name: string;
   createAt?: Date;
   url: string;
