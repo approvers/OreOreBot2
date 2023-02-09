@@ -7,15 +7,15 @@
 
 // channel#Channel-Types - https://discord.com/developers/docs/resources/channel#channel-object-channel-types
 export type ChannelType =
-  | 'テキストチャンネル' // ID: 0
-  | 'ボイスチャンネル' // ID: 2
-  | 'カテゴリー' // ID: 4
-  | 'アナウンスチャンネル' // ID: 5
-  | 'アナウンスチャンネル(スレッド)' // ID: 10
-  | '公開スレッド(パブリックスレッド)' // ID: 11
-  | '非公開スレッド(プライベートスレッド)' // ID: 12
-  | 'ステージチャンネル' // ID: 13
-  | 'フォーラムチャンネル'; // ID: 15
+  | 'Text' // ID: 0
+  | 'Voice' // ID: 2
+  | 'Category' // ID: 4
+  | 'Announce' // ID: 5
+  | 'Announce(Thread)' // ID: 10
+  | 'Thread(Public)' // ID: 11
+  | 'Thread(Private)' // ID: 12
+  | 'Stage' // ID: 13
+  | 'Forum'; // ID: 15
 
 // チャンネルが持つ詳細情報
 export interface ChannelStats {

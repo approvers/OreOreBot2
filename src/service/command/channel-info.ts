@@ -48,7 +48,7 @@ export class ChannelInfo implements CommandResponder<typeof SCHEMA> {
   }
 
   private buildEmbed(
-    { name, createAt, url, type, manageable, viewable }: ChannelStats,
+    { name, createdAt, url, type, administrable, viewable }: ChannelStats,
     channelId: string
   ) {
     const fields = [
@@ -64,7 +64,7 @@ export class ChannelInfo implements CommandResponder<typeof SCHEMA> {
       },
       {
         name: '管理可能か',
-        value: manageable ? '可能' : '不可能',
+        value: administrable ? '可能' : '不可能',
         inline: true
       },
       {
@@ -74,7 +74,7 @@ export class ChannelInfo implements CommandResponder<typeof SCHEMA> {
       },
       {
         name: '作成日時',
-        value: createTimestamp(createAt),
+        value: createTimestamp(createdAt),
         inline: true
       }
     ];

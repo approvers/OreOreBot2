@@ -5,15 +5,15 @@ import type { Snowflake } from '../../model/id.js';
 import type { ChannelStatsRepository } from '../../service/command/channel-info.js';
 
 const mappingChannelTypes: Record<GuildBasedChannel['type'], ChannelType> = {
-  0: 'テキストチャンネル',
-  2: 'ボイスチャンネル',
-  4: 'カテゴリー',
-  5: 'アナウンスチャンネル',
-  10: 'アナウンスチャンネル(スレッド)',
-  11: '公開スレッド(パブリックスレッド)',
-  12: '非公開スレッド(プライベートスレッド)',
-  13: 'ステージチャンネル',
-  15: 'フォーラムチャンネル'
+  0: 'Text',
+  2: 'Voice',
+  4: 'Category',
+  5: 'Announce',
+  10: 'Announce(Thread)',
+  11: 'Thread(Public)',
+  12: 'Thread(Private)',
+  13: 'Stage',
+  15: 'Forum'
 };
 
 export class DiscordChannelManager implements ChannelStatsRepository {
@@ -35,10 +35,10 @@ export class DiscordChannelManager implements ChannelStatsRepository {
 
     return {
       name: channel.name,
-      createAt: channel.createdAt ?? undefined,
+      createdAt: channel.createdAt ?? undefined,
       url: channel.url,
       type: mappingChannelTypes[channel.type],
-      manageable: channel.manageable,
+      administrable: channel.manageable,
       viewable: channel.viewable
     };
   }
