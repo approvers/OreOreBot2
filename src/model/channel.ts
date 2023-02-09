@@ -20,9 +20,9 @@ export type ChannelType =
 // チャンネルが持つ詳細情報
 export interface ChannelStats {
   name: string;
-  createAt?: Date;
+  createdAt?: Date;
   url: string;
   type: ChannelType;
-  manageable: boolean; // モデレーション操作可能か
+  administrable: boolean;
   viewable: boolean;
 }
