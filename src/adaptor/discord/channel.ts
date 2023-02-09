@@ -35,7 +35,7 @@ export class DiscordChannelManager implements ChannelStatsRepository {
 
     return {
       name: channel.name,
-      createAt: channel.createdAt,
+      createAt: channel.createdAt ?? undefined,
       url: channel.url,
       type: mappingChannelTypes[channel.type],
       manageable: channel.manageable,

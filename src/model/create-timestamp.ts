@@ -1,4 +1,4 @@
-export function createTimestamp(targetDate: Date | null | undefined) {
+export function createTimestamp(targetDate: Date | undefined) {
   if (!targetDate) {
     return '情報なし';
   }
