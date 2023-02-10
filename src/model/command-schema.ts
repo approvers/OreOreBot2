@@ -5,9 +5,6 @@ export interface ParamBase {
 
 /**
  * 真偽値の引数のスキーマ。`defaultValue` が未定義ならば必須の引数になる。
- *
- * @export
- * @interface BooleanParam
  */
 export interface BooleanParam extends ParamBase {
   type: 'BOOLEAN';
@@ -18,9 +15,6 @@ export interface BooleanParam extends ParamBase {
  * 文字列の引数のスキーマ。`defaultValue` が未定義ならば必須の引数になる。
  *
  * `minLength` や `maxLength` で文字列長の最小値と最大値を指定できる。長さが指定された範囲の外ならばパースに失敗する。
- *
- * @export
- * @interface StringParam
  */
 export interface StringParam extends ParamBase {
   type: 'STRING';
@@ -31,9 +25,6 @@ export interface StringParam extends ParamBase {
 
 /**
  * ユーザなどの ID の引数のスキーマ。`defaultValue` が未定義ならば必須の引数になる。
- *
- * @export
- * @interface SnowflakeParam
  */
 export interface SnowflakeParam extends ParamBase {
   type: 'USER' | 'CHANNEL' | 'ROLE' | 'MESSAGE';
@@ -46,9 +37,6 @@ export interface SnowflakeParam extends ParamBase {
  * `type` が `INTEGER` のとき、数字以外を含む文字列ならばパースに失敗する。
  *
  * `minLength` や `maxLength` で数値の最小値と最大値を指定できる。長さが指定された範囲の外ならばパースに失敗する。
- *
- * @export
- * @interface NumberParam
  */
 export interface NumberParam extends ParamBase {
   type: 'INTEGER' | 'FLOAT';
@@ -61,9 +49,6 @@ export interface NumberParam extends ParamBase {
  * 選択式の引数のスキーマ。`defaultValue` が未定義ならば必須の引数になる。パース結果は、対応する `choices` 内の文字列のインデックスである。
  *
  * `choices` の中に存在しない文字列ならばパースに失敗する。
- *
- * @export
- * @interface ChoicesParam
  */
 export interface ChoicesParam extends ParamBase {
   type: 'CHOICES';
@@ -73,9 +58,6 @@ export interface ChoicesParam extends ParamBase {
 
 /**
  * 可変長引数のスキーマ。`defaultValue` が未定義ならば必須の引数になる。引数リストの中では一番最後の位置にのみ置ける。
- *
- * @export
- * @interface ChoicesParam
  */
 export interface VariadicParam extends ParamBase {
   type: 'VARIADIC';
@@ -93,9 +75,7 @@ export type ParamType = Param['type'];
 /**
  * 引数のスキーマ `P` に対応するパース結果の型を返す。
  *
- * @export
- * @typedef ParamValue
- * @template P 引数のスキーマの型
+ * @typeParam P - 引数のスキーマの型
  */
 export type ParamValue<P extends Param> = P extends BooleanParam
   ? boolean
@@ -124,9 +104,6 @@ export type ParamsValues<S> = Equal<S, readonly Param[]> extends true
  * コマンドの中で分岐する細かいサブコマンド。
  *
  * `params` は引数を受け取る順番で並べたスキーマの配列で指定する。必須の引数は他のどの任意の引数よりも前に登場しなければならない。可変長引数は最後にのみ登場しなければならない。
- *
- * @export
- * @interface SubCommand
  */
 export interface SubCommand {
   type: 'SUB_COMMAND';
@@ -165,9 +142,6 @@ export type SubCommandEntries = Record<string, SubCommand | SubCommandGroup>;
 
 /**
  * サブコマンドが属するグループ。これ単体ではコマンドとして実行できない。
- *
- * @export
- * @interface SubCommandGroup
  */
 export interface SubCommandGroup {
   type: 'SUB_COMMAND_GROUP';
@@ -178,9 +152,6 @@ export interface SubCommandGroup {
  * コマンドの引数のスキーマ。
  *
  * `names` はこのコマンド実行に利用可能な全てのコマンド名、`subCommands` はこの配下にあるサブコマンドである。
- *
- * @export
- * @interface Schema
  */
 export interface Schema {
   names: readonly string[];
@@ -191,9 +162,7 @@ export interface Schema {
 /**
  * コマンドのスキーマ `S` に対応するパース結果の型を返す。
  *
- * @export
- * @typedef ParsedSchema
- * @template S コマンドスキーマの型
+ * @typeParam S - コマンドスキーマの型
  */
 export type ParsedSchema<S extends Schema> = {
   name: S['names'][number];
@@ -204,9 +173,7 @@ export type ParsedSchema<S extends Schema> = {
 /**
  * コマンドのスキーマ `S` の引数のみに対応するパース結果の型を返す。
  *
- * @export
- * @typedef ParsedParameter
- * @template S コマンドスキーマの型
+ * @typeParam S - コマンドスキーマの型
  */
 export type ParsedParameter<S> = S extends SubCommand
   ? {
@@ -225,9 +192,7 @@ export type HasSubCommand = Schema | SubCommandGroup;
 /**
  * コマンドのスキーマ `S` のサブコマンドのみに対応するパース結果の型を返す。
  *
- * @export
- * @typedef ParsedParameter
- * @template S コマンドスキーマの型
+ * @typeParam S - コマンドスキーマの型
  */
 export type ParsedSubCommand<E> = {
   [K in keyof E]: {
@@ -245,9 +210,6 @@ export type SubCommands<S> = S extends { subCommands: SubCommandEntries }
 
 /**
  * パース結果のエラーを表す型。
- *
- * @export
- * @typedef ParseError
  */
 export type ParseError =
   | [type: 'INVALID_DATA', expected: ParamType, but: unknown]

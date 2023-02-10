@@ -6,17 +6,14 @@ import type {
 } from './command-message.js';
 
 /**
- * 'SheriffCommandのための削除機能。
- *
- * @export
- * @interface Sheriff
+ * `SheriffCommand` のための削除機能。
  */
 export interface Sheriff {
   /**
    * 'channel' 内の 'historyRange' 件のメッセージ中の自身のメッセージを削除する。
    *
-   * @param {Snowflake} channel
-   * @param {number} historyRange
+   * @param channel - 削除するメッセージを探すチャンネルの ID
+   * @param historyRange - 履歴の最新から削除する件数
    */
   executeMessage(channel: Snowflake, historyRange: number): Promise<void>;
 }
@@ -38,11 +35,7 @@ const SCHEMA = {
 } as const;
 
 /**
- * 'sftu' コマンドではらちょの直近のメッセージを削除する・
- *
- * @export
- * @class Sheriff
- *
+ * 'sftu' コマンドではらちょの直近のメッセージを削除する。
  */
 export class SheriffCommand implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {

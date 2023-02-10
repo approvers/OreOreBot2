@@ -12,26 +12,21 @@ import type {
 
 /**
  * `JudgingCommand` のための乱数生成器。
- *
- * @export
- * @interface RandomGenerator
  */
 export interface RandomGenerator {
   /**
    * ランダムに少しの間だけ待ってから解決する `Promise` を返す。
    *
-   * @returns {Promise<void>}
-   * @memberof RandomGenerator
+   * @returns ランダムな経過時間後に解決される `Promise`
    */
   sleep(): Promise<void>;
 
   /**
    * `from` 以上 `to` 未満の一様にランダムな整数を返す。
    *
-   * @param {number} from
-   * @param {number} to
-   * @returns {number}
-   * @memberof RandomGenerator
+   * @param from - 生成する乱数の下限 (同じ数値を含む)
+   * @param to - 生成する乱数の上限 (同じ数値を含まない)
+   * @returns 生成した乱数
    */
   uniform(from: number, to: number): number;
 }
@@ -67,10 +62,6 @@ const SCHEMA = {
 
 /**
  * `judge` コマンドで競技プログラミングの判定をシミュレートする。
- *
- * @export
- * @class JudgingCommand
- * @implements {MessageEventResponder<CommandMessage>}
  */
 export class JudgingCommand implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {

@@ -31,19 +31,20 @@ export interface RandomGenerator {
   /**
    * 0 以上 59 以下の乱数を生成する。
    *
-   * @return {*}  {number}
-   * @memberof RandomMinutes
+   * @returns 生成した乱数
    */
   minutes(): number;
 
   /**
    * `array` からランダムな一要素を取り出す。
    *
-   * @template T
-   * @param {readonly} array
-   * @param {*} T[]
-   * @return {*} {T}
-   * @memberof RandomGenerator
+   * @typeParam T - リストの型
+   * @param array - 取り出す対象のリスト
+   * @returns `array` から取り出した 1 つの要素
+   *
+   * @remarks
+   *
+   * `array` の長さは `1` 以上でなければならない。さもなくば `T` 型の値が返ることは保証されない。
    */
   pick<T>(array: readonly T[]): T;
 }
@@ -88,10 +89,6 @@ const SCHEMA = {
 
 /**
  * `party` コマンドで押し掛けPartyする機能。
- *
- * @export
- * @class PartyCommand
- * @implements {MessageEventResponder<CommandMessage>}
  */
 export class PartyCommand implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {

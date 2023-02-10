@@ -4,25 +4,18 @@ import type { MessageUpdateEventResponder } from '../runner/index.js';
 
 /**
  * 監視するメッセージの抽象。
- *
- * @export
- * @interface Observable
  */
 export interface EditingObservable {
   /**
    * メッセージの文章。
-   *
-   * @type {string}
-   * @memberof Observable
    */
   readonly content: string;
 
   /**
    * すぐ消えてしまう `message` のメッセージをこのメッセージと同じチャンネルに送信する。
    *
-   * @param {string} message
-   * @returns {Promise}
-   * @memberof Observable
+   * @param message - 送信するメッセージのテキスト
+   * @returns 送信に成功すると解決される `Promise`
    */
   sendEphemeralToSameChannel(message: string): Promise<void>;
 }

@@ -10,10 +10,6 @@ export type MessageHandler<M> = (message: M) => Promise<void>;
 
 /**
  * `Message` を受け渡す場合の `MessageEventProvider` を実装したクラス。
- *
- * @export
- * @class MessageProxy
- * @implements {MessageEventProvider<Message>}
  */
 export class MessageProxy<M> implements MessageEventProvider<M> {
   constructor(

@@ -7,11 +7,9 @@ export type VoiceRoomEvent =
   | 'UNDEAFEN';
 
 /**
- * `VoiceRoomResponseRunner` に登録する機能が実装するインターフェイス。`V` には discord.js の `VoiceState` などが入る。
+ * `VoiceRoomResponseRunner` に登録する機能が実装するインターフェイス。
  *
- * @export
- * @interface VoiceRoomEventResponder
- * @template V
+ * @typeParam V - ボイスチャンネルに関する伝播したい情報。discord.js の `VoiceState` など。
  */
 export interface VoiceRoomEventResponder<V> {
   on(event: VoiceRoomEvent, voiceState: V): Promise<void>;
@@ -20,9 +18,7 @@ export interface VoiceRoomEventResponder<V> {
 /**
  * `VoiceRoomResponseRunner` のためにボイスチャンネルに関するイベントハンドラの登録手段を提供する。
  *
- * @export
- * @interface VoiceRoomEventProvider
- * @template V
+ * @typeParam V - ボイスチャンネルに関する伝播したい情報。discord.js の `VoiceState` など。
  */
 export interface VoiceRoomEventProvider<V> {
   onJoin(handler: (voiceState: V) => Promise<void>): void;
@@ -36,9 +32,7 @@ export interface VoiceRoomEventProvider<V> {
 /**
  * ボイスチャンネルの変化に反応するタイプの機能を登録すると、`VoiceRoomEventProvider` からのイベントを `VoiceRoomEvent` 付きの形式に変換し、それに渡して実行する。
  *
- * @export
- * @class VoiceRoomResponseRunner
- * @template V
+ * @typeParam V - ボイスチャンネルに関する伝播したい情報。discord.js の `VoiceState` など。
  */
 export class VoiceRoomResponseRunner<V> {
   constructor(provider: VoiceRoomEventProvider<V>) {

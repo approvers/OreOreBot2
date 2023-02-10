@@ -23,8 +23,8 @@ export class ReservationTime {
   /**
    * `HH:MM` 形式の文字列をパースして `ReservationTime` を作成する。
    *
-   * @param hoursMinutes `HH:MM` 形式の文字列
-   * @returns {ReservationTime | null} パースした結果の `ReservationTime`、失敗した場合は null
+   * @param hoursMinutes - `HH:MM` 形式の文字列
+   * @returns パースした結果の `ReservationTime`、失敗した場合は null
    */
   static fromHoursMinutes(hoursMinutes: string): ReservationTime | null {
     const result = hoursMinutesRegex.exec(hoursMinutes);
@@ -43,7 +43,7 @@ export class ReservationTime {
   /**
    * 時刻を日本語の形式の文字列に変換する。
    *
-   * @returns {`午前${string}時${string}分` | `午後${string}時${string}分`}
+   * @returns `午前{HH}時{MM}分` または `午後{HH}時{MM}分` の形式の文字列。`HH` は 0 以上 12 未満になる。
    */
   intoJapanese(): `午前${string}時${string}分` | `午後${string}時${string}分` {
     if (this.hours < 12) {
