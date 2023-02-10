@@ -4,6 +4,7 @@ import { generateDependencyReport } from '@discordjs/voice';
 import { Client, GatewayIntentBits, version } from 'discord.js';
 import dotenv from 'dotenv';
 
+import { DiscordChannelRepository } from '../adaptor/discord/channel.js';
 import { DiscordMemberStats } from '../adaptor/discord/member-stats.js';
 import { DiscordMessageRepository } from '../adaptor/discord/message-repo.js';
 import { DiscordRoleManager } from '../adaptor/discord/role.js';
@@ -136,6 +137,11 @@ const output = new DiscordOutput(client, mainChannelId);
 const KAWAEMON_ID = '391857452360007680' as Snowflake;
 const roleManager = new DiscordRoleManager(client, GUILD_ID as Snowflake);
 
+const channelRepository = new DiscordChannelRepository(
+  client,
+  GUILD_ID as Snowflake
+);
+
 if (features.includes('COMMAND')) {
   registerAllCommandResponder({
     typoRepo,
@@ -167,7 +173,8 @@ if (features.includes('COMMAND')) {
     guildRepo: stats,
     roleCreateRepo: roleManager,
     queen: new MathRandomGenerator(),
-    stdout: output
+    stdout: output,
+    channelRepository
   });
 }
 
