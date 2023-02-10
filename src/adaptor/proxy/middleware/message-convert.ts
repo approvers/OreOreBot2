@@ -28,7 +28,12 @@ const observableMessage = (
   content: raw.content || '',
   async sendEphemeralToSameChannel(message: string): Promise<void> {
     const FIVE_SECONDS_MS = 5000;
-    const sent = await raw.channel.send(message);
+    const sent = await raw.channel.send({
+      content: message,
+      allowedMentions: {
+        parse: []
+      }
+    });
 
     void sent
       .awaitReactions({
