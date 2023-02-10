@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.37.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.36.1...oreorebot2-v1.37.0) (2023-02-10)
+
+
+### Features
+
+* チャンネル情報参照コマンドの追加 ([#723](https://github.com/approvers/OreOreBot2/issues/723)) ([0eca31c](https://github.com/approvers/OreOreBot2/commit/0eca31c70b0adb453aac3bc45976bb811eb2decf))
+
 ## [1.36.1](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.36.0...oreorebot2-v1.36.1) (2023-02-08)
 
 
