@@ -1,11 +1,9 @@
 export type MessageEvent = 'CREATE' | 'DELETE';
 
 /**
- * `MessageResponseRunner` に登録する機能が実装するインターフェイス。`M` には discord.js の `Message` などが入る。
+ * `MessageResponseRunner` に登録する機能が実装するインターフェイス。
  *
- * @export
- * @interface MessageEventResponder
- * @template M
+ * @typeParam M - 伝播するメッセージの型。discord.js の `Message` など。
  */
 export interface MessageEventResponder<M> {
   on(event: MessageEvent, message: M): Promise<void>;
@@ -24,9 +22,7 @@ export const composeMessageEventResponders = <M>(
 /**
  * `MessageResponseRunner` のためにメッセージに関するイベントハンドラの登録手段を提供する。
  *
- * @export
- * @interface MessageEventProvider
- * @template M
+ * @typeParam M - 伝播するメッセージの型。discord.js の `Message` など。
  */
 export interface MessageEventProvider<M> {
   onMessageCreate(handler: (message: M) => Promise<void>): void;
@@ -36,9 +32,7 @@ export interface MessageEventProvider<M> {
 /**
  * メッセージに反応するタイプの機能を登録すると、`MessageEventProvider` からのイベントを `MessageEvent` 付きの形式に変換し、それに渡して実行する。
  *
- * @export
- * @class MessageResponseRunner
- * @template M
+ * @typeParam M - 伝播するメッセージの型。discord.js の `Message` など。
  */
 export class MessageResponseRunner<
   M,
@@ -69,11 +63,9 @@ export class MessageResponseRunner<
 }
 
 /**
- * `MessageResponseRunner` に登録する機能が実装するインターフェイス。`M` には discord.js の `Message` などが入る。
+ * `MessageResponseRunner` に登録する機能が実装するインターフェイス。
  *
- * @export
- * @interface MessageEventResponder
- * @template M
+ * @typeParam M - 伝播するメッセージの型。discord.js の `Message` など。
  */
 export interface MessageUpdateEventResponder<M> {
   on(event: 'UPDATE', before: M, after: M): Promise<void>;
@@ -92,9 +84,7 @@ export const composeMessageUpdateEventResponders = <M>(
 /**
  * `MessageResponseRunner` のためにメッセージに関するイベントハンドラの登録手段を提供する。
  *
- * @export
- * @interface MessageEventProvider
- * @template M
+ * @typeParam M - 伝播するメッセージの型。discord.js の `Message` など。
  */
 export interface MessageUpdateEventProvider<M> {
   onMessageUpdate(handler: (before: M, after: M) => Promise<void>): void;
@@ -103,9 +93,7 @@ export interface MessageUpdateEventProvider<M> {
 /**
  * メッセージに反応するタイプの機能を登録すると、`MessageEventProvider` からのイベントを `MessageEvent` 付きの形式に変換し、それに渡して実行する。
  *
- * @export
- * @class MessageResponseRunner
- * @template M
+ * @typeParam M - 伝播するメッセージの型。discord.js の `Message` など。
  */
 export class MessageUpdateResponseRunner<M> {
   constructor(provider: MessageUpdateEventProvider<M>) {

@@ -5,16 +5,13 @@ const boldItalic = /\*\*\*(?:.+?)\*\*\*/g;
 
 export interface BoldItalicCop {
   /**
-   * メッセージの内容.
-   *
-   * @type {string}
-   * @memberof Observable
+   * メッセージの内容。
    */
   readonly content: string;
 
   /**
-   * "Bold-Italic警察だ!!!" と返す。
-   * @param message
+   * 指定のメッセージでと返信する。
+   * @param message - 返信内容
    */
   replyMessage(message: { content: string }): Promise<void>;
 }

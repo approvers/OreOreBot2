@@ -8,10 +8,8 @@ export type RawMessage = Message | PartialMessage;
 /**
  * メッセージ `M` を `N` へと変換するか、`Promise` を拒否して処理を中断する。
  *
- * @export
- * @interface Middleware
- * @template M 変換前のメッセージの型
- * @template N 変換後のメッセージの型
+ * @typeParam M - 変換前のメッセージの型
+ * @typeParam N - 変換後のメッセージの型
  */
 export interface Middleware<M, N> {
   (message: M): Promise<N>;

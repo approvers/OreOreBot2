@@ -2,32 +2,22 @@ import type { MessageEvent, MessageEventResponder } from '../runner/index.js';
 
 /**
  * 監視するメッセージの抽象。
- *
- * @export
- * @interface Observable
  */
 export interface DeletionObservable {
   /**
    * メッセージの作成者。
-   *
-   * @type {string}
-   * @memberof Observable
    */
   readonly author: string;
   /**
    * メッセージの内容
-   *
-   * @type {string}
-   * @memberof Observable
    */
   readonly content: string;
 
   /**
    * すぐ消えてしまう `message` のメッセージをこのメッセージと同じチャンネルに送信する。
    *
-   * @param {string} message
-   * @returns {Promise}
-   * @memberof Observable
+   * @param message - 送信するメッセージのテキスト
+   * @returns 送信に成功すると解決される `Promise`
    */
   sendEphemeralToSameChannel(message: string): Promise<void>;
 }
@@ -35,10 +25,7 @@ export interface DeletionObservable {
 /**
  * メッセージの削除を検知して、その内容と作者を復唱する。
  *
- * @export
- * @class DeletionRepeater
- * @implements {MessageEventResponder<M>}
- * @template M
+ * @typeParam M - `DeletionObservable` を満たした、監視するメッセージの型
  */
 export class DeletionRepeater<M extends DeletionObservable>
   implements MessageEventResponder<M>

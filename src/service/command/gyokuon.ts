@@ -17,8 +17,6 @@ const SCHEMA = {
 
 /**
  * gyokuon コマンドでこるくの玉音放送をボイスチャンネルに再生する機能
- *
- * @export
  */
 export class GyokuonCommand implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {

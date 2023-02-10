@@ -4,16 +4,10 @@ import type { Snowflake } from '../../model/id.js';
 
 /**
  * `CommandMessage.replyPages` のオプション。
- *
- * @export
- * @interface ReplyPagesOptions
  */
 export interface ReplyPagesOptions {
   /**
    * ページネーションのボタンを操作できるユーザの ID のリスト。
-   *
-   * @type {readonly Snowflake[]}
-   * @memberof ReplyPagesOptions
    */
   readonly usersCanPaginate?: readonly Snowflake[];
 }
@@ -21,80 +15,57 @@ export interface ReplyPagesOptions {
 /**
  * コマンド形式のメッセージの抽象。
  *
- * @export
- * @interface CommandMessage
- * @template S スキーマの型
+ * @typeParam S - スキーマの型
  */
 export interface CommandMessage<S extends Schema> {
   /**
    * コマンドの送信者の ID。
-   *
-   * @type {Snowflake}
-   * @memberof CommandMessage
    */
   senderId: Snowflake;
 
   /**
    * コマンドの送信者の所属サーバの ID。
-   *
-   * @type {Snowflake}
-   * @memberof CommandMessage
    */
   senderGuildId: Snowflake;
 
   /**
    * コマンドの送信者が発信したチャンネルのID。
-   *
-   * @type {Snowflake}
-   * @memberOf CommandMessage
    */
   senderChannelId: Snowflake;
 
   /**
    * コマンドの送信者が接続しているボイスチャンネルの ID。
-   *
-   * @type {Snowflake}
-   * @memberof CommandMessage
    */
   senderVoiceChannelId: Snowflake | null;
 
   /**
    * コマンドの送信者の名前。
-   *
-   * @type {string}
-   * @memberof CommandMessage
    */
   senderName: string;
 
   /**
    * パースされたコマンドの引数。
-   *
-   * @type {Readonly<ParsedSchema<S>>}
-   * @memberof CommandMessage
    */
   args: Readonly<ParsedSchema<S>>;
 
   /**
    * このメッセージに `message` の内容で返信する。
    *
-   * @param message
-   * @memberof CommandMessage
+   * @param message - 返信内容の Embed メッセージ
    */
   reply(message: EmbedMessage): Promise<SentMessage>;
 
   /**
    * このメッセージにページ送りできる `pages` で返信する。
    *
-   * @param pages
-   * @memberof CommandMessage
+   * @param pages - 返信内容の Embed ページのリスト
    */
   replyPages(pages: EmbedPage[], options?: ReplyPagesOptions): Promise<void>;
 
   /**
    * このメッセージに `emoji` の絵文字でリアクションする。
    *
-   * @param emoji
-   * @memberof CommandMessage
+   * @param emoji - リアクションする絵文字
    */
   react(emoji: string): Promise<void>;
 }

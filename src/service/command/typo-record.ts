@@ -16,66 +16,49 @@ import type {
 
 /**
  * 監視するメッセージの抽象。
- *
- * @export
- * @interface Observable
  */
 export interface TypoObservable {
   /**
    * メッセージの作成者。
-   *
-   * @type {string}
-   * @memberof Observable
    */
   readonly authorId: Snowflake;
   /**
    * メッセージの内容。
-   *
-   * @type {string}
-   * @memberof Observable
    */
   readonly content: string;
 }
 
 /**
  * Typo を記録/消去する抽象。
- *
- * @export
- * @interface TypoRepository
  */
 export interface TypoRepository {
   /**
    * `id` に対応した新しい Typo を追加する。
    *
-   * @param {string} newTypo
-   * @returns {Promise<void>}
-   * @memberof TypoRepository
+   * @param id - Typo した人を特定する ID
+   * @param newTypo - 追加する Typo の内容
+   * @returns 追加に成功すると解決される `Promise`
    */
   addTypo(id: Snowflake, newTypo: string): Promise<void>;
 
   /**
    * `id` に対応した Typo 一覧を日時順で取得する。
    *
-   * @returns {Promise<readonly string[]>}
-   * @memberof TypoRepository
+   * @param id - Typo した人を特定する ID
+   * @returns Typo 内容のリストで解決される `Promise`
    */
   allTyposByDate(id: Snowflake): Promise<readonly string[]>;
 
   /**
    * Typo をすべて消去する。
    *
-   * @returns {Promise<void>}
-   * @memberof TypoRepository
+   * @returns 削除に成功すると解決される `Promise`
    */
   clear(): Promise<void>;
 }
 
 /**
  * 「だカス」で終わるメッセージを, それを取り除いて記録する。
- *
- * @export
- * @class TypoRecorder
- * @implements {MessageEventResponder<TypoObservable>}
  */
 export class TypoRecorder implements MessageEventResponder<TypoObservable> {
   constructor(private readonly repo: TypoRepository) {}
@@ -130,10 +113,6 @@ const SCHEMA = {
 
 /**
  * `typo` コマンドで今日の Typo 一覧を返信する。
- *
- * @export
- * @class TypoReporter
- * @implements {MessageEventResponder<CommandMessage>}
  */
 export class TypoReporter implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {

@@ -2,10 +2,6 @@ import { addMilliseconds, isAfter } from 'date-fns';
 
 /**
  * `ScheduleRunner` に登録するイベントが実装するインターフェイス。戻り値は次に自身を再実行する時刻。`null` を返した場合は再実行されない。
- *
- * @export
- * @interface MessageEventResponder
- * @template M
  */
 export interface ScheduleTask {
   (): Promise<Date | null>;
@@ -13,16 +9,12 @@ export interface ScheduleTask {
 
 /**
  * 時刻を扱う抽象。
- *
- * @export
- * @interface Clock
  */
 export interface Clock {
   /**
    * 現在時刻を取得する。
    *
-   * @returns {Date}
-   * @memberof Clock
+   * @returns 呼び出した時点での時刻。
    */
   now(): Date;
 }
@@ -31,10 +23,6 @@ const CONSUMPTION_INTERVAL = 100;
 
 /**
  * 機能を指定ミリ秒後や特定時刻に実行する。特定間隔での再実行については `ScheduleTask` を参照。
- *
- * @export
- * @class MessageResponseRunner
- * @template M
  */
 export class ScheduleRunner {
   constructor(private readonly clock: Clock) {
@@ -73,9 +61,9 @@ export class ScheduleRunner {
   /**
    * 現在からミリ秒指定で一定時間後にタスクを実行するように登録する。
    *
-   * @param key あとで登録したタスクを停止させるときに用いるキーのオブジェクト
-   * @param task 実行したいタスク
-   * @param milliSeconds 現在から何ミリ秒経過した時に実行するのか
+   * @param key - あとで登録したタスクを停止させるときに用いるキーのオブジェクト
+   * @param task - 実行したいタスク
+   * @param milliSeconds - 現在から何ミリ秒経過した時に実行するのか
    */
   runAfter(key: unknown, task: ScheduleTask, milliSeconds: number): void {
     this.queue.set(key, [
@@ -87,9 +75,9 @@ export class ScheduleRunner {
   /**
    * 特定時刻にタスクを実行するように登録する。
    *
-   * @param key あとで登録したタスクを停止させるときに用いるキーのオブジェクト
-   * @param task 実行したいタスク
-   * @param time いつ実行するのか
+   * @param key - あとで登録したタスクを停止させるときに用いるキーのオブジェクト
+   * @param task - 実行したいタスク
+   * @param time - いつ実行するのか
    */
   runOnNextTime(key: unknown, task: ScheduleTask, time: Date): void {
     this.queue.set(key, [task, time]);
@@ -98,7 +86,7 @@ export class ScheduleRunner {
   /**
    * タスクの実行登録を解除する。このキーに登録されていない場合は何も起こらない。
    *
-   * @param key 実行を登録したときのキーのオブジェクト
+   * @param key - 実行を登録したときのキーのオブジェクト
    */
   stop(key: unknown): void {
     this.queue.delete(key);

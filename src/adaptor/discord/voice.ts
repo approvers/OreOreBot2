@@ -61,9 +61,8 @@ export class DiscordVoiceConnection<K extends string | number | symbol>
   /**
    * Discord のボイスチャンネルへの接続を作成する。
    *
-   * @param {VoiceBasedChannel} channel 接続するボイスチャンネル
-   * @param {Record<K, string>} audioRecord 再生データのキーとファイルパスの辞書
-   * @memberof DiscordVoiceConnection
+   * @param channel - 接続するボイスチャンネル
+   * @param audioRecord - 再生データのキーとファイルパスの辞書
    */
   constructor(
     private readonly channel: VoiceBasedChannel,

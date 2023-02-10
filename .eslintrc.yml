@@ -2,30 +2,32 @@ env:
   node: true
   es2021: true
 extends:
-  - "eslint:recommended"
-  - "plugin:@typescript-eslint/recommended"
-  - "plugin:@typescript-eslint/recommended-requiring-type-checking"
-  - "plugin:markdown/recommended"
-  - "prettier"
-parser: "@typescript-eslint/parser"
+  - 'eslint:recommended'
+  - 'plugin:@typescript-eslint/recommended'
+  - 'plugin:@typescript-eslint/recommended-requiring-type-checking'
+  - 'plugin:markdown/recommended'
+  - 'prettier'
+parser: '@typescript-eslint/parser'
 parserOptions:
   sourceType: module
   project:
-    - "./tsconfig.json"
+    - './tsconfig.json'
 plugins:
-  - "@typescript-eslint"
-  - "markdown"
-  - "simple-import-sort"
-  - "import"
+  - '@typescript-eslint'
+  - 'markdown'
+  - 'simple-import-sort'
+  - 'import'
+  - eslint-plugin-tsdoc
 rules:
-  "simple-import-sort/imports": "error"
-  "simple-import-sort/exports": "error"
-  "max-params": "error"
-  "import/first": "error"
-  "import/no-duplicates": "error"
+  'simple-import-sort/imports': 'error'
+  'simple-import-sort/exports': 'error'
+  'max-params': 'error'
+  'import/first': 'error'
+  'import/no-duplicates': 'error'
   # TODO: 必要に応じてルールを追加する
   #  https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/order.md
-  "import/order": [2, { "alphabetize": { "order": "asc" } }]
+  'import/order': [2, { 'alphabetize': { 'order': 'asc' } }]
+  'tsdoc/syntax': 'warn'
 overrides:
-  - files: ["**/*.md"]
-    processor: "markdown/markdown"
+  - files: ['**/*.md']
+    processor: 'markdown/markdown'

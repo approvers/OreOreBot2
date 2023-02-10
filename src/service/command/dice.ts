@@ -11,9 +11,9 @@ import type {
 export interface DiceQueen {
   /**
    *
-   * @param {number} faces
-   * @param {number} howManyRolls
-   * @return {Array<number>}
+   * @param faces - ダイスの面の数
+   * @param howManyRolls - 振るダイスの個数
+   * @returns 降ったダイスの数値のリスト。長さは `howManyRolls` に等しい。
    */
   roll(faces: number, howManyRolls: number): Array<number>;
 }
@@ -46,11 +46,7 @@ const SCHEMA = {
 } as const;
 
 /**
- * 'dice' コマンドで
- *
- * @export
- * @class DiceCommand
- * @implements {MessageEventResponder<CommandMessage>}
+ * 'dice' コマンド。複数のサイコロを同時に振って出目を確認できる。
  */
 export class DiceCommand implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {

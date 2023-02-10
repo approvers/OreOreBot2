@@ -16,18 +16,14 @@ export type KaereMusicKey = 'NEROYO';
 
 /**
  * ボイスチャンネル自体を操作できるコントローラーの抽象.
- *
- * @export
- * @interface VoiceRoomController
  */
 export interface VoiceRoomController {
   /**
    * そのボイスチャンネルからすべてのユーザーを切断させる.
    *
-   * @param {Snowflake} guildId サーバの ID
-   * @param {Snowflake} roomId ボイスチャンネルの ID
-   * @returns {Promise<void>}
-   * @memberof VoiceRoomController
+   * @param guildId - サーバの ID
+   * @param roomId - ボイスチャンネルの ID
+   * @returns 切断処理の完了後に解決される `Promise`
    */
   disconnectAllUsersIn(guildId: Snowflake, roomId: Snowflake): Promise<void>;
 }
@@ -39,40 +35,33 @@ export type ReservationResult = 'Ok' | 'Err';
 
 /**
  * 予約 `Reservation` のモデルを永続化するクラスの抽象。
- *
- * @export
- * @interface ReservationRepository
  */
 export interface ReservationRepository {
   /**
    * すべての予約を取得する。
    *
-   * @returns {Promise<readonly Reservation[]>} すべての予約
-   * @memberof ReservationRepository
+   * @returns すべての予約のリストで解決される `Promise`
    */
   all(): Promise<readonly Reservation[]>;
   /**
    * 指定時刻の予約を取得する。
    *
-   * @param time 取得する予約の時刻
-   * @returns {Promise<Reservation | null>} 指定時刻である予約、存在しない場合は `null`
-   * @memberof ReservationRepository
+   * @param time - 取得する予約の時刻
+   * @returns 指定時刻である予約、存在しない場合は `null` で解決される `Promise`
    */
   reservationAt(time: ReservationTime): Promise<Reservation | null>;
   /**
    * 新しい予約を保存して永続化する。
    *
-   * @param reservation 永続化する予約
-   * @returns {Promise<ReservationResult>} 保存に成功したかどうか。すでに同じ時刻の予約がある場合は失敗する。
-   * @memberof ReservationRepository
+   * @param reservation - 永続化する予約
+   * @returns 保存に成功したかどうかで解決される `Promise`
    */
   reserve(reservation: Reservation): Promise<ReservationResult>;
   /**
    * 予約を取り消して永続化を解除する。
    *
-   * @param reservation 永続化を解除する予約
-   * @returns {Promise<ReservationResult>} 解除に成功したかどうか。永続化されていない場合は失敗する。
-   * @memberof ReservationRepository
+   * @param reservation - 永続化を解除する予約
+   * @returns 解除に成功したかどうかで解決される。
    */
   cancel(reservation: Reservation): Promise<ReservationResult>;
 }
@@ -128,10 +117,6 @@ const SCHEMA = {
 
 /**
  * `kaere` コマンドでボイスチャンネルの参加者に切断を促す機能。
- *
- * @export
- * @class KaereCommand
- * @implements {MessageEventResponder<CommandMessage>}
  */
 export class KaereCommand implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
