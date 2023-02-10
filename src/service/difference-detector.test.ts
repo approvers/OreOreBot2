@@ -116,3 +116,21 @@ wow`,
 
   expect(fn).not.toHaveBeenCalled();
 });
+
+it('not react to unedited message', async () => {
+  const responder = new DifferenceDetector();
+  const fn = vi.fn(() => Promise.resolve());
+
+  await responder.on(
+    'UPDATE',
+    {
+      content: '草',
+      sendEphemeralToSameChannel: fn
+    },
+    {
+      content: '草',
+      sendEphemeralToSameChannel: fn
+    }
+  );
+  expect(fn).not.toHaveBeenCalled();
+});

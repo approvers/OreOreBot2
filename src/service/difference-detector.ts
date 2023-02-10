@@ -62,7 +62,7 @@ export class DifferenceDetector
     after: EditingObservable
   ): Promise<void> {
     const composed = diffComposer(before.content, after.content);
-    if (composed === '') {
+    if (composed === before.content) {
       return;
     }
     await after.sendEphemeralToSameChannel(
