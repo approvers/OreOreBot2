@@ -59,7 +59,7 @@ export class ChannelInfo implements CommandResponder<typeof SCHEMA> {
       },
       {
         name: 'チャンネルタイプ',
-        value: `${type}`,
+        value: type,
         inline: true
       },
       {
