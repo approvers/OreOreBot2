@@ -137,7 +137,7 @@ const output = new DiscordOutput(client, mainChannelId);
 const KAWAEMON_ID = '391857452360007680' as Snowflake;
 const roleManager = new DiscordRoleManager(client, GUILD_ID as Snowflake);
 
-const channelManager = new DiscordChannelRepository(
+const channelRepository = new DiscordChannelRepository(
   client,
   GUILD_ID as Snowflake
 );
@@ -174,7 +174,7 @@ if (features.includes('COMMAND')) {
     roleCreateRepo: roleManager,
     queen: new MathRandomGenerator(),
     stdout: output,
-    channelManager
+    channelRepository
   });
 }
 

@@ -54,7 +54,7 @@ export const registerAllCommandResponder = ({
   roleCreateRepo,
   queen,
   stdout,
-  channelManager
+  channelRepository
 }: {
   typoRepo: TypoRepository;
   reservationRepo: ReservationRepository;
@@ -76,7 +76,7 @@ export const registerAllCommandResponder = ({
   roleCreateRepo: RoleCreateManager;
   queen: DiceQueen;
   stdout: StandardOutput;
-  channelManager: ChannelStatsRepository;
+  channelRepository: ChannelStatsRepository;
 }) => {
   const allResponders = [
     new TypoReporter(typoRepo, clock, scheduleRunner),
@@ -107,7 +107,7 @@ export const registerAllCommandResponder = ({
     new GuildInfo(guildRepo),
     new RoleCreate(roleCreateRepo),
     new DiceCommand(queen),
-    new ChannelInfo(channelManager)
+    new ChannelInfo(channelRepository)
   ];
   for (const responder of allResponders) {
     commandRunner.addResponder(
