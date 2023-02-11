@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.37.1](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.37.0...oreorebot2-v1.37.1) (2023-02-11)
+
+
+### Bug Fixes
+
+* sendEphemeralToSameChannel でのメンションを抑制 ([#735](https://github.com/approvers/OreOreBot2/issues/735)) ([2e10a65](https://github.com/approvers/OreOreBot2/commit/2e10a65c9a7a95b989fb3e0c70bcceb0a9e38b10))
+* 空の編集イベントに反応しないように修正 ([#734](https://github.com/approvers/OreOreBot2/issues/734)) ([c53e753](https://github.com/approvers/OreOreBot2/commit/c53e75388a0c5eef3cd900b092a1a299a049306d))
+
 ## [1.37.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.36.1...oreorebot2-v1.37.0) (2023-02-10)
 
 
