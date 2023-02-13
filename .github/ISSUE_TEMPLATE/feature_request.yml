@@ -12,6 +12,8 @@ body:
       label: 機能要望の提出を行う前に
       description: 機能要望の提出を行う前に以下の項目を確認してください
       options:
+        # 既に解決しているIssueも含んで検索するために検索クエリを空にする
+        # https://github.com/approvers/OreOreBot2/issues/732
         - label: すでに[同じ機能要望を行うIssue](https://github.com/approvers/OreOreBot2/issues?q=)が存在しないか確認しましたか?
           required: true
         - label: この要望を実現する保証はありません。よろしいですか?
