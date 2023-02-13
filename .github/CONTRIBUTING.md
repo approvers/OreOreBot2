@@ -1,139 +1,31 @@
 # OreOreBot2 への貢献
 
-## 貢献の流れ
+OreOreBot2 には誰でも貢献でき、その貢献にはさまざまな方法があります。
 
-1. 当リポジトリをフォークしてください。
-2. フォークしたリポジトリをクローンしてください。
-3. ディレクトリを開き、ブランチを作成してチェックアウトしてください。
+## バグレポートの提出
 
-```sh
-git checkout -b <branch-name>
-```
+OreOreBot2 の不具合を発見した際は **[Issues](https://github.com/approvers/OreOreBot2/issues/new/choice) -> バグ報告** の順に進んで表示されるフォームからバグレポートを提出できます。
 
-4. 開発を行い、その内容を GitHub へアップロードします。
+提出する際は以下の項目を満たしているか確認してください。
 
-```sh
-git add <file-name>
-git commit -m "hoge"
-git push
-```
+- [ ] OreOreBot2 の Issues に自分が今から報告しようとしていることと同じ Issue はない
+- [ ] セキュリティーに関する不具合ではない
 
-5. 開発が終了したら GitHub から当リポジトリの `main` ブランチへ新規 pull request を作成してください。
-6. 当プロジェクト コントリビューターによるレビュー・GitHub Actions によるテストなどが行われた後、マージが可能になります。
+バグレポートは **詳細、再現方法、期待する動作、はらちょのバージョン** 全て記載した状態で報告を行ってください。
 
-## コーティング規約
+### セキュリティーに関する不具合の報告
 
-- ファイル名を小文字英字とハイフンのみの `kebab-case` にしてください。
+セキュリティーに関する不具合は Issue ではなく、適切な方法で報告する必要があります。
 
-## テストについて
+報告する方法は2つあります。どちらで報告しても構いません。
 
-新機能の追加や、既存の機能の変更などを行った際はテストを追加してください。
+1. `me@m2en.dev` 宛に以下のGPG鍵で署名したメールを送信する
+  鍵指紋: `78E4 CFE0 B3B2 0C4C 7BAA A3CA 6554 A829 D251 53F9` , [pgp_keys.asc](https://keybase.io/m2en/pgp_keys.asc?fingerprint=78e4cfe0b3b20c4c7baaa3ca6554a829d25153f9)
+2. [GitHub Security Advisories](https://github.com/approvers/OreOreBot2/security/advisories/new) からセキュリティ勧告を作成する
 
-- [Vitest](https://vitest.dev/) を使用してテストしています。
-- テストファイルの名前は `<file-name>.test.ts` とします。
-  - `<file-name>` は機能の処理を行うファイルと同じ名前にし、 `.test.ts` との競合を回避するため、`<file-name>` で `.` は含めないようにしてください。
-  - これは `<file-name>.ts` と同じディレクトリに配置してください。
+上記2つの方法、どちらとも以下の情報を詳細に記載してください。
 
-### テストの例
-
-```typescript:meme.test.ts
-import { expect, it, vi } from 'vitest';
-import { Meme } from './meme.js';
-import { createMockMessage } from './command-message.js';
-
-it('use case of hukueki', async () => {
-  const fn = vi.fn();
-  const responder = new Meme();
-  await responder.on(
-    createMockMessage(
-      {
-        args: ['hukueki', 'こるく']
-      },
-      fn
-    )
-  );
-  expect(fn).toHaveBeenCalledWith({
-    description:
-      'ねぇ、将来何してるだろうね\n' +
-      'こるくはしてないといいね\n' +
-      '困らないでよ'
-  });
-});
-```
-
-詳しくは [Vitest のドキュメント](https://vitest.dev/api/) をご覧ください。
-
-## コミットメッセージ
-
-コミットメッセージを書く際は [**Conventional Commit**](https://conventionalcommits.org/ja/) に従ってください。
-
-> Conventional Commits の仕様はコミットメッセージのための軽量の規約です。 明示的なコミット履歴を作成するための簡単なルールを提供します。この規則に従うことで自動化ツールの導入を簡単にします。 コミットメッセージで機能追加・修正・破壊的変更などを説明することで、この規約は SemVer と協調動作します。
-> 引用: [Conventional Commits](https://conventionalcommits.org/ja/)
-
-コミットメッセージは次のような形にする必要があります。
-
-```
-<type>[optional scope]: <description>
-
-[optional body]
-
-[optional footer(s)]
-```
-
-`<type>` は、OreOreBot2 を使用する利用者や開発者に意図を伝えるために以下に記載するそれぞれの型を指定する必要があります。
-
-| 型         | 要素                                                                           |
-| ---------- | ------------------------------------------------------------------------------ |
-| `fix`      | この型を持つコミットはコードベースのバグにパッチを当てます。                   |
-| `feat`     | この型を持つコミットはコードベースに新しい機能を追加します。                   |
-| `build`    | この型を持つコミットはプログラムをコンパイル、ビルドする部分の変更を行います。 |
-| `ci`       | この型を持つコミットは GitHub Actions に関する変更を行います。                 |
-| `docs`     | この型を持つコミットはドキュメントなどの変更を行います。                       |
-| `refactor` | この型を持つコミットはコードベースのリファクタリングを行います。               |
-| `chore`    | この型を持つコミットはファイル整理や依存関係の更新などを行います。             |
-
-`BREAKING CHANGE` とフッターにかかれているか型/スコープの直後に `!` が追加されているコミットは仕様の破壊的変更を意味します。 (Semantic Versioning における `MAJOR` に相当します)
-
-また、 `BREAKING CHANGE` は任意の型のコミットに含めることも可能です。
-
-### 例 (引用: [Conventional Commits](https://conventionalcommits.org/ja))
-
-#### タイトルおよび破壊的変更のフッターを持つコミットメッセージ
-
-```
-feat: allow provided config object to extend other configs
-
-BREAKING CHANGE: `extends` key in config file is now used for extending other config files
-```
-
-#### 本文を持たないコミットメッセージ
-
-```
-docs: correct spelling of CHANGELOG
-```
-
-詳しくは [Conventional Commits](https://conventionalcommits.org/) を参照してください。
-
-## Issue
-
-不具合報告や機能の要望、立案を行う際は [Issue](https://github.com/approvers/OreOreBot2/issues/new/choose) を利用してください。
-
-OreOreBot2 では Issue Template を用意しています。
-
-- [Bug-report](https://github.com/approvers/OreOreBot2/issues/new?assignees=&labels=bug&template=bug-report.md&title=)
-  - OreOreBot2 の不具合を報告する際に使用してください。
-- [Feature-request](https://github.com/approvers/OreOreBot2/issues/new?assignees=&labels=enhancement&template=feature-request.md&title=feat%3A+)
-  - OreOreBot2 の新機能立案などを行う際に使用してください。
-- [Custom-Issue](https://github.com/approvers/OreOreBot2/issues/new?assignees=&labels=&template=custom-issue.md&title=)
-  - 上記に当てはまらない内容の Issue を立てたいときに使用してください。
-  - 完全カスタマイズの Issue を作る際もこれを使用してください。
-- [Discord](https://support.discord.com/hc/ja/requests/new?ticket_form_id=360006586013)
-  - Discord の不具合は言わずもがな **Discord 運営チーム**　に報告してください。
-
-## Pull Request
-
-- Pull Request のタイトルは Conventional Commit の型を使用して作成してください。
-  - 例: `feat: えぬ留年構文ジェネレータの実装`, `fix: えぬが留年しない問題の修正`
-- Pull Request 作成時は Issue と同様テンプレートが用意されているので詳細情報の記載をお願いします。
-- draft などぜひ有効活用してください。
-  - 一度作成しても Assign の欄に `Still in progress? Convert to draft` とわかりにくいですがこれを利用することで途中からでも draft に設定できます。
+- `Impact` - どのような脆弱性で、誰が影響を受けるのか
+- `Process` - 問題を再現するための手段
+- `PoC` - 概念実証。脆弱性を利用した攻撃が可能であることを示す実際のコード
+- `Version` - 脆弱性が存在するバージョン
