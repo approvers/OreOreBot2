@@ -294,6 +294,6 @@ github: [m2en, shun-shobon, su8ru]
 
 ### 音楽再生系の機能
 
-[FFmpeg](https://ffmpeg.org/) がローカルにインストールされていない場合、`!party` などの音楽再生系の機能は利用できません。
+`!party` などの音楽再生系の機能は利用するには、[FFmpeg](https://ffmpeg.org/) がインストールされていてその `PATH` が通っている必要があります。
 
 開発の際はご注意ください。
