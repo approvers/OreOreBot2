@@ -275,9 +275,9 @@ github: [m2en, shun-shobon, su8ru]
 
 ## 開発環境
 
-- `yarn start` でコンパイルしたビルドで起動します。
-- `yarn dev` でコンパイルせずに起動します。
-- `yarn build` でコンパイルします。
+- `yarn dev` で開発用にコンパイルなしで起動します。
+- `yarn build` で本番用にコンパイルします。
+- `yarn start` で本番用にコンパイルしたビルドを起動します。
 - `yarn test` でテストを実行します。
 
 ### 機能の有効・無効
