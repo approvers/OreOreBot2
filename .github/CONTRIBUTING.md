@@ -46,7 +46,7 @@ OreOreBot2 の不具合を発見した際は **[Issues](https://github.com/appro
 
 ## 新機能リクエストの提出
 
-OreOreBot2 に追加したい機能がある場合は **[Issues](https://github.com/approvers/OreOreBot2/issues/new/choice) -> 機能要望** の順に進んで表示されるフォームからリクエストを提出できます。
+OreOreBot2 に追加したい機能がある場合は **[Issues](https://github.com/approvers/OreOreBot2/issues/new/choose) -> 機能要望** の順に進んで表示されるフォームからリクエストを提出できます。
 
 なお、リクエストを必ずしも実現する保証はできません。
 
