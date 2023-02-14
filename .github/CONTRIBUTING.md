@@ -249,6 +249,16 @@ it('use case of hukueki', async () => {
   - 例: `feat: えぬ留年構文ジェネレータの実装`, `fix: えぬが留年しない問題の修正`
 - プルリクエスト作成時は Issue と同様テンプレートが用意されているので詳細情報の記載をお願いします。
 
+## GitHub Sponsor の掲載条件
+
+OreOreBot2 の Sponsor ボタンへの掲載は **OreOreBot2 にコントリビュートをしていること**が条件になります。
+
+コントリビュートしていて、掲載を希望する場合は `.github/FUNDING.yml` へ自分のユーザー ID を追加し、プルリクエストを作成してください。
+
+```yaml
+github: [m2en, shun-shobon, su8ru]
+```
+
 ## 開発環境
 
 - `yarn start` でコンパイルしたビルドで起動します。
