@@ -1,5 +1,6 @@
 import { clang } from './clang.js';
 import { dousurya } from './dousurya.js';
+import { failure } from './failure.js';
 import { hukueki } from './hukueki.js';
 import { kenjou } from './kenjou.js';
 import { koume } from './koume.js';
@@ -29,5 +30,6 @@ export const memes = [
   nine,
   tsureteike,
   syakai,
-  clang
+  clang,
+  failure
 ];
