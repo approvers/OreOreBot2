@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.38.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.37.1...oreorebot2-v1.38.0) (2023-02-22)
+
+
+### Features
+
+* 共同通信の記者MEME の追加 ([#742](https://github.com/approvers/OreOreBot2/issues/742)) ([3ab6063](https://github.com/approvers/OreOreBot2/commit/3ab6063932a78d17822dd880df103b1fc1ecaa3a))
+
 ## [1.37.1](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.37.0...oreorebot2-v1.37.1) (2023-02-11)
 
 
