@@ -24,6 +24,28 @@ describe('meme', () => {
     );
   });
 
+  it('use case of failure with option -k', async () => {
+    await responder.on(
+      createMockMessage(
+        parseStringsOrThrow(
+          [
+            'failure',
+            '-k',
+            '恋',
+            'クラスのマドンナが好きなのにいじめてしまいました'
+          ],
+          responder.schema
+        ),
+        (message) => {
+          expect(message).toStrictEqual({
+            description:
+              '「クラスのマドンナが好きなのにいじめてしまいました」\n「わかりました。それは一般に恋と言います、ありがとうございます」'
+          });
+        }
+      )
+    );
+  });
+
   it('args null (failure)', async () => {
     await responder.on(
       createMockMessage(
