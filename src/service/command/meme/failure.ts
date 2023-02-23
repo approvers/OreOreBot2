@@ -6,7 +6,7 @@ const failureOption = ['k'] as const;
 
 export const failure: MemeTemplate<never, (typeof failureOption)[number]> = {
   commandNames: ['failure', 'fail'],
-  description: `「〜〜〜」\n「わかりました。それは一般に失敗と言います、ありがとうございます」\n[元ネタ](${sourceLink})`,
+  description: `「〜〜〜」\n「わかりました。それは一般に失敗と言います、ありがとうございます」\n* \`-k <失敗部分> <説明>\` で失敗部分を変更できます。 \n [元ネタ](${sourceLink})`,
   flagsKeys: [],
   optionsKeys: failureOption,
   errorMessage:
