@@ -4,7 +4,7 @@ const sourceLink = 'https://dic.nicovideo.jp/id/5671528';
 
 export const failure: MemeTemplate<never, never> = {
   commandNames: ['failure', 'fail'],
-  description: `「〜〜〜」\n「わかりました。それは一般に失敗と言います、ありがとうございます」\n[元ネタ](${sourceLink})'`,
+  description: `「〜〜〜」\n「わかりました。それは一般に失敗と言います、ありがとうございます」\n[元ネタ](${sourceLink})`,
   flagsKeys: [],
   optionsKeys: [],
   errorMessage:
