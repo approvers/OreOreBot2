@@ -1,12 +1,13 @@
 import type { MemeTemplate } from '../../../model/meme-template.js';
 
-export const n: MemeTemplate<never, never> = {
+const positionalKeys = ['context'] as const;
+
+export const n: MemeTemplate<never, never, (typeof positionalKeys)[number]> = {
   commandNames: ['n'],
   description: '〜Nった',
-  flagsKeys: [],
-  optionsKeys: [],
+  requiredPositionalKeys: positionalKeys,
   errorMessage: 'このままだと <@521958252280545280> みたいに留年しちゃう....',
   generate(args) {
-    return `${args.body}Nった`;
+    return `${args.requiredPositionals.context}Nった`;
   }
 };

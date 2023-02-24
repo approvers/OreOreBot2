@@ -11,7 +11,7 @@ describe('meme', () => {
     await responder.on(
       createMockMessage(
         parseStringsOrThrow(
-          ['lolicon', 'こるく', 'にえっちを申し込む'],
+          ['lolicon', '"こるく にえっちを申し込む"'],
           responder.schema
         ),
         (message) => {

@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 import { createMockMessage } from './command-message.js';
-import { Meme, sanitizeArgs } from './meme.js';
+import { Meme } from './meme.js';
 
 describe('meme', () => {
   const responder = new Meme();
@@ -21,13 +21,5 @@ describe('meme', () => {
       )
     );
     expect(fn).not.toHaveBeenCalled();
-  });
-});
-
-describe('sanitizeArgs', () => {
-  it('rids pollution', () => {
-    expect(
-      sanitizeArgs(['--yes', '--__proto__=0', '-n', '-constructor', 'hoge'])
-    ).toStrictEqual(['--yes', '-n', 'hoge']);
   });
 });
