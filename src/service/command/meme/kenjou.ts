@@ -1,14 +1,19 @@
 import type { MemeTemplate } from '../../../model/meme-template.js';
 
-export const kenjou: MemeTemplate<never, never> = {
+const positionalKeys = ['title'] as const;
+
+export const kenjou: MemeTemplate<
+  never,
+  never,
+  (typeof positionalKeys)[number]
+> = {
   commandNames: ['kenjou'],
   description:
     '[健常者エミュレーター](https://healthy-person-emulator.memo.wiki/)の構文ジェネレーター。\n健常者エミュレーターWikiにありそうなタイトルを指定すればうまくいきます。',
-  flagsKeys: [],
-  optionsKeys: [],
+  requiredPositionalKeys: positionalKeys,
   errorMessage:
     'はらちょのミーム機能を使うときは引数を忘れない方がいい - 健常者エミュレータ事例集Wiki',
   generate(args) {
-    return `${args.body} - 健常者エミュレータ事例集Wiki`;
+    return `${args.requiredPositionals.title} - 健常者エミュレータ事例集Wiki`;
   }
 };

@@ -1,13 +1,17 @@
 import type { MemeTemplate } from '../../../model/meme-template.js';
 
-export const clang: MemeTemplate<never, never> = {
+const positionalKeys = ['domain', 'way'] as const;
+
+export const clang: MemeTemplate<
+  never,
+  never,
+  (typeof positionalKeys)[number]
+> = {
   commandNames: ['clang', 'c'],
   description: '〜の天才\n9つの〜を操る',
-  flagsKeys: [],
-  optionsKeys: [],
+  requiredPositionalKeys: positionalKeys,
   errorMessage: 'エラーの天才\n9つの引数エラーを操る',
-  generate(args) {
-    const [option1, option2] = args.body.split(' ');
-    return `${option1}の天才\n9つの${option2}を操る`;
+  generate({ requiredPositionals: { domain, way } }) {
+    return `${domain}の天才\n9つの${way}を操る`;
   }
 };
