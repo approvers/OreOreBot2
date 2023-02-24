@@ -1,4 +1,4 @@
-import parse from 'cli-argparse';
+import yargs from 'yargs';
 
 import type { MemeTemplate } from '../../model/meme-template.js';
 import type {
@@ -10,7 +10,7 @@ import { memes } from './meme/index.js';
 
 const memesByCommandName: Record<
   string,
-  MemeTemplate<string, string> | undefined
+  MemeTemplate<string, string, string, string> | undefined
 > = Object.fromEntries(
   memes.flatMap((meme) => meme.commandNames.map((name) => [name, meme]))
 );
@@ -46,33 +46,72 @@ export class Meme implements CommandResponder<typeof SCHEMA> {
     if (!meme) {
       return;
     }
-    const sanitizedArgs = sanitizeArgs(commandArgs);
-    const hyphen = (key: string) => (key.length <= 1 ? `-${key}` : `--${key}`);
-    const { flags, options, unparsed } = parse(sanitizedArgs, {
-      flags: meme.flagsKeys.map(hyphen),
-      options: meme.optionsKeys.map(hyphen)
+
+    const builder = yargs(`${commandName} ${commandArgs.join(' ')}`);
+    builder.help('info', meme.description);
+    const flagsKeys = meme.flagsKeys ?? [];
+    for (const flagKey of flagsKeys) {
+      builder.boolean(flagKey);
+    }
+    const optionsKeys = meme.optionsKeys ?? [];
+    for (const optionKey of optionsKeys) {
+      builder.string(optionKey);
+    }
+    const requiredPositionalKeys = meme.requiredPositionalKeys ?? [];
+    const optionalPositionalKeys = meme.optionalPositionalKeys ?? [];
+    const formattedPositionalKeys = requiredPositionalKeys
+      .map((key) => `<${key}>`)
+      .concat(optionalPositionalKeys.map((key) => `[${key}]`))
+      .join(' ');
+    const formattedCommand = `${commandName} ${formattedPositionalKeys}`;
+
+    builder.command(formattedCommand, meme.description, (subBuilder) => {
+      for (const key of requiredPositionalKeys.concat(optionalPositionalKeys)) {
+        subBuilder.positional(key, {
+          type: 'string'
+        });
+      }
     });
-    const body = unparsed.join(' ');
-    if (flags['help'] || options['help']) {
+    builder.fail(() => {
+      void reportError(message, meme);
+    });
+
+    const argv = await builder.parseAsync();
+
+    if (argv.help) {
       await message.reply({
         title: meme.commandNames.map((name) => `\`${name}\``).join('/'),
         description: meme.description
       });
       return;
     }
-    if (body === '') {
-      await message.reply({
-        title: '引数が不足してるみたいだ。',
-        description: meme.errorMessage
-      });
-      return;
+
+    const requiredPositionalsUnsafe = extract(argv, requiredPositionalKeys);
+    for (const key of requiredPositionalKeys) {
+      if (!Object.hasOwn(requiredPositionalsUnsafe, key)) {
+        await reportError(message, meme);
+        return;
+      }
+      const value = requiredPositionalsUnsafe[key] as string;
+      if (value.startsWith('"') && value.endsWith('"')) {
+        requiredPositionalsUnsafe[key] = value.slice(1, -1);
+      }
     }
-    const splitOptions = split(options);
     const generated = meme.generate(
       {
-        flags,
-        options: splitOptions,
-        body
+        flags: extract(argv, flagsKeys) as Record<string, boolean | undefined>,
+        options: extract(argv, optionsKeys) as Record<
+          string,
+          string | undefined
+        >,
+        requiredPositionals: requiredPositionalsUnsafe as Record<
+          string,
+          string
+        >,
+        optionalPositionals: extract(argv, optionalPositionalKeys) as Record<
+          string,
+          string | undefined
+        >
       },
       message.senderName
     );
@@ -80,24 +119,25 @@ export class Meme implements CommandResponder<typeof SCHEMA> {
   }
 }
 
-const TO_RID = /^(-+)?(__proto__|prototype|constructor)/g;
-
-export function sanitizeArgs(args: readonly string[]): string[] {
-  return args.flatMap((arg) => {
-    if (TO_RID.test(arg)) {
-      return [];
-    }
-    return [arg];
+async function reportError(
+  message: CommandMessage<typeof SCHEMA>,
+  meme: MemeTemplate<string, string, string, string>
+) {
+  await message.reply({
+    title: '引数が不足してるみたいだ。',
+    description: meme.errorMessage
   });
 }
 
-function split(
-  options: Record<string, string | string[] | undefined>
-): Record<string, string | undefined> {
-  return Object.fromEntries(
-    Object.entries(options).map(([key, value]) => [
-      key,
-      Array.isArray(value) ? value.join(' ') : value
-    ])
-  );
+function extract(
+  obj: Record<string, unknown>,
+  keys: readonly string[]
+): Record<string, unknown> {
+  const ret: Record<string, unknown> = {};
+  for (const key of keys) {
+    if (Object.hasOwn(obj, key)) {
+      ret[key] = obj[key];
+    }
+  }
+  return ret;
 }
