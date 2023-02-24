@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.39.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.38.0...oreorebot2-v1.39.0) (2023-02-24)
+
+
+### Features
+
+* 共同通信記者の発言の "失敗" の部分を変えられるオプションを追加 ([#746](https://github.com/approvers/OreOreBot2/issues/746)) ([aa1d53f](https://github.com/approvers/OreOreBot2/commit/aa1d53f0bd3e1c6bdaec6d010db0d13ae07b3e9c))
+
+
+### Bug Fixes
+
+* Meme における位置引数のサポートとリファクタ ([#749](https://github.com/approvers/OreOreBot2/issues/749)) ([56b2316](https://github.com/approvers/OreOreBot2/commit/56b231643edef425ea5f9683dad8ca1bc8ee8c9f))
+
 ## [1.38.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.37.1...oreorebot2-v1.38.0) (2023-02-22)
 
 
