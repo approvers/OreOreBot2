@@ -83,28 +83,6 @@ const intents = [
 
 const client = new Client({ intents });
 
-/* 接続時にクライアントの情報を提供する */
-function readyLog(client: Client): void {
-  const connectionClient = client.user;
-  const projectVersion = process.env.npm_package_version ?? '不明';
-  if (connectionClient == null) return;
-  console.info('============');
-  console.info('');
-  console.info('起動完了しました。');
-  console.info('');
-  console.info('有効になっている機能> ' + features.join(', '));
-  console.info('');
-  console.info('接続クライアント> ' + connectionClient.username);
-  console.info('接続クライアントID> ' + connectionClient.id);
-  console.info('接続クライアントバージョン> ' + projectVersion);
-  console.info('');
-  console.info('discord.js バージョン> ' + version);
-  console.info('');
-  console.info(generateDependencyReport());
-  console.info('');
-  console.info('============');
-}
-
 const typoRepo = new InMemoryTypoRepository();
 const reservationRepo = new InMemoryReservationRepository();
 const clock = new ActualClock();
@@ -211,7 +189,26 @@ process.on('SIGTERM', () => {
 });
 
 client.once('ready', () => {
-  readyLog(client);
+  const projectVersion = process.env.npm_package_version;
+  const connectionUser = client.user;
+  if (connectionUser == null) return;
+  if (projectVersion !== undefined) {
+    connectionUser.setActivity(`v${projectVersion}`);
+  }
+  console.log('======================================');
+  console.log('起動しました。');
+  console.log(`ログインユーザー: ${connectionUser.tag}(${connectionUser.id})`);
+  console.log(`バージョン:`);
+  console.log(` - ビルド: v${projectVersion ?? 'unknown'}`);
+  console.log(` - discord.js: v${version}`);
+  console.log(` - Node.js: ${process.version}`);
+  console.log('コンフィグ:');
+  console.log(` - 有効化済み機能: ${FEATURE}`);
+  console.log(` - プレフィックス: ${PREFIX}`);
+  console.log(` - メインチャンネルID: ${mainChannelId}`);
+  console.log(` - ギルドID: ${GUILD_ID}`);
+  console.log(generateDependencyReport());
+  console.log('======================================');
 });
 
 client.login(token).catch(console.error);
