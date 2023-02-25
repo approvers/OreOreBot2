@@ -73,10 +73,16 @@ export class Meme implements CommandResponder<typeof SCHEMA> {
       }
     });
     builder.fail(() => {
-      void reportError(message, meme);
+      // ignore the error
     });
 
-    const argv = await builder.parseAsync();
+    let argv: Record<string, unknown>;
+    try {
+      argv = await builder.parseAsync();
+    } catch {
+      await reportError(message, meme);
+      return;
+    }
 
     if (argv.help) {
       await message.reply({

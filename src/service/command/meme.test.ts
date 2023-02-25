@@ -12,14 +12,15 @@ describe('meme', () => {
    * https://github.com/approvers/OreOreBot2/pull/600
    */
 
-  it('delete message', async () => {
+  it('report error only once', async () => {
     const fn = vi.fn();
     await responder.on(
-      createMockMessage(
-        parseStringsOrThrow(['fukueki', 'こるく'], responder.schema),
-        fn
-      )
+      createMockMessage(parseStringsOrThrow(['hukueki'], responder.schema), fn)
     );
-    expect(fn).not.toHaveBeenCalled();
+    expect(fn).toHaveBeenCalledOnce();
+    expect(fn).toHaveBeenCalledWith({
+      title: '引数が不足してるみたいだ。',
+      description: '服役できなかった。'
+    });
   });
 });
