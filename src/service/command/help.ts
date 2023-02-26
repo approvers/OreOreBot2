@@ -36,6 +36,7 @@ export class HelpCommand implements CommandResponder<typeof SCHEMA> {
   private buildField({
     title,
     description,
+    docId,
     names,
     params
   }: Readonly<HelpInfo & Schema>): EmbedPage {
@@ -52,6 +53,7 @@ export class HelpCommand implements CommandResponder<typeof SCHEMA> {
     const patterns = patternsWithDesc.map(([pattern]) => pattern);
     return {
       title,
+      url: `https://haracho.approvers.dev/commands/${docId}`,
       description: `${description}
 \`${names.join('/')}${['', ...patterns].join(' ')}\`
 ${argsDescriptions}`
