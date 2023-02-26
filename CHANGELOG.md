@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.40.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.39.0...oreorebot2-v1.40.0) (2023-02-26)
+
+
+### Features
+
+* クライアントユーザーのアクティビティ欄にバージョンを表示するように ([#752](https://github.com/approvers/OreOreBot2/issues/752)) ([b74c595](https://github.com/approvers/OreOreBot2/commit/b74c595421dab054b20b1ac6695b5cb64bc8fbe6))
+* ヘルプ埋め込みからドキュメントサイトのリファレンスに飛べるように ([#755](https://github.com/approvers/OreOreBot2/issues/755)) ([02d09dd](https://github.com/approvers/OreOreBot2/commit/02d09ddede8e3b4bf5b283a413de0da37576e325))
+
+
+### Bug Fixes
+
+* エラーを一度しか出さないように修正 ([#751](https://github.com/approvers/OreOreBot2/issues/751)) ([261050f](https://github.com/approvers/OreOreBot2/commit/261050f2f54e0a43d55692f49570db5278f0b83d))
+
 ## [1.39.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.38.0...oreorebot2-v1.39.0) (2023-02-24)
 
 
