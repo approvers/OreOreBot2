@@ -9,6 +9,7 @@ export const clang: MemeTemplate<
 > = {
   commandNames: ['clang', 'c'],
   description: '〜の天才\n9つの〜を操る',
+  docId: 'clang',
   requiredPositionalKeys: positionalKeys,
   errorMessage: 'エラーの天才\n9つの引数エラーを操る',
   generate({ requiredPositionals: { domain, way } }) {

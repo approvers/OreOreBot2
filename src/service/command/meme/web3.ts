@@ -6,6 +6,7 @@ export const web3: MemeTemplate<never, never, (typeof positionalKeys)[number]> =
   {
     commandNames: ['web3'],
     description: '「いちばんやさしい〜の教本」',
+    docId: 'web3',
     requiredPositionalKeys: positionalKeys,
     errorMessage: 'TCP/IP、SMTP、HTTPはGoogleやAmazonに独占されています。',
     generate(args) {
