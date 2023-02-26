@@ -1,0 +1,12 @@
+MORNING:
+  hours: 7
+  minutes: 0
+  message: 'マルナナマルマル、朝だ。…司令官、まだ寝てるの？'
+NOON:
+  hours: 12
+  minutes: 0
+  message: 'Полдень. 今日は何を作ってるんだい？'
+MIDNIGHT:
+  hours: 2
+  minutes: 0
+  message: 'マルフタマルマル、もう遅いね。眠かったらどうぞ。私の膝を貸そうか。'
