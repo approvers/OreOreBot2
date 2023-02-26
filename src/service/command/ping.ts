@@ -19,7 +19,8 @@ const SCHEMA = {
 export class PingCommand implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'Ping',
-    description: '現在のレイテンシを表示するよ。'
+    description: '現在のレイテンシを表示するよ。',
+    docId: 'ping'
   };
   readonly schema = SCHEMA;
 

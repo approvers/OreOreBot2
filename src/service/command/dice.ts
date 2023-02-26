@@ -51,7 +51,8 @@ const SCHEMA = {
 export class DiceCommand implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ダイスロール',
-    description: '賽子が振れるみたいだよ'
+    description: '賽子が振れるみたいだよ',
+    docId: 'dice'
   };
   readonly schema = SCHEMA;
 

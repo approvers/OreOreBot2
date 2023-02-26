@@ -66,7 +66,8 @@ const SCHEMA = {
 export class JudgingCommand implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: JUDGING_TITLE,
-    description: 'プログラムが適格かどうか判定してあげるよ'
+    description: 'プログラムが適格かどうか判定してあげるよ',
+    docId: 'judge'
   };
   readonly schema = SCHEMA;
 

@@ -35,7 +35,8 @@ const SCHEMA = {
 export class RoleCreate implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ロール作成',
-    description: 'ロールを作成するよ'
+    description: 'ロールを作成するよ',
+    docId: 'rolecreate'
   };
   readonly schema = SCHEMA;
 

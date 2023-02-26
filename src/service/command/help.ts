@@ -15,7 +15,8 @@ const SCHEMA = {
 export class HelpCommand implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'はらちょヘルプ',
-    description: 'こんな機能が搭載されてるよ'
+    description: 'こんな機能が搭載されてるよ',
+    docId: 'help'
   };
   readonly schema = SCHEMA;
 

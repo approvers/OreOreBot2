@@ -32,7 +32,8 @@ const SCHEMA = {
 export class Meme implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ミーム構文機能',
-    description: '何これ……引数のテキストを構文にはめ込むみたいだよ'
+    description: '何これ……引数のテキストを構文にはめ込むみたいだよ',
+    docId: 'meme'
   };
   readonly schema = SCHEMA;
 

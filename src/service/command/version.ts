@@ -16,7 +16,8 @@ const SCHEMA = {
 export class GetVersionCommand implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'はらちょバージョン',
-    description: '現在の私のバージョンを出力するよ。'
+    description: '現在の私のバージョンを出力するよ。',
+    docId: 'version'
   };
   readonly schema = SCHEMA;
 
