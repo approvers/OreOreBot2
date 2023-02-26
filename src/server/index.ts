@@ -28,6 +28,7 @@ import {
   roleProxy
 } from '../adaptor/index.js';
 import { DiscordCommandProxy } from '../adaptor/proxy/command.js';
+import { loadSchedule } from '../adaptor/signal-schedule.js';
 import { GenVersionFetcher } from '../adaptor/version/fetch.js';
 import type { Snowflake } from '../model/id.js';
 import { CommandRunner } from '../runner/command.js';
@@ -49,6 +50,7 @@ import {
   allRoleResponder,
   registerAllCommandResponder
 } from '../service/index.js';
+import { startTimeSignal } from '../service/time-signal.js';
 import {
   type VoiceChannelParticipant,
   VoiceDiff
@@ -87,6 +89,7 @@ const reservationRepo = new InMemoryReservationRepository();
 const clock = new ActualClock();
 const sequencesYaml = loadEmojiSeqYaml(['assets', 'emoji-seq.yaml']);
 
+const scheduleRunner = new ScheduleRunner(clock);
 const messageCreateRunner = new MessageResponseRunner(
   new MessageProxy(client, middlewareForMessage())
 );
@@ -94,6 +97,12 @@ if (features.includes('MESSAGE_CREATE')) {
   messageCreateRunner.addResponder(
     allMessageEventResponder(typoRepo, sequencesYaml)
   );
+
+  startTimeSignal({
+    runner: scheduleRunner,
+    clock,
+    schedule: loadSchedule(['assets', 'time-signal.yaml'])
+  });
 }
 
 const messageUpdateRunner = new MessageUpdateResponseRunner(
@@ -102,8 +111,6 @@ const messageUpdateRunner = new MessageUpdateResponseRunner(
 if (features.includes('MESSAGE_UPDATE')) {
   messageUpdateRunner.addResponder(allMessageUpdateEventResponder());
 }
-
-const scheduleRunner = new ScheduleRunner(clock);
 
 const commandProxy = new DiscordCommandProxy(client, PREFIX);
 const commandRunner = new CommandRunner(commandProxy);
