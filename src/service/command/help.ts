@@ -54,7 +54,7 @@ export class HelpCommand implements CommandResponder<typeof SCHEMA> {
     const patterns = patternsWithDesc.map(([pattern]) => pattern);
     return {
       title,
-      url: `https://haracho.approvers.dev/commands/${docId}`,
+      url: `https://haracho.approvers.dev/references/commands/${docId}`,
       description: `${description}
 \`${names.join('/')}${['', ...patterns].join(' ')}\`
 ${argsDescriptions}`
