@@ -36,7 +36,7 @@ export class RoleCreate implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ロール作成',
     description: 'ロールを作成するよ',
-    docId: 'rolecreate'
+    docId: 'role-create'
   };
   readonly schema = SCHEMA;
 

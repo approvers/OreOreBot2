@@ -39,7 +39,7 @@ export class UserInfo implements CommandResponder<typeof SCHEMA> {
     title: 'ユーザー秘書艦',
     description:
       '指定したユーザーの情報を調べてくるよ。限界開発鯖のメンバーしか検索できないから注意してね。',
-    docId: 'userinfo'
+    docId: 'user-info'
   };
   readonly schema = SCHEMA;
 
