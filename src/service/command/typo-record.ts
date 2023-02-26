@@ -118,7 +118,7 @@ export class TypoReporter implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: '今日のTypo',
     description: '「〜だカス」をTypoとして一日間記録するよ',
-    docId: 'typo'
+    pageName: 'typo'
   };
   readonly schema = SCHEMA;
 

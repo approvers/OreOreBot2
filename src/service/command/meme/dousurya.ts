@@ -9,7 +9,7 @@ export const dousurya: MemeTemplate<
 > = {
   commandNames: ['dousurya', 'dousureba'],
   description: '限界みたいな鯖に住んでる〜はどうすりゃいいですか？',
-  docId: 'dousurya',
+  pageName: 'dousurya',
   requiredPositionalKeys: positionalKeys,
   errorMessage: 'どうしようもない。',
   generate(args) {

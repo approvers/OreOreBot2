@@ -43,7 +43,7 @@ export class RoleInfo implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ロール秘書艦',
     description: '指定したロールの情報を調べてくるよ',
-    docId: 'role-info'
+    pageName: 'role-info'
   };
   readonly schema = SCHEMA;
 

@@ -31,7 +31,7 @@ export class DebugCommand implements CommandResponder<typeof SCHEMA> {
     title: 'デバッガーはらちょ',
     description:
       'メッセージIDを渡すと、同じチャンネル内にあればそれをコードブロックとして表示するよ',
-    docId: 'debug'
+    pageName: 'debug'
   };
   readonly schema = SCHEMA;
 

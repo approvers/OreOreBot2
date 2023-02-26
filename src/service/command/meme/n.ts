@@ -5,7 +5,7 @@ const positionalKeys = ['context'] as const;
 export const n: MemeTemplate<never, never, (typeof positionalKeys)[number]> = {
   commandNames: ['n'],
   description: '〜Nった',
-  docId: 'n',
+  pageName: 'n',
   requiredPositionalKeys: positionalKeys,
   errorMessage: 'このままだと <@521958252280545280> みたいに留年しちゃう....',
   generate(args) {

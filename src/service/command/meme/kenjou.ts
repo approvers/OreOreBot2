@@ -10,7 +10,7 @@ export const kenjou: MemeTemplate<
   commandNames: ['kenjou'],
   description:
     '[健常者エミュレーター](https://healthy-person-emulator.memo.wiki/)の構文ジェネレーター。\n健常者エミュレーターWikiにありそうなタイトルを指定すればうまくいきます。',
-  docId: 'kenjou',
+  pageName: 'kenjou',
   requiredPositionalKeys: positionalKeys,
   errorMessage:
     'はらちょのミーム機能を使うときは引数を忘れない方がいい - 健常者エミュレータ事例集Wiki',

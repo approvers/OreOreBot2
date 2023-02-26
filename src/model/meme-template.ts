@@ -22,7 +22,7 @@ export interface MemeTemplate<
    * はらちょドキュメントサイト(haracho.approvers.dev):
    * 各ミームリファレンスのページ名を指定する。
    */
-  docId: string;
+  pageName: string;
   flagsKeys?: readonly FLAGS_KEY[];
   optionsKeys?: readonly OPTIONS_KEY[];
   requiredPositionalKeys?: readonly REQ_POSITIONAL_KEY[];

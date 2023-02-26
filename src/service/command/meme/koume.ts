@@ -9,7 +9,7 @@ export const koume: MemeTemplate<
 > = {
   commandNames: ['koume'],
   description: '〜と思ったら〜♪\n\n〜でした〜♪\n\n引数は2つ必要です。',
-  docId: 'koume',
+  pageName: 'koume',
   requiredPositionalKeys: positionalKeys,
   errorMessage:
     'MEMEを表示しようと思ったら〜♪ 引数が足りませんでした〜♪ チクショー！！',

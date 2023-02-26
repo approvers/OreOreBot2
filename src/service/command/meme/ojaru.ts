@@ -12,7 +12,7 @@ export const ojaru: MemeTemplate<
   commandNames: ['ojaru'],
   description:
     'あっぱれおじゃる様！見事ミーム構文を使いこなされました！`-g`オプションを使用なさってデンボの口調の変更も可能でございます！',
-  docId: 'ojaru',
+  pageName: 'ojaru',
   flagsKeys: ojaruFlags,
   requiredPositionalKeys: positionalKeys,
   errorMessage:

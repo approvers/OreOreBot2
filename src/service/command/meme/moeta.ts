@@ -12,7 +12,7 @@ export const moeta: MemeTemplate<
 > = {
   commandNames: ['moeta', 'yuki'],
   description: `「久留米の花火大会ね、寮から見れたの?」\n「うん ついでに〜が燃えた」\n${source}`,
-  docId: 'moeta',
+  pageName: 'moeta',
   requiredPositionalKeys: positionalKeys,
   errorMessage: source,
   generate(args) {

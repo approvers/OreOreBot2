@@ -17,7 +17,7 @@ export class GetVersionCommand implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'はらちょバージョン',
     description: '現在の私のバージョンを出力するよ。',
-    docId: 'version'
+    pageName: 'version'
   };
   readonly schema = SCHEMA;
 

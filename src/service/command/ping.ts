@@ -20,7 +20,7 @@ export class PingCommand implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'Ping',
     description: '現在のレイテンシを表示するよ。',
-    docId: 'ping'
+    pageName: 'ping'
   };
   readonly schema = SCHEMA;
 

@@ -85,7 +85,7 @@ export interface HelpInfo {
    * 各コマンドリファレンスのページ名を指定する。
    * 例: !ping コマンドのリファレンスが `haracho.approvers.dev/commands/ping` にある場合は `ping` を docId に指定する。
    */
-  docId: string;
+  pageName: string;
 }
 
 export interface CommandResponder<S extends Schema> {

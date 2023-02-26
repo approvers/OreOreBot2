@@ -22,7 +22,7 @@ export class RoleRank implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ロール数ランキング',
     description: '各メンバーごとのロール数をランキング形式で表示するよ',
-    docId: 'role-rank'
+    pageName: 'role-rank'
   };
   readonly schema = SCHEMA;
 

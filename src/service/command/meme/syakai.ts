@@ -9,7 +9,7 @@ export const syakai: MemeTemplate<
 > = {
   commandNames: ['syakai'],
   description: '「首相、～に否定的な考え ― 『社会が変わってしまう』」',
-  docId: 'syakai',
+  pageName: 'syakai',
   requiredPositionalKeys: positionalKeys,
   errorMessage: '極めて慎重に検討すべき課題だ',
   generate(args) {

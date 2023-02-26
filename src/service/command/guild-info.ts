@@ -77,7 +77,7 @@ export class GuildInfo implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ギルド秘書艦',
     description: '限界開発鯖の情報を持ってくるよ',
-    docId: 'guild-info'
+    pageName: 'guild-info'
   };
   readonly schema = SCHEMA;
 

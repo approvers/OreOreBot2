@@ -24,7 +24,7 @@ export class GyokuonCommand implements CommandResponder<typeof SCHEMA> {
     description:
       'VC内にこるくの玉音放送を再生するよ。引数無しで即起動。どの方式でもコマンド発行者がVCに居ないと動かないよ。',
     // 音声機能関連の機能は voice/ 以下にドキュメントを置いているため
-    docId: 'voice/colk'
+    pageName: 'voice/colk'
   };
   readonly schema = SCHEMA;
 

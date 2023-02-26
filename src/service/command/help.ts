@@ -16,7 +16,7 @@ export class HelpCommand implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'はらちょヘルプ',
     description: 'こんな機能が搭載されてるよ',
-    docId: 'help'
+    pageName: 'help'
   };
   readonly schema = SCHEMA;
 
@@ -37,7 +37,7 @@ export class HelpCommand implements CommandResponder<typeof SCHEMA> {
   private buildField({
     title,
     description,
-    docId,
+    pageName,
     names,
     params
   }: Readonly<HelpInfo & Schema>): EmbedPage {
@@ -54,7 +54,7 @@ export class HelpCommand implements CommandResponder<typeof SCHEMA> {
     const patterns = patternsWithDesc.map(([pattern]) => pattern);
     return {
       title,
-      url: `https://haracho.approvers.dev/references/commands/${docId}`,
+      url: `https://haracho.approvers.dev/references/commands/${pageName}`,
       description: `${description}
 \`${names.join('/')}${['', ...patterns].join(' ')}\`
 ${argsDescriptions}`

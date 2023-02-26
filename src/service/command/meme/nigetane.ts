@@ -12,7 +12,7 @@ export const nigetane: MemeTemplate<
 > = {
   commandNames: ['nigetane'],
   description: '… 〜から悪くないって、… (from Arcaea "Final Verdict")',
-  docId: 'nigetane',
+  pageName: 'nigetane',
   requiredPositionalKeys: positionalKeys,
   errorMessage: '……手遅れなのは頭（おつむ）からなのかな。',
   generate: ({ requiredPositionals: { reason } }) => template(reason)
