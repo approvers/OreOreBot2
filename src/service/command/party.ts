@@ -95,7 +95,8 @@ export class PartyCommand implements CommandResponder<typeof SCHEMA> {
     title: 'Party一葉',
     description:
       'VC内の人類に押しかけてPartyを開くよ。引数なしで即起動。どの方式でもコマンド発行者がVCに居ないと動かないよ',
-    docId: 'patry'
+    // 音声機能関連の機能は voice/ 以下にドキュメントを置いているため
+    docId: 'voice/party'
   };
   readonly schema = SCHEMA;
 

@@ -123,7 +123,8 @@ export class KaereCommand implements CommandResponder<typeof SCHEMA> {
     title: 'Kaere一葉',
     description:
       'VC内の人類に就寝を促すよ。引数なしで即起動。どの方式でもコマンド発行者がVCに居ないと動かないよ',
-    docId: 'kaere'
+    // 音声機能関連の機能は voice/ 以下にドキュメントを置いているため
+    docId: 'voice/kaere'
   };
   readonly schema = SCHEMA;
 

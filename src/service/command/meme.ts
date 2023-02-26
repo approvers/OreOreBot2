@@ -88,7 +88,7 @@ export class Meme implements CommandResponder<typeof SCHEMA> {
     if (argv.help) {
       await message.reply({
         title: meme.commandNames.map((name) => `\`${name}\``).join('/'),
-        url: `https://haracho.approvers.dev/commands/meme/${meme.docId}`,
+        url: `https://haracho.approvers.dev/references/commands/meme/${meme.docId}`,
         description: meme.description
       });
       return;

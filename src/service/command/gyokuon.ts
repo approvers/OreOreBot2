@@ -23,7 +23,8 @@ export class GyokuonCommand implements CommandResponder<typeof SCHEMA> {
     title: 'こるくの玉音放送',
     description:
       'VC内にこるくの玉音放送を再生するよ。引数無しで即起動。どの方式でもコマンド発行者がVCに居ないと動かないよ。',
-    docId: 'gyokuon'
+    // 音声機能関連の機能は voice/ 以下にドキュメントを置いているため
+    docId: 'voice/colk'
   };
   readonly schema = SCHEMA;
 
