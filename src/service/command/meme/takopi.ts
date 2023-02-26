@@ -12,6 +12,7 @@ export const takopi: MemeTemplate<
   commandNames: ['takopi'],
   description:
     '「〜、出して」\n`-f` で教員と自分の名前の位置を反対にします。\n`-c <教員の名前> <出すもの>`で教員の名前も変更可能です。',
+  pageName: 'takopi',
   flagsKeys: takopiFlags,
   optionsKeys: takopiOptions,
   requiredPositionalKeys: positionalKeys,

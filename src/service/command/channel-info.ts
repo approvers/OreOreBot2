@@ -25,7 +25,8 @@ const SCHEMA = {
 export class ChannelInfo implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'チャンネル秘書艦',
-    description: '指定したチャンネルの情報を調べてくるよ'
+    description: '指定したチャンネルの情報を調べてくるよ',
+    pageName: 'channel-info'
   };
 
   readonly schema = SCHEMA;

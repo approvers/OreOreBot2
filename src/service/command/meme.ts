@@ -32,7 +32,8 @@ const SCHEMA = {
 export class Meme implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ミーム構文機能',
-    description: '何これ……引数のテキストを構文にはめ込むみたいだよ'
+    description: '何これ……引数のテキストを構文にはめ込むみたいだよ',
+    pageName: 'meme'
   };
   readonly schema = SCHEMA;
 
@@ -87,6 +88,7 @@ export class Meme implements CommandResponder<typeof SCHEMA> {
     if (argv.help) {
       await message.reply({
         title: meme.commandNames.map((name) => `\`${name}\``).join('/'),
+        url: `https://haracho.approvers.dev/references/commands/meme/${meme.pageName}`,
         description: meme.description
       });
       return;

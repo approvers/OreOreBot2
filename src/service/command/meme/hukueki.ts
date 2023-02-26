@@ -9,6 +9,7 @@ export const hukueki: MemeTemplate<
 > = {
   commandNames: ['hukueki'],
   description: 'ねぇ、将来何してるだろうね\n〜はしてないといいね\n困らないでよ',
+  pageName: 'hukueki',
   requiredPositionalKeys: positionalKeys,
   errorMessage: '服役できなかった。',
   generate(args) {

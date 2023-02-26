@@ -24,7 +24,8 @@ const SCHEMA = {
 export class KokuseiChousa implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: '国勢調査',
-    description: '限界開発鯖の人類の数、Botの数とBot率を算出するよ。'
+    description: '限界開発鯖の人類の数、Botの数とBot率を算出するよ。',
+    pageName: 'kokusei'
   };
   readonly schema = SCHEMA;
 

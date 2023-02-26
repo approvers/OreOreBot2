@@ -16,6 +16,7 @@ export const tsureteike: MemeTemplate<
   commandNames: ['tsureteike', 'hunt'],
   description:
     '「この中に〜はいるか 連れて行け」\nex.) `!tsureteike プログラマ Rustは知っているか? ゲームですか? 錆のこと? 🦀`',
+  pageName: 'tsureteike',
   requiredPositionalKeys: positionalKeys,
   errorMessage: '構文ミスだ、問答無用で連れて行け',
   generate({ requiredPositionals }) {

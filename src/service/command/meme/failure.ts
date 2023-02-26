@@ -12,6 +12,7 @@ export const failure: MemeTemplate<
 > = {
   commandNames: ['failure', 'fail'],
   description: `「〜〜〜」\n「わかりました。それは一般に失敗と言います、ありがとうございます」\n* \`-k <失敗部分> <説明>\` で失敗部分を変更できます。 \n [元ネタ](${sourceLink})`,
+  pageName: 'failure',
   optionsKeys: failureOption,
   requiredPositionalKeys: positionalKeys,
   errorMessage:

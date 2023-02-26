@@ -9,6 +9,7 @@ export const lolicon: MemeTemplate<
 > = {
   commandNames: ['lolicon'],
   description: 'だから僕は〜を辞めた',
+  pageName: 'lolicon',
   requiredPositionalKeys: positionalKeys,
   errorMessage: 'こるくはロリコンをやめられなかった。',
   generate(args, author) {

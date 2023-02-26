@@ -80,6 +80,12 @@ export interface SentMessage {
 export interface HelpInfo {
   title: string;
   description: string;
+  /**
+   * はらちょドキュメントサイト(haracho.approvers.dev):
+   * 各コマンドリファレンスのページ名を指定する。
+   * 例: !ping コマンドのリファレンスが `haracho.approvers.dev/commands/ping` にある場合は `ping` を docId に指定する。
+   */
+  pageName: string;
 }
 
 export interface CommandResponder<S extends Schema> {

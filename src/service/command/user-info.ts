@@ -38,7 +38,8 @@ export class UserInfo implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ユーザー秘書艦',
     description:
-      '指定したユーザーの情報を調べてくるよ。限界開発鯖のメンバーしか検索できないから注意してね。'
+      '指定したユーザーの情報を調べてくるよ。限界開発鯖のメンバーしか検索できないから注意してね。',
+    pageName: 'user-info'
   };
   readonly schema = SCHEMA;
 

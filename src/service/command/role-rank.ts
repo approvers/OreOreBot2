@@ -21,7 +21,8 @@ const SCHEMA = {
 export class RoleRank implements CommandResponder<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ロール数ランキング',
-    description: '各メンバーごとのロール数をランキング形式で表示するよ'
+    description: '各メンバーごとのロール数をランキング形式で表示するよ',
+    pageName: 'role-rank'
   };
   readonly schema = SCHEMA;
 
