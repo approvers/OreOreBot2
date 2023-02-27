@@ -1,5 +1,4 @@
 import { Temporal, toTemporalInstant } from '@js-temporal/polyfill';
-import { format } from 'date-fns';
 import { setTimeout } from 'timers/promises';
 
 import type {
@@ -52,10 +51,20 @@ const reportTimeSignal =
     output: StandardOutput;
   }): ScheduleTask =>
   async (): Promise<Date> => {
+    const nowInstant = toTemporalInstant.call(clock.now());
+    const now = nowInstant.toZonedDateTimeISO('Asia/Tokyo');
     await output.sendEmbed({
       title: 'はらちょ時報システム',
       description: signalMessage.message,
-      footer: format(clock.now(), 'yyyy-MM-dd HH:mm:ss')
+      footer: now.toLocaleString('ja-JP', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        timeZoneName: 'short'
+      })
     });
     await setTimeout(60 * 1000);
     return intoDate(signalMessage.time, clock);

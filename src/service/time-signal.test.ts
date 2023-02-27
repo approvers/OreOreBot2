@@ -43,7 +43,7 @@ describe('time signal reported', () => {
     expect(sendEmbed).toHaveBeenCalledWith({
       title: 'はらちょ時報システム',
       description: 'fuga',
-      footer: '2020-01-01 12:01:00'
+      footer: '2020/01/01 12:01:00 JST'
     });
   });
 });
