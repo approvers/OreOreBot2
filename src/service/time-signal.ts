@@ -1,5 +1,5 @@
-import { addDays, format, setHours, setMinutes } from 'date-fns';
-// eslint-disable-next-line import/order
+import { Temporal, toTemporalInstant } from '@js-temporal/polyfill';
+import { format } from 'date-fns';
 import { setTimeout } from 'timers/promises';
 
 import type {
@@ -22,14 +22,16 @@ export interface SignalTime {
 }
 
 const intoDate = ({ hours, minutes }: SignalTime, clock: Clock): Date => {
-  const now = clock.now();
-  let hasHoursMinutes = new Date(now);
-  hasHoursMinutes = setHours(hasHoursMinutes, hours);
-  hasHoursMinutes = setMinutes(hasHoursMinutes, minutes);
-  if (hasHoursMinutes.getTime() < now.getTime()) {
-    hasHoursMinutes = addDays(hasHoursMinutes, 1);
+  const nowInstant = toTemporalInstant.call(clock.now());
+  const now = nowInstant.toZonedDateTimeISO('Asia/Tokyo');
+  let hasHoursMinutes = now.withPlainTime({
+    hour: hours,
+    minute: minutes
+  });
+  if (Temporal.Instant.compare(nowInstant, hasHoursMinutes.toInstant()) > 0) {
+    hasHoursMinutes = hasHoursMinutes.add(Temporal.Duration.from({ days: 1 }));
   }
-  return hasHoursMinutes;
+  return new Date(hasHoursMinutes.epochMilliseconds);
 };
 
 export interface SignalMessage {
