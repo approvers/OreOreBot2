@@ -1,7 +1,7 @@
 import { addMilliseconds, isAfter } from 'date-fns';
 
 /**
- * `ScheduleRunner` に登録するイベントが実装するインターフェイス。戻り値は次に自身を再実行する時刻。`null` を返した場合は再実行されない。
+ * `ScheduleRunner` に登録するイベントが実装するインターフェイス。戻り値は次に自身を再実行する UTC 時刻。`null` を返した場合は再実行されない。
  */
 export interface ScheduleTask {
   (): Promise<Date | null>;
@@ -12,7 +12,7 @@ export interface ScheduleTask {
  */
 export interface Clock {
   /**
-   * 現在時刻を取得する。
+   * 現在の UTC 時刻を取得する。
    *
    * @returns 呼び出した時点での時刻。
    */
@@ -77,7 +77,7 @@ export class ScheduleRunner {
    *
    * @param key - あとで登録したタスクを停止させるときに用いるキーのオブジェクト
    * @param task - 実行したいタスク
-   * @param time - いつ実行するのか
+   * @param time - いつ実行するのか、UTC 時刻で
    */
   runOnNextTime(key: unknown, task: ScheduleTask, time: Date): void {
     this.queue.set(key, [task, time]);

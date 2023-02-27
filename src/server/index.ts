@@ -28,6 +28,7 @@ import {
   roleProxy
 } from '../adaptor/index.js';
 import { DiscordCommandProxy } from '../adaptor/proxy/command.js';
+import { loadSchedule } from '../adaptor/signal-schedule.js';
 import { GenVersionFetcher } from '../adaptor/version/fetch.js';
 import type { Snowflake } from '../model/id.js';
 import { CommandRunner } from '../runner/command.js';
@@ -49,6 +50,7 @@ import {
   allRoleResponder,
   registerAllCommandResponder
 } from '../service/index.js';
+import { startTimeSignal } from '../service/time-signal.js';
 import {
   type VoiceChannelParticipant,
   VoiceDiff
@@ -86,7 +88,9 @@ const typoRepo = new InMemoryTypoRepository();
 const reservationRepo = new InMemoryReservationRepository();
 const clock = new ActualClock();
 const sequencesYaml = loadEmojiSeqYaml(['assets', 'emoji-seq.yaml']);
+const output = new DiscordOutput(client, mainChannelId);
 
+const scheduleRunner = new ScheduleRunner(clock);
 const messageCreateRunner = new MessageResponseRunner(
   new MessageProxy(client, middlewareForMessage())
 );
@@ -94,6 +98,13 @@ if (features.includes('MESSAGE_CREATE')) {
   messageCreateRunner.addResponder(
     allMessageEventResponder(typoRepo, sequencesYaml)
   );
+
+  startTimeSignal({
+    runner: scheduleRunner,
+    clock,
+    schedule: loadSchedule(['assets', 'time-signal.yaml']),
+    output
+  });
 }
 
 const messageUpdateRunner = new MessageUpdateResponseRunner(
@@ -103,12 +114,9 @@ if (features.includes('MESSAGE_UPDATE')) {
   messageUpdateRunner.addResponder(allMessageUpdateEventResponder());
 }
 
-const scheduleRunner = new ScheduleRunner(clock);
-
 const commandProxy = new DiscordCommandProxy(client, PREFIX);
 const commandRunner = new CommandRunner(commandProxy);
 const stats = new DiscordMemberStats(client, GUILD_ID as Snowflake);
-const output = new DiscordOutput(client, mainChannelId);
 
 // ほとんど変わらないことが予想され環境変数で管理する必要性が薄いので、ハードコードした。
 const KAWAEMON_ID = '391857452360007680' as Snowflake;

@@ -4,7 +4,7 @@ export class MockClock implements Clock {
   constructor(public placeholder: Date) {}
 
   now(): Date {
-    return this.placeholder;
+    return new Date(this.placeholder);
   }
 }
 
