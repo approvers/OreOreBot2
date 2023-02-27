@@ -88,6 +88,7 @@ const typoRepo = new InMemoryTypoRepository();
 const reservationRepo = new InMemoryReservationRepository();
 const clock = new ActualClock();
 const sequencesYaml = loadEmojiSeqYaml(['assets', 'emoji-seq.yaml']);
+const output = new DiscordOutput(client, mainChannelId);
 
 const scheduleRunner = new ScheduleRunner(clock);
 const messageCreateRunner = new MessageResponseRunner(
@@ -101,7 +102,8 @@ if (features.includes('MESSAGE_CREATE')) {
   startTimeSignal({
     runner: scheduleRunner,
     clock,
-    schedule: loadSchedule(['assets', 'time-signal.yaml'])
+    schedule: loadSchedule(['assets', 'time-signal.yaml']),
+    output
   });
 }
 
@@ -115,7 +117,6 @@ if (features.includes('MESSAGE_UPDATE')) {
 const commandProxy = new DiscordCommandProxy(client, PREFIX);
 const commandRunner = new CommandRunner(commandProxy);
 const stats = new DiscordMemberStats(client, GUILD_ID as Snowflake);
-const output = new DiscordOutput(client, mainChannelId);
 
 // ほとんど変わらないことが予想され環境変数で管理する必要性が薄いので、ハードコードした。
 const KAWAEMON_ID = '391857452360007680' as Snowflake;
