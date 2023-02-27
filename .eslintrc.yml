@@ -15,18 +15,9 @@ parserOptions:
 plugins:
   - '@typescript-eslint'
   - 'markdown'
-  - 'simple-import-sort'
-  - 'import'
   - eslint-plugin-tsdoc
 rules:
-  'simple-import-sort/imports': 'error'
-  'simple-import-sort/exports': 'error'
   'max-params': 'error'
-  'import/first': 'error'
-  'import/no-duplicates': 'error'
-  # TODO: 必要に応じてルールを追加する
-  #  https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/order.md
-  'import/order': [2, { 'alphabetize': { 'order': 'asc' } }]
   'tsdoc/syntax': 'warn'
 overrides:
   - files: ['**/*.md']
