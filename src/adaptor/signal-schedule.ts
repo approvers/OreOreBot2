@@ -4,7 +4,8 @@ import { parse } from 'yaml';
 
 import { messageTypes, SignalSchedule } from '../service/time-signal.js';
 
-const fields = ['hours', 'minutes', 'message'] as const;
+const messageFields = ['time', 'message'] as const;
+const timeFields = ['hours', 'minutes'] as const;
 
 const validate = (object: unknown): object is SignalSchedule => {
   if (!(typeof object === 'object' && object !== null)) {
@@ -18,13 +19,23 @@ const validate = (object: unknown): object is SignalSchedule => {
     if (!(typeof entryUnsafe === 'object' && entryUnsafe !== null)) {
       return false;
     }
-    for (const field of fields) {
+    for (const field of messageFields) {
       if (!Object.hasOwn(entryUnsafe, field)) {
         return false;
       }
     }
-    const { hours, minutes, message } = entryUnsafe as Record<
-      (typeof fields)[number],
+    const { time: timeUnsafe, message } = entryUnsafe as Record<
+      (typeof messageFields)[number],
+      unknown
+    >;
+    if (!(typeof message === 'string' && 0 < message.length)) {
+      return false;
+    }
+    if (!(typeof timeUnsafe === 'object' && timeUnsafe !== null)) {
+      return false;
+    }
+    const { hours, minutes } = timeUnsafe as Record<
+      (typeof timeFields)[number],
       unknown
     >;
     if (
@@ -47,9 +58,6 @@ const validate = (object: unknown): object is SignalSchedule => {
     ) {
       return false;
     }
-    if (!(typeof message === 'string' && 0 < message.length)) {
-      return false;
-    }
   }
   return true;
 };
@@ -60,7 +68,6 @@ export const loadSchedule = (path: string[]): SignalSchedule => {
     flag: 'r'
   });
   const parsed = parse(fileText) as unknown;
-  console.dir(parsed);
   if (!validate(parsed)) {
     console.error(parsed);
     throw new Error('invalid signal schedule');
