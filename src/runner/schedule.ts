@@ -12,7 +12,7 @@ export interface ScheduleTask {
  */
 export interface Clock {
   /**
-   * 現在時刻を取得する。
+   * 現在の UTC 時刻を取得する。
    *
    * @returns 呼び出した時点での時刻。
    */

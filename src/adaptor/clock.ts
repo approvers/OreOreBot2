@@ -4,12 +4,12 @@ export class MockClock implements Clock {
   constructor(public placeholder: Date) {}
 
   now(): Date {
-    return this.placeholder;
+    return new Date(this.placeholder.getUTCMilliseconds());
   }
 }
 
 export class ActualClock implements Clock {
   now(): Date {
-    return new Date();
+    return new Date(new Date().getUTCMilliseconds());
   }
 }
