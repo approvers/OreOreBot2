@@ -6,7 +6,7 @@ import type { StandardOutput } from './output.js';
 import { SignalSchedule, startTimeSignal } from './time-signal.js';
 
 describe('time signal reported', () => {
-  const clock = new MockClock(new Date(0));
+  const clock = new MockClock(new Date(Date.UTC(2020, 0, 1, 0, 0)));
   const runner = new ScheduleRunner(clock);
   const output: StandardOutput = { sendEmbed: () => Promise.resolve() };
   test('at now', () => {
@@ -36,14 +36,14 @@ describe('time signal reported', () => {
     };
 
     startTimeSignal({ runner, clock, schedule, output });
-    clock.placeholder = new Date(8 * 60 * 60 * 1000);
+    clock.placeholder = new Date(Date.UTC(2020, 0, 1, 3, 1));
     runner.consume();
 
     expect(sendEmbed).toHaveBeenCalledOnce();
     expect(sendEmbed).toHaveBeenCalledWith({
       title: 'はらちょ時報システム',
-      description: 'hoge',
-      footer: '1970-01-01 08:00:00 JST'
+      description: 'fuga',
+      footer: '2020-01-01 12:01:00'
     });
   });
 });

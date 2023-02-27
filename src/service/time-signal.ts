@@ -1,5 +1,4 @@
-import { addDays, isBefore, setHours, setMinutes } from 'date-fns';
-import { formatInTimeZone, utcToZonedTime } from 'date-fns-tz';
+import { addDays, format, setHours, setMinutes } from 'date-fns';
 // eslint-disable-next-line import/order
 import { setTimeout } from 'timers/promises';
 
@@ -14,15 +13,20 @@ export const messageTypes = ['MORNING', 'NOON', 'MIDNIGHT'] as const;
 
 export type SignalMessageType = (typeof messageTypes)[number];
 
+/**
+ * 時報を送る時分を Asia/Tokyo のタイムゾーンで表す。
+ */
 export interface SignalTime {
   hours: number;
   minutes: number;
 }
 
 const intoDate = ({ hours, minutes }: SignalTime, clock: Clock): Date => {
-  const now = utcToZonedTime(clock.now().getUTCDate(), 'Asia/Tokyo');
-  let hasHoursMinutes = setHours(setMinutes(now, minutes), hours);
-  if (isBefore(now, hasHoursMinutes)) {
+  const now = clock.now();
+  let hasHoursMinutes = new Date(now);
+  hasHoursMinutes = setHours(hasHoursMinutes, hours);
+  hasHoursMinutes = setMinutes(hasHoursMinutes, minutes);
+  if (hasHoursMinutes.getTime() < now.getTime()) {
     hasHoursMinutes = addDays(hasHoursMinutes, 1);
   }
   return hasHoursMinutes;
@@ -49,11 +53,7 @@ const reportTimeSignal =
     await output.sendEmbed({
       title: 'はらちょ時報システム',
       description: signalMessage.message,
-      footer: formatInTimeZone(
-        clock.now().getUTCDay(),
-        'Asia/Tokyo',
-        'yyyy-MM-dd HH:mm:ss zzz'
-      )
+      footer: format(clock.now(), 'yyyy-MM-dd HH:mm:ss')
     });
     await setTimeout(60 * 1000);
     return intoDate(signalMessage.time, clock);
@@ -72,10 +72,12 @@ export const startTimeSignal = ({
 }) => {
   for (const messageType of messageTypes) {
     const signalMessage = schedule[messageType];
+    const reportTask = reportTimeSignal({ signalMessage, clock, output });
+    const firstSignalDate = intoDate(signalMessage.time, clock);
     runner.runOnNextTime(
       `TIME_SIGNAL_${messageType}`,
-      reportTimeSignal({ signalMessage, clock, output }),
-      intoDate(signalMessage.time, clock)
+      reportTask,
+      firstSignalDate
     );
   }
 };
