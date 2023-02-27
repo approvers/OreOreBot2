@@ -11,8 +11,8 @@ import type {
 } from '../../service/command/guild-info.js';
 import type { MemberStats } from '../../service/command/kokusei-chousa.js';
 import type {
-  MembersWithRoleRepository,
-  MemberWithRole
+  MemberWithRole,
+  MembersWithRoleRepository
 } from '../../service/command/role-rank.js';
 import type {
   UserStats,

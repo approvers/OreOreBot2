@@ -1,12 +1,12 @@
 import {
   type AudioPlayer,
   AudioPlayerStatus,
+  type VoiceConnection as RawVoiceConnection,
+  VoiceConnectionStatus,
   createAudioPlayer,
   createAudioResource,
   entersState,
-  joinVoiceChannel,
-  type VoiceConnection as RawVoiceConnection,
-  VoiceConnectionStatus
+  joinVoiceChannel
 } from '@discordjs/voice';
 import {
   ChannelType,

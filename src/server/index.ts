@@ -1,8 +1,7 @@
-import { join } from 'node:path';
-
 import { generateDependencyReport } from '@discordjs/voice';
 import { Client, GatewayIntentBits, version } from 'discord.js';
 import dotenv from 'dotenv';
+import { join } from 'node:path';
 
 import { DiscordChannelRepository } from '../adaptor/discord/channel.js';
 import { DiscordMemberStats } from '../adaptor/discord/member-stats.js';
@@ -23,10 +22,10 @@ import {
   MathRandomGenerator,
   MessageProxy,
   MessageUpdateProxy,
+  VoiceRoomProxy,
   middlewareForMessage,
   middlewareForUpdateMessage,
-  roleProxy,
-  VoiceRoomProxy
+  roleProxy
 } from '../adaptor/index.js';
 import { DiscordCommandProxy } from '../adaptor/proxy/command.js';
 import { GenVersionFetcher } from '../adaptor/version/fetch.js';

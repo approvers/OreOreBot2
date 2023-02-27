@@ -1,6 +1,5 @@
-import EventEmitter from 'node:events';
-
 import { addDays, setHours, setMinutes } from 'date-fns';
+import EventEmitter from 'node:events';
 import { afterAll, describe, expect, it, vi } from 'vitest';
 
 import { InMemoryTypoRepository, MockClock } from '../../adaptor/index.js';
