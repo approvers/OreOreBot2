@@ -1,14 +1,14 @@
 import {
-  makeError,
   Params,
   ParamsValues,
+  ParseError,
   ParsedSchema,
   ParsedSubCommand,
-  ParseError,
   Schema,
   SubCommand,
   SubCommandGroup,
-  SubCommands
+  SubCommands,
+  makeError
 } from '../../../model/command-schema.js';
 
 const DIGITS = /^\d+$/;
