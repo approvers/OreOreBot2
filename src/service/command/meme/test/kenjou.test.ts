@@ -20,7 +20,7 @@ describe('meme', () => {
         (message) => {
           expect(message).toStrictEqual({
             description:
-              'ホテルのオートロックの鍵は部屋に置きっぱなしにしないほうがいい - 健常者エミュレータ事例集Wiki'
+              'ホテルのオートロックの鍵は部屋に置きっぱなしにしないほうがいい - 健常者エミュレータ事例集'
           });
         }
       )
@@ -35,7 +35,7 @@ describe('meme', () => {
           expect(message).toStrictEqual({
             title: '引数が不足してるみたいだ。',
             description:
-              'はらちょのミーム機能を使うときは引数を忘れない方がいい - 健常者エミュレータ事例集Wiki'
+              'はらちょのミーム機能を使うときは引数を忘れない方がいい - 健常者エミュレータ事例集'
           });
         }
       )
