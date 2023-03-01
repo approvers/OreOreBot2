@@ -1,5 +1,7 @@
 import type { MemeTemplate } from '../../../model/meme-template.js';
 
+const sourceLink = 'https://healthy-person-emulator.org/';
+
 const positionalKeys = ['title'] as const;
 
 export const kenjou: MemeTemplate<
@@ -8,8 +10,7 @@ export const kenjou: MemeTemplate<
   (typeof positionalKeys)[number]
 > = {
   commandNames: ['kenjou'],
-  description:
-    '[健常者エミュレーター](https://healthy-person-emulator.memo.wiki/)の構文ジェネレーター。\n健常者エミュレーターWikiにありそうなタイトルを指定すればうまくいきます。',
+  description: `[健常者エミュレーターWiki](${sourceLink})の構文ジェネレーター。\n健常者エミュレーターWikiにありそうなタイトルを指定すればうまくいきます。`,
   pageName: 'kenjou',
   requiredPositionalKeys: positionalKeys,
   errorMessage:
