@@ -18,9 +18,7 @@ describe('ChannelInfo', () => {
               name: '無法地帯',
               createdAt: new Date(20200101),
               url: 'https://discord.com/channels/683939861539192860/690909527461199922',
-              type: 'Text',
-              administrable: true,
-              viewable: true
+              type: 'Text'
             }
           : null
       )
@@ -51,16 +49,6 @@ describe('ChannelInfo', () => {
         {
           name: 'チャンネルタイプ',
           value: `Text`,
-          inline: true
-        },
-        {
-          name: '管理可能か',
-          value: '可能',
-          inline: true
-        },
-        {
-          name: '表示可能か',
-          value: '可能',
           inline: true
         },
         {
