@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.41.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.40.0...oreorebot2-v1.41.0) (2023-03-01)
+
+
+### Features
+
+* 新時報システムの追加 ([#756](https://github.com/approvers/OreOreBot2/issues/756)) ([46bea77](https://github.com/approvers/OreOreBot2/commit/46bea776b221c9931bf59e24d5ada35bbf3edd3c))
+
+
+### Bug Fixes
+
+* 健常者エミュレーターWikiのURLを新しいWikiに置き換え ([#761](https://github.com/approvers/OreOreBot2/issues/761)) ([ab98217](https://github.com/approvers/OreOreBot2/commit/ab9821755ca45c1f89f5f8a2595f206ba936341e))
+
 ## [1.40.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.39.0...oreorebot2-v1.40.0) (2023-02-26)
 
 
