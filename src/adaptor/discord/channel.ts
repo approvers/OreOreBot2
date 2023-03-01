@@ -37,9 +37,7 @@ export class DiscordChannelRepository implements ChannelStatsRepository {
       name: channel.name,
       createdAt: channel.createdAt ?? undefined,
       url: channel.url,
-      type: mappingChannelTypes[channel.type],
-      administrable: channel.manageable,
-      viewable: channel.viewable
+      type: mappingChannelTypes[channel.type]
     };
   }
 }
