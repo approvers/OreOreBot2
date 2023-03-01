@@ -16,6 +16,4 @@ export interface ChannelStats {
   createdAt?: Date;
   url: string;
   type: ChannelType;
-  administrable: boolean;
-  viewable: boolean;
 }
