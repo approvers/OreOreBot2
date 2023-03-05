@@ -2,19 +2,21 @@
 
 OreOreBot2 には誰でも貢献でき、その貢献にはさまざまな方法があります。
 
-- [バグレポートの提出](#バグレポートの提出)
-  - [セキュリティーに関する不具合の報告](#セキュリティーに関する不具合の報告)
-- [新機能リクエストの提出](#新機能リクエストの提出)
-- [プルリクエストの提出](#プルリクエストの提出)
-  - [開発参加の流れ](#開発参加の流れ)
-  - [コーティング規約](#コーティング規約)
-  - [テストについて](#テストについて)
-  - [コミットメッセージ](#コミットメッセージ)
-  - [その他](#その他)
-- [GitHub Sponsor の掲載条件](#github-sponsor-の掲載条件)
-- [開発環境](#開発環境)
-  - [機能の有効・無効](#機能の有効無効)
-  - [音楽再生系の機能](#音楽再生系の機能)
+- [OreOreBot2 への貢献](#oreorebot2-への貢献)
+  - [バグレポートの提出](#バグレポートの提出)
+    - [セキュリティーに関する不具合の報告](#セキュリティーに関する不具合の報告)
+  - [新機能リクエストの提出](#新機能リクエストの提出)
+  - [プルリクエストの提出](#プルリクエストの提出)
+    - [開発参加の流れ](#開発参加の流れ)
+    - [コーティング規約](#コーティング規約)
+    - [テストについて](#テストについて)
+      - [テストの例](#テストの例)
+    - [コミットメッセージ](#コミットメッセージ)
+    - [その他](#その他)
+  - [GitHub Sponsor の掲載条件](#github-sponsor-の掲載条件)
+  - [開発環境](#開発環境)
+    - [機能の有効・無効](#機能の有効無効)
+    - [音楽再生系の機能](#音楽再生系の機能)
 
 ## バグレポートの提出
 
@@ -29,20 +31,13 @@ OreOreBot2 の不具合を発見した際は **[Issues](https://github.com/appro
 
 ### セキュリティーに関する不具合の報告
 
-セキュリティーに関する不具合は Issue ではなく、適切な方法で報告する必要があります。
+セキュリティーに関する不具合は Issue ではなく、GitHub Security Advisories から Draft Advisory を生成してください。
 
-報告する方法は 2 つあります。どちらで報告しても構いません。
+脆弱性だと判断され次第、Security Advisories に掲載されます。
 
-1. `me@m2en.dev` 宛に以下の GPG 鍵で署名したメールを送信する
-   鍵指紋: `78E4 CFE0 B3B2 0C4C 7BAA A3CA 6554 A829 D251 53F9` , [pgp_keys.asc](https://keybase.io/m2en/pgp_keys.asc?fingerprint=78e4cfe0b3b20c4c7baaa3ca6554a829d25153f9)
-2. [GitHub Security Advisories](https://github.com/approvers/OreOreBot2/security/advisories/new) からセキュリティ勧告を作成する
+作成方法については GitHub Docs を確認してください。
 
-上記 2 つの方法、どちらとも以下の情報を詳細に記載してください。
-
-- `Impact` - どのような脆弱性で、誰が影響を受けるのか
-- `Process` - 問題を再現するための手段
-- `PoC` - 概念実証。脆弱性を利用した攻撃が可能であることを示す実際のコード (可能であれば)
-- `Version` - 脆弱性が存在するバージョン
+[Creating a repository security advisory - GitHub Docs](https://docs.github.com/en/code-security/security-advisories/repository-security-advisories/creating-a-repository-security-advisory)
 
 ## 新機能リクエストの提出
 
@@ -198,8 +193,9 @@ describe('RoleRank', () => {
 
 ```ts
 import { expect, it, vi } from 'vitest';
-import { Meme } from './meme.js';
+
 import { createMockMessage } from './command-message.js';
+import { Meme } from './meme.js';
 
 it('use case of hukueki', async () => {
   const fn = vi.fn();
