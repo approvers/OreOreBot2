@@ -31,7 +31,7 @@ OreOreBot2 の不具合を発見した際は **[Issues](https://github.com/appro
 
 ### セキュリティーに関する不具合の報告
 
-セキュリティーに関する不具合は Issue ではなく、GitHub Security Advisories から Draft Advisory を生成してください。
+セキュリティーに関する不具合は Issue ではなく、[GitHub Security Advisories から Draft Advisory を作成](https://github.com/approvers/OreOreBot2/security/advisories/new)してください。
 
 脆弱性だと判断され次第、Security Advisories に掲載されます。
 
