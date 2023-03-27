@@ -9,7 +9,7 @@ import {
   type MessageActionRowComponentBuilder
 } from 'discord.js';
 
-import { Schema, makeError } from '../../model/command-schema.js';
+import { type Schema, makeError } from '../../model/command-schema.js';
 import type { EmbedPage } from '../../model/embed-message.js';
 import type { Snowflake } from '../../model/id.js';
 import type {

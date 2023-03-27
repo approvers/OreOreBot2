@@ -3,7 +3,7 @@ import { expect, it, vi } from 'vitest';
 import { MockVoiceConnectionFactory } from '../../adaptor/index.js';
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 import { createMockMessage } from './command-message.js';
-import { GyokuonAssetKey, GyokuonCommand } from './gyokuon.js';
+import { type GyokuonAssetKey, GyokuonCommand } from './gyokuon.js';
 
 it('use case of gyokuon', async () => {
   const fn = vi.fn();

@@ -1,7 +1,11 @@
 import { expect, it } from 'vitest';
 
 import type { Snowflake } from './id.js';
-import { Reservation, ReservationId, ReservationTime } from './reservation.js';
+import {
+  Reservation,
+  type ReservationId,
+  ReservationTime
+} from './reservation.js';
 
 it('invalid time construction', () => {
   expect(() => new ReservationTime(-1, 0)).toThrow(

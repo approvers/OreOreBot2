@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import { parse } from 'yaml';
 
-import { messageTypes, SignalSchedule } from '../service/time-signal.js';
+import { messageTypes, type SignalSchedule } from '../service/time-signal.js';
 
 const messageFields = ['time', 'message'] as const;
 const timeFields = ['hours', 'minutes'] as const;

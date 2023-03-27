@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 import { createMockMessage } from './command-message.js';
-import { MembersWithRoleRepository, RoleRank } from './role-rank.js';
+import { type MembersWithRoleRepository, RoleRank } from './role-rank.js';
 
 describe('RoleRank', () => {
   afterEach(() => {
