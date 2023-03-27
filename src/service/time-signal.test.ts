@@ -3,7 +3,7 @@ import { describe, expect, test, vi } from 'vitest';
 import { MockClock } from '../adaptor/clock.js';
 import { ScheduleRunner } from '../runner/schedule.js';
 import type { StandardOutput } from './output.js';
-import { SignalSchedule, startTimeSignal } from './time-signal.js';
+import { type SignalSchedule, startTimeSignal } from './time-signal.js';
 
 describe('time signal reported', () => {
   const clock = new MockClock(new Date(Date.UTC(2020, 0, 1, 0, 0)));

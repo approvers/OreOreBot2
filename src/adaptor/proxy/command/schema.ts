@@ -1,13 +1,13 @@
 import {
-  Params,
-  ParamsValues,
-  ParseError,
-  ParsedSchema,
-  ParsedSubCommand,
-  Schema,
-  SubCommand,
-  SubCommandGroup,
-  SubCommands,
+  type Params,
+  type ParamsValues,
+  type ParseError,
+  type ParsedSchema,
+  type ParsedSubCommand,
+  type Schema,
+  type SubCommand,
+  type SubCommandGroup,
+  type SubCommands,
   makeError
 } from '../../../model/command-schema.js';
 

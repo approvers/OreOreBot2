@@ -1,35 +1,41 @@
 import type { Schema } from '../model/command-schema.js';
 import type { CommandRunner } from '../runner/command.js';
 import type { Clock, ScheduleRunner } from '../runner/schedule.js';
-import { ChannelInfo, ChannelStatsRepository } from './command/channel-info.js';
+import {
+  ChannelInfo,
+  type ChannelStatsRepository
+} from './command/channel-info.js';
 import type { CommandResponder } from './command/command-message.js';
-import { DebugCommand, MessageRepository } from './command/debug.js';
-import { DiceCommand, DiceQueen } from './command/dice.js';
-import { GuildInfo, GuildStatsRepository } from './command/guild-info.js';
-import { GyokuonAssetKey, GyokuonCommand } from './command/gyokuon.js';
+import { DebugCommand, type MessageRepository } from './command/debug.js';
+import { DiceCommand, type DiceQueen } from './command/dice.js';
+import { GuildInfo, type GuildStatsRepository } from './command/guild-info.js';
+import { type GyokuonAssetKey, GyokuonCommand } from './command/gyokuon.js';
 import { HelpCommand } from './command/help.js';
-import { JudgingCommand, RandomGenerator } from './command/judging.js';
+import { JudgingCommand, type RandomGenerator } from './command/judging.js';
 import {
   KaereCommand,
-  KaereMusicKey,
-  ReservationRepository,
-  VoiceRoomController
+  type KaereMusicKey,
+  type ReservationRepository,
+  type VoiceRoomController
 } from './command/kaere.js';
-import { KokuseiChousa, MemberStats } from './command/kokusei-chousa.js';
+import { KokuseiChousa, type MemberStats } from './command/kokusei-chousa.js';
 import { Meme } from './command/meme.js';
 import {
-  AssetKey,
+  type AssetKey,
   PartyCommand,
-  RandomGenerator as PartyRng
+  type RandomGenerator as PartyRng
 } from './command/party.js';
-import { Ping, PingCommand } from './command/ping.js';
-import { RoleCreate, RoleCreateManager } from './command/role-create.js';
-import { RoleInfo, RoleStatsRepository } from './command/role-info.js';
-import { MembersWithRoleRepository, RoleRank } from './command/role-rank.js';
-import { Sheriff, SheriffCommand } from './command/stfu.js';
-import { TypoReporter, TypoRepository } from './command/typo-record.js';
-import { UserInfo, UserStatsRepository } from './command/user-info.js';
-import { GetVersionCommand, VersionFetcher } from './command/version.js';
+import { type Ping, PingCommand } from './command/ping.js';
+import { RoleCreate, type RoleCreateManager } from './command/role-create.js';
+import { RoleInfo, type RoleStatsRepository } from './command/role-info.js';
+import {
+  type MembersWithRoleRepository,
+  RoleRank
+} from './command/role-rank.js';
+import { type Sheriff, SheriffCommand } from './command/stfu.js';
+import { TypoReporter, type TypoRepository } from './command/typo-record.js';
+import { UserInfo, type UserStatsRepository } from './command/user-info.js';
+import { GetVersionCommand, type VersionFetcher } from './command/version.js';
 import type { StandardOutput } from './output.js';
 import type { VoiceConnectionFactory } from './voice-connection.js';
 
