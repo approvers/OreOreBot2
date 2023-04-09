@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.41.1](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.41.0...oreorebot2-v1.41.1) (2023-04-09)
+
+
+### Bug Fixes
+
+* **docs:** inconsistency between Security Policy and Contributing Guide ([#765](https://github.com/approvers/OreOreBot2/issues/765)) ([33c4908](https://github.com/approvers/OreOreBot2/commit/33c4908e71e697ca17a362b60d64db56a0592b1d))
+
 ## [1.41.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.40.0...oreorebot2-v1.41.0) (2023-03-01)
 
 
