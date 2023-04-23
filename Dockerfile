@@ -1,6 +1,6 @@
 FROM mwader/static-ffmpeg:5.1.2 as ffmpeg
 
-FROM node:18-slim as build
+FROM node:20-slim as build
 ARG GIT_TAG
 SHELL ["/bin/bash", "-c"]
 WORKDIR /src
