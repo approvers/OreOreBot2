@@ -7,7 +7,7 @@ WORKDIR /src
 
 # node-gyp requires Python and basic packages needed to compile C libs
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends python3=3.9.2-3 build-essential=12.9 \
+    && apt-get install -y --no-install-recommends python3=3.11.2-1+b1 build-essential=12.9 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
