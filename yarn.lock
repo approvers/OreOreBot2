@@ -3339,14 +3339,14 @@ __metadata:
   linkType: hard
 
 "make-dir-cli@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "make-dir-cli@npm:3.0.0"
+  version: 3.1.0
+  resolution: "make-dir-cli@npm:3.1.0"
   dependencies:
-    make-dir: ^3.1.0
+    make-dir: ^4.0.0
     meow: ^10.0.0
   bin:
     make-dir: cli.js
-  checksum: 228de9695d231429f8dd499159256cc3ae41054355eab9345cfbfdbaec2c4ba78c2c5251733eb0555e7c5b112469b83774675bb6dcba6dd69233f9d91f49417b
+  checksum: 8a5b4cc92efdde9bdc82be5abfaf6819ab862ffd0c0a96788fa3685baff7af23ab4e8a7a9e85cde4a9f585345fcf638da098ecd993f5420b87e1c643e794381d
   languageName: node
   linkType: hard
 
@@ -3356,6 +3356,15 @@ __metadata:
   dependencies:
     semver: ^6.0.0
   checksum: 484200020ab5a1fdf12f393fe5f385fc8e4378824c940fba1729dcd198ae4ff24867bc7a5646331e50cead8abff5d9270c456314386e629acec6dff4b8016b78
+  languageName: node
+  linkType: hard
+
+"make-dir@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "make-dir@npm:4.0.0"
+  dependencies:
+    semver: ^7.5.3
+  checksum: bf0731a2dd3aab4db6f3de1585cea0b746bb73eb5a02e3d8d72757e376e64e6ada190b1eddcde5b2f24a81b688a9897efd5018737d05e02e2a671dda9cff8a8a
   languageName: node
   linkType: hard
 
@@ -4413,6 +4422,17 @@ __metadata:
   bin:
     semver: bin/semver.js
   checksum: ba9c7cbbf2b7884696523450a61fee1a09930d888b7a8d7579025ad93d459b2d1949ee5bbfeb188b2be5f4ac163544c5e98491ad6152df34154feebc2cc337c1
+  languageName: node
+  linkType: hard
+
+"semver@npm:^7.5.3":
+  version: 7.5.3
+  resolution: "semver@npm:7.5.3"
+  dependencies:
+    lru-cache: ^6.0.0
+  bin:
+    semver: bin/semver.js
+  checksum: 9d58db16525e9f749ad0a696a1f27deabaa51f66e91d2fa2b0db3de3e9644e8677de3b7d7a03f4c15bc81521e0c3916d7369e0572dbde250d9bedf5194e2a8a7
   languageName: node
   linkType: hard
 
