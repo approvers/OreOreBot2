@@ -14,7 +14,10 @@ const hoursMinutesRegex = /^(\d\d?):(\d\d?)$/;
  * 予約の時刻を表すバリューオブジェクト。
  */
 export class ReservationTime {
-  constructor(public readonly hours: number, public readonly minutes: number) {
+  constructor(
+    public readonly hours: number,
+    public readonly minutes: number
+  ) {
     if (!(0 <= hours && hours < 24 && 0 <= minutes && minutes < 60)) {
       throw new RangeError('hours or minutes got out of range');
     }

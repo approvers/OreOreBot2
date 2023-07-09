@@ -24,7 +24,10 @@ import type { RawMessage } from './middleware.js';
 const SPACES = /\s+/;
 
 export class DiscordCommandProxy implements CommandProxy {
-  constructor(client: Client, private readonly prefix: string) {
+  constructor(
+    client: Client,
+    private readonly prefix: string
+  ) {
     client.on('messageCreate', (message) => this.onMessageCreate(message));
   }
 
