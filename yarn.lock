@@ -190,15 +190,15 @@ __metadata:
   linkType: hard
 
 "@codedependant/semantic-release-docker@npm:^4.1.0":
-  version: 4.3.0
-  resolution: "@codedependant/semantic-release-docker@npm:4.3.0"
+  version: 4.4.0
+  resolution: "@codedependant/semantic-release-docker@npm:4.4.0"
   dependencies:
     "@semantic-release/error": ^3.0.0
     debug: ^4.1.1
     execa: ^4.0.2
     handlebars: ^4.7.7
     semver: ^7.3.2
-  checksum: 2a88f3df3b55433ca0976104be0310f7503258803775056c013502429959604456d6db69df16c516a3afd8e9e255de18b88f63f7a84a9004026a6d684f470fa3
+  checksum: 891ac9ff51b652fba97b67cfd4d0018cb15da2866cc68dca638b1206a9739e20b937f0173cef12cffab2c933967813f38a42f40a3199a78c4b904cac80aabc25
   languageName: node
   linkType: hard
 
