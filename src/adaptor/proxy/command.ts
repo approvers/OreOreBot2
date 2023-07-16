@@ -54,13 +54,10 @@ export class DiscordCommandProxy implements CommandProxy {
     }
     await message.fetch();
 
-    if (!message.content?.trimStart().startsWith(this.prefix)) {
+    if (!message.content.trimStart().startsWith(this.prefix)) {
       return;
     }
-    const args = message.content
-      ?.trim()
-      .slice(this.prefix.length)
-      .split(SPACES);
+    const args = message.content.trim().slice(this.prefix.length).split(SPACES);
 
     const entry = this.listenerMap.get(args[0]);
     if (!entry) {
@@ -82,7 +79,7 @@ export class DiscordCommandProxy implements CommandProxy {
         const id = message.member?.voice.channelId ?? null;
         return id ? (id as Snowflake) : null;
       },
-      senderName: message.author?.username ?? '名無し',
+      senderName: message.author.username,
       args: parsedArgs,
       async reply(embed) {
         const mes = await message.reply({ embeds: [convertEmbed(embed)] });
@@ -164,7 +161,7 @@ const replyPages =
     collector.on('collect', async (interaction) => {
       if (
         isLimitedToPaginate &&
-        !options?.usersCanPaginate?.includes(interaction.user.id as Snowflake)
+        !options.usersCanPaginate.includes(interaction.user.id as Snowflake)
       ) {
         return;
       }

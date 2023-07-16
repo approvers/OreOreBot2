@@ -21,7 +21,7 @@ export const takopi: MemeTemplate<
     const takopiArgs = {
       takopi: author,
       shizuka: args.options.c ?? '教員',
-      goods: args.requiredPositionals.subject ?? '課題'
+      goods: args.requiredPositionals.subject
     };
 
     if (args.flags.f) {

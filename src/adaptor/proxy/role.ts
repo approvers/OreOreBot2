@@ -17,8 +17,6 @@ export const roleProxy = (
 ) => {
   client.on('roleCreate', (role) => runner.triggerEvent('CREATE', map(role)));
   client.on('roleUpdate', async (_, role) => {
-    if (role) {
-      await runner.triggerEvent('UPDATE', map(role));
-    }
+    await runner.triggerEvent('UPDATE', map(role));
   });
 };

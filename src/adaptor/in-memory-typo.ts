@@ -2,7 +2,7 @@ import type { Snowflake } from '../model/id.js';
 import type { TypoRepository } from '../service/command/typo-record.js';
 
 export class InMemoryTypoRepository implements TypoRepository {
-  private dict: Map<Snowflake, string[]> = new Map();
+  private dict = new Map<Snowflake, string[]>();
 
   private entry(id: Snowflake): string[] {
     if (!this.dict.has(id)) {

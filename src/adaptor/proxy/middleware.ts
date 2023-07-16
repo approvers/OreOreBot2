@@ -11,9 +11,7 @@ export type RawMessage = Message | PartialMessage;
  * @typeParam M - 変換前のメッセージの型
  * @typeParam N - 変換後のメッセージの型
  */
-export interface Middleware<M, N> {
-  (message: M): Promise<N>;
-}
+export type Middleware<M, N> = (message: M) => Promise<N>;
 
 const connectMiddleware =
   <M, N, O>(

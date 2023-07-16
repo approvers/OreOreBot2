@@ -25,7 +25,7 @@ export function extractEnv<K extends string>(
     if (process.env[key] !== undefined && process.env[key] !== '') {
       // 存在したらそれに設定
       env[key] = process.env[key];
-    } else if (defaults && defaults[key] !== undefined) {
+    } else if (defaults?.[key] !== undefined) {
       // `defaults` にフォールバック
       env[key] = defaults[key];
     } else {

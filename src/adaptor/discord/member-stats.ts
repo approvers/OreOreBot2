@@ -96,12 +96,10 @@ export class DiscordMemberStats
       throw new Error('guild unavailable');
     }
     const member = await guild.members.fetch(userId);
-    if (!member) {
-      return null;
-    }
 
     const joinedAt: Date | undefined = member.joinedAt ?? undefined;
-    const hoistRoleId = (member.roles.hoist?.id as Snowflake) ?? undefined;
+    const hoistRoleId =
+      (member.roles.hoist?.id as Snowflake | null) ?? undefined;
     const createdAt = member.user.createdAt;
 
     return {

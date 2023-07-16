@@ -1,4 +1,4 @@
-export type EmojiEvent = 'CREATE';
+export type EmojiEvent = 'CREATE' | 'UPDATE' | 'DELETE';
 
 export interface EmojiEventResponder<E> {
   on(event: EmojiEvent, emoji: E): Promise<void>;

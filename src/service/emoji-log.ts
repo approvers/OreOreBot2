@@ -17,14 +17,6 @@ export class EmojiLog implements EmojiEventResponder<EmojiData> {
       return;
     }
 
-    if (emojiAuthorId == undefined) {
-      await this.output.sendEmbed({
-        title: '絵文字警察',
-        description: `誰かが ${emoji} を作成しました`
-      });
-      return;
-    }
-
     await this.output.sendEmbed({
       title: '絵文字警察',
       description: `<@${emojiAuthorId}> が ${emoji} を作成しました`

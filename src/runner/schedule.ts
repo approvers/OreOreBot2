@@ -3,9 +3,7 @@ import { addMilliseconds, isAfter } from 'date-fns';
 /**
  * `ScheduleRunner` に登録するイベントが実装するインターフェイス。戻り値は次に自身を再実行する UTC 時刻。`null` を返した場合は再実行されない。
  */
-export interface ScheduleTask {
-  (): Promise<Date | null>;
-}
+export type ScheduleTask = () => Promise<Date | null>;
 
 /**
  * 時刻を扱う抽象。

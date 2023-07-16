@@ -15,7 +15,7 @@ export interface DiceQueen {
    * @param howManyRolls - 振るダイスの個数
    * @returns 降ったダイスの数値のリスト。長さは `howManyRolls` に等しい。
    */
-  roll(faces: number, howManyRolls: number): Array<number>;
+  roll(faces: number, howManyRolls: number): number[];
 }
 
 const regExState = /^(?<num>\d+)[dD](?<faces>\d+)$/;

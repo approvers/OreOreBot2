@@ -22,7 +22,7 @@ export class MathRandomGenerator implements PartyRng, JudgingRng, DiceQueen {
     return Math.floor(Math.random() * (to - from) + from);
   }
 
-  roll(faces: number, howManyRolls: number): Array<number> {
+  roll(faces: number, howManyRolls: number): number[] {
     const diceLog: number[] = [];
     for (let i = 0; i < howManyRolls; ++i) {
       diceLog.push(this.uniform(1, faces));

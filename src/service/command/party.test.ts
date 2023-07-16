@@ -23,7 +23,9 @@ describe('party ichiyo', () => {
     random
   });
 
-  afterAll(() => scheduleRunner.killAll());
+  afterAll(() => {
+    scheduleRunner.killAll();
+  });
 
   it('with no options', async () => {
     await responder.on(

@@ -96,7 +96,9 @@ export interface CommandResponder<S extends Schema> {
 
 export const createMockMessage = <S extends Schema>(
   args: Readonly<ParsedSchema<S>>,
-  reply?: (message: EmbedMessage) => void | Promise<SentMessage | void>,
+  reply?:
+    | ((message: EmbedMessage) => void)
+    | ((message: EmbedMessage) => Promise<SentMessage> | Promise<void>),
   partial?: Readonly<Partial<Omit<CommandMessage<S>, 'reply'>>>
 ): CommandMessage<S> => ({
   senderId: '279614913129742338' as Snowflake,
@@ -107,7 +109,7 @@ export const createMockMessage = <S extends Schema>(
   args,
   reply: reply
     ? async (mes) =>
-        (await reply(mes)) || {
+        ((await reply(mes)) as SentMessage | undefined) ?? {
           edit: () => Promise.resolve()
         }
     : () =>
