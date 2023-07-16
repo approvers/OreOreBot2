@@ -3,15 +3,13 @@ env:
   es2021: true
 extends:
   - 'eslint:recommended'
-  - 'plugin:@typescript-eslint/recommended'
-  - 'plugin:@typescript-eslint/recommended-requiring-type-checking'
-  - 'plugin:markdown/recommended'
+  - 'plugin:@typescript-eslint/strict-type-checked'
+  - 'plugin:@typescript-eslint/stylistic-type-checked'
   - 'prettier'
 parser: '@typescript-eslint/parser'
 parserOptions:
   sourceType: module
-  project:
-    - './tsconfig.json'
+  project: true
 plugins:
   - '@typescript-eslint'
   - 'markdown'
@@ -22,3 +20,4 @@ rules:
 overrides:
   - files: ['**/*.md']
     processor: 'markdown/markdown'
+root: true
