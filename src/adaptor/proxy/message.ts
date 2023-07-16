@@ -52,15 +52,14 @@ export class MessageUpdateProxy<M> implements MessageUpdateEventProvider<M> {
   onMessageUpdate(handler: (before: M, after: M) => Promise<void>): void {
     const mapped = async (ms: [RawMessage, RawMessage]) => {
       try {
-        return await handler(...(await this.map(ms)));
+        await handler(...(await this.map(ms)));
+        return;
       } catch {
         // 変換処理の結果として続行すべきでないと判断されたため, 無視できます。
       }
     };
     this.client.on('messageUpdate', async (before, after) => {
-      if (after) {
-        await mapped([before, after]);
-      }
+      await mapped([before, after]);
     });
   }
 }

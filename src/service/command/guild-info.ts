@@ -196,9 +196,5 @@ export class GuildInfo implements CommandResponder<typeof SCHEMA> {
 }
 
 function makeAfkChannelMention(afkChannelId: Snowflake, afkTimeout: number) {
-  if (!afkChannelId) {
-    return '未設定';
-  }
-
   return `<#${afkChannelId}>(${afkTimeout})`;
 }

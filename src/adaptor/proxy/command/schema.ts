@@ -50,8 +50,10 @@ const parseParams = <S extends Schema | SubCommand>(
       }
       case 'STRING':
         if (
-          (param.minLength && arg.length < param.minLength) ||
-          (param.maxLength && param.maxLength < arg.length)
+          !(
+            (param.minLength ?? Number.NEGATIVE_INFINITY) <= arg.length &&
+            arg.length <= (param.maxLength ?? Number.POSITIVE_INFINITY)
+          )
         ) {
           return [
             'Err',
@@ -75,8 +77,10 @@ const parseParams = <S extends Schema | SubCommand>(
         }
         const parsed = Number.parseInt(arg, 10);
         if (
-          (param.minValue && parsed < param.minValue) ||
-          (param.maxValue && param.maxValue < parsed)
+          !(
+            (param.minValue ?? Number.NEGATIVE_INFINITY) <= parsed &&
+            parsed <= (param.maxValue ?? Number.POSITIVE_INFINITY)
+          )
         ) {
           return ['Err', ['OUT_OF_RANGE', param.minValue, param.maxValue, arg]];
         }
@@ -89,8 +93,10 @@ const parseParams = <S extends Schema | SubCommand>(
           return ['Err', ['INVALID_DATA', 'FLOAT', arg]];
         }
         if (
-          (param.minValue && parsed < param.minValue) ||
-          (param.maxValue && param.maxValue < parsed)
+          !(
+            (param.minValue ?? Number.NEGATIVE_INFINITY) <= parsed &&
+            parsed <= (param.maxValue ?? Number.POSITIVE_INFINITY)
+          )
         ) {
           return ['Err', ['OUT_OF_RANGE', param.minValue, param.maxValue, arg]];
         }
@@ -133,15 +139,6 @@ const parseSubCommand = <S extends Schema | SubCommandGroup>(
     const subCommandKey: keyof SubCommands<S> = arg;
 
     const subCommand = (schema.subCommands as SubCommands<S>)[subCommandKey];
-    if (
-      !(
-        typeof subCommand === 'object' &&
-        subCommand !== null &&
-        'type' in subCommand
-      )
-    ) {
-      return ['Err', ['OTHERS', 'unreachable']];
-    }
     if (isSubCommandGroup(subCommand)) {
       const subSubCommand = parseSubCommand(args, subCommand);
       if (subSubCommand[0] === 'Err') {

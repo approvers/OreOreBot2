@@ -74,7 +74,9 @@ describe('typo record command', () => {
   const clock = new MockClock(new Date(0));
   const runner = new ScheduleRunner(clock);
 
-  afterAll(() => runner.killAll());
+  afterAll(() => {
+    runner.killAll();
+  });
 
   it('show all typos', async () => {
     const db = new InMemoryTypoRepository();

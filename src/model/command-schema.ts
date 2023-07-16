@@ -164,11 +164,11 @@ export interface Schema {
  *
  * @typeParam S - コマンドスキーマの型
  */
-export type ParsedSchema<S extends Schema> = {
+export interface ParsedSchema<S extends Schema> {
   name: S['names'][number];
   subCommand?: ParsedSubCommand<S['subCommands']>;
   params: ParamsValues<S['params']>;
-};
+}
 
 /**
  * コマンドのスキーマ `S` の引数のみに対応するパース結果の型を返す。

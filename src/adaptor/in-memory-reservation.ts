@@ -5,7 +5,7 @@ import type {
 } from '../service/command/kaere.js';
 
 export class InMemoryReservationRepository implements ReservationRepository {
-  map: Map<string, Reservation> = new Map();
+  map = new Map<string, Reservation>();
 
   private mapTimeToKey(time: ReservationTime): string {
     return `${time.hours}:${time.minutes}`;

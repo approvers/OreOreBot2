@@ -7,7 +7,7 @@ import type { EmojiSeqObservable } from '../../../service/emoji-seq-react.js';
 import type { Middleware, RawMessage } from '../middleware.js';
 
 const getAuthorSnowflake = (message: RawMessage): Snowflake =>
-  (message.author?.id || 'unknown') as Snowflake;
+  (message.author?.id ?? 'unknown') as Snowflake;
 
 const fetchMessage = async (message: RawMessage) => {
   await message.fetch().catch(() => {
@@ -24,8 +24,8 @@ const observableMessage = (
   BoldItalicCop &
   EmojiSeqObservable => ({
   authorId: getAuthorSnowflake(raw),
-  author: raw.author?.username || '名無し',
-  content: raw.content || '',
+  author: raw.author?.username ?? '名無し',
+  content: raw.content ?? '',
   async sendEphemeralToSameChannel(message: string): Promise<void> {
     const FIVE_SECONDS_MS = 5000;
     const { channel } = raw;

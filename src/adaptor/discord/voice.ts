@@ -44,7 +44,7 @@ export class DiscordVoiceConnectionFactory<K extends string | number | symbol>
       throw new Error('guild unavailable');
     }
     const channel =
-      guild.channels.cache.get(roomId) || (await guild.channels.fetch(roomId));
+      guild.channels.cache.get(roomId) ?? (await guild.channels.fetch(roomId));
     if (!channel) {
       throw new Error('the user is not joined to voice channel');
     }
@@ -79,7 +79,9 @@ export class DiscordVoiceConnection<K extends string | number | symbol>
       const resource = createAudioResource(this.audioRecord[key]);
 
       this.player.once('error', reject);
-      this.player.once(AudioPlayerStatus.Idle, () => resolve());
+      this.player.once(AudioPlayerStatus.Idle, () => {
+        resolve();
+      });
 
       this.player.play(resource);
       this.reserveToPlay();
@@ -92,7 +94,7 @@ export class DiscordVoiceConnection<K extends string | number | symbol>
     const subscription = this.connection?.subscribe(this.player);
     if (subscription) {
       setTimeout(() => {
-        if (this.player.state.status === 'playing') {
+        if (this.player.state.status === AudioPlayerStatus.Playing) {
           return;
         }
         subscription.unsubscribe();
@@ -179,7 +181,7 @@ export class DiscordVoiceRoomController implements VoiceRoomController {
     roomId: Snowflake
   ): Promise<void> {
     const guild =
-      this.client.guilds.cache.get(guildId) ||
+      this.client.guilds.cache.get(guildId) ??
       (await this.client.guilds.fetch(guildId));
     if (
       !guild.members.me?.permissions.has(PermissionsBitField.Flags.MoveMembers)
@@ -187,7 +189,7 @@ export class DiscordVoiceRoomController implements VoiceRoomController {
       throw new Error('insufficient permission');
     }
     const room =
-      guild.channels.cache.get(roomId) || (await guild.channels.fetch(roomId));
+      guild.channels.cache.get(roomId) ?? (await guild.channels.fetch(roomId));
     if (room?.type !== ChannelType.GuildVoice) {
       throw new TypeError(`invalid room id: ${roomId}`);
     }
