@@ -20,7 +20,7 @@ describe('UserInfo', () => {
               joinedAt: new Date(20050902),
               createdAt: new Date(20050902),
               bot: false,
-              userName: 'meru',
+              userName: 'meru#0',
               hoistRoleId: '865951894173515786' as Snowflake
             }
           : null
