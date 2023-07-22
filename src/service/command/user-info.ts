@@ -12,7 +12,7 @@ export interface UserStats {
   joinedAt?: Date;
   createdAt: Date;
   bot: boolean;
-  tag: string;
+  userName: string;
   hoistRoleId?: Snowflake | undefined;
 }
 
@@ -76,7 +76,7 @@ export class UserInfo implements CommandResponder<typeof SCHEMA> {
       joinedAt,
       createdAt,
       bot,
-      tag,
+      userName,
       hoistRoleId
     }: UserStats,
     userId: string
@@ -93,8 +93,8 @@ export class UserInfo implements CommandResponder<typeof SCHEMA> {
         inline: true
       },
       {
-        name: 'ユーザー名+Discord Tag',
-        value: tag,
+        name: 'ユーザーネーム',
+        value: createUserNameDisplay(userName),
         inline: true
       },
       {
@@ -138,10 +138,19 @@ function fetchUserId(arg: string, senderId: string): string {
   }
   return arg;
 }
+
 function createHoistRoleDisplay(hoistRoleId: Snowflake | undefined): string {
   if (!hoistRoleId) {
     return 'なし';
   }
 
   return `<@&${hoistRoleId}>`;
+}
+
+function createUserNameDisplay(userName: string): string {
+  if (userName.endsWith('#0')) {
+    // Discordのユーザー名に"#"を使うことは出来ないのでそのまま replace しても問題ない
+    return userName.replace('#0', '');
+  }
+  return userName;
 }
