@@ -93,7 +93,7 @@ export class UserInfo implements CommandResponder<typeof SCHEMA> {
         inline: true
       },
       {
-        name: 'ユーザネーム',
+        name: 'ユーザーネーム',
         value: createUserNameDisplay(userName),
         inline: true
       },
