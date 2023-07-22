@@ -108,7 +108,11 @@ export class DiscordMemberStats
       joinedAt,
       createdAt,
       bot: member.user.bot,
-      tag: member.user.tag,
+      /**
+       * "#0" がついたユーザーネーム(新システム)から取り除くの処理は user-info.ts 側で行う
+       * https://github.com/approvers/OreOreBot2/issues/914
+       */
+      userName: member.user.tag,
       hoistRoleId: hoistRoleId
     };
   }
