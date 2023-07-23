@@ -1,5 +1,5 @@
 {
-  "reviewers": ["m2en", "MikuroXina"],
+  "reviewers": ["m1sk9", "MikuroXina"],
   "ignoreTests": false,
   "automerge": true,
   "major": {
@@ -33,7 +33,7 @@
     "automerge": true,
     "labels": ["C-security"],
     "assignees": [
-      "m2en", "MikuroXina"
+      "m1sk9", "MikuroXina"
     ]
   },
   "extends": [":timezone(Asia/Tokyo)"],
