@@ -5,6 +5,7 @@ import { hukueki } from './hukueki.js';
 import { kenjou } from './kenjou.js';
 import { koume } from './koume.js';
 import { lolicon } from './lolicon.js';
+import { misskey } from './misskey.js';
 import { moeta } from './moeta.js';
 import { n } from './n.js';
 import { nigetane } from './nigetane.js';
@@ -31,5 +32,6 @@ export const memes = [
   tsureteike,
   syakai,
   clang,
-  failure
+  failure,
+  misskey
 ];
