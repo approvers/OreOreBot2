@@ -15,9 +15,16 @@ jobs:
         with:
           fetch-depth: 0
 
+      - id: token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.HIGUCHI_ICHIYO_APP_ID }}
+          private_key: ${{ secrets.HIGUCHI_ICHIYO__PRIVATE_KEY }}
+
       - uses: google-github-actions/release-please-action@v3
         id: release
         with:
+          token: ${{ steps.token.outputs.token }}
           release-type: node
           command: manifest
 
