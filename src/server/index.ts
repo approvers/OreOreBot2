@@ -191,7 +191,7 @@ if (features.includes('EMOJI')) {
 
 // PID 1 問題のためのシグナルハンドラ
 process.on('SIGTERM', () => {
-  client.destroy();
+  void client.destroy();
   process.exit(0);
 });
 
