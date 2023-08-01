@@ -14,6 +14,7 @@ export interface UserStats {
   bot: boolean;
   userName: string;
   hoistRoleId?: Snowflake | undefined;
+  avatarUrl: string;
 }
 
 export interface UserStatsRepository {
@@ -77,7 +78,8 @@ export class UserInfo implements CommandResponder<typeof SCHEMA> {
       createdAt,
       bot,
       userName,
-      hoistRoleId
+      hoistRoleId,
+      avatarUrl
     }: UserStats,
     userId: string
   ) {
@@ -127,7 +129,8 @@ export class UserInfo implements CommandResponder<typeof SCHEMA> {
     return {
       title: `ユーザーの情報`,
       description: `司令官、頼まれていた <@${userId}> の情報だよ`,
-      fields
+      fields,
+      thumbnail: { url: avatarUrl }
     };
   }
 }

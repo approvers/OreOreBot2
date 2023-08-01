@@ -102,6 +102,8 @@ export class DiscordMemberStats
       (member.roles.hoist?.id as Snowflake | null) ?? undefined;
     const createdAt = member.user.createdAt;
 
+    const displayAvatarURL = member.displayAvatarURL();
+
     return {
       color: member.displayColor.toString(16).padStart(6, '0'),
       displayName: member.displayName,
@@ -113,7 +115,8 @@ export class DiscordMemberStats
        * https://github.com/approvers/OreOreBot2/issues/914
        */
       userName: member.user.tag,
-      hoistRoleId: hoistRoleId
+      hoistRoleId: hoistRoleId,
+      avatarUrl: displayAvatarURL
     };
   }
 
