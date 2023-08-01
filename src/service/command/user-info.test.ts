@@ -21,7 +21,8 @@ describe('UserInfo', () => {
               createdAt: new Date(20050902),
               bot: false,
               userName: 'meru#0',
-              hoistRoleId: '865951894173515786' as Snowflake
+              hoistRoleId: '865951894173515786' as Snowflake,
+              avatarUrl: 'https://example.com/meru.png'
             }
           : null
       )
@@ -86,7 +87,8 @@ describe('UserInfo', () => {
           value: `<t:20050>(<t:20050:R>)`,
           inline: true
         }
-      ]
+      ],
+      thumbnail: { url: 'https://example.com/meru.png' }
     });
     expect(fetchStats).toHaveBeenCalledOnce();
   });
@@ -149,7 +151,8 @@ describe('UserInfo', () => {
           value: `<t:20050>(<t:20050:R>)`,
           inline: true
         }
-      ]
+      ],
+      thumbnail: { url: 'https://example.com/meru.png' }
     });
     expect(fetchStats).toHaveBeenCalledOnce();
   });
@@ -193,7 +196,8 @@ describe('BotInfo', () => {
               createdAt: new Date(20230721),
               bot: true,
               userName: 'mikuro#2796',
-              hoistRoleId: '865951894173515786' as Snowflake
+              hoistRoleId: '865951894173515786' as Snowflake,
+              avatarUrl: 'https://example.com/mikuro.png'
             }
           : null
       )
@@ -258,7 +262,8 @@ describe('BotInfo', () => {
           value: `<t:20230>(<t:20230:R>)`,
           inline: true
         }
-      ]
+      ],
+      thumbnail: { url: 'https://example.com/mikuro.png' }
     });
     expect(fetchStats).toHaveBeenCalledOnce();
   });
