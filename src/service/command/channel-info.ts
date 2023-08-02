@@ -17,7 +17,8 @@ const SCHEMA = {
     {
       type: 'CHANNEL',
       name: 'チャンネルID',
-      description: 'このIDのチャンネルを調べるよ'
+      description: 'このIDのチャンネルを調べるよ',
+      defaultValue: 'me'
     }
   ]
 } as const;
@@ -34,7 +35,8 @@ export class ChannelInfo implements CommandResponder<typeof SCHEMA> {
   constructor(private readonly repo: ChannelStatsRepository) {}
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
-    const [channelId] = message.args.params;
+    const [args] = message.args.params;
+    const channelId = fetchChannelId(args, message.senderChannelId);
 
     const stats = await this.repo.fetchStats(channelId);
     if (!stats) {
@@ -76,4 +78,12 @@ export class ChannelInfo implements CommandResponder<typeof SCHEMA> {
       fields
     };
   }
+}
+
+function fetchChannelId(args: string, messageChannelId: string) {
+  if (args == 'me') {
+    return messageChannelId;
+  }
+
+  return args;
 }
