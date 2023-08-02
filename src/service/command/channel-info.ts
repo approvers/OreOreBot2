@@ -82,7 +82,7 @@ export class ChannelInfo implements CommandResponder<typeof SCHEMA> {
 }
 
 function fetchChannelId(args: string, messageChannelId: string) {
-  if (args == 'me') {
+  if (args === 'me') {
     return messageChannelId;
   }
 
