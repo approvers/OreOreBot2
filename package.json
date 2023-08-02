@@ -1,6 +1,6 @@
 {
   "name": "oreorebot2",
-  "version": "1.42.0",
+  "version": "1.43.0",
   "exports": "./index.js",
   "type": "module",
   "license": "MIT",
