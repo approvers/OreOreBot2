@@ -17,7 +17,8 @@ const SCHEMA = {
     {
       type: 'CHANNEL',
       name: 'チャンネルID',
-      description: 'このIDのチャンネルを調べるよ',
+      description:
+        'このIDのチャンネルを調べるよ。指定しない場合は実行したチャンネルを調べるよ',
       defaultValue: 'me'
     }
   ]
