@@ -1,2 +1,8 @@
 C-GitHub Actions:
   - .github/workflows/*.yml
+
+T-OreOreBot2:
+  - src/**
+
+T-Documents:
+  - docs/**
