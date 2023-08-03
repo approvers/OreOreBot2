@@ -1,6 +1,6 @@
 # 作成されたプルリクエストに対してPrettierを実行します。
 
-name: Prettier
+name: Prettier (OreOreBot2)
 
 on:
   pull_request:

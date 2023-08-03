@@ -1,6 +1,6 @@
 # CodeQLによるスキャンを行います。
 
-name: CodeQL analysis
+name: CodeQL analysis (OreOreBot2 & docs)
 
 on:
   push:

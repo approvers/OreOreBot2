@@ -1,6 +1,6 @@
 # 作成されたプルリクエストに対してDockerfileに変更があればhadolintを実行します。
 
-name: Dockerfile lint
+name: Dockerfile lint (OreOreBot2)
 
 on:
   pull_request:
@@ -33,7 +33,7 @@ jobs:
             ${process.env.HADOLINT_RESULTS}
             \`\`\`
             `;
-            
+
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,

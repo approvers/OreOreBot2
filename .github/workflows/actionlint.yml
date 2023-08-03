@@ -1,9 +1,11 @@
 # GitHub Workflowsに関するプルリクエストに対し、reviewdogのlintを実行します。
 
-name: Actionlint
+name: actionlint (OreOreBot2 & docs)
 
 on:
   pull_request:
+    branches:
+      - main
     paths:
       - '.github/workflows/*.yml'
       - '.github/actions/**/action.yml'

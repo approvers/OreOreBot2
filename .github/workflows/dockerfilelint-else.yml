@@ -1,4 +1,4 @@
-name: dockerfile lint
+name: Dockerfile lint (OreOreBot2)
 
 on:
   pull_request:
@@ -12,4 +12,3 @@ jobs:
     steps:
       - run: |
           echo "No lint(dockerfile) required"
-

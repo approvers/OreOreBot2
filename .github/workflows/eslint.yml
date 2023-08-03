@@ -1,6 +1,6 @@
 # 作成されたプルリクエストに対してeslintを実行します。
 
-name: eslint
+name: eslint (OreOreBot2)
 
 on:
   pull_request:

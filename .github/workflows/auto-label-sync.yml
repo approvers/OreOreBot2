@@ -1,7 +1,6 @@
 # .github/labels.yml で定義されたラベルを同期します
 
-name: Label sync
-
+name: label sync (OreOreBot2 & docs)
 
 on:
   push:

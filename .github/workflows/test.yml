@@ -1,6 +1,6 @@
 # 作成されたプルリクエストに対してテストを行います。
 
-name: Test
+name: Test (OreOreBot2)
 
 on:
   pull_request:
