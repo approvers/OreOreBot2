@@ -1,4 +1,5 @@
-import { CommandArgs } from '/src/organisms/command-args';
+import { CommandArgs } from '../../../organisms/command-args';
+import {Callout} from "nextra-theme-docs";
 
 # 治安統率機構
 
@@ -14,4 +15,9 @@ import { CommandArgs } from '/src/organisms/command-args';
   ]}
 />
 
-第一引数で指定した個数、実行したチャンネルに存在するはらちょのメッセージを最新順から削除します。
+第1引数で指定した個数、実行したチャンネルに存在するはらちょのメッセージを最新順から削除します。
+
+<Callout type="warning">
+    送信日時が2週間前のメッセージは Discord API の制約上削除することができません。
+    そのようなメッセージに対して治安統率機構は機能しません。
+</Callout>

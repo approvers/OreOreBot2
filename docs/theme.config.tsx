@@ -18,7 +18,7 @@ const themeConfig: DocsThemeConfig = {
       </span>
     </>
   ),
-  docsRepositoryBase: `${pkg.repository}/blob/main/docs/src/pages`,
+  docsRepositoryBase: `${pkg.repository}/blob/main/docs`,
   primaryHue: 193,
   project: {
     link: pkg.repository
@@ -31,9 +31,8 @@ const themeConfig: DocsThemeConfig = {
   },
   feedback: {
     content: 'Issueを作成する',
-    // TODO: 直接のIssueリンクにする
     useLink() {
-      return `${pkg.repository}/issues/new`;
+      return `${pkg.repository}/issues/new?assignees=&labels=T-Documents&projects=&template=content_report.yml`;
     }
   },
   footer: {

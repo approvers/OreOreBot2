@@ -1,4 +1,4 @@
-import { CommandArgs } from '/src/organisms/command-args';
+import { CommandArgs } from '../../../organisms/command-args';
 
 # ロール情報表示
 
@@ -16,6 +16,8 @@ import { CommandArgs } from '/src/organisms/command-args';
 
 指定したロールについて、以下の情報を表示します。
 
+## 表示される情報
+
 | 項目         | 説明                                                                        |
 | ------------ | --------------------------------------------------------------------------- |
 | ID           | ロールの ID                                                                 |
@@ -23,3 +25,14 @@ import { CommandArgs } from '/src/organisms/command-args';
 | ポジション   | ロールリスト内での位置 <br/> (Discord API 上では、最終尾から数えるため注意) |
 | カラーコード | そのロールのカラーコード                                                    |
 | 作成日時     | そのロールが作成された日時と経過時間                                        |
+
+## ロールの絵文字
+
+指定したロールに対して Role Emoji が設定されていない場合はその絵文字が表示されます。
+
+Unicode、カスタム絵文字かで挙動が大きく変わります。
+
+| 絵文字     | 挙動                     |
+|---------|------------------------|
+| Unicode | `アイコン` というフィールドの値として表示 |
+| カスタム絵文字 | 絵文字の画像そのものを表示          |
