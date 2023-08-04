@@ -1,22 +1,21 @@
 {
-  "channel-info": "チャンネル情報表示",
-  "debug": "デバッガーはらちょ",
-  "dice": "ダイスロール",
-  "guild-info": "サーバー情報表示",
-  "help": "ヘルプ",
-  "hojs": "†HARACHO ONLINE JUDGING SYSTEM†",
-  "kokusei": "国勢調査",
-  "ping": "レイテンシ表示",
-  "role-info": "ロール情報表示",
-  "role-rank": "ロール数ランキング",
-  "stfu": "治安統率機構",
-  "typo": "今日の Typo",
-  "user-info": "ユーザー情報表示",
-  "version": "バージョン表示",
-  "role-create": "ロール作成",
-  "judge": "†HARACHO ONLINE JUDGING SYSTEM†",
+  "channel-info": "!channelinfo",
+  "debug": "!debug",
+  "dice": "!dice",
+  "guild-info": "!guildinfo",
+  "help": "!heko",
+  "kokusei": "!kokusei",
+  "ping": "!ping",
+  "role-info": "!roleinfo",
+  "role-rank": "!rolerank",
+  "stfu": "!stfu",
+  "typo": "!typo",
+  "user-info": "!userinfo",
+  "version": "!version",
+  "role-create": "!rolecreate",
+  "judge": "!judge",
   "meme": {
-    "title": "ミーム"
+    "title": "Meme"
   },
   "voice": {
     "title": "音声機能"
