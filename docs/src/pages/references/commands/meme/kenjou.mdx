@@ -1,0 +1,36 @@
+import { Callout } from 'nextra-theme-docs';
+
+import { CommandArgs } from '/src/organisms/command-args';
+
+# 健常者エミュレーター構文
+
+<CommandArgs
+  versionAvailableFrom="v1.27.0"
+  commandName="kenjou"
+  args={[
+    {
+      name: 'テキスト',
+      about: 'テンプレートに挿入するテキストです。'
+    }
+  ]}
+/>
+
+### 使用例
+
+`!kenjou ドキュメントはちゃんと作ったほうがいい`
+
+```
+>> ドキュメントはちゃんと作ったほうがいい - 健常者エミュレータ事例集Wiki
+```
+
+<Callout type="info">
+  健常者エミュレーター事例集 にありそうなタイトルを指定すればうまくいきます。
+</Callout>
+
+<Callout type="info">
+
+元ネタ
+
+元ネタは [健常者エミュレーター事例集](https://healthy-person-emulator.org/) です。かつてはタイトルに Wiki がついていたので、その名残があります。そのうち本家に合わせて修正されるかもしれません。
+
+</Callout>

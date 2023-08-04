@@ -1,0 +1,49 @@
+import { Callout } from 'nextra-theme-docs';
+
+import { CommandArgs } from '/src/organisms/command-args';
+
+# コウメ太夫構文
+
+<CommandArgs
+  versionAvailableFrom="v1.29.0"
+  commandName="koume"
+  args={[
+    {
+      name: 'テキスト1',
+      about: 'テンプレートに挿入する1つ目のテキストです。'
+    },
+    {
+      name: 'テキスト2',
+      about: 'テンプレートに挿入する2つ目のテキストです。'
+    }
+  ]}
+/>
+
+### 使用例
+
+`!koume 課題を出そう 通信制限で間に合いません`
+
+```
+>> 課題を出そうと思ったら〜♪
+通信制限で間に合いませんでした〜♪
+チクショー！！　#まいにちチクショー
+```
+
+<Callout type="info">
+
+ここだけの話: コウメ太夫構文
+
+コウメ太夫の元々のネタを完全に再現するため、スペース等を本物と合わせています。
+
+[eslint の警告まで BAN ](https://github.com/approvers/OreOreBot2/blob/main/src/service/command/meme/koume.ts#L10-L15)されるほどの厳格さです。[あの RC](https://github.com/approvers/OreOreBot2/pull/584#discussion_r1032444190) は今でも意味がわかりません。
+
+```ts
+generate(args) {
+  const [option1, option2] = args.body.split(' ');
+  // Reason: 構文とコウメ太夫に敬意を払い、元ネタを尊重することから全角スペースを使用したいのでeslintの警告をBANします。
+  // eslint-disable-next-line no-irregular-whitespace
+  return `${option1}と思ったら〜♪\n\n${option2}でした〜♪\n\nチクショー！！　#まいにちチクショー`;
+}
+```
+
+</Callout>

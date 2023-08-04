@@ -1,0 +1,25 @@
+import { Callout } from 'nextra-theme-docs';
+
+import { FeatureBadge } from '/src/molecules/feature-badge';
+import { VersionBadge } from '/src/molecules/version-badge';
+
+# 削除 Diff
+
+<FeatureBadge>ログ</FeatureBadge>,<VersionBadge>v1.0.0</VersionBadge>
+
+---
+
+メッセージを削除すると削除したメッセージを晒し上げます。
+
+<Callout type="info">
+  削除 Diff
+  は一定時間で削除されます。削除せず取っておきたい場合はリアクションを送信することで阻止できます。
+</Callout>
+
+<Callout type="warning">
+
+削除したメッセージにスポイラーが含まれている場合は削除時に開示されます。
+
+削除する際は覚悟を決めてください。
+
+</Callout>

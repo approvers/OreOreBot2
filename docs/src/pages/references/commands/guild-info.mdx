@@ -1,0 +1,25 @@
+import { CommandArgs } from '/src/organisms/command-args';
+
+# サーバー情報表示
+
+<CommandArgs versionAvailableFrom="v1.23.0" commandName="guildinfo/guild" />
+
+サーバーの情報を表示します。
+
+メンションでは動作しません。
+
+| 項目             | 説明                                                                                                                                                       |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| サーバー名       | サーバーの名称                                                                                                                                             |
+| オーナー         | サーバーのオーナー権限を持ったユーザーの情報                                                                                                               |
+| AFK 設定         | AFK チャンネルの設定、AFK タイムアウトの設定 <br/> (設定していない場合は未設定)                                                                            |
+| チャンネル数     | サーバーに存在するチャンネル数                                                                                                                             |
+| 絵文字数         | サーバーに存在する絵文字数                                                                                                                                 |
+| ロール数         | サーバーに存在するロール数                                                                                                                                 |
+| ステッカー数     | サーバーに存在するステッカー数                                                                                                                             |
+| 全メンバー数     | サーバーに存在するメンバー数                                                                                                                               |
+| 規模             | サーバーの規模 <br/> (メンバー数によって変化)                                                                                                              |
+| 管理の二段階認証 | [タイムアウトなどのモデレーション操作を行う際に二段階認証を必要とするかどうか](https://discord.com/developers/docs/resources/guild#guild-object-mfa-level) |
+| NSFW レベル      | [ギルドの NSFW レベル](https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level)                                                  |
+| ブースト状況     | [サーバーブースト状況](https://discord.com/developers/docs/resources/guild#guild-object-premium-tier)                                                      |
+| 認証レベル       | [サーバーの認証レベル](https://discord.com/developers/docs/resources/guild#guild-object-verification-level)                                                |

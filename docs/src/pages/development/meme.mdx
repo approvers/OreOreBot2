@@ -1,0 +1,150 @@
+import { Callout } from 'nextra-theme-docs';
+
+# 新しいミームを追加する
+
+このページでは新しいミームを追加する方法について説明します。
+
+---
+
+## ミームが追加される流れ
+
+1. ミームの処理を書く
+2. ミームを登録する
+3. ミームのテストケースを追加する
+
+## ミーム追加の判断基準
+
+はらちょは基本的にくだらない機能は大歓迎としています。(それは面白いからです。)
+
+ミームも一緒で、基本的に面白ければ何でもいいです。ただ何でも OK にしていると溢れてしまうため追加前に `#無法地帯` で話をちょろっと出すのもいいかもしれません。
+
+## ミームを追加する
+
+### ミームの処理を書く
+
+ミームの処理は `src/service/command/meme` 配下に書いてきます。
+
+```ts title="src/service/command/meme/n.ts"
+import type { MemeTemplate } from '../../../model/meme-template.js';
+
+export const n: MemeTemplate<never, never> = {
+  commandNames: ['n'],
+  description: '〜Nった',
+  flagsKeys: [],
+  optionsKeys: [],
+  errorMessage: 'このままだと <@521958252280545280> みたいに留年しちゃう....',
+  generate(args) {
+    return `${args.body}Nった`;
+  }
+};
+```
+
+ミームは `MemeTemplate` という型で定義されています。
+
+この型の中身に従って書いていきます。
+
+#### `MemeTemplate.commandNames`
+
+ミームに使用されるコマンドを配列で指定します。必須になります。
+
+- `['hoge']` - `!hoge` というコマンドで実行できます。
+- `['hoge', 'fuga']` - `!hoge` と `!fuga` というコマンドで実行できます。
+
+<Callout type="warning">
+
+他のミームとは重複しないようにしてください。
+
+</Callout>
+
+#### `MemeTemplate.description`
+
+ミームコマンドに対し `--help` フラグを使うと表示されるヘルプの説明欄を指定します。
+
+わかりやすくすることをオススメします。
+
+```ts title="src/service/command/meme/n.ts"
+export const n: MemeTemplate<never, never> = {
+  commandNames: ['n'],
+  description: '〜Nった'
+  // ...
+};
+```
+
+![nのmemeのヘルプ。descriptionでの説明が表示されている](/public/images/meme.jpg)
+
+<Callout type="info">
+
+引数で変わるところを `〜` で表現するとわかりやすいです。
+
+</Callout>
+
+#### `MemeTemplate.flagsKeys`
+
+ミームのフラグを定義します。
+
+```ts title="src/service/command/meme/takopi.ts"
+const takopiFlags = ['f'] as const;
+const takopiOptions = ['c'] as const;
+export const takopi: MemeTemplate<
+  typeof takopiFlags[number],
+  typeof takopiOptions[number]
+> = {
+  commandNames: ['takopi'],
+  description:
+    '「〜、出して」\n`-f` で教員と自分の名前の位置を反対にします。\n`-c <教員の名前> <出すもの>`で教員の名前も変更可能です。',
+  flagsKeys: takopiFlags,
+```
+
+#### `MemeTemplate.optionsKeys`
+
+ミームのオプションを定義します。
+
+```ts title="src/service/command/meme/takopi.ts"
+const takopiFlags = ['f'] as const;
+const takopiOptions = ['c'] as const;
+export const takopi: MemeTemplate<
+  typeof takopiFlags[number],
+  typeof takopiOptions[number]
+> = {
+  commandNames: ['takopi'],
+  description:
+    '「〜、出して」\n`-f` で教員と自分の名前の位置を反対にします。\n`-c <教員の名前> <出すもの>`で教員の名前も変更可能です。',
+  flagsKeys: takopiFlags,
+  optionsKeys: takopiOptions,
+```
+
+#### `MemeTemplate.errorMessage`
+
+引数不足時のエラーメッセージを定義します。
+
+```ts title="src/service/command/meme/n.ts"
+export const n: MemeTemplate<never, never> = {
+  commandNames: ['n'],
+  description: '〜Nった',
+  flagsKeys: [],
+  optionsKeys: [],
+  errorMessage: 'このままだと <@521958252280545280> みたいに留年しちゃう....',
+```
+
+### ミームを登録する
+
+ミームの処理を書いたら `src/service/command/meme/index.ts` に登録します。
+
+```ts title="src/service/command/meme/index.ts"
+export const memes = [
+  dousurya,
+  hukueki,
+  lolicon,
+  n,
+  takopi,
+  nigetane,
+  web3,
+  moeta,
+  kenjou,
+  koume,
+  ojaru,
+  nine
+];
+```
+
+変数 `meme` にミームを書きエクスポートすることで登録が完了します。

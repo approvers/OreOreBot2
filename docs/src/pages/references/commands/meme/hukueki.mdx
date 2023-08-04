@@ -1,0 +1,24 @@
+import { CommandArgs } from '/src/organisms/command-args';
+
+# 服役はしてないといいね
+
+<CommandArgs
+  versionAvailableFrom="v1.0.0"
+  commandName="hukueki"
+  args={[
+    {
+      name: 'テキスト',
+      about: 'テンプレートに挿入するテキストです。'
+    }
+  ]}
+/>
+
+### 使用例
+
+`!hukueki こるく`
+
+```
+>> ねぇ、将来何してるだろうね
+こるくはしてないといいね
+困らないでよ
+```

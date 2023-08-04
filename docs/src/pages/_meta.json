@@ -1,0 +1,17 @@
+{
+  "index": "ようこそ",
+  "references": {
+    "title": "リファレンス",
+    "type": "page"
+  },
+  "development": {
+    "title": "開発ガイド",
+    "type": "page"
+  },
+  "repo": {
+    "title": "OreOreBot2 レポジトリ",
+    "type": "page",
+    "href": "https://github.com/approvers/OreOreBot2",
+    "newWindow": true
+  }
+}

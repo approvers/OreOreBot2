@@ -1,0 +1,19 @@
+import { CommandArgs } from '/src/organisms/command-args';
+
+# 国勢調査
+
+<CommandArgs
+  versionAvailableFrom="v1.0.0"
+  commandName={[
+    'kokusei',
+    'kokusei-chousa',
+    'population',
+    'number',
+    'zinnkou',
+    'zinkou'
+  ].join('/')}
+/>
+
+限界開発鯖の全メンバー数、ユーザーアカウント(人類)の数、Bot の数、Bot 率を表示します。
+
+Bot 率は `(Botの数 / 全メンバー数) * 100` で計算されます。

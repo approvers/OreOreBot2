@@ -1,0 +1,14 @@
+env:
+  node: true
+  es2021: true
+extends:
+  - 'next/core-web-vitals'
+  - 'prettier'
+  - plugin:mdx/recommended
+plugins:
+  - '@typescript-eslint'
+rules:
+  'max-params': 'error'
+settings:
+  'mdx/code-blocks': true
+root: true

@@ -1,0 +1,32 @@
+import { Callout } from 'nextra-theme-docs';
+
+import { VersionBadge } from '/src/molecules/version-badge';
+import { CommandArgs } from '/src/organisms/command-args';
+
+# ヘルプ
+
+<CommandArgs versionAvailableFrom="v1.0.0" commandName="help/h" />
+
+ヘルプを表示します。
+
+### ページ送り
+
+<VersionBadge>v1.16.0</VersionBadge>
+
+ヘルプは 2 つのボタンを使ってページ送りすることができます。最初のページから前のページへ送ると最後のページに、最後のページから次のページへ送ると最初のページにジャンプします。
+
+<Callout type="warning">
+
+ページ送りのボタンは一定時間で無効化されます。無効化された場合はコマンドを再実行してください。
+
+</Callout>
+
+<Callout type="warning">
+
+ページ送りの制限 <VersionBadge children={'v1.31.0'} />
+
+**`v1.32.1` からページ送りができるのは `!help` コマンドを実行したメンバーのみに制限されました**。
+
+コマンド実行者以外がボタンを押してもクライアントにはインタラクションに失敗した趣旨の警告が表示されます。
+
+</Callout>

@@ -1,0 +1,38 @@
+import { Callout } from 'nextra-theme-docs';
+
+import { CommandArgs } from '/src/organisms/command-args';
+
+# 「うん ついでに〜が燃えた」
+
+<CommandArgs
+  versionAvailableFrom="v1.23.0"
+  commandName="moeta/yuki"
+  args={[
+    {
+      name: 'テキスト',
+      about: 'テンプレートに挿入するテキストです。'
+    }
+  ]}
+/>
+
+### 使用例
+
+`!moeta 限界開発鯖`
+
+```
+>> 「久留米の花火大会ね、寮から見れたの?」
+「うん ついでに限界開発鯖が燃えた」
+「は?」
+```
+
+<Callout type="info">
+
+元ネタ
+
+[2022 年 8 月に久留米・筑後川花火大会で不発の花火玉が落下し、限界開発鯖にも通っている学生がいる 久留米工業高等専門学校 (久留米高専) の弓道場が全焼した。](https://www3.nhk.or.jp/fukuoka-news/20220805/5010016764.html)
+
+その事故に関する久留米高専の学生とその母親との LINE が元ネタになっている。
+
+[該当ツイート](https://twitter.com/yuki_yuigishi/status/1555557259798687744)
+
+</Callout>

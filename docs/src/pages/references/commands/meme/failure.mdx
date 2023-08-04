@@ -1,0 +1,46 @@
+import { Callout } from 'nextra-theme-docs';
+
+import { CommandArgs } from '/src/organisms/command-args';
+
+# 共同通信記者の失礼発言 MEME
+
+<CommandArgs
+  versionAvailableFrom="v1.38.0"
+  commandName="failure/fail"
+  args={[
+    {
+      name: 'オプション',
+      about: (
+        <>
+          <code>-k</code> は、失敗の部分を指定します。
+        </>
+      ),
+      defaultValue: '指定なし',
+      versionAvailableFrom: 'v1.39.0'
+    },
+    {
+      name: 'テキスト',
+      about: 'テンプレートに挿入する1つ目のテキストです。'
+    }
+  ]}
+/>
+
+## 使用例
+
+`!failure OreOreBotはPythonで作成しています`
+
+```
+>> 「OreOreBotはPythonで作成しています。」
+「わかりました。それは一般に失敗と言います、ありがとうございます」
+```
+
+`!failure -k 終わり OreOreBotはPythonで作成しています`
+
+```
+>> 「OreOreBotはPythonで作成しています。」
+「わかりました。それは一般に終わりと言います、ありがとうございます」
+```
+
+<Callout type="info" emoji="ℹ️">
+  この機能は他のどのMEMEよりも使うのが難しいです。うまく使いこなせるよう練習しましょう。
+</Callout>

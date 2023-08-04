@@ -1,0 +1,44 @@
+import { CommandArgs } from '/src/organisms/command-args';
+
+# プログラマ狩り
+
+<CommandArgs
+  versionAvailableFrom="v1.36.0"
+  commandName="tsureteike"
+  args={[
+    {
+      name: 'テキスト1',
+      about: 'テンプレートに挿入する1つ目のテキストです。'
+    },
+    {
+      name: 'テキスト2',
+      about: 'テンプレートに挿入する2つ目のテキストです。'
+    },
+    {
+      name: 'テキスト3',
+      about: 'テンプレートに挿入する3つ目のテキストです。'
+    },
+    {
+      name: 'テキスト4',
+      about: 'テンプレートに挿入する4つ目のテキストです。'
+    },
+    {
+      name: 'テキスト5',
+      about: 'テンプレートに挿入する5つ目のテキストです。'
+    }
+  ]}
+/>
+
+## 使用例
+
+`!tsureteike プログラマ Rustは知っているか? ゲームですか? 錆のこと? 🦀`
+
+```
+>> 「この中にプログラマはいるか」
+A,B,C「いません」
+「Rustは知っているか?
+A「ゲームですか?」
+B「錆のこと?」
+C「🦀」
+「いたぞ、Cを連れて行け」
+```

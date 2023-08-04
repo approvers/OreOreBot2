@@ -1,0 +1,60 @@
+import { Callout } from 'nextra-theme-docs';
+
+import { FeatureBadge } from '/src/molecules/feature-badge';
+import { VersionBadge } from '/src/molecules/version-badge';
+
+# 時報システム
+
+<FeatureBadge>ログ</FeatureBadge>,<VersionBadge>v1.41.0</VersionBadge>
+
+旧はらちょに搭載されていた時報システムを新生はらちょ向けに機能を改善したリメイク版です。
+
+## 時報が送信されるチャンネル
+
+旧はらちょでは専用チャンネル `#はらちょ` に送信されていましたが、**新生はらちょでは `#無法地帯` に変更されています**。
+
+## 時報が送信される時間
+
+1時間毎に送信される旧はらちょと異なり、リメイク版では時報の送信時間が変更されています。
+
+時報が送信される時間は以下のとおりです。
+
+| 時間帯 | 送信時間 | 時報内容 |
+| ---- | ---- | ---- |
+| 朝 ( `MORNING` ) | AM 7:00 | **マルナナマルマル、朝だ。…司令官、まだ寝てるの？** |
+| 昼 ( `MOON` ) | PM 12:00 | **Полдень. 今日は何を作ってるんだい？** |
+| 夜 ( `MIDNIGHT` ) | AM 2:00 | **マルフタマルマル、もう遅いね。眠かったらどうぞ。私の膝を貸そうか。** |
+
+## 時報の送信時間を変更する
+
+<Callout type="warning" emoji="⚠️">
+  本来、この設定を変更する必要はありません。
+  設定変更が必要になったら変更するようにしてください。
+</Callout>
+
+時報の送信時間は `assets/time-signal.yaml` で定義されています。
+
+```yaml
+MORNING: # キーはこの 3 パターンがすべて必須
+  time:
+    hours: 7   # 0 - 23 の数値
+    minutes: 0 # 0 - 59 の数値
+  message: 'マルナナマルマル、朝だ。…司令官、まだ寝てるの？'
+NOON:
+  time:
+    hours: 12
+    minutes: 0
+  message: 'Полдень. 今日は何を作ってるんだい？'
+MIDNIGHT:
+  time:
+    hours: 2
+    minutes: 0
+  message: 'マルフタマルマル、もう遅いね。眠かったらどうぞ。私の膝を貸そうか。'
+```
+
+- `MORNING`, `MOON`, `MIDNIGHT` これらすべてのキーを指定する必要があります。
+- `time.hours` には時を指定します。
+- `time.minutes` には分を指定します。
+- `message` にははらちょが時報として送信するメッセージを指定できます。
+    - 埋め込みの `Embed.description` に埋め込まれた状態で指定したメッセージが送信されます。
+    - 一部の Markdown 記法が使用できます。

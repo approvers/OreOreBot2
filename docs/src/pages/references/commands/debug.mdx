@@ -1,0 +1,33 @@
+import { Callout } from 'nextra-theme-docs';
+
+import { CommandArgs } from '/src/organisms/command-args';
+
+# デバッガーはらちょ
+
+<CommandArgs
+  versionAvailableFrom="v1.19.0"
+  commandName="debug"
+  args={[
+    {
+      name: 'メッセージID',
+      about: 'デバッグ表示するメッセージのID'
+    }
+  ]}
+/>
+
+指定したメッセージをコードブロックとして表示します。
+
+指定するメッセージがコマンドを実行したチャンネルに存在する必要があります。
+
+<Callout type="info">
+  デバック結果に 3
+  連続のバッククォートが含まれている場合、コードブロックの崩壊を回避するためにシングルクォートに置換します。
+</Callout>
+
+<Callout type="warning">
+
+メッセージ内容をコードブロック上に展開するため、スポイラーを含んだメッセージをデバッグするとスポイラー部分が開示されてしまいます。
+
+デバックの際はご注意ください。
+
+</Callout>
