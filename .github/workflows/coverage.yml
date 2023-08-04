@@ -1,6 +1,6 @@
 # Coverageのレポートを作成、送信します。
 
-name: Coverage (OreOreBot2)
+name: Coverage
 
 on:
   pull_request:

@@ -1,6 +1,6 @@
 # 作成されたプルリクエストに対してライセンスの変更がないか確認します。
 
-name: License checker (OreOreBot2)
+name: License checker
 
 on:
   pull_request:

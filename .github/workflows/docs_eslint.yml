@@ -1,6 +1,6 @@
 # OreOreBot2 Documents に対して eslint を実行します。
 
-name: eslint (docs)
+name: eslint
 
 on:
   push:

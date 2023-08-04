@@ -1,6 +1,6 @@
 # OreOreBot2 Documents をビルドします。
 
-name: Build (docs)
+name: Build
 
 on:
   push:

@@ -1,4 +1,4 @@
-name: Test (OreOreBot2)
+name: Test
 
 on:
   pull_request:

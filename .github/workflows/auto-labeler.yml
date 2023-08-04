@@ -1,6 +1,6 @@
 # 作成されたプルリクエストに対し、.github/labeler.yml で定義されたラベルを自動付与します。
 
-name: labeler (OreOreBot2 & docs)
+name: Labeler
 
 on: pull_request_target
 
