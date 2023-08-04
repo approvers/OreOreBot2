@@ -1,0 +1,22 @@
+import { CommandArgs } from '/src/organisms/command-args';
+
+# 首相の否定的な考え
+
+<CommandArgs
+  versionAvailableFrom="v1.36.0"
+  commandName="syakai"
+  args={[
+    {
+      name: 'テキスト1',
+      about: 'テンプレートに挿入する1つ目のテキストです。'
+    }
+  ]}
+/>
+
+## 使用例
+
+`!syakai Rust採用`
+
+```
+>> 「首相、Rust採用に否定的な考え ― 『社会が変わってしまう』」
+```

@@ -1,6 +1,14 @@
 # OreOreBot2 ラベルファイル
 # ラベル等の編集はこのファイルを編集してください。 main ブランチ更新後 CI が動き出し同期を開始します。
 
+# T - Type
+- name: 'T-OreOreBot2'
+  description: 'Type: OreOreBot2'
+  color: '8597FF'
+- name: 'T-Documents'
+  description: 'Type: Documents'
+  color: 'F0FF77'
+
 # C - Category
 - name: 'C-bug'
   description: 'Category: bug'

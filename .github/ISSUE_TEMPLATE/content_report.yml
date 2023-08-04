@@ -1,0 +1,20 @@
+name: ドキュメント
+description: ドキュメントに関するIssueを提出します。
+labels: ["T-Documents"]
+body:
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: 提出する前に - 確認事項
+      description: 提出する前に確認する事項です。
+      options:
+        - label: 同一Issueはないか確認しましたか？
+          required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: 提出内容
+      description: >
+        提出する内容を入力してください。
+    validations:
+      required: true

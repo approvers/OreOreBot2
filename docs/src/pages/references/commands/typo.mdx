@@ -1,0 +1,18 @@
+import { CommandArgs } from '/src/organisms/command-args';
+
+# 今日の Typo
+
+<CommandArgs
+  versionAvailableFrom="v1.0.0"
+  commandName="typo"
+  args={[
+    {
+      name: 'by [ユーザーID]',
+      about: '指定したユーザーの Typo を表示します。',
+      defaultValue: '指定なし',
+      versionAvailableFrom: 'v1.14.0'
+    }
+  ]}
+/>
+
+その日に記録された、あなたの Typo (`だカス` で終わるメッセージ) を一覧します。ユーザー ID を指定することで、特定ユーザーの Typo も一覧できます。詳しくは [今日の Typo 機能のドキュメント](../features/typo) をご覧ください。

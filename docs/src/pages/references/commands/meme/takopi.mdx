@@ -1,0 +1,72 @@
+import { Callout } from 'nextra-theme-docs';
+
+import { CommandArgs } from '/src/organisms/command-args';
+
+# タコピー構文
+
+<CommandArgs
+  versionAvailableFrom="v1.5.0"
+  commandName="takopi"
+  args={[
+    {
+      name: 'フラグ',
+      about: (
+        <>
+          <code>-f</code> は、教員と自分の名前を逆にします。
+        </>
+      ),
+      defaultValue: '指定なし',
+      versionAvailableFrom: 'v1.9.2'
+    },
+    {
+      name: 'オプション',
+      about: (
+        <>
+          <code>-c</code> は、教員の名前を変更します。
+        </>
+      ),
+      defaultValue: '指定なし',
+      versionAvailableFrom: 'v1.30.0'
+    },
+    {
+      name: 'テキスト',
+      about: 'テンプレートに挿入するテキストです。'
+    }
+  ]}
+/>
+
+### 使用例
+
+`!takopi 単位`
+
+```
+>> 教員「単位、出して」
+m2en「わ、わかんないっピ.......」
+```
+
+`!takopi -f 単位`
+
+```
+>> m2en「単位、出して」
+教員「わ、わかんないっピ.......」
+```
+
+`!takopi -c ドラえもん 独裁スイッチ`
+
+```
+>> m2en「独裁スイッチ、出して」
+ドラえもん「わ、わかんないっピ.......」
+```
+
+<Callout type="warning">
+
+`-f`, `-c` は同時に使用することが出来ます。`-f` は有効/無効を切り替えられるフラグであるのに対して、`-c` はその直後に名前の値を指定するオプションです。引数の順番や形式に注意してください。
+
+`!takopi -f -c ドラえもん 独裁スイッチ`
+
+```
+>> ドラえもん「独裁スイッチ、出して」
+m2en「わ、わかんないっピ.......」
+```
+
+</Callout>

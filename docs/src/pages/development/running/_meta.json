@@ -1,0 +1,6 @@
+{
+  "docker-use-compose": "Docker イメージで起動する",
+  "docker-use-image": "Docker Compose で起動する",
+  "index": "実行環境",
+  "local": "ローカルで起動する"
+}

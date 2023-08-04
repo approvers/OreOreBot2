@@ -1,0 +1,27 @@
+import { CommandArgs } from '/src/organisms/command-args';
+
+# コンピューターの天才、9 つの C 言語を操る
+
+<CommandArgs
+  versionAvailableFrom="v1.36.0"
+  commandName="clang"
+  args={[
+    {
+      name: 'テキスト1',
+      about: 'テンプレートに挿入する1つ目のテキストです。'
+    },
+    {
+      name: 'テキスト2',
+      about: 'テンプレートに挿入する2つ目のテキストです。'
+    }
+  ]}
+/>
+
+## 使用例
+
+`!clang コンピューター C言語`
+
+```
+>> コンピューターの天才
+9つのC言語を操る
+```

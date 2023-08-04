@@ -1,0 +1,32 @@
+import { CommandArgs } from '/src/organisms/command-args';
+
+# †HARACHO ONLINE JUDGING SYSTEM†
+
+<CommandArgs
+  versionAvailableFrom="v1.0.0"
+  commandName="jd/judge"
+  args={[
+    {
+      name: 'テスト数',
+      about: (
+        <>
+          判定のアニメーションに使うテストケースの数です。最大値は{' '}
+          <code>64</code> です。
+        </>
+      ),
+      defaultValue: <code>5</code>
+    },
+    {
+      name: '判定結果',
+      about: 'アニメーション終了後の判定を指定します。',
+      defaultValue: <code>'AC'</code>
+    },
+    {
+      name: '全失敗',
+      about: '全てのテストケースを失敗させるかどうかを指定します。',
+      defaultValue: <code>false</code>
+    }
+  ]}
+/>
+
+プログラムが適格かどうかを判定するためのオンラインジャッジシステムです。

@@ -1,0 +1,40 @@
+{
+  "name": "haracho.approvers.dev",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/approvers/OreOreBot2",
+  "author": "approvers <info@approvers.dev>",
+  "description": "新生はらちょドキュメントサイト",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --ignore-path .gitignore -w **/*.{js,ts,jsx,tsx,md,mdx}"
+  },
+  "dependencies": {
+    "next": "^13.1.6",
+    "nextra": "^2.2.14",
+    "nextra-theme-docs": "^2.2.14",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.1.1",
+    "@types/node": "18.13.0",
+    "@types/react": "18.0.28",
+    "@typescript-eslint/eslint-plugin": "^5.51.0",
+    "@typescript-eslint/parser": "^5.51.0",
+    "eslint": "8.33.0",
+    "eslint-config-next": "13.1.6",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-mdx": "^2.0.5",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "prettier": "^2.8.4",
+    "typescript": "4.9.5"
+  },
+  "packageManager": "yarn@3.4.1"
+}

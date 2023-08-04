@@ -1,0 +1,15 @@
+.args {
+  padding-left: 1rem;
+}
+
+.args > li {
+  list-style: disc;
+}
+
+.parameter {
+  padding-left: 2rem;
+}
+
+.parameter > li {
+  list-style: circle;
+}

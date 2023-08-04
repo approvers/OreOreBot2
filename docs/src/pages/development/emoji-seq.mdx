@@ -1,0 +1,57 @@
+# EmojiSeq に新しい言葉を追加する
+
+このページでは、**ある特定の言葉に対して、予め設定していたリアクションを返す機能 EmojiSeq** に新しいパターンを追加する方法について紹介します。
+
+---
+
+EmojiSeq の設定ファイルは [`assets/`](https://github.com/approvers/OreOreBot2/blob/main/assets/emoji-seq.yaml) に存在します。
+
+このファイルを編集することで、新しいパターンを追加することができます。
+
+```yml title="assets/emoji-seq.yaml"
+- pattern: (?<!影)響
+  emojisToSend:
+    - <:haracho:684424533997912096>
+- pattern: ぴちょん
+  emojisToSend:
+    - <:python_kuso:689921246913101962>
+- pattern: 腹切り
+  emojisToSend:
+    - <:hara:991347806180741160>
+    - <:ki:991347820693032970>
+    - <:ri:1011328993657634887>
+- pattern: 磯(崎|﨑)
+  emojisToSend:
+    - <:isozaki_kirito:836249519632023623>
+```
+
+| 設定値       | 説明                                                                                                                                                                          | 値の例                      | 必須か |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- | ------ |
+| pattern      | リアクションを送信するメッセージ内容を指定する。<br/>[正規表現パターン](https://developer.mozilla.org/ja/docs/Web/JavaScript/Guide/Regular_Expressions)を使うことも出来ます。 | 磯﨑                        | true   |
+| emojisToSend | 送信するリアクションを指定する。                                                                                                                                              | `<:ri:1011328993657634887>` | true   |
+
+## 絵文字の指定方法
+
+### デフォルトの絵文字 (Unicode Emoji)
+
+デフォルトの絵文字は、そのまま絵文字の名前を指定するだけで使用することができます。
+
+```yml
+- pattern: Apple
+  emojisToSend:
+    - 🍎
+```
+
+### サーバーの絵文字
+
+サーバーの絵文字は、`<:絵文字名:絵文字ID>` の形式で指定します。
+
+```yml
+- pattern: Docker
+  emojisToSend:
+    - <:docker:725967469021233162>
+```
+
+この `<:絵文字名:絵文字ID>` の形式は Discord クライアントから取得できます。
+
+![絵文字の先頭にバックスラッシュを加え送信します。](/public/images/gif/emoji-id.gif)

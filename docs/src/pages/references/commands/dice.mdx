@@ -1,0 +1,30 @@
+import { CommandArgs } from '/src/organisms/command-args';
+
+# ダイスロール
+
+<CommandArgs
+  versionAvailableFrom="v1.12.0"
+  commandName="dice/d"
+  args={[
+    {
+      name: 'ダイスロール設定',
+      about:
+        <>
+        ダイスロールの内容を設定します。2 個の 6 面ダイス であれば <code>!dice 2d6</code> (または <code>!dice 2D6</code>) と入力します。
+        </>,
+      defaultValue: '1d100'
+    },
+    {
+      name: '詳細モード',
+      about:
+        '結果を表示モードを設定します。省略モードではダイスの合計値のみを表示し、詳細モードでは各ダイスの結果も表示します。',
+      defaultValue: 'simple'
+    }
+
+]}
+/>
+
+| 詳細モード     | 表示形式 |
+| -------------- | -------- |
+| `s`, `simple`  | 省略表示 |
+| `v`, `verbose` | 詳細表示 |

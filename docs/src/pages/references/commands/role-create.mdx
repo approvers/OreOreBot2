@@ -1,0 +1,24 @@
+import { CommandArgs } from '/src/organisms/command-args';
+
+# ロール情報表示
+
+<CommandArgs
+  versionAvailableFrom="v1.25.0"
+  commandName="rolecreate"
+  args={[
+    {
+      name: 'ロール名',
+      about: '作成したいロールの名前を指定します。'
+    },
+    {
+      name: 'ロールの色',
+      about: '作成したいロールの色を指定します。',
+      optional: true,
+      defaultValue: 'デフォルトカラー'
+    }
+  ]}
+/>
+
+コマンドでロールを作成します。
+
+作成したロールは [Kawaemon has given a new role](../features/kawaemon) 機能によって即座にかわえもんに付与されます。
