@@ -8,11 +8,20 @@ import type {
 } from './command-message.js';
 import type { VoiceRoomController } from './kaere.js';
 
-export type GyokuonAssetKey = 'GYOKUON';
+export type GyokuonAssetKey = 'GYOKUON' | 'GYOKUON_SHORT';
 
 const SCHEMA = {
   names: ['gyokuon'],
-  subCommands: {}
+  subCommands: {},
+  params: [
+    {
+      type: 'BOOLEAN',
+      name: '短縮版',
+      description:
+        '`true`でこるくの玉音放送の短縮版を流すよ。`false`を指定しない場合・指定しない場合はフル版を再生するよ',
+      defaultValue: false
+    }
+  ]
 } as const satisfies Schema;
 
 /**
@@ -36,6 +45,7 @@ export class GyokuonCommand implements CommandResponder<typeof SCHEMA> {
   ) {}
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
+    const [shortFlag] = message.args.params;
     const roomId = message.senderVoiceChannelId;
     if (!roomId) {
       await message.reply({
@@ -50,13 +60,17 @@ export class GyokuonCommand implements CommandResponder<typeof SCHEMA> {
       title: 'こるく天皇の玉音放送だよ',
       description: '全鯖民に対しての大詔だから椅子から立って聞いてね'
     });
-    await this.start(message.senderGuildId, roomId);
+    await this.start(message.senderGuildId, roomId, shortFlag);
     return;
   }
 
   // 玉音放送がすでに行われているか
   private doingGyokuon = false;
-  private async start(guildId: Snowflake, roomId: Snowflake): Promise<void> {
+  private async start(
+    guildId: Snowflake,
+    roomId: Snowflake,
+    isShort: boolean
+  ): Promise<void> {
     if (this.doingGyokuon) {
       return;
     }
@@ -73,7 +87,11 @@ export class GyokuonCommand implements CommandResponder<typeof SCHEMA> {
       return false;
     });
 
-    await connectionVC.playToEnd('GYOKUON');
+    if (isShort) {
+      await connectionVC.playToEnd('GYOKUON_SHORT');
+    } else {
+      await connectionVC.playToEnd('GYOKUON');
+    }
 
     connectionVC.destroy();
     this.doingGyokuon = false;

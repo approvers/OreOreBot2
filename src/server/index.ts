@@ -140,7 +140,8 @@ if (features.includes('COMMAND')) {
       KAKUSIN_DAISUKE: join('assets', 'party', 'kakusin-daisuke.mp3'),
       POTATO: join('assets', 'party', 'potato.mp3'),
       NEROYO: join('assets', 'kaere', 'neroyo.mp3'),
-      GYOKUON: join('assets', 'gyokuon', 'gyokuon.mp3')
+      GYOKUON: join('assets', 'gyokuon', 'gyokuon.mp3'),
+      GYOKUON_SHORT: join('assets', 'gyokuon', 'gyokuon-short.mp3')
     }),
     clock,
     scheduleRunner,
