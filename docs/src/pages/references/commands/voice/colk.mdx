@@ -4,7 +4,18 @@ import { CommandArgs } from '../../../../organisms/command-args';
 
 # こるくの玉音放送
 
-<CommandArgs versionAvailableFrom="v1.32.0" commandName="gyokuon" />
+<CommandArgs
+  versionAvailableFrom="v1.32.0"
+  commandName="gyokuon"
+  args={[
+    {
+        name: "縮小版",
+        about: "trueで縮小版の玉音放送を再生します。falseを指定することでフル版を再生します。",
+        defaultValue: "false",
+        versionAvailableFrom: "v1.44.0"
+    }
+  ]}
+/>
 
 ---
 
@@ -12,10 +23,16 @@ VC 内にこるくの玉音放送を再生します。
 
 <Callout type="warning">
 
-この機能には FFmpeg が必要です。
+    この機能には FFmpeg が必要です。
 
 </Callout>
 
 <Callout type="info">
-  実行者がボイスチャンネルにいないとこのコマンドは安全装置によって封じ込められます。
+    実行者がボイスチャンネルにいないとこのコマンドは安全装置によって封じ込められます。
 </Callout>
+
+## 縮小版を再生する
+
+`!gyokuon true` で縮小版の玉音放送を再生します。
+
+フル版は **4分34秒**、縮小版は **2分10秒** です。
