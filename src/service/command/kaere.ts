@@ -184,7 +184,6 @@ export class KaereCommand implements CommandResponder<typeof SCHEMA> {
     connection.connect();
     connection.onDisconnected(() => {
       this.doingKaere = false;
-      return false;
     });
     await this.deps.stdout.sendEmbed({
       title: '提督、もうこんな時間だよ',

@@ -5,7 +5,6 @@ import {
   VoiceConnectionStatus,
   createAudioPlayer,
   createAudioResource,
-  entersState,
   joinVoiceChannel
 } from '@discordjs/voice';
 import {
@@ -121,55 +120,16 @@ export class DiscordVoiceConnection<K extends string | number | symbol>
     this.connection = null;
   }
 
-  onDisconnected(shouldReconnect: () => boolean): void {
+  onDisconnected(handler: () => void): void {
     if (!this.connection) {
       throw new Error(
         'You must invoke `connect` before to register disconnection handler'
       );
     }
-    this.connection.on(
-      VoiceConnectionStatus.Disconnected,
-      () => void this.makeDisconnectionHandler(shouldReconnect)
-    );
-  }
-  private makeDisconnectionHandler(shouldReconnect: () => boolean) {
-    return async () => {
-      if (!this.connection) {
-        return;
-      }
-      try {
-        await Promise.race([
-          entersState(
-            this.connection,
-            VoiceConnectionStatus.Signalling,
-            TIMEOUT_MS
-          ),
-          entersState(
-            this.connection,
-            VoiceConnectionStatus.Connecting,
-            TIMEOUT_MS
-          )
-        ]);
-        // 再接続に成功。
-        return;
-      } catch (error) {
-        console.error(error);
-        this.destroy();
-      }
-      if (!shouldReconnect()) {
-        return;
-      }
-      try {
-        const newConn = new DiscordVoiceConnection(
-          this.channel,
-          this.audioRecord
-        );
-        this.connection = newConn.connection;
-        this.player = newConn.player;
-      } catch (error) {
-        console.error(error);
-      }
-    };
+    this.connection.on(VoiceConnectionStatus.Disconnected, () => {
+      handler();
+      this.destroy();
+    });
   }
 }
 
