@@ -84,7 +84,6 @@ export class GyokuonCommand implements CommandResponder<typeof SCHEMA> {
     connectionVC.connect();
     connectionVC.onDisconnected(() => {
       this.doingGyokuon = false;
-      return false;
     });
 
     if (isShort) {

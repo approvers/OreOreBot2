@@ -54,9 +54,7 @@ export interface VoiceConnection<K> {
   unpause(): void;
 
   /**
-   * 回復できない接続解除が発生した時に、同じチャンネルへ再接続するかどうかのハンドラを登録する。ボイスチャンネルが削除されたなど、必ず再接続できないこともある。
-   *
-   * @param shouldReconnect - この関数が `true` を返す場合は、回復できない接続解除でも同じチャンネルへの再接続を試みる。
+   * 接続解除が発生した時のハンドラを登録する。
    */
-  onDisconnected(shouldReconnect: () => boolean): void;
+  onDisconnected(handler: () => void): void;
 }
