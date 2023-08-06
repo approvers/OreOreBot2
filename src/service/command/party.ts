@@ -188,7 +188,6 @@ export class PartyCommand implements CommandResponder<typeof SCHEMA> {
     this.connection.connect();
     this.connection.onDisconnected(() => {
       this.connection = null;
-      return false;
     });
     await message.reply(partyStarting);
     await this.connection.playToEnd(this.generateNextKey());
