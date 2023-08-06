@@ -24,7 +24,7 @@ import { Callout } from 'nextra-theme-docs';
 
 ミームの処理は `src/service/command/meme` 配下に書いてきます。
 
-```ts title="src/service/command/meme/n.ts"
+```ts filename="src/service/command/meme/n.ts"
 import type { MemeTemplate } from '../../../model/meme-template.js';
 
 export const n: MemeTemplate<never, never> = {
@@ -62,15 +62,13 @@ export const n: MemeTemplate<never, never> = {
 
 わかりやすくすることをオススメします。
 
-```ts title="src/service/command/meme/n.ts"
+```ts filename="src/service/command/meme/n.ts"
 export const n: MemeTemplate<never, never> = {
   commandNames: ['n'],
   description: '〜Nった'
   // ...
 };
 ```
-
-![nのmemeのヘルプ。descriptionでの説明が表示されている](/public/images/meme.jpg)
 
 <Callout type="info">
 
@@ -82,7 +80,7 @@ export const n: MemeTemplate<never, never> = {
 
 ミームのフラグを定義します。
 
-```ts title="src/service/command/meme/takopi.ts"
+```ts filename="src/service/command/meme/takopi.ts"
 const takopiFlags = ['f'] as const;
 const takopiOptions = ['c'] as const;
 export const takopi: MemeTemplate<
@@ -99,7 +97,7 @@ export const takopi: MemeTemplate<
 
 ミームのオプションを定義します。
 
-```ts title="src/service/command/meme/takopi.ts"
+```ts filename="src/service/command/meme/takopi.ts"
 const takopiFlags = ['f'] as const;
 const takopiOptions = ['c'] as const;
 export const takopi: MemeTemplate<
@@ -117,7 +115,7 @@ export const takopi: MemeTemplate<
 
 引数不足時のエラーメッセージを定義します。
 
-```ts title="src/service/command/meme/n.ts"
+```ts filename="src/service/command/meme/n.ts"
 export const n: MemeTemplate<never, never> = {
   commandNames: ['n'],
   description: '〜Nった',
