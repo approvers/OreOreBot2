@@ -844,14 +844,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
+"@types/node@npm:*, @types/node@npm:20.4.6":
   version: 20.4.6
   resolution: "@types/node@npm:20.4.6"
   checksum: 28dfc13da87f579264840bc5b8a2cde2dcb93662464a0d58f0fa98eba1aae978e3c73e893474238c4a1226d0b1a14e3936520ff9795e1c4e06fad3282be83d18
   languageName: node
   linkType: hard
 
-"@types/node@npm:18.17.1, @types/node@npm:^18.0.0":
+"@types/node@npm:^18.0.0":
   version: 18.17.1
   resolution: "@types/node@npm:18.17.1"
   checksum: 56201bda9a2d05d68602df63b4e67b0545ac8c6d0280bd5fb31701350a978a577a027501fbf49db99bf177f2242ebd1244896bfd35e89042d5bd7dfebff28d4e
@@ -3286,7 +3286,7 @@ __metadata:
   resolution: "haracho.approvers.dev@workspace:."
   dependencies:
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
-    "@types/node": 18.17.1
+    "@types/node": 20.4.6
     "@types/react": 18.2.18
     "@typescript-eslint/eslint-plugin": ^6.0.0
     "@typescript-eslint/parser": ^6.0.0
