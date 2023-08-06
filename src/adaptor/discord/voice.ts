@@ -111,11 +111,7 @@ export class DiscordVoiceConnection<K extends string | number | symbol>
     this.connection = joinVoiceChannel({
       channelId: this.channel.id,
       guildId: this.channel.guildId,
-      adapterCreator: this.channel.guild.voiceAdapterCreator,
-      debug: true
-    });
-    this.connection.on('stateChange', (from, to) => {
-      console.log({ from, to });
+      adapterCreator: this.channel.guild.voiceAdapterCreator
     });
   }
   destroy(): void {
