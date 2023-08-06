@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.44.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.43.0...oreorebot2-v1.44.0) (2023-08-06)
+
+
+### Features
+
+* こるくの玉音放送縮小版を追加 ([#936](https://github.com/approvers/OreOreBot2/issues/936)) ([c25fb4e](https://github.com/approvers/OreOreBot2/commit/c25fb4eca2da7abee29ad6acbe408037e4f4f728))
+
+
+### Bug Fixes
+
+* 再接続の制御を除去 ([#959](https://github.com/approvers/OreOreBot2/issues/959)) ([9ebe81d](https://github.com/approvers/OreOreBot2/commit/9ebe81d8cc0ca1f3b9323601b84180d9ae4a23b9))
+
 ## [1.43.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.42.0...oreorebot2-v1.43.0) (2023-08-02)
 
 ### Features
