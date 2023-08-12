@@ -149,7 +149,9 @@ test('multi args', () => {
 
   const noParamRes = parseOptions(
     'rolecreate',
-    {} as unknown as ChatInputCommandInteraction['options'],
+    {
+      getUser: () => null
+    } as unknown as ChatInputCommandInteraction['options'],
     ROLE_CREATE_SCHEMA
   );
 
@@ -158,7 +160,8 @@ test('multi args', () => {
   const oneParamRes = parseOptions(
     'rolecreate',
     {
-      getUser: () => ({ id: '0123456789' }) as unknown as User
+      getUser: () => ({ id: '0123456789' }) as unknown as User,
+      getString: () => null
     } as unknown as ChatInputCommandInteraction['options'],
     ROLE_CREATE_SCHEMA
   );
