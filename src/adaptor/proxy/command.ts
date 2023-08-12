@@ -117,7 +117,11 @@ export class DiscordCommandProxy implements CommandProxy {
 
     const [schema, listener] = entry;
 
-    const [tag, parsedArgs] = parseOptions(interaction, schema);
+    const [tag, parsedArgs] = parseOptions(
+      interaction.commandName,
+      interaction.options,
+      schema
+    );
     if (tag === 'Err') {
       const error = makeError(parsedArgs);
       await interaction.editReply(error.message);

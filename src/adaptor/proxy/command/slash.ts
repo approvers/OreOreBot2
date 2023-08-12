@@ -1,7 +1,4 @@
-import type {
-  ChatInputCommandInteraction,
-  CommandInteractionOptionResolver
-} from 'discord.js';
+import type { CommandInteractionOptionResolver } from 'discord.js';
 
 import type {
   ParsedSchema,
@@ -17,7 +14,8 @@ import type {
 } from '../../../model/command-schema.js';
 
 export const parseOptions = <S extends Schema>(
-  interaction: ChatInputCommandInteraction,
+  commandName: string,
+  options: Omit<CommandInteractionOptionResolver, 'getMessage' | 'getFocused'>,
   schema: S
 ): ['Ok', ParsedSchema<S>] | ['Err', ParseError] => {
   const hasSubCommand =
@@ -28,31 +26,31 @@ export const parseOptions = <S extends Schema>(
       return [
         'Ok',
         {
-          name: interaction.commandName,
+          name: commandName,
           params: []
         } as ParsedSchema<S>
       ];
     }
-    const params = parseParams(interaction.options, schema.params);
+    const params = parseParams(options, schema.params);
     if (params[0] === 'Err') {
       return params;
     }
     return [
       'Ok',
       {
-        name: interaction.commandName,
+        name: commandName,
         params: params[1]
       }
     ];
   }
-  const subCommand = parseSubcommand(interaction.options, schema);
+  const subCommand = parseSubcommand(options, schema);
   if (subCommand[0] === 'Err') {
     return subCommand;
   }
   return [
     'Ok',
     {
-      name: interaction.commandName,
+      name: commandName,
       params: [],
       subCommand: subCommand[1]
     } as ParsedSchema<S>
