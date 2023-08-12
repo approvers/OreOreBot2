@@ -70,6 +70,7 @@ test('single arg', () => {
   const noParamRes = parseOptions(
     'kaere',
     {
+      data: [],
       getSubcommand: () => null,
       getSubcommandGroup: () => null
     } as unknown as ChatInputCommandInteraction['options'],
@@ -87,7 +88,9 @@ test('single arg', () => {
   const oneParamRes = parseOptions(
     'kaere',
     {
-      getSubcommand: () => 'start'
+      data: [{}],
+      getSubcommand: () => 'start',
+      getSubcommandGroup: () => null
     } as unknown as ChatInputCommandInteraction['options'],
     KAERE_SCHEMA
   );
@@ -108,6 +111,7 @@ test('single arg', () => {
   const subCommandRes = parseOptions(
     'kaere',
     {
+      data: [{}, {}, {}],
       getSubcommandGroup: () => 'reserve',
       getSubcommand: () => 'add',
       getString: () => '01:12'
