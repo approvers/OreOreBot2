@@ -43,6 +43,17 @@ export const parseOptions = <S extends Schema>(
       }
     ];
   }
+
+  if (options.data.length === 0) {
+    return [
+      'Ok',
+      {
+        name: commandName,
+        params: []
+      } as ParsedSchema<S>
+    ];
+  }
+
   const subCommand = parseSubcommand(options, schema);
   if (subCommand[0] === 'Err') {
     return subCommand;
