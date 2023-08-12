@@ -83,6 +83,72 @@ const parseParams = <S extends Schema | SubCommand>(
         result.push(val);
         break;
       }
+      case 'MESSAGE':
+      case 'STRING': {
+        const val = options.getString(param.name, false) ?? param.defaultValue;
+        if (val === undefined) {
+          return ['Err', ['NEED_MORE_ARGS']];
+        }
+        result.push(val);
+        break;
+      }
+      case 'USER': {
+        const val =
+          options.getUser(param.name, false)?.id ?? param.defaultValue;
+        if (val === undefined) {
+          return ['Err', ['NEED_MORE_ARGS']];
+        }
+        result.push(val);
+        break;
+      }
+      case 'ROLE': {
+        const val =
+          options.getRole(param.name, false)?.id ?? param.defaultValue;
+        if (val === undefined) {
+          return ['Err', ['NEED_MORE_ARGS']];
+        }
+        result.push(val);
+        break;
+      }
+      case 'INTEGER': {
+        const val = options.getInteger(param.name, false) ?? param.defaultValue;
+        if (val === undefined) {
+          return ['Err', ['NEED_MORE_ARGS']];
+        }
+        result.push(val);
+        break;
+      }
+      case 'FLOAT': {
+        const val = options.getNumber(param.name, false) ?? param.defaultValue;
+        if (val === undefined) {
+          return ['Err', ['NEED_MORE_ARGS']];
+        }
+        result.push(val);
+        break;
+      }
+      case 'CHOICES': {
+        const val = options.getString(param.name, false);
+        if (val === null) {
+          if (param.defaultValue !== undefined) {
+            const defaultChoice = param.choices[param.defaultValue];
+            result.push(defaultChoice);
+            break;
+          }
+          return ['Err', ['NEED_MORE_ARGS']];
+        }
+        result.push(val);
+        break;
+      }
+      case 'VARIADIC': {
+        const val =
+          options.getString(param.name, false)?.split(' ') ??
+          param.defaultValue;
+        if (val === undefined) {
+          return ['Err', ['NEED_MORE_ARGS']];
+        }
+        result.push(val);
+        break;
+      }
     }
   }
   return ['Ok', result as ParamsValues<Params<S>>];
