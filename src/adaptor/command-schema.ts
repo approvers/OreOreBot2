@@ -10,10 +10,12 @@ const entriesToOptions = (entries: SubCommandEntries): unknown[] =>
     return entry.type === 'SUB_COMMAND'
       ? {
           type: 1, // SUB_COMMAND
+          name: key,
           options: entry.params?.map(paramToOption) ?? []
         }
       : {
           type: 2, // SUB_COMMAND_GROUP
+          name: key,
           options: entriesToOptions(entry.subCommands)
         };
   });
