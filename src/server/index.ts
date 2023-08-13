@@ -172,16 +172,24 @@ if (features.includes('COMMAND')) {
     channelRepository
   });
 }
+
+const rest = new REST().setToken(token);
 if (features.includes('SLASH_COMMAND')) {
   const body = commandRunner
     .getResponders()
     .flatMap((responder) => schemaToDiscordFormat(responder.schema));
-  const rest = new REST().setToken(token);
   try {
     await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), {
       body
     });
     console.log('コマンドの登録に成功しました。');
+  } catch (error) {
+    console.error(error);
+  }
+} else {
+  try {
+    await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID));
+    console.log('コマンドの削除に成功しました。');
   } catch (error) {
     console.error(error);
   }
