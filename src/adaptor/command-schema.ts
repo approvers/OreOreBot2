@@ -7,19 +7,23 @@ import type {
 const entriesToOptions = (entries: SubCommandEntries): unknown[] =>
   Object.keys(entries).map((key) => {
     const entry = entries[key];
-    return entry.type === 'SUB_COMMAND'
-      ? {
-          type: 1, // SUB_COMMAND
-          name: key,
-          description: entry.description,
-          options: entry.params?.map(paramToOption) ?? []
-        }
-      : {
-          type: 2, // SUB_COMMAND_GROUP
-          name: key,
-          description: entry.description,
-          options: entriesToOptions(entry.subCommands)
-        };
+    if (entry.type === 'SUB_COMMAND') {
+      const options = entry.params?.map(paramToOption) ?? [];
+      return {
+        type: 1, // SUB_COMMAND
+        name: key,
+        description: entry.description,
+        options: options.length === 0 ? undefined : options
+      };
+    } else {
+      const options = entriesToOptions(entry.subCommands);
+      return {
+        type: 2, // SUB_COMMAND_GROUP
+        name: key,
+        description: entry.description,
+        options: options.length === 0 ? undefined : options
+      };
+    }
   });
 const paramToOption = (param: Param): unknown => {
   switch (param.type) {
