@@ -178,7 +178,6 @@ if (features.includes('SLASH_COMMAND')) {
   const body = commandRunner
     .getResponders()
     .flatMap((responder) => schemaToDiscordFormat(responder.schema));
-  console.log(JSON.stringify(body));
   try {
     console.log('コマンドの登録中…');
     await rest.put(Routes.applicationGuildCommands(APPLICATION_ID, GUILD_ID), {

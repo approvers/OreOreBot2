@@ -109,10 +109,13 @@ const paramToOption = (param: Param): unknown => {
   }
 };
 export const schemaToDiscordFormat = (schema: Schema): unknown[] =>
-  schema.names.map((name) => ({
-    name,
-    description: schema.description,
-    options: (schema.params?.map(paramToOption) ?? []).concat(
+  schema.names.map((name) => {
+    const options = (schema.params?.map(paramToOption) ?? []).concat(
       entriesToOptions(schema.subCommands)
-    )
-  }));
+    );
+    return {
+      name,
+      description: schema.description,
+      options: options.length === 0 ? undefined : options
+    };
+  });
