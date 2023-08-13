@@ -65,6 +65,13 @@ const paramToOption = (param: Param): unknown => {
         description: param.description,
         required: param.defaultValue === undefined
       };
+    case 'MESSAGE':
+      return {
+        type: 3, // STRING
+        name: param.name,
+        description: param.description,
+        required: param.defaultValue === undefined
+      };
     case 'FLOAT':
       return {
         type: 10, // NUMBER
