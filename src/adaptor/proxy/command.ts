@@ -6,12 +6,16 @@ import {
   ButtonStyle,
   Client,
   Message,
-  type MessageActionRowComponentBuilder
+  type MessageActionRowComponentBuilder,
+  type Interaction,
+  type MessageReplyOptions,
+  InteractionResponse,
+  type InteractionReplyOptions
 } from 'discord.js';
 
 import { type Schema, makeError } from '../../model/command-schema.js';
 import type { EmbedPage } from '../../model/embed-message.js';
-import type { Snowflake } from '../../model/id.js';
+import { type Snowflake, unknownId } from '../../model/id.js';
 import type {
   CommandProxy,
   MessageCreateListener
@@ -19,6 +23,7 @@ import type {
 import type { ReplyPagesOptions } from '../../service/command/command-message.js';
 import { convertEmbed } from '../embed-convert.js';
 import { parseStrings } from './command/schema.js';
+import { parseOptions } from './command/slash.js';
 import type { RawMessage } from './middleware.js';
 
 const SPACES = /\s+/;
@@ -29,6 +34,9 @@ export class DiscordCommandProxy implements CommandProxy {
     private readonly prefix: string
   ) {
     client.on('messageCreate', (message) => this.onMessageCreate(message));
+    client.on('interactionCreate', (interaction) =>
+      this.onInteractionCreate(interaction)
+    );
   }
 
   private readonly listenerMap = new Map<
@@ -95,6 +103,60 @@ export class DiscordCommandProxy implements CommandProxy {
       }
     });
   }
+
+  private async onInteractionCreate(interaction: Interaction): Promise<void> {
+    if (!interaction.isChatInputCommand()) {
+      return;
+    }
+    const entry = this.listenerMap.get(interaction.commandName);
+    if (!entry) {
+      return;
+    }
+
+    await interaction.deferReply();
+
+    const [schema, listener] = entry;
+
+    const [tag, parsedArgs] = parseOptions(
+      interaction.commandName,
+      interaction.options,
+      schema
+    );
+    if (tag === 'Err') {
+      const error = makeError(parsedArgs);
+      await interaction.editReply(error.message);
+      return;
+    }
+
+    await listener({
+      senderId: interaction.user.id as Snowflake,
+      senderGuildId: (interaction.guild?.id ?? unknownId) as Snowflake,
+      senderChannelId: (interaction.channel?.id ?? unknownId) as Snowflake,
+      get senderVoiceChannelId(): Snowflake | null {
+        if (!interaction.inCachedGuild()) {
+          return null;
+        }
+        const id = interaction.member.voice.channelId ?? null;
+        return id ? (id as Snowflake) : null;
+      },
+      senderName: interaction.user.username,
+      args: parsedArgs,
+      async reply(embed) {
+        const mes = await interaction.editReply({
+          embeds: [convertEmbed(embed)]
+        });
+        return {
+          async edit(embed) {
+            await mes.edit({ embeds: [convertEmbed(embed)] });
+          }
+        };
+      },
+      replyPages: replyPages(interaction),
+      async react() {
+        // cannot react emoji to the slash command
+      }
+    });
+  }
 }
 
 const ONE_MINUTE_MS = 60_000;
@@ -135,7 +197,11 @@ const pagesFooter = (currentPage: number, pagesLength: number) =>
   `ページ ${currentPage + 1}/${pagesLength}`;
 
 const replyPages =
-  (message: RawMessage) =>
+  (message: {
+    reply:
+      | ((options: InteractionReplyOptions) => Promise<InteractionResponse>)
+      | ((options: MessageReplyOptions) => Promise<RawMessage>);
+  }) =>
   async (pages: EmbedPage[], options?: ReplyPagesOptions) => {
     if (pages.length === 0) {
       throw new Error('pages must not be empty array');
@@ -187,8 +253,6 @@ const replyPages =
       await interaction.update({ embeds: [generatePage(currentPage)] });
     });
     collector.on('end', async () => {
-      if (paginated.editable) {
-        await paginated.edit({ components: [CONTROLS_DISABLED] });
-      }
+      await paginated.edit({ components: [CONTROLS_DISABLED] });
     });
   };
