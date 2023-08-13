@@ -15,6 +15,7 @@ export interface MembersWithRoleRepository {
 
 const SCHEMA = {
   names: ['rolerank'],
+  description: 'メンバーごとのロール数をランキングにするよ',
   subCommands: {}
 } as const;
 

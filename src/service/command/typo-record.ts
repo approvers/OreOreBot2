@@ -95,15 +95,16 @@ const typoRecordResetTask =
 
 const SCHEMA = {
   names: ['typo'],
+  description: '今日の Typo「〜だカス」を表示するよ',
   subCommands: {
     by: {
       type: 'SUB_COMMAND',
+      description: 'そのユーザ ID の今日の Typo を表示するよ',
       params: [
         {
           type: 'USER',
-          name: '表示するユーザID',
-          description:
-            'この後にユーザ ID を入れると, そのユーザ ID の今日の Typo を表示するよ',
+          name: 'target',
+          description: '表示するユーザID',
           defaultValue: 'me'
         }
       ]

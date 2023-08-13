@@ -29,11 +29,12 @@ export interface RoleStatsRepository {
 
 const SCHEMA = {
   names: ['roleinfo', 'role'],
+  description: 'ロールの情報を調べてくるよ',
   subCommands: {},
   params: [
     {
       type: 'ROLE',
-      name: 'ロールID',
+      name: 'target',
       description: 'このIDのロールを調べるよ'
     }
   ]

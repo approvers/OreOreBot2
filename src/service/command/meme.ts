@@ -17,6 +17,7 @@ const memesByCommandName: Record<
 
 const SCHEMA = {
   names: memes.flatMap((meme) => meme.commandNames),
+  description: '何これ……引数のテキストを構文にはめ込むみたいだよ',
   subCommands: {},
   params: [
     {

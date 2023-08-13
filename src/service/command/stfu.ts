@@ -20,6 +20,7 @@ export interface Sheriff {
 
 const SCHEMA = {
   names: ['stfu'],
+  description: '私のうるさい発言をまとめて消すよ',
   subCommands: {},
   params: [
     {

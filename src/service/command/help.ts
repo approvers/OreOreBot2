@@ -9,6 +9,7 @@ import type {
 
 const SCHEMA = {
   names: ['help', 'h'],
+  description: '搭載機能の説明を表示するよ',
   subCommands: {}
 } as const;
 

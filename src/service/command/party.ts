@@ -51,35 +51,41 @@ export interface RandomGenerator {
 
 const SCHEMA = {
   names: ['party'],
+  description: 'VC内の人類に押しかけてPartyを開くよ',
   subCommands: {
     enable: {
-      type: 'SUB_COMMAND'
+      type: 'SUB_COMMAND',
+      description: 'ゲリラを有効化するよ'
     },
     disable: {
-      type: 'SUB_COMMAND'
+      type: 'SUB_COMMAND',
+      description: 'ゲリラを無効化するよ'
     },
     status: {
-      type: 'SUB_COMMAND'
+      type: 'SUB_COMMAND',
+      description: '現在のゲリラの設定を確認するよ'
     },
     time: {
       type: 'SUB_COMMAND',
+      description: '次にゲリラを始める時間を設定するよ',
       params: [
         {
           type: 'INTEGER',
-          name: '開始する分',
+          name: 'start_minutes',
           description:
-            '次にゲリラを始める分を指定できるよ。指定しなかったり負数を指定したらランダムになるよ。',
+            '分単位で指定できるよ。指定しなかったり負数を指定したらランダムになるよ。',
           defaultValue: -1
         }
       ]
     },
     set: {
       type: 'SUB_COMMAND',
+      description: '次の Party で再生する曲を設定するよ',
       params: [
         {
           type: 'CHOICES',
-          name: '曲',
-          description: '次の Party で再生する曲を指定できるよ。',
+          name: 'music',
+          description: '再生する曲の ID だよ。',
           choices: assetKeys
         }
       ]
