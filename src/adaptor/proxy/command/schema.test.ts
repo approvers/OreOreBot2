@@ -79,21 +79,6 @@ test('single arg', () => {
     }
   ]);
 
-  const oneParamRes = parseStrings(['kaere', 'start'], KAERE_SCHEMA);
-
-  expect(oneParamRes).toStrictEqual([
-    'Ok',
-    {
-      name: 'kaere',
-      params: [],
-      subCommand: {
-        name: 'start',
-        type: 'PARAMS',
-        params: []
-      }
-    }
-  ]);
-
   const subCommandRes = parseStrings(
     ['kaere', 'reserve', 'add', '01:12'],
     KAERE_SCHEMA
@@ -142,7 +127,7 @@ test('multi args', () => {
   expect(noParamRes).toStrictEqual(['Err', ['NEED_MORE_ARGS']]);
 
   const oneParamRes = parseStrings(
-    ['rolecreate', '0123456789'],
+    ['rolecreate', '0123456789', '#bedead'],
     ROLE_CREATE_SCHEMA
   );
 
@@ -150,7 +135,7 @@ test('multi args', () => {
     'Ok',
     {
       name: 'rolecreate',
-      params: ['0123456789', 'random']
+      params: ['0123456789', '#bedead']
     }
   ]);
 });

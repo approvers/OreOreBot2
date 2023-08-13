@@ -1,4 +1,4 @@
-import type { ChatInputCommandInteraction, User } from 'discord.js';
+import type { ChatInputCommandInteraction } from 'discord.js';
 import { expect, test } from 'vitest';
 
 import { parseOptions } from './slash.js';
@@ -92,29 +92,6 @@ test('single arg', () => {
     }
   ]);
 
-  const oneParamRes = parseOptions(
-    'kaere',
-    {
-      data: [{}],
-      getSubcommand: () => 'start',
-      getSubcommandGroup: () => null
-    } as unknown as ChatInputCommandInteraction['options'],
-    KAERE_SCHEMA
-  );
-
-  expect(oneParamRes).toStrictEqual([
-    'Ok',
-    {
-      name: 'kaere',
-      params: [],
-      subCommand: {
-        name: 'start',
-        type: 'PARAMS',
-        params: []
-      }
-    }
-  ]);
-
   const subCommandRes = parseOptions(
     'kaere',
     {
@@ -167,18 +144,27 @@ test('multi args', () => {
   const noParamRes = parseOptions(
     'rolecreate',
     {
-      getUser: () => null
+      getString: () => null
     } as unknown as ChatInputCommandInteraction['options'],
     ROLE_CREATE_SCHEMA
   );
 
   expect(noParamRes).toStrictEqual(['Err', ['NEED_MORE_ARGS']]);
 
+  let count = 0;
   const oneParamRes = parseOptions(
     'rolecreate',
     {
-      getUser: () => ({ id: '0123456789' }) as unknown as User,
-      getString: () => null
+      getString: () => {
+        ++count;
+        if (count === 1) {
+          return '0123456789';
+        }
+        if (count === 2) {
+          return '#bedead';
+        }
+        return null;
+      }
     } as unknown as ChatInputCommandInteraction['options'],
     ROLE_CREATE_SCHEMA
   );
@@ -187,7 +173,7 @@ test('multi args', () => {
     'Ok',
     {
       name: 'rolecreate',
-      params: ['0123456789', 'random']
+      params: ['0123456789', '#bedead']
     }
   ]);
 });
