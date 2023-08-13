@@ -111,6 +111,7 @@ const paramToOption = (param: Param): unknown => {
 export const schemaToDiscordFormat = (schema: Schema): unknown[] =>
   schema.names.flatMap((name) => ({
     name,
+    description: schema.description,
     options: entriesToOptions(schema.subCommands).concat(
       schema.params?.map(paramToOption) ?? []
     )

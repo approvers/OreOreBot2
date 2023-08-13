@@ -157,6 +157,7 @@ export interface SubCommandGroup {
  */
 export interface Schema {
   names: readonly string[];
+  description: string;
   subCommands: SubCommandEntries;
   params?: readonly Param[];
 }
