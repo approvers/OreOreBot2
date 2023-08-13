@@ -18,6 +18,7 @@ const SCHEMA = {
     'zinnkou',
     'zinkou'
   ],
+  description: '限界開発鯖の人類の数、Botの数とBot率を算出するよ',
   subCommands: {}
 } as const;
 
