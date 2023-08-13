@@ -188,7 +188,9 @@ if (features.includes('SLASH_COMMAND')) {
   }
 } else {
   try {
-    await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID));
+    await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), {
+      body: []
+    });
     console.log('コマンドの削除に成功しました。');
   } catch (error) {
     console.error(error);
