@@ -175,21 +175,80 @@ if (features.includes('COMMAND')) {
 
 const rest = new REST().setToken(token);
 if (features.includes('SLASH_COMMAND')) {
+  const currentRegistered = (await rest.get(
+    Routes.applicationGuildCommands(APPLICATION_ID, GUILD_ID)
+  )) as unknown[];
+  const currentRegisteredByName = new Map(
+    (
+      currentRegistered as {
+        name: string;
+        id: string;
+        [key: string]: unknown;
+      }[]
+    ).map((obj) => [obj.name, obj])
+  );
   const commands = commandRunner
     .getResponders()
     .flatMap((responder) => schemaToDiscordFormat(responder.schema));
+  const commandNames = new Map(
+    (commands as { name: string }[]).map((obj) => [obj.name, obj])
+  );
+
+  const idsNeedToDelete = [...currentRegisteredByName.keys()]
+    .filter((name) => !commandNames.has(name))
+    .map((name) => currentRegisteredByName.get(name)?.id ?? 'unknown');
+  const needToUpdate = [...currentRegisteredByName.values()].filter(
+    (registered) =>
+      JSON.stringify(commandNames.get(registered.name) ?? {}) !==
+      JSON.stringify(registered)
+  );
+  const needToRegister = (
+    commands as { name: string; [key: string]: unknown }[]
+  ).filter(({ name }) => !currentRegisteredByName.has(name));
+
   try {
-    console.log('コマンドの登録中…');
-    let i = 0;
-    for (const command of commands) {
-      ++i;
-      console.log(`${i}/${commands.length}`);
-      await rest.post(
-        Routes.applicationGuildCommands(APPLICATION_ID, GUILD_ID),
-        {
-          body: command
-        }
-      );
+    if (0 < idsNeedToDelete.length) {
+      console.log('コマンドの削除を開始…');
+      for (let i = 0; i < idsNeedToDelete.length; ++i) {
+        console.log(`${i + 1}/${idsNeedToDelete.length}`);
+        await rest.delete(
+          Routes.applicationGuildCommand(
+            APPLICATION_ID,
+            GUILD_ID,
+            idsNeedToDelete[i]
+          )
+        );
+      }
+    }
+
+    if (0 < needToUpdate.length) {
+      console.log('コマンドの更新を開始…');
+      for (let i = 0; i < needToUpdate.length; ++i) {
+        console.log(`${i + 1}/${needToUpdate.length}`);
+        await rest.patch(
+          Routes.applicationGuildCommand(
+            APPLICATION_ID,
+            GUILD_ID,
+            needToUpdate[i].id
+          ),
+          {
+            body: needToUpdate[i]
+          }
+        );
+      }
+    }
+
+    if (0 < needToRegister.length) {
+      console.log('コマンドの追加を開始…');
+      for (let i = 0; i < needToRegister.length; ++i) {
+        console.log(`${i + 1}/${needToUpdate.length}`);
+        await rest.post(
+          Routes.applicationGuildCommands(APPLICATION_ID, GUILD_ID),
+          {
+            body: needToRegister[i]
+          }
+        );
+      }
     }
     console.log('コマンドの登録に成功しました。');
   } catch (error) {
