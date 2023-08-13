@@ -107,6 +107,7 @@ export type ParamsValues<S> = Equal<S, readonly Param[]> extends true
  */
 export interface SubCommand {
   type: 'SUB_COMMAND';
+  description: string;
   params?: readonly Param[];
 }
 
@@ -145,6 +146,7 @@ export type SubCommandEntries = Record<string, SubCommand | SubCommandGroup>;
  */
 export interface SubCommandGroup {
   type: 'SUB_COMMAND_GROUP';
+  description: string;
   subCommands: SubCommandEntries;
 }
 
