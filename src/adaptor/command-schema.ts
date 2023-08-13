@@ -11,11 +11,13 @@ const entriesToOptions = (entries: SubCommandEntries): unknown[] =>
       ? {
           type: 1, // SUB_COMMAND
           name: key,
+          description: entry.description,
           options: entry.params?.map(paramToOption) ?? []
         }
       : {
           type: 2, // SUB_COMMAND_GROUP
           name: key,
+          description: entry.description,
           options: entriesToOptions(entry.subCommands)
         };
   });
