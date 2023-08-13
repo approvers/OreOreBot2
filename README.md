@@ -70,6 +70,7 @@ OreOreBot2 の [Discussions](https://github.com/approvers/OreOreBot2/discussions
 | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
 | `DISCORD_TOKEN`   | BOT のトークン                                                                                                                                                                               | True  |
 | `MAIN_CHANNEL_ID` | VoiceDiff(VC 入退室ログ)を送信する **テキスト** チャンネルの ID                                                                                                                              | True  |
+| `CLIENT_ID`       | BOT の OAuth2 のクライアント ID                                                                                                                                                              | True  |
 | `GUILD_ID`        | 限界開発鯖の ID                                                                                                                                                                              | True  |
 | `PREFIX`          | コマンドの接頭辞、デフォルト値は `"!"`                                                                                                                                                       | False |
 | `FEATURE`         | 有効にする機能のカンマ区切り文字列、デフォルト値は全ての機能。`"MESSAGE_CREATE"`, `"MESSAGE_UPDATE"`, `"COMMAND"`, `"VOICE_ROOM"`, `"ROLE"`, `"EMOJI"`, `"SLASH_COMMAND"` を組み合わせ可能。 | False |
