@@ -1,8 +1,9 @@
 import { generateDependencyReport } from '@discordjs/voice';
-import { Client, GatewayIntentBits, version } from 'discord.js';
+import { Client, GatewayIntentBits, REST, Routes, version } from 'discord.js';
 import dotenv from 'dotenv';
 import { join } from 'node:path';
 
+import { schemaToDiscordFormat } from '../adaptor/command-schema.js';
 import { DiscordChannelRepository } from '../adaptor/discord/channel.js';
 import { DiscordMemberStats } from '../adaptor/discord/member-stats.js';
 import { DiscordMessageRepository } from '../adaptor/discord/message-repo.js';
@@ -63,9 +64,17 @@ const {
   MAIN_CHANNEL_ID: mainChannelId,
   GUILD_ID,
   PREFIX,
-  FEATURE
+  FEATURE,
+  CLIENT_ID
 } = extractEnv(
-  ['DISCORD_TOKEN', 'MAIN_CHANNEL_ID', 'GUILD_ID', 'PREFIX', 'FEATURE'],
+  [
+    'DISCORD_TOKEN',
+    'MAIN_CHANNEL_ID',
+    'GUILD_ID',
+    'PREFIX',
+    'FEATURE',
+    'CLIENT_ID'
+  ],
   {
     PREFIX: '!',
     FEATURE: 'MESSAGE_CREATE,MESSAGE_UPDATE,COMMAND,VOICE_ROOM,ROLE,EMOJI'
@@ -162,6 +171,20 @@ if (features.includes('COMMAND')) {
     stdout: output,
     channelRepository
   });
+}
+if (features.includes('SLASH_COMMAND')) {
+  const body = commandRunner
+    .getResponders()
+    .flatMap((responder) => schemaToDiscordFormat(responder.schema));
+  const rest = new REST().setToken(token);
+  try {
+    await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), {
+      body
+    });
+    console.log('コマンドの登録に成功しました。');
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 const provider = new VoiceRoomProxy<VoiceChannelParticipant>(
