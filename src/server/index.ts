@@ -175,14 +175,22 @@ if (features.includes('COMMAND')) {
 
 const rest = new REST().setToken(token);
 if (features.includes('SLASH_COMMAND')) {
-  const body = commandRunner
+  const commands = commandRunner
     .getResponders()
     .flatMap((responder) => schemaToDiscordFormat(responder.schema));
   try {
     console.log('コマンドの登録中…');
-    await rest.put(Routes.applicationGuildCommands(APPLICATION_ID, GUILD_ID), {
-      body
-    });
+    let i = 0;
+    for (const command of commands) {
+      ++i;
+      console.log(`${i}/${commands.length}`);
+      await rest.post(
+        Routes.applicationGuildCommands(APPLICATION_ID, GUILD_ID),
+        {
+          body: command
+        }
+      );
+    }
     console.log('コマンドの登録に成功しました。');
   } catch (error) {
     console.error(error);
