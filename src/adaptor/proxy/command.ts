@@ -8,9 +8,9 @@ import {
   Message,
   type MessageActionRowComponentBuilder,
   type Interaction,
-  type MessageReplyOptions,
+  type InteractionReplyOptions,
   InteractionResponse,
-  type InteractionReplyOptions
+  type MessageReplyOptions
 } from 'discord.js';
 
 import { type Schema, makeError } from '../../model/command-schema.js';
@@ -113,8 +113,6 @@ export class DiscordCommandProxy implements CommandProxy {
       return;
     }
 
-    await interaction.deferReply();
-
     const [schema, listener] = entry;
 
     const [tag, parsedArgs] = parseOptions(
@@ -124,7 +122,7 @@ export class DiscordCommandProxy implements CommandProxy {
     );
     if (tag === 'Err') {
       const error = makeError(parsedArgs);
-      await interaction.editReply(error.message);
+      await interaction.reply(error.message);
       return;
     }
 
@@ -142,7 +140,7 @@ export class DiscordCommandProxy implements CommandProxy {
       senderName: interaction.user.username,
       args: parsedArgs,
       async reply(embed) {
-        const mes = await interaction.editReply({
+        const mes = await interaction.reply({
           embeds: [convertEmbed(embed)]
         });
         return {
