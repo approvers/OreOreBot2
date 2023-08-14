@@ -122,58 +122,71 @@ test('single arg', () => {
 });
 
 test('multi args', () => {
-  const ROLE_CREATE_SCHEMA = {
-    names: ['rolecreate'],
-    description: 'ロールを作成するよ',
+  const DICE_SCHEMA = {
+    names: ['d', 'dice'],
+    description: 'ダイスが振れるよ',
     subCommands: {},
     params: [
       {
         type: 'STRING',
-        name: 'name',
-        description: '作成するロールの名前を指定してね'
+        name: 'dice',
+        description:
+          'どのダイスを何個振るかの指定。6面ダイス2個であれば `!dice 2d6`または`!d 2D6`のように入力してね。',
+        defaultValue: '1d100'
       },
       {
-        type: 'STRING',
-        name: 'color',
+        type: 'CHOICES',
+        name: 'display_mode',
         description:
-          '作成するロールの色を[HEX](https://htmlcolorcodes.com/)で指定してね'
+          '各ダイスの出目を表示させるかどうか。デフォルトは省略します。省略表示: `s`, `simple` 、詳細表示: `v`, `verbose`',
+        defaultValue: 0,
+        choices: ['s', 'v', 'simple', 'verbose']
       }
     ]
   } as const;
 
+  function argsToOptions(args: string[]) {
+    return {
+      index: 0,
+      getString() {
+        const ret = args[this.index];
+        ++this.index;
+        return ret;
+      }
+    };
+  }
+
   const noParamRes = parseOptions(
-    'rolecreate',
-    {
-      getString: () => null
-    } as unknown as ChatInputCommandInteraction['options'],
-    ROLE_CREATE_SCHEMA
+    'd',
+    argsToOptions([
+      '1d100',
+      's'
+    ]) as unknown as ChatInputCommandInteraction['options'],
+    DICE_SCHEMA
   );
 
-  expect(noParamRes).toStrictEqual(['Err', ['NEED_MORE_ARGS']]);
-
-  let count = 0;
-  const oneParamRes = parseOptions(
-    'rolecreate',
+  expect(noParamRes).toStrictEqual([
+    'Ok',
     {
-      getString: () => {
-        ++count;
-        if (count === 1) {
-          return '0123456789';
-        }
-        if (count === 2) {
-          return '#bedead';
-        }
-        return null;
-      }
-    } as unknown as ChatInputCommandInteraction['options'],
-    ROLE_CREATE_SCHEMA
+      name: 'd',
+      params: ['1d100', 0]
+    }
+  ]);
+
+  const oneParamRes = parseOptions(
+    'dice',
+    argsToOptions([
+      '2d6',
+      'verbose'
+    ]) as unknown as ChatInputCommandInteraction['options'],
+    DICE_SCHEMA
   );
 
   expect(oneParamRes).toStrictEqual([
     'Ok',
     {
-      name: 'rolecreate',
-      params: ['0123456789', '#bedead']
+      name: 'dice',
+      params: ['2d6', 3]
     }
   ]);
 });
