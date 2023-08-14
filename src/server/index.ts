@@ -1,4 +1,5 @@
 import { generateDependencyReport } from '@discordjs/voice';
+import equal from 'deep-equal';
 import { Client, GatewayIntentBits, REST, Routes, version } from 'discord.js';
 import dotenv from 'dotenv';
 import { join } from 'node:path';
@@ -198,9 +199,7 @@ if (features.includes('SLASH_COMMAND')) {
     .filter((name) => !commandNames.has(name))
     .map((name) => currentRegisteredByName.get(name)?.id ?? 'unknown');
   const needToUpdate = [...currentRegisteredByName.values()].filter(
-    (registered) =>
-      JSON.stringify(commandNames.get(registered.name) ?? {}) !==
-      JSON.stringify(registered)
+    (registered) => equal(commandNames.get(registered.name) ?? {}, registered)
   );
   const needToRegister = (
     commands as { name: string; [key: string]: unknown }[]
