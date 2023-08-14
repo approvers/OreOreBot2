@@ -139,13 +139,12 @@ const parseParams = <S extends Schema | SubCommand>(
         const val = options.getString(param.name, false);
         if (val === null) {
           if (param.defaultValue !== undefined) {
-            const defaultChoice = param.choices[param.defaultValue];
-            result.push(defaultChoice);
+            result.push(param.defaultValue);
             break;
           }
           return ['Err', ['NEED_MORE_ARGS']];
         }
-        result.push(val);
+        result.push(param.choices.indexOf(val));
         break;
       }
       case 'VARIADIC': {
