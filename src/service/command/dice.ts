@@ -25,18 +25,19 @@ const choices = [...modes.map((elem) => elem[0]), ...modes] as const;
 
 const SCHEMA = {
   names: ['d', 'dice'],
+  description: 'ダイスが振れるよ',
   subCommands: {},
   params: [
     {
       type: 'STRING',
-      name: 'ダイスロール設定',
+      name: 'dice',
       description:
         'どのダイスを何個振るかの指定。6面ダイス2個であれば `!dice 2d6`または`!d 2D6`のように入力してね。',
       defaultValue: '1d100'
     },
     {
       type: 'CHOICES',
-      name: '詳細モード',
+      name: 'display_mode',
       description:
         '各ダイスの出目を表示させるかどうか。デフォルトは省略します。省略表示: `s`, `simple` 、詳細表示: `v`, `verbose`',
       defaultValue: 0,

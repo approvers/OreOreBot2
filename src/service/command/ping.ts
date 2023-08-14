@@ -13,6 +13,7 @@ export interface Ping {
 
 const SCHEMA = {
   names: ['ping', 'latency'],
+  description: '現在のレイテンシを表示するよ',
   subCommands: {}
 } as const;
 

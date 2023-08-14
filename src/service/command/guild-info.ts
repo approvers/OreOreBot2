@@ -70,6 +70,7 @@ export interface GuildStatsRepository {
 
 const SCHEMA = {
   names: ['guildinfo', 'serverinfo', 'guild', 'server'],
+  description: '限界開発鯖の情報を持ってくるよ',
   subCommands: {}
 } as const;
 

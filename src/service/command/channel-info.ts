@@ -12,11 +12,12 @@ export interface ChannelStatsRepository {
 
 const SCHEMA = {
   names: ['channel', 'chinfo', 'channelinfo'],
+  description: 'チャンネルの情報を調べてくるよ',
   subCommands: {},
   params: [
     {
       type: 'CHANNEL',
-      name: 'チャンネルID',
+      name: 'target',
       description:
         'このIDのチャンネルを調べるよ。指定しない場合は実行したチャンネルを調べるよ',
       defaultValue: 'me'

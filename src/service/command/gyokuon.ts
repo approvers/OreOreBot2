@@ -12,6 +12,7 @@ export type GyokuonAssetKey = 'GYOKUON' | 'GYOKUON_SHORT';
 
 const SCHEMA = {
   names: ['gyokuon'],
+  description: 'こるくの玉音放送を再生するよ',
   subCommands: {},
   params: [
     {

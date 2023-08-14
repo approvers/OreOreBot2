@@ -101,6 +101,15 @@ const parseParams = <S extends Schema | SubCommand>(
         result.push(val);
         break;
       }
+      case 'CHANNEL': {
+        const val =
+          options.getChannel(param.name, false)?.id ?? param.defaultValue;
+        if (val === undefined) {
+          return ['Err', ['NEED_MORE_ARGS']];
+        }
+        result.push(val);
+        break;
+      }
       case 'ROLE': {
         const val =
           options.getRole(param.name, false)?.id ?? param.defaultValue;

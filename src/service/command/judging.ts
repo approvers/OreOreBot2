@@ -35,6 +35,7 @@ const JUDGING_TITLE = '***†HARACHO ONLINE JUDGING SYSTEM†***';
 
 const SCHEMA = {
   names: ['jd', 'judge'],
+  description: 'プログラムが適格かどうか判定してあげるよ',
   subCommands: {},
   params: [
     {

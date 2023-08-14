@@ -14,11 +14,12 @@ export interface MessageRepository {
 
 const SCHEMA = {
   names: ['debug'],
+  description: '同じチャンネル内のメッセージをコードブロックとして表示するよ',
   subCommands: {},
   params: [
     {
       type: 'MESSAGE',
-      name: 'メッセージID',
+      name: 'target',
       description: 'デバッグ表示したいメッセージのID'
     }
   ]

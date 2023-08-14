@@ -16,16 +16,17 @@ const HEX_FORMAT = /^#?[0-9a-fA-F]{6}$/m;
 
 const SCHEMA = {
   names: ['rolecreate'],
+  description: 'ロールを作成するよ',
   subCommands: {},
   params: [
     {
       type: 'STRING',
-      name: 'ロール名',
+      name: 'name',
       description: '作成するロールの名前を指定してね'
     },
     {
       type: 'STRING',
-      name: 'ロールの色',
+      name: 'color',
       description:
         '作成するロールの色を[HEX](https://htmlcolorcodes.com/)で指定してね'
     }

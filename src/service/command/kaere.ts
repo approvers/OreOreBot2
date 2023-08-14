@@ -81,34 +81,43 @@ const TIME_OPTIONS = [
 
 const SCHEMA = {
   names: ['kaere'],
+  description: 'VC内の人類に就寝を促すよ',
   subCommands: {
     bed: {
       type: 'SUB_COMMAND_GROUP',
+      description: '強制切断モードを取り扱うよ',
       subCommands: {
         enable: {
-          type: 'SUB_COMMAND'
+          type: 'SUB_COMMAND',
+          description: '強制切断モードを有効化するよ'
         },
         disable: {
-          type: 'SUB_COMMAND'
+          type: 'SUB_COMMAND',
+          description: '強制切断モードを無効化するよ'
         },
         status: {
-          type: 'SUB_COMMAND'
+          type: 'SUB_COMMAND',
+          description: '現在の強制切断モードの設定を確認するよ'
         }
       }
     },
     reserve: {
       type: 'SUB_COMMAND_GROUP',
+      description: '予約システムを取り扱うよ',
       subCommands: {
         add: {
           type: 'SUB_COMMAND',
+          description: '指定の時刻で予約するよ',
           params: TIME_OPTIONS
         },
         cancel: {
           type: 'SUB_COMMAND',
+          description: '指定時刻の予約をキャンセルするよ',
           params: TIME_OPTIONS
         },
         list: {
-          type: 'SUB_COMMAND'
+          type: 'SUB_COMMAND',
+          description: '現在の予約を一覧するよ'
         }
       }
     }

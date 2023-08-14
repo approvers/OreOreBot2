@@ -10,6 +10,7 @@ export interface VersionFetcher {
 
 const SCHEMA = {
   names: ['version'],
+  description: '現在の私のバージョンを出力するよ',
   subCommands: {}
 } as const;
 

@@ -23,11 +23,12 @@ export interface UserStatsRepository {
 
 const SCHEMA = {
   names: ['userinfo', 'user'],
+  description: 'ユーザーの情報を調べてくるよ',
   subCommands: {},
   params: [
     {
       type: 'USER',
-      name: 'ユーザーID',
+      name: 'target',
       description:
         'このIDのロールを調べるよ。何も入力しないと自分が対象になるよ。',
       defaultValue: 'me'

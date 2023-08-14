@@ -1,8 +1,10 @@
 import { generateDependencyReport } from '@discordjs/voice';
-import { Client, GatewayIntentBits, version } from 'discord.js';
+import equal from 'deep-equal';
+import { Client, GatewayIntentBits, REST, Routes, version } from 'discord.js';
 import dotenv from 'dotenv';
 import { join } from 'node:path';
 
+import { schemaToDiscordFormat } from '../adaptor/command-schema.js';
 import { DiscordChannelRepository } from '../adaptor/discord/channel.js';
 import { DiscordMemberStats } from '../adaptor/discord/member-stats.js';
 import { DiscordMessageRepository } from '../adaptor/discord/message-repo.js';
@@ -63,9 +65,17 @@ const {
   MAIN_CHANNEL_ID: mainChannelId,
   GUILD_ID,
   PREFIX,
-  FEATURE
+  FEATURE,
+  APPLICATION_ID
 } = extractEnv(
-  ['DISCORD_TOKEN', 'MAIN_CHANNEL_ID', 'GUILD_ID', 'PREFIX', 'FEATURE'],
+  [
+    'DISCORD_TOKEN',
+    'MAIN_CHANNEL_ID',
+    'GUILD_ID',
+    'PREFIX',
+    'FEATURE',
+    'APPLICATION_ID'
+  ],
   {
     PREFIX: '!',
     FEATURE: 'MESSAGE_CREATE,MESSAGE_UPDATE,COMMAND,VOICE_ROOM,ROLE,EMOJI'
@@ -162,6 +172,96 @@ if (features.includes('COMMAND')) {
     stdout: output,
     channelRepository
   });
+}
+
+const rest = new REST().setToken(token);
+if (features.includes('SLASH_COMMAND')) {
+  const currentRegistered = (await rest.get(
+    Routes.applicationGuildCommands(APPLICATION_ID, GUILD_ID)
+  )) as unknown[];
+  const currentRegisteredByName = new Map(
+    (
+      currentRegistered as {
+        name: string;
+        id: string;
+        [key: string]: unknown;
+      }[]
+    ).map((obj) => [obj.name, obj])
+  );
+  const commands = commandRunner
+    .getResponders()
+    .flatMap((responder) => schemaToDiscordFormat(responder.schema));
+  const commandNames = new Map(
+    (commands as { name: string }[]).map((obj) => [obj.name, obj])
+  );
+
+  const idsNeedToDelete = [...currentRegisteredByName.keys()]
+    .filter((name) => !commandNames.has(name))
+    .map((name) => currentRegisteredByName.get(name)?.id ?? 'unknown');
+  const needToUpdate = [...currentRegisteredByName.values()].filter(
+    (registered) => equal(commandNames.get(registered.name) ?? {}, registered)
+  );
+  const needToRegister = (
+    commands as { name: string; [key: string]: unknown }[]
+  ).filter(({ name }) => !currentRegisteredByName.has(name));
+
+  try {
+    if (0 < idsNeedToDelete.length) {
+      console.log('コマンドの削除を開始…');
+      for (let i = 0; i < idsNeedToDelete.length; ++i) {
+        console.log(`${i + 1}/${idsNeedToDelete.length}`);
+        await rest.delete(
+          Routes.applicationGuildCommand(
+            APPLICATION_ID,
+            GUILD_ID,
+            idsNeedToDelete[i]
+          )
+        );
+      }
+    }
+
+    if (0 < needToUpdate.length) {
+      console.log('コマンドの更新を開始…');
+      for (let i = 0; i < needToUpdate.length; ++i) {
+        console.log(`${i + 1}/${needToUpdate.length}`);
+        await rest.patch(
+          Routes.applicationGuildCommand(
+            APPLICATION_ID,
+            GUILD_ID,
+            needToUpdate[i].id
+          ),
+          {
+            body: needToUpdate[i]
+          }
+        );
+      }
+    }
+
+    if (0 < needToRegister.length) {
+      console.log('コマンドの追加を開始…');
+      for (let i = 0; i < needToRegister.length; ++i) {
+        console.log(`${i + 1}/${needToRegister.length}`);
+        await rest.post(
+          Routes.applicationGuildCommands(APPLICATION_ID, GUILD_ID),
+          {
+            body: needToRegister[i]
+          }
+        );
+      }
+    }
+    console.log('コマンドの登録に成功しました。');
+  } catch (error) {
+    console.error(error);
+  }
+} else {
+  try {
+    await rest.put(Routes.applicationGuildCommands(APPLICATION_ID, GUILD_ID), {
+      body: []
+    });
+    console.log('コマンドの削除に成功しました。');
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 const provider = new VoiceRoomProxy<VoiceChannelParticipant>(
