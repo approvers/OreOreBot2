@@ -145,11 +145,11 @@ test('multi args', () => {
     ]
   } as const;
 
-  function argsToOptions(args: string[]) {
+  function argsToOptions(args: (string | undefined)[]) {
     return {
       index: 0,
       getString() {
-        const ret = args[this.index];
+        const ret = args[this.index] ?? null;
         ++this.index;
         return ret;
       }
@@ -159,8 +159,7 @@ test('multi args', () => {
   const noParamRes = parseOptions(
     'd',
     argsToOptions([
-      '1d100',
-      's'
+      '1d100'
     ]) as unknown as ChatInputCommandInteraction['options'],
     DICE_SCHEMA
   );
