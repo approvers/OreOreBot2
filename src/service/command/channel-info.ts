@@ -17,7 +17,7 @@ const SCHEMA = {
   params: [
     {
       type: 'CHANNEL',
-      name: 'channel_id',
+      name: 'target',
       description:
         'このIDのチャンネルを調べるよ。指定しない場合は実行したチャンネルを調べるよ',
       defaultValue: 'me'
