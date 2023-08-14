@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.45.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.44.0...oreorebot2-v1.45.0) (2023-08-14)
+
+
+### Features
+
+* スラッシュコマンドのハンドリング処理を追加 ([#960](https://github.com/approvers/OreOreBot2/issues/960)) ([812ad2e](https://github.com/approvers/OreOreBot2/commit/812ad2e8ae9c2e42348846cb7fda74d9a076f4d4))
+* スラッシュコマンドの対応 ([#974](https://github.com/approvers/OreOreBot2/issues/974)) ([9f3a867](https://github.com/approvers/OreOreBot2/commit/9f3a867f0c692611c3e47071dcaef7b50ecc9562))
+
 ## [1.44.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.43.0...oreorebot2-v1.44.0) (2023-08-06)
 
 
