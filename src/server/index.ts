@@ -240,7 +240,7 @@ if (features.includes('SLASH_COMMAND')) {
     if (0 < needToRegister.length) {
       console.log('コマンドの追加を開始…');
       for (let i = 0; i < needToRegister.length; ++i) {
-        console.log(`${i + 1}/${needToUpdate.length}`);
+        console.log(`${i + 1}/${needToRegister.length}`);
         await rest.post(
           Routes.applicationGuildCommands(APPLICATION_ID, GUILD_ID),
           {
