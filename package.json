@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node ./build/index.js",
     "dev": "ts-node --esm ./src/server/index.ts",
-    "build": "esbuild ./src/server/index.ts --bundle --platform=node  --target=node16 --format=esm --packages=external --outfile=build/index.js",
+    "build": "esbuild ./src/server/index.ts --bundle --minify --charset=utf8 --platform=node --target=node16 --format=esm --packages=external --outfile=build/index.js",
     "format": "prettier --write \"src/**/*.{js,ts,md}\"",
     "check": "prettier --check \"src/**/*.{js,ts,md}\" && tsc -p . --noEmit",
     "eslint": "eslint \"src/**/*.{js,ts,md}\"",
