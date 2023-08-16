@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.45.1](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.45.0...oreorebot2-v1.45.1) (2023-08-16)
+
+
+### Bug Fixes
+
+* 選択肢のパース処理の修正 ([#979](https://github.com/approvers/OreOreBot2/issues/979)) ([4570eae](https://github.com/approvers/OreOreBot2/commit/4570eaec27d8d74b67cd079ed965de3bf2f31f43))
+
 ## [1.45.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.44.0...oreorebot2-v1.45.0) (2023-08-14)
 
 
