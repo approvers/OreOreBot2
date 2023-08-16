@@ -1,1 +1,2 @@
-github: [m2en, shun-shobon, su8ru]
+# 本来 approvers/.github にある FUNDING.yml が使われるが、リポジトリで上書きしている場合は別途で指定が必要
+github: [approvers, m1sk9, shun-shobon, su8ru]
