@@ -30,7 +30,7 @@ const SCHEMA = {
       type: 'USER',
       name: 'target',
       description:
-        'このIDのロールを調べるよ。何も入力しないと自分が対象になるよ。',
+        'このIDのユーザーを調べるよ。何も入力しないと自分が対象になるよ。',
       defaultValue: 'me'
     }
   ]
