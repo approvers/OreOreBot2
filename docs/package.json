@@ -28,7 +28,7 @@
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "8.46.0",
-    "eslint-config-next": "13.4.13",
+    "eslint-config-next": "13.4.16",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-mdx": "^2.0.5",
