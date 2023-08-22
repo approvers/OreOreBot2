@@ -29,7 +29,7 @@ export class ScheduleRunner {
     }, CONSUMPTION_INTERVAL);
   }
 
-  private taskConsumerId: NodeJS.Timer;
+  private taskConsumerId: NodeJS.Timeout;
   private queue = new Map<unknown, [ScheduleTask, Date]>();
 
   /**
