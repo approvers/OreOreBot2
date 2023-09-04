@@ -14,7 +14,7 @@ import { DiscordWS } from '../adaptor/discord/ws.js';
 import { loadEmojiSeqYaml } from '../adaptor/emoji-seq-loader.js';
 import {
   ActualClock,
-  DiscordOutput,
+  DiscordStandardOutput,
   DiscordParticipant,
   DiscordVoiceConnectionFactory,
   DiscordVoiceRoomController,
@@ -27,9 +27,11 @@ import {
   VoiceRoomProxy,
   middlewareForMessage,
   middlewareForUpdateMessage,
-  roleProxy
+  roleProxy,
+  DiscordEntranceOutput
 } from '../adaptor/index.js';
 import { DiscordCommandProxy } from '../adaptor/proxy/command.js';
+import { memberProxy } from '../adaptor/proxy/member.js';
 import { loadSchedule } from '../adaptor/signal-schedule.js';
 import { GenVersionFetcher } from '../adaptor/version/fetch.js';
 import type { Snowflake } from '../model/id.js';
@@ -42,11 +44,13 @@ import {
   ScheduleRunner,
   VoiceRoomResponseRunner
 } from '../runner/index.js';
+import { MemberResponseRunner } from '../runner/member.js';
 import type { GyokuonAssetKey } from '../service/command/gyokuon.js';
 import type { KaereMusicKey } from '../service/command/kaere.js';
 import type { AssetKey } from '../service/command/party.js';
 import {
   allEmojiResponder,
+  allMemberResponder,
   allMessageEventResponder,
   allMessageUpdateEventResponder,
   allRoleResponder,
@@ -63,6 +67,7 @@ dotenv.config();
 const {
   DISCORD_TOKEN: token,
   MAIN_CHANNEL_ID: mainChannelId,
+  ENTRANCE_CHANNEL_ID: entranceChannelId,
   GUILD_ID,
   PREFIX,
   FEATURE,
@@ -71,6 +76,7 @@ const {
   [
     'DISCORD_TOKEN',
     'MAIN_CHANNEL_ID',
+    'ENTRANCE_CHANNEL_ID',
     'GUILD_ID',
     'PREFIX',
     'FEATURE',
@@ -78,7 +84,8 @@ const {
   ],
   {
     PREFIX: '!',
-    FEATURE: 'MESSAGE_CREATE,MESSAGE_UPDATE,COMMAND,VOICE_ROOM,ROLE,EMOJI'
+    FEATURE:
+      'MESSAGE_CREATE,MESSAGE_UPDATE,COMMAND,VOICE_ROOM,ROLE,EMOJI,MEMBER'
   }
 );
 
@@ -86,6 +93,7 @@ const features = FEATURE.split(',');
 
 const intents = [
   GatewayIntentBits.Guilds, // GUILD_CREATE による初期化
+  GatewayIntentBits.GuildMembers, // メンバーの参加を検知する機能
   GatewayIntentBits.GuildMessages, // ほとんどのメッセージに反応する機能
   GatewayIntentBits.GuildMessageReactions, // タイマー削除をリアクションでキャンセルする機能
   GatewayIntentBits.GuildVoiceStates, // VoiceDiff 機能
@@ -98,7 +106,8 @@ const typoRepo = new InMemoryTypoRepository();
 const reservationRepo = new InMemoryReservationRepository();
 const clock = new ActualClock();
 const sequencesYaml = loadEmojiSeqYaml(['assets', 'emoji-seq.yaml']);
-const output = new DiscordOutput(client, mainChannelId);
+const standardOutput = new DiscordStandardOutput(client, mainChannelId);
+const entranceOutput = new DiscordEntranceOutput(client, entranceChannelId);
 
 const scheduleRunner = new ScheduleRunner(clock);
 const messageCreateRunner = new MessageResponseRunner(
@@ -113,7 +122,7 @@ if (features.includes('MESSAGE_CREATE')) {
     runner: scheduleRunner,
     clock,
     schedule: loadSchedule(['assets', 'time-signal.yaml']),
-    output
+    output: standardOutput
   });
 }
 
@@ -169,7 +178,7 @@ if (features.includes('COMMAND')) {
     guildRepo: stats,
     roleCreateRepo: roleManager,
     queen: new MathRandomGenerator(),
-    stdout: output,
+    stdout: standardOutput,
     channelRepository
   });
 }
@@ -270,7 +279,7 @@ const provider = new VoiceRoomProxy<VoiceChannelParticipant>(
 );
 const voiceRoomRunner = new VoiceRoomResponseRunner(provider);
 if (features.includes('VOICE_ROOM')) {
-  voiceRoomRunner.addResponder(new VoiceDiff(output));
+  voiceRoomRunner.addResponder(new VoiceDiff(standardOutput));
 }
 
 const roleRunner = new RoleResponseRunner();
@@ -279,7 +288,7 @@ if (features.includes('ROLE')) {
     allRoleResponder({
       kawaemonId: KAWAEMON_ID,
       roleManager,
-      output
+      output: standardOutput
     })
   );
   roleProxy(client, roleRunner);
@@ -287,7 +296,13 @@ if (features.includes('ROLE')) {
 
 const emojiRunner = new EmojiResponseRunner(new EmojiProxy(client));
 if (features.includes('EMOJI')) {
-  emojiRunner.addResponder(allEmojiResponder(output));
+  emojiRunner.addResponder(allEmojiResponder(standardOutput));
+}
+
+const memberRunner = new MemberResponseRunner();
+if (features.includes('MEMBER')) {
+  memberRunner.addResponder(allMemberResponder(entranceOutput));
+  memberProxy(client, memberRunner);
 }
 
 // PID 1 問題のためのシグナルハンドラ
