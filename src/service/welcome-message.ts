@@ -11,12 +11,13 @@ export class WelcomeMessage implements MemberEventResponder<NewMember> {
   constructor(private readonly output: EntranceOutput) {}
 
   async on(_event: MemberEvent, member: NewMember): Promise<void> {
-    if (!member.isBot) return;
+    if (member.isBot) return;
 
     await this.output.sendEmbedWithMention(this.buildEmbed(), member.userId);
   }
 
   private buildEmbed() {
+    // そこまで変更が発生するとは思えないのでハードコード
     const fields = [
       {
         name: 'メンバーデータの追加',
@@ -31,9 +32,16 @@ export class WelcomeMessage implements MemberEventResponder<NewMember> {
         inline: false
       },
       {
+        name: 'メインチャンネル',
+        value:
+          '限界開発鯖では以下のチャンネルがメインで使われているよ\n- <#690909527461199922>\n- <#891210643938611260>\n- <#683939861539192865>',
+        inline: false
+      },
+      {
         name: 'Botの導入',
         value:
-          '限界開発鯖では自分が開発したBotを導入できるよ。導入に関する詳しい説明は [Bot 製作ガイドライン](https://docs.approvers.dev/guideline/bot-create-guideline) を確認してね'
+          '限界開発鯖では自分が開発したBotを導入できるよ。導入に関する詳しい説明は [Bot 製作ガイドライン](https://docs.approvers.dev/guideline/bot-create-guideline) を確認してね',
+        inline: false
       }
     ];
     return {
