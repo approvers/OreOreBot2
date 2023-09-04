@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.45.2](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.45.1...oreorebot2-v1.45.2) (2023-09-04)
+
+
+### Bug Fixes
+
+* user-info の説明文の誤植を修正 ([#983](https://github.com/approvers/OreOreBot2/issues/983)) ([a759bf6](https://github.com/approvers/OreOreBot2/commit/a759bf6f9db2a130f6afb484f73127be176d6433))
+
 ## [1.45.1](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.45.0...oreorebot2-v1.45.1) (2023-08-16)
 
 
