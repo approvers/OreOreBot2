@@ -13,8 +13,7 @@ export class WelcomeMessage implements MemberEventResponder<NewMember> {
   async on(_event: MemberEvent, member: NewMember): Promise<void> {
     if (!member.isBot) return;
 
-    await this.output.sendMention(member.userId);
-    await this.output.sendEmbed(this.buildEmbed());
+    await this.output.sendEmbedWithMention(this.buildEmbed(), member.userId);
   }
 
   private buildEmbed() {

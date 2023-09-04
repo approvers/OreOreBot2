@@ -42,13 +42,20 @@ export class DiscordEntranceOutput implements EntranceOutput {
     });
   }
 
-  async sendMention(userId: string): Promise<void> {
+  async sendEmbedWithMention(
+    embed: EmbedMessage,
+    userId: string
+  ): Promise<void> {
     const channel = await this.client.channels.fetch(this.channelId);
 
     if (!channel || channel.type !== ChannelType.GuildText) {
       throw new Error(`the channel (${this.channelId}) is not text channel`);
     }
 
-    await channel.send(`<@${userId}>`);
+    const made = convertEmbed(embed);
+    await channel.send({
+      content: `<@${userId}>`,
+      embeds: [made]
+    });
   }
 }
