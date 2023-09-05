@@ -2,9 +2,7 @@ import type { Client, GuildMember } from 'discord.js';
 
 import type { Snowflake } from '../../model/id.js';
 import type { MemberResponseRunner } from '../../runner/member.js';
-import type { NewMember } from '../../service/welcome-message.js';
-
-type AllMemberModel = NewMember;
+import type { NewMember as AllMemberModel } from '../../service/welcome-message.js';
 
 const map: (member: GuildMember) => AllMemberModel = (member) => ({
   userId: member.id as Snowflake,
