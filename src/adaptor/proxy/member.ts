@@ -4,9 +4,9 @@ import type { Snowflake } from '../../model/id.js';
 import type { MemberResponseRunner } from '../../runner/member.js';
 import type { NewMember as AllMemberModel } from '../../service/welcome-message.js';
 
-const map: (member: GuildMember) => AllMemberModel = (member) => ({
-  userId: member.id as Snowflake,
-  isBot: member.user.bot
+const map = ({ id, user }: GuildMember): AllMemberModel => ({
+  userId: id as Snowflake,
+  isBot: user.bot
 });
 
 export const memberProxy = (
