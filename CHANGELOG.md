@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.46.0](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.45.2...oreorebot2-v1.46.0) (2023-09-06)
+
+
+### Features
+
+* ようこそメッセージの追加 ([#1028](https://github.com/approvers/OreOreBot2/issues/1028)) ([0294cbc](https://github.com/approvers/OreOreBot2/commit/0294cbc270a39b75fb21cb8550aebe9fc4914a38))
+
 ## [1.45.2](https://github.com/approvers/OreOreBot2/compare/oreorebot2-v1.45.1...oreorebot2-v1.45.2) (2023-09-04)
 
 
