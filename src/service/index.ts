@@ -5,6 +5,7 @@ import {
   composeMessageUpdateEventResponders,
   composeRoleEventResponders
 } from '../runner/index.js';
+import { composeMemberEventResponders } from '../runner/member.js';
 import {
   type BoldItalicCop,
   BoldItalicCopReporter
@@ -25,7 +26,8 @@ import {
   KawaemonHasAllRoles,
   type RoleManager
 } from './kawaemon-has-all-roles.js';
-import type { StandardOutput } from './output.js';
+import type { EntranceOutput, StandardOutput } from './output.js';
+import { WelcomeMessage } from './welcome-message.js';
 
 const stfuIgnorePredicate = (content: string): boolean => content === '!stfu';
 
@@ -62,3 +64,6 @@ export const allRoleResponder = ({
 
 export const allEmojiResponder = (output: StandardOutput) =>
   composeEmojiEventResponders(new EmojiLog(output));
+
+export const allMemberResponder = (output: EntranceOutput) =>
+  composeMemberEventResponders(new WelcomeMessage(output));
