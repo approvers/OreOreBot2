@@ -11,8 +11,5 @@ export interface StandardOutput {
  * "#玄関" に埋め込みを送信する interface.
  */
 export interface EntranceOutput {
-  sendEmbed(embed: EmbedMessage): Promise<void>;
-
-  // note: メンションとともに送信したいため
   sendEmbedWithMention(embed: EmbedMessage, userId: string): Promise<void>;
 }

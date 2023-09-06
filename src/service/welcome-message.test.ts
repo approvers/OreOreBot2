@@ -10,7 +10,6 @@ describe('WelcomeMessage', () => {
   });
 
   const output: EntranceOutput = {
-    sendEmbed: () => Promise.resolve(),
     sendEmbedWithMention: () => Promise.resolve()
   };
   const responder = new WelcomeMessage(output);

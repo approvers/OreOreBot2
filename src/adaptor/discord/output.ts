@@ -29,19 +29,6 @@ export class DiscordEntranceOutput implements EntranceOutput {
     private readonly channelId: string
   ) {}
 
-  async sendEmbed(embed: EmbedMessage): Promise<void> {
-    const channel = await this.client.channels.fetch(this.channelId);
-
-    if (!channel || channel.type !== ChannelType.GuildText) {
-      throw new Error(`the channel (${this.channelId}) is not text channel`);
-    }
-
-    const made = convertEmbed(embed);
-    await channel.send({
-      embeds: [made]
-    });
-  }
-
   async sendEmbedWithMention(
     embed: EmbedMessage,
     userId: string
