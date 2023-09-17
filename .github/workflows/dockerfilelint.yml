@@ -18,7 +18,7 @@ jobs:
       - uses: hadolint/hadolint-action@v3.1.0
         id: run_hadolint
         with:
-          dockerfile: ./packages/bot/Dockerfile
+          dockerfile: ./Dockerfile
           no-color: false
           no-fail: false
 

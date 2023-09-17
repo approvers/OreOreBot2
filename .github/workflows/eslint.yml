@@ -24,5 +24,5 @@ jobs:
       - name: eslint (bot)
         run: yarn run lint:bot
 
-      - name: eslint (docs
+      - name: eslint (docs)
         run: yarn run lint:docs
