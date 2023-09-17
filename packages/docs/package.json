@@ -1,0 +1,27 @@
+{
+  "name": "@oreorebot2/docs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/approvers/OreOreBot2",
+  "author": "approvers <info@approvers.dev>",
+  "description": "新生はらちょドキュメントサイト",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "lint": "next lint",
+    "format": "prettier --write \"./src/**/*.{js,ts,jsx,tsx,md,mdx}\"",
+    "lint-staged": "lint-staged"
+  },
+  "dependencies": {
+    "next": "^13.1.6",
+    "nextra": "^2.2.14",
+    "nextra-theme-docs": "^2.2.14",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@oreorebot2/common": "workspace:*",
+    "@types/react": "18.2.21"
+  }
+}

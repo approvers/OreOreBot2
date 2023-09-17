@@ -11,14 +11,14 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-COPY .yarn/releases/ ./.yarn/releases/
+COPY ../../.yarn/releases ./.yarn/releases/
 COPY package.json yarn.lock .yarnrc.yml ./
 
 RUN npx --quiet pinst --disable \
     && yarn install --immutable \
     && yarn cache clean
 
-COPY . .
+COPY ../.. .
 RUN yarn build
 
 WORKDIR /build
