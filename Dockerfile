@@ -23,8 +23,8 @@ COPY . .
 RUN yarn build:bot
 
 WORKDIR /build
-RUN cp -r /src/{package.json,yarn.lock,node_modules} .
-RUN cp -r /src/packages/bot/{build,assets} .
+RUN cp -r /src/{package.json,yarn.lock,node_modules} . \
+    && cp -r /src/packages/bot/{build,assets} .
 
 FROM ubuntu:jammy-20221130
 COPY --from=build /usr/local/include/ /usr/local/include/
