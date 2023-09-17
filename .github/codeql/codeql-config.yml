@@ -1,5 +1,4 @@
 paths:
-  - src
-  - docs
+  - packages
 paths-ignore:
-  - '**/*.md'
+  - '**.md'
