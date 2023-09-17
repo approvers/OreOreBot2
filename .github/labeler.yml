@@ -2,7 +2,7 @@ C-GitHub Actions:
   - .github/workflows/*.yml
 
 T-OreOreBot2:
-  - src/**
+  - packages/bot/**
 
 T-Documents:
-  - docs/**
+  - packages/docs/**
