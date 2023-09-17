@@ -26,6 +26,14 @@
   - [初代はらちょぶっ殺しプロジェクト](https://github.com/approvers/OreOreBot2/milestone/1) の開始です。
   - これも Go と同じく、途中で永久凍結するところでしたが、 [雪](https://github.com/YukiYuigishi) が初代はらちょを殺した罪で死刑が確定したことで、作り直しが加速することになり、 2022/02/27 ついに最初の [初代はらちょぶっ殺しプロジェクト](https://github.com/approvers/OreOreBot2/milestone/1) が終了しました。
 
+## パッケージ構造
+
+OreOreBot2 は以下のパッケージ構成で運用されています。
+
+- `@oreorebot2/common`: スクリプトや共通の依存関係を提供するパッケージです。
+- [`@oreorebot2/bot`](./packages/bot/README.md): Discord Bot 本体を提供するパッケージです。
+- [`@oreorebot2/docs`](./packages/docs/README.md): OreOreBot2 のドキュメントを提供するパッケージです。
+
 ## 機能の追加・改善
 
 機能の追加や改善などがありましたら [Issue](https://github.com/approvers/OreOreBot2/issues/new) から新規 Issue を作成してください。
@@ -48,55 +56,3 @@
 OreOreBot2 の [Discussions](https://github.com/approvers/OreOreBot2/discussions) では開発の議論などを行っています。
 
 - [Discussion の使い方](https://github.com/approvers/OreOreBot2/discussions/147)
-
-## 使用方法
-
-### 事前要件
-
-以下のものをインストールしていることを想定しています。
-
-- git
-- ffmpeg
-- node.js
-- yarn
-
-### 環境変数
-
-デフォルト値が無い変数は指定する必要があり、指定しなかった場合は起動に失敗します。
-
-起動時にデフォルト値が存在する変数の値が指定されていない場合は、そのデフォルト値が使われます。
-
-| 変数名            | 説明                                                                                                                                                             | 必須  |
-| ----------------- |----------------------------------------------------------------------------------------------------------------------------------------------------------------| ----- |
-| `DISCORD_TOKEN`   | BOT のトークン                                                                                                                                                      | True  |
-| `MAIN_CHANNEL_ID` | VoiceDiff(VC 入退室ログ)を送信する **テキスト** チャンネルの ID                                                                                                                    | True  |
-| `APPLICATION_ID`  | BOT のアプリケーション ID                                                                                                                                               | True  |
-| `GUILD_ID`        | 限界開発鯖の ID                                                                                                                                                      | True  |
-| `PREFIX`          | コマンドの接頭辞、デフォルト値は `"!"`                                                                                                                                         | False |
-| `FEATURE`         | 有効にする機能のカンマ区切り文字列、デフォルト値は全ての機能。`"MESSAGE_CREATE"`, `"MESSAGE_UPDATE"`, `"COMMAND"`, `"VOICE_ROOM"`, `"ROLE"`, `"EMOJI"`, `"SLASH_COMMAND"`, `"MEMBER"` を組み合わせ可能。 | False |
-
-### インストールと実行
-
-```shell
-git clone https://github.com/approvers/OreOreBot2.git
-cd OreOreBot2
-yarn install
-yarn build
-yarn start
-```
-
-`yarn start` での起動時に上記の環境変数を指定してください。`.env` でも指定できます。
-
-`yarn dev` を使用することでコンパイルせずに起動することもできます。
-
-### Docker での起動
-
-Docker・Docker Compose が利用可能であるとします。
-
-```shell
-git clone https://github.com/approvers/OreOreBot2.git
-cd OreOreBot2
-docker compose up -d
-```
-
-`.env` で環境変数を設定してから `docker compose up -d` を実行してください。

@@ -1,34 +1,22 @@
-# OreOreBot2 Documents
+# `@oreorebot2/docs`
 
-新生はらちょドキュメントサイト
+OreOreBot2 のドキュメントを提供するパッケージ。
 
-## Getting Started
+## 必要動作環境
 
-### Prerequisites
-
-- [Node.js](https://nodejs.org/) v16.x or later
+- [Node.js](https://nodejs.org/) v18.x 以上
 - [Yarn](https://yarnpkg.com/) v3
 
----
+## 開発環境の使用方法
 
-1. このリポジトリをクローンします。
-   ([approvers](https://github.com/approvers) のメンバーではない場合は最初に Fork してください)
+すべてルートディレクトリ上で実行します。
 
-   ```shell
-   git clone https://github.com/approvers/OreOreBot2.git
-   ```
+`@oreorebot2/common` (ルートディレクトリ) 上で `yarn install` を実行すると自動的に `@oreorebot2/common`, `@oreorebot2/docs` にも依存関係がインストールされます。
 
-2. **OreOreBot2 Documents** の依存関係をインストールします。
+```shell
+# ビルド (Static Export を使用しているため、ビルド成果物をそのまま起動することはできません)
+yarn run build:docs
 
-   **OreOreBot2** の依存関係とは全く無関係のため、注意してください。
-
-   ```shell
-   cd docs
-   yarn
-   ```
-
-3. 開発サーバーを起動します。
-
-   ```shell
-   yarn dev
-   ```
+# 開発サーバーでの起動
+yarn run dev:docs
+```
