@@ -1,7 +1,11 @@
 {
     "last-release-sha": "e5023238cace2f625076d32075090e4eecce219d",
-    "release-type": "node",
     "packages": {
-        ".": {}
+        ".": {},
+        "packages/bot": {
+            "release-type": "node",
+            "package-name": "OreOreBot2",
+            "changelog-path": "./CHANGELOG.md"
+        }
     }
 }
