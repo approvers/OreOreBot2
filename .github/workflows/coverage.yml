@@ -28,7 +28,7 @@ jobs:
 
       - uses: codecov/codecov-action@v3
         with:
-          files: ./coverage/clover.xml
+          files: ./packages/bot/coverage/clover.xml
           flags: unittests
           fail_ci_if_error: true
           verbose: true
