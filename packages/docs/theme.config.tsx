@@ -42,20 +42,24 @@ const themeConfig: DocsThemeConfig = {
     <>
       <meta property="og:title" content="OreOreBot2 Documents" />
       <meta property="og:description" content={pkg.description} />
-      <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+      <link
+        rel="icon"
+        type="image/svg+xml"
+        href="/packages/bot/assets/favicon.svg"
+      />
       <link
         rel="icon"
         type="image/png"
         sizes="32x32"
-        href="/assets/favicon-32x32.png"
+        href="/packages/bot/assets/favicon-32x32.png"
       />
       <link
         rel="icon"
         type="image/png"
         sizes="16x16"
-        href="/assets/favicon-16x16.png"
+        href="/packages/bot/assets/favicon-16x16.png"
       />
-      <link rel="icon" href="/assets/favicon.ico" />
+      <link rel="icon" href="/packages/bot/assets/favicon.ico" />
     </>
   ),
   useNextSeoProps() {

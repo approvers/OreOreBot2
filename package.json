@@ -1,67 +1,41 @@
 {
-  "name": "oreorebot2",
-  "version": "1.46.0",
-  "exports": "./index.js",
-  "type": "module",
-  "license": "MIT",
-  "repository": "https://github.com/approvers/OreOreBot2",
-  "author": "approvers <info@approvers.dev>",
+  "name": "@oreorebot2/common",
+  "private": true,
+  "packageManager": "yarn@3.6.3",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "start": "node ./build/index.js",
-    "dev": "ts-node --esm ./src/server/index.ts",
-    "build": "esbuild ./src/server/index.ts --bundle --minify --charset=utf8 --platform=node --target=node16 --format=esm --packages=external --outfile=build/index.js",
-    "format": "prettier --write \"src/**/*.{js,ts,md}\"",
-    "check": "prettier --check \"src/**/*.{js,ts,md}\" && tsc -p . --noEmit",
-    "eslint": "eslint \"src/**/*.{js,ts,md}\"",
-    "test": "vitest run",
-    "coverage": "vitest run --coverage",
+    "start": "yarn workspace @oreorebot2/bot start",
+    "build:bot": "yarn workspace @oreorebot2/bot build",
+    "build:docs": "yarn workspace @oreorebot2/docs build",
+    "dev:bot": "yarn workspace @oreorebot2/bot dev",
+    "dev:docs": "yarn workspace @oreorebot2/docs dev",
+    "lint:bot": "yarn workspace @oreorebot2/bot lint",
+    "lint:docs": "yarn workspace @oreorebot2/docs lint",
+    "format:bot": "yarn workspace @oreorebot2/bot format",
+    "format:docs": "yarn workspace @oreorebot2/docs format",
+    "test": "yarn workspace @oreorebot2/bot test",
+    "coverage": "yarn workspace @oreorebot2/bot coverage",
     "lint-staged": "lint-staged",
     "postinstall": "husky install"
   },
-  "engines": {
-    "node": ">=14.16"
-  },
-  "lint-staged": {
-    "src/**/*.{js,ts,md}": [
-      "eslint --fix",
-      "prettier --write"
-    ]
-  },
-  "packageManager": "yarn@3.6.3",
-  "dependencies": {
-    "@discordjs/opus": "^0.9.0",
-    "@discordjs/voice": "^0.16.0",
-    "@js-temporal/polyfill": "^0.4.3",
-    "date-fns": "^2.29.3",
-    "deep-equal": "^2.2.2",
-    "discord.js": "^14.7.1",
-    "dotenv": "^16.0.3",
-    "fast-diff": "^1.2.0",
-    "nanoid": "^5.0.0",
-    "tweetnacl": "^1.0.3",
-    "yaml": "^2.2.2",
-    "yargs": "^17.7.1"
-  },
   "devDependencies": {
-    "@codedependant/semantic-release-docker": "^4.1.0",
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
-    "@types/deep-equal": "^1.0.1",
-    "@types/node": "^20.0.0",
-    "@types/yargs": "^17.0.22",
+    "@types/node": "20.5.9",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
-    "@vitest/coverage-v8": "^0.34.0",
-    "esbuild": "^0.19.0",
-    "eslint": "^8.30.0",
+    "eslint": "8.48.0",
+    "eslint-config-next": "13.4.19",
     "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-markdown": "^3.0.0",
+    "eslint-plugin-mdx": "^2.0.5",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-tsdoc": "^0.2.17",
     "husky": "^8.0.2",
     "lint-staged": "^14.0.0",
-    "make-dir-cli": "^3.0.0",
     "prettier": "^3.0.0",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.0.0",
-    "vitest": "^0.34.0"
+    "typescript": "5.2.2"
   }
 }

@@ -12,6 +12,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY .yarn/releases/ ./.yarn/releases/
+COPY packages/ ./packages/
 COPY package.json yarn.lock .yarnrc.yml ./
 
 RUN npx --quiet pinst --disable \
@@ -19,10 +20,11 @@ RUN npx --quiet pinst --disable \
     && yarn cache clean
 
 COPY . .
-RUN yarn build
+RUN yarn build:bot
 
 WORKDIR /build
-RUN cp -r /src/{build,assets,package.json,yarn.lock,node_modules} .
+RUN cp -r /src/{package.json,yarn.lock,node_modules} . \
+    && cp -r /src/packages/bot/{build,assets} .
 
 FROM ubuntu:jammy-20221130
 COPY --from=build /usr/local/include/ /usr/local/include/

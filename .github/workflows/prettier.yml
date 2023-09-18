@@ -20,5 +20,9 @@ jobs:
 
       - name: Install packages
         run: yarn install --immutable
-      - name: Prettier#check
-        run: yarn run check
+
+      - name: prettier (bot)
+        run: yarn run format:bot
+
+      - name: prettier (docs)
+        run: yarn run format:docs

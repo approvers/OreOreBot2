@@ -20,5 +20,9 @@ jobs:
 
       - name: Install packages
         run: yarn install --immutable
-      - name: eslint
-        run: yarn run eslint
+
+      - name: eslint (bot)
+        run: yarn run lint:bot
+
+      - name: eslint (docs)
+        run: yarn run lint:docs

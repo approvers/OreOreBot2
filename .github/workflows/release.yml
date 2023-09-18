@@ -24,6 +24,8 @@ jobs:
       - uses: google-github-actions/release-please-action@v3
         id: release
         with:
+          path: ./packages/bot/
+          changelog-path: ./CHANGELOG.md
           token: ${{ steps.token.outputs.token }}
           release-type: node
           command: manifest
