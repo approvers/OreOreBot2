@@ -1,4 +1,5 @@
 {
+    "last-release-sha": "8947b7552291304f530687e468fdeb2611c966cf",
     "changelog-path": "CHANGELOG.md",
     "packages": {
         "packages/bot": {
