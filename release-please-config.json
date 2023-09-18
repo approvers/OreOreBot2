@@ -1,6 +1,6 @@
 {
     "last-release-sha": "e5023238cace2f625076d32075090e4eecce219d",
-    "changelog-path": "./CHANGELOG.md",
+    "changelog-path": "CHANGELOG.md",
     "packages": {
         ".": {},
         "packages/bot": {
