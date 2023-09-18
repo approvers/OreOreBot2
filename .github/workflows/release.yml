@@ -25,7 +25,6 @@ jobs:
         id: release
         with:
           token: ${{ steps.token.outputs.token }}
-          release-type: node
           command: manifest
 
       - name: Publish the Docker package
