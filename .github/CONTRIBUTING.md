@@ -1,71 +1,159 @@
 # OreOreBot2 への貢献
 
-OreOreBot2 には誰でも貢献でき、その貢献にはさまざまな方法があります。
+OreOreBot2 への貢献を検討していただきありがとうございます。
 
-- [OreOreBot2 への貢献](#oreorebot2-への貢献)
-  - [バグレポートの提出](#バグレポートの提出)
-    - [セキュリティーに関する不具合の報告](#セキュリティーに関する不具合の報告)
-  - [新機能リクエストの提出](#新機能リクエストの提出)
-  - [プルリクエストの提出](#プルリクエストの提出)
-    - [開発参加の流れ](#開発参加の流れ)
-    - [コーティング規約](#コーティング規約)
-    - [テストについて](#テストについて)
-      - [テストの例](#テストの例)
-    - [コミットメッセージ](#コミットメッセージ)
-    - [その他](#その他)
-  - [GitHub Sponsor の掲載条件](#github-sponsor-の掲載条件)
-  - [開発環境](#開発環境)
-    - [機能の有効・無効](#機能の有効無効)
-    - [音楽再生系の機能](#音楽再生系の機能)
+バグ報告や機能追加の提案、ドキュメントの改善など、様々な貢献をお待ちしています。
 
-## バグレポートの提出
+## Issue の提出
 
-OreOreBot2 の不具合を発見した際は **[Issues](https://github.com/approvers/OreOreBot2/issues/new/choice) -> バグ報告** の順に進んで表示されるフォームからバグレポートを提出できます。
+OreOreBot2 では以下のような Issue を提出することができます。
 
-提出する際は以下の項目を満たしているか確認してください。
+- [バグ報告のIssue](https://github.com/approvers/OreOreBot2/issues/new?assignees=&labels=C-bug&projects=&template=bug_report.yml)
+- [ドキュメントに関するIssue](https://github.com/approvers/OreOreBot2/issues/new?assignees=&labels=T-Documents&projects=&template=content_report.yml)
+- [機能要望のIssue](https://github.com/approvers/OreOreBot2/issues/new?assignees=&labels=C-enhancement&projects=&template=feature_request.yml)
 
-- [ ] OreOreBot2 の Issues に自分が今から報告しようとしていることと同じ Issue はない
-- [ ] セキュリティーに関する不具合ではない
+これらの Issue はテンプレートが用意されており、それぞれの目的に応じた内容を記述することで、簡単に Issue を提出できます。
 
-バグレポートは **詳細、再現方法、期待する動作、はらちょのバージョン** 全て記載した状態で報告を行ってください。
+テンプレートを使用せず、[空の Issue を使用して提出することも可能です](https://github.com/approvers/OreOreBot2/issues/new)。ただしその場合はしっかり内容を記述してください。
 
-### セキュリティーに関する不具合の報告
+## Pull Request の提出
 
-[OreOreBot2 Security Policy](../SECURITY.md) を確認してください。
-
-## 新機能リクエストの提出
-
-OreOreBot2 に追加したい機能がある場合は **[Issues](https://github.com/approvers/OreOreBot2/issues/new/choose) -> 機能要望** の順に進んで表示されるフォームからリクエストを提出できます。
-
-なお、リクエストを必ずしも実現する保証はできません。
-
-## プルリクエストの提出
-
-プルリクエストを提出することで OreOreBot2 の開発に参加できます。
+自分で開発したり修正した機能・不具合を Pull Request として提出することも可能です。
 
 ### 開発参加の流れ
 
-1. 当リポジトリをフォークする
-   - approvers のメンバーはフォークする必要はありません。
-2. フォークしたリポジトリ(または 当リポジトリ)をローカルにクローンする
-   ```shell
-   git clone https://github.com/approvers/OreOreBot2.git
-   cd OreOreBot2
-   ```
-3. ブランチを作成、チェックアウトする
-   ```shell
-   git checkout -b <branch-name>
-   ```
-4. 開発を行い、その内容を GitHub にプッシュする
-   ```shell
-   git add <file-name>
-   git commit -m <commit-message>
-   git push
-   ```
-5. 開発が完了したら GitHub の OreOreBot2 レポジトリ (フォーク元でもフォーク先でも可) にアクセスし、 当リポジトリの `main` ブランチへのプルリクエストを作成してください。
-6. 当リポジトリのメンテナーによるレビューと CI によるテストが行われ、両方に合格すればマージできます。
+1. [OreOreBot2 のリポジトリ](https://github.com/approvers/OreOreBot2)をフォークする
 
-### コーティング規約
+リポジトリ画面の右上にある "Fork" から自分のアカウントにクローンしてください。
+
+> **Note**
+> 
+> approversのメンバーはクローンする必要はありません。
+
+2. ローカルにクローンする
+
+次のコマンドを実行してリポジトリをローカルにクローンしてください。
+
+```shell
+git clone https://github.com/approvers/OreOreBot2.git
+```
+
+3. 依存関係をインストールする
+
+次のコマンドを実行して依存関係をインストールしてください。
+
+このコマンドを実行すると共通のパッケージ・`@oreorebot2/bot`(はらちょ本体)・`@oreorebot2/docs`(はらちょのドキュメント)、それぞれの依存関係がインストールされます。
+
+**必ず、ルートディレクトリ上で実行してください**。
+
+```shell
+yarn install
+```
+
+4. ブランチを作成、チェックアウトする
+
+ブランチ名には特に規則はありませんが、内容が逸脱しすぎているブランチ名ではプッシュしないでください。
+
+```shell
+git checkout -b <branch-name>
+```
+
+5. 開発を行い、その内容を GitHub にプッシュする
+
+```shell
+git add <file-name>
+git commit -m <commit-message>
+git push
+```
+
+6. 開発が完了したら GitHub の OreOreBot2 レポジトリ (フォーク元でもフォーク先でも可) にアクセスし、 当リポジトリの main ブランチへのプルリクエストを作成してください。
+   当リポジトリのメンテナーによるレビューと CI によるテストが行われ、両方に合格すればマージできます。
+
+## プロジェクトの構成
+
+OreOreBot2 は以下のような構成になっています。
+
+```
+OreOreBot2 (@oreorebot2/common)
+│
+├── packages
+│   │
+│   ├── bot (@oreorebot2/bot) // OreOreBot2 本体
+│   │
+│   └── docs (@oreorebot2/docs) // OreOreBot2 のドキュメント
+```
+
+- ルートディレクトリ (`@oreorebot2/common`) 上は `@oreorebot2/bot`・`@oreorebot2/docs` で使用される依存関係やコンフィグファイルが管理されています。
+  - このディレクトリ上で `yarn install` を実行すると、`@oreorebot2/common`・`@oreorebot2/bot`・`@oreorebot2/docs` の依存関係がインストールされます。
+- ルートディレクトリ (`@oreorebot2/common`) 上から `@oreorebot2/bot`・`@oreorebot2/docs` のスクリプトにアクセスすることが可能です。
+- 依存関係をインストールする必要がある場合はインストール先に注意してください。それぞれパッケージの依存関係はそれぞれのディレクトリ上でインストールする必要があります。
+  - 2つのパッケージ (`@oreorebot2/bot`・`@oreorebot2/docs`) に共通するような依存関係は `@oreorebot2/common` 上でインストールしてください。
+  - それぞれのパッケージに依存するような依存関係はそれぞれのディレクトリ上でインストールしてください。
+
+## コミットメッセージ
+
+コミットメッセージを書く際は Conventional Commit に従ってください。
+
+> Conventional Commits の仕様はコミットメッセージのための軽量の規約です。 明示的なコミット履歴を作成するための簡単なルールを提供します。この規則に従うことで自動化ツールの導入を簡単にします。 コミットメッセージで機能追加・修正・破壊的変更などを説明することで、この規約は SemVer と協調動作します。
+
+コミットメッセージは次のような形にする必要があります。
+
+```
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+`<type>` は、OreOreBot2 を使用する利用者や開発者に意図を伝えるために以下に記載するそれぞれの型を指定する必要があります。
+
+| 型         | 要素                                                                           |
+| ---------- | ------------------------------------------------------------------------------ |
+| `fix`      | この型を持つコミットはコードベースのバグにパッチを当てます。                   |
+| `feat`     | この型を持つコミットはコードベースに新しい機能を追加します。                   |
+| `build`    | この型を持つコミットはプログラムをコンパイル、ビルドする部分の変更を行います。 |
+| `ci`       | この型を持つコミットは GitHub Actions に関する変更を行います。                 |
+| `docs`     | この型を持つコミットはドキュメントなどの変更を行います。                       |
+| `refactor` | この型を持つコミットはコードベースのリファクタリングを行います。               |
+| `chore`    | この型を持つコミットはファイル整理や依存関係の更新などを行います。             |
+
+`BREAKING CHANGE` とフッターにかかれているか型/スコープの直後に `!` が追加されているコミットは仕様の破壊的変更を意味します。 (Semantic Versioning における `MAJOR` に相当します)
+
+また、 `BREAKING CHANGE` は任意の型のコミットに含めることも可能です。
+
+詳しくは [Conventional Commits](https://conventionalcommits.org/) を参照してください。
+
+## 開発環境について
+
+[プロジェクトの構成](#プロジェクトの構成) にあるように OreOreBot2 は `@oreorebot2/bot`・`@oreorebot2/docs` という2つのパッケージで構成されています。
+
+それぞれのパッケージにはそれぞれの開発環境が用意されていますが、スクリプトを実行する場合はそれぞれのパッケージのディレクトリに移動する必要はありません。
+
+以下は使用可能なスクリプトのリストです。
+
+- `start`: ビルドした成果物で OreOreBot2 を起動します。
+- `build:bot`: `@oreorebot2/bot` をビルドします。
+- `build:docs`: `@oreorebot2/docs` をビルドします。
+- `dev:bot`: `@oreorebot2/bot` を開発環境で起動します。コンパイルは実施しません。
+- `dev:docs`: `@oreorebot2/docs` を開発サーバーで起動します。
+- `lint:bot`, `lint:docs`: `@oreorebot2/bot`・`@oreorebot2/docs` のコードに対して ESLint を実行します。
+- `format:bot`, `format:docs`: `@oreorebot2/bot`・`@oreorebot2/docs` のコードに対して Prettier を実行します。
+- `test`: `@oreorebot2/bot` のテストを実行します。
+- `coverage`: `@oreorebot2/bot` のカバレッジを計測します。
+
+## 開発について
+
+### OreOreBot2 (`@oreorebot2/bot`)
+
+以下のものをインストールしていることを想定しています。
+
+- Git
+- [FFmpeg](#音楽再生系の機能)
+- Node.js v18.x 以上
+- Yarn v3
+
+#### コーディング規約
 
 1. 型、クラスの命名には `PascalCase` を使用してください。
 2. 関数、変数の命名には `camelCase` を使用してください。
@@ -76,17 +164,15 @@ OreOreBot2 に追加したい機能がある場合は **[Issues](https://github.
 
 - ファイル名を小文字英字とハイフンのみの `kabeb-case` としてください。
 - コミット時に必ず Husky で Prettier と ESLint を実行してください。
-- 新機能の追加や、既存の機能の変更を行った際は[テストを追加](#テストについて)してください。
+- 新機能の追加や、既存の機能の変更を行った際は[テストを追加](#テストの追加)してください。
 
-### テストについて
+#### テストの追加
 
 - OreOreBot2 ではテストフレームワーク [Vitest](https://vitest.dev/) を使用してテストを行っています。
 - テストファイルの名前は `<file-name>.test.ts` とします。
   - `<file-name>` は機能の処理を行うファイルと同じ名前にし、 `.test.ts` との競合を回避するため、`<file-name>` で `.` を含めないようにしてください。
   - テストファイルは機能の処理を行うファイルと同じディレクトリに配置します。
     - ミーム構文のみ `test/` 配下に配置してください。
-
-#### テストの例
 
 **コマンド**
 
@@ -211,66 +297,9 @@ it('use case of hukueki', async () => {
 });
 ```
 
-詳しくは [Vitest Guide](https://vitest.dev/guide/) をご覧ください。
+詳しいテストの記述方法については [Vitest Guide](https://vitest.dev/guide/) をご覧ください。
 
-### コミットメッセージ
-
-コミットメッセージを書く際は Conventional Commit に従ってください。
-
-> Conventional Commits の仕様はコミットメッセージのための軽量の規約です。 明示的なコミット履歴を作成するための簡単なルールを提供します。この規則に従うことで自動化ツールの導入を簡単にします。 コミットメッセージで機能追加・修正・破壊的変更などを説明することで、この規約は SemVer と協調動作します。
-
-コミットメッセージは次のような形にする必要があります。
-
-```
-<type>[optional scope]: <description>
-
-[optional body]
-
-[optional footer(s)]
-```
-
-`<type>` は、OreOreBot2 を使用する利用者や開発者に意図を伝えるために以下に記載するそれぞれの型を指定する必要があります。
-
-| 型         | 要素                                                                           |
-| ---------- | ------------------------------------------------------------------------------ |
-| `fix`      | この型を持つコミットはコードベースのバグにパッチを当てます。                   |
-| `feat`     | この型を持つコミットはコードベースに新しい機能を追加します。                   |
-| `build`    | この型を持つコミットはプログラムをコンパイル、ビルドする部分の変更を行います。 |
-| `ci`       | この型を持つコミットは GitHub Actions に関する変更を行います。                 |
-| `docs`     | この型を持つコミットはドキュメントなどの変更を行います。                       |
-| `refactor` | この型を持つコミットはコードベースのリファクタリングを行います。               |
-| `chore`    | この型を持つコミットはファイル整理や依存関係の更新などを行います。             |
-
-`BREAKING CHANGE` とフッターにかかれているか型/スコープの直後に `!` が追加されているコミットは仕様の破壊的変更を意味します。 (Semantic Versioning における `MAJOR` に相当します)
-
-また、 `BREAKING CHANGE` は任意の型のコミットに含めることも可能です。
-
-詳しくは [Conventional Commits](https://conventionalcommits.org/) を参照してください。
-
-### その他
-
-- プルリクエストのタイトルは Conventional Commit の型を使用して作成してください。
-  - 例: `feat: えぬ留年構文ジェネレータの実装`, `fix: えぬが留年しない問題の修正`
-- プルリクエスト作成時は Issue と同様テンプレートが用意されているので詳細情報の記載をお願いします。
-
-## GitHub Sponsor の掲載条件
-
-OreOreBot2 の Sponsor ボタンへの掲載は **OreOreBot2 にコントリビュートをしていること**が条件になります。
-
-コントリビュートしていて、掲載を希望する場合は `.github/FUNDING.yml` へ自分のユーザー ID を追加し、プルリクエストを作成してください。
-
-```yaml
-github: [m2en, shun-shobon, su8ru]
-```
-
-## 開発環境
-
-- `yarn dev` で開発用にコンパイルなしで起動します。
-- `yarn build` で本番用にコンパイルします。
-- `yarn start` で本番用にコンパイルしたビルドを起動します。
-- `yarn test` でテストを実行します。
-
-### 機能の有効・無効
+#### 機能の有効・無効
 
 環境変数 `FEATURE` で有効にする機能を指定できます。
 
@@ -281,9 +310,10 @@ github: [m2en, shun-shobon, su8ru]
 - `"COMMAND"` - コマンド全般の機能
 - `"VOICE_ROOM"` - VC 関連の機能
 - `"ROLE"` - ロール関連の機能
+- `"EMOJI"` - 絵文字関連の機能
+- `"SLASH_COMMAND"` - スラッシュコマンド関連の機能 (指定しない場合はスラッシュコマンドは登録されず、メッセージコマンド形式だけになります。)
+- `"MEMBER"` - メンバー関連の機能
 
-### 音楽再生系の機能
+#### 音楽再生系の機能
 
 `!party` などの音楽再生系の機能は利用するには、[FFmpeg](https://ffmpeg.org/) がインストールされていてその `PATH` が通っている必要があります。
-
-開発の際はご注意ください。
