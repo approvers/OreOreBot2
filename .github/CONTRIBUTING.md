@@ -166,7 +166,7 @@ OreOreBot2 (@oreorebot2/common)
 以下のものをインストールしていることを想定しています。
 
 - Git
-- [FFmpeg](#音楽再生系の機能)
+- FFmpeg ([音楽再生系の機能](#音楽再生系の機能)で必要です)
 - Node.js v18.x 以上
 - Yarn v3
 
