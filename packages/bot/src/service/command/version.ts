@@ -32,7 +32,7 @@ export class GetVersionCommand implements CommandResponder<typeof SCHEMA> {
        * v1.30.0以降、全てのTagの先頭には "oreorebot2-" という文字列が付与されるようになったため、ハードコーディングで対応
        * https://github.com/approvers/OreOreBot2/tags
        */
-      description: `[${version}](https://github.com/approvers/OreOreBot2/releases/tag/oreorebot2-v${version}) だよ。`,
+      description: `[${version}](https://github.com/approvers/OreOreBot2/releases/tag/OreOreBot2-v${version}) だよ。`,
       url: `https://github.com/approvers/OreOreBot2/releases`
     });
   }
