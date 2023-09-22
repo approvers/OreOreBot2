@@ -2,7 +2,7 @@ import type {
   Param,
   Schema,
   SubCommandEntries
-} from '../model/command-schema.js';
+} from '../../../model/command-schema.js';
 
 const entriesToOptions = (entries: SubCommandEntries): unknown[] =>
   Object.keys(entries).map((key) => {
