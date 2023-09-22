@@ -317,3 +317,80 @@ it('use case of hukueki', async () => {
 #### 音楽再生系の機能
 
 `!party` などの音楽再生系の機能は利用するには、[FFmpeg](https://ffmpeg.org/) がインストールされていてその `PATH` が通っている必要があります。
+
+### OreOreBot2 ドキュメント (`@oreorebot2/docs`)
+
+以下のものをインストールしていることを想定しています。
+
+- Git
+- Node.js v18.x 以上
+- Yarn v3
+
+#### コーディング規約
+
+1. コンポーネント、型の命名には `PascalCase` を使用してください。
+2. 関数、変数の命名には `camelCase` を使用してください。
+3. `null` は使用せず、`undefined` を使用してください。
+
+----
+
+- 各ページのファイル名は小文字英字とハイフンのみの `kabeb-case` としてください。
+- コミット時に必ず Husky で Prettier と ESLint を実行してください。
+
+#### リファレンスの追加
+
+リファレンスは `docs/reference` に MDX ファイルとして追加してください。
+
+- `commands`: 各コマンドのリファレンスを追加します。ファイル名と OreOreBot2 の `pageName` プロパティが一致するように書いてください。
+
+```ts
+// 例: src/commands/version.ts
+
+help: Readonly<HelpInfo> = {
+  title: 'はらちょバージョン',
+  description: '現在の私のバージョンを出力するよ。',
+  pageName: 'version'
+};
+```
+
+- `features`: コマンド以外の機能のリファレンスを追加します。
+
+**コマンドリファレンス**
+
+コマンドリファレンスには以下の情報は必ず含めてください。
+
+- 各引数が要求するものの説明
+
+コンポーネント `CommandArgs` を使用することで綺麗に記述可能です。
+
+```mdx
+import { CommandArgs } from '../../../organisms/command-args';
+
+# チャンネル情報表示
+
+<CommandArgs
+  versionAvailableFrom="v1.37.0"
+  commandName="channelinfo/channel/chinfo"
+  args={[
+    {
+      name: 'チャンネルID',
+      about:
+        '情報を表示したいチャンネルのIDです。チャンネルのメンションを指定しないようにしてください。'
+    }
+  ]}
+/>
+```
+
+- どのバージョンから利用可能になったのか
+  - 機能追加系のPRの場合は基本的にマイナーバージョンがあがります。
+
+コンポーネント `CommandArgs` の `versionAvailableFrom` を指定するか、機能リファレンスの場合は `VersionBadge` を使用してください。
+
+```mdx
+import { FeatureBadge } from '../../../molecules/feature-badge';
+import { VersionBadge } from '../../../molecules/version-badge';
+
+# Kawaemon has given a new role
+
+<FeatureBadge>その他</FeatureBadge>,<VersionBadge>v1.16.0</VersionBadge>
+```
