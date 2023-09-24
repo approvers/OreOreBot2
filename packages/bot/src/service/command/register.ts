@@ -36,19 +36,21 @@ export const registerCommands = async ({
   const commands = commandRunner
     .getResponders()
     .flatMap((responder) => schemaToDiscordFormat(responder.schema));
-  const commandNames = new Map(commands.map((obj) => [obj.name, obj]));
+  const commandByName = new Map(commands.map((obj) => [obj.name, obj]));
 
   const idsNeedToDelete = [...currentRegisteredByName.keys()]
-    .filter((name) => !commandNames.has(name))
+    .filter((name) => !commandByName.has(name))
     .map(
       (name) =>
         (currentRegisteredByName.get(name)?.id ?? 'unknown') as Snowflake
     );
   const needToUpdate = [...currentRegisteredByName.values()].filter(
-    (registered) => equal(commandNames.get(registered.name) ?? {}, registered)
+    (registered) =>
+      commandByName.has(registered.name) &&
+      !equal(commandByName.get(registered.name) ?? {}, registered)
   );
-  const needToRegister = commands.filter(
-    ({ name }) => !currentRegisteredByName.has(name)
+  const needToCreate = commands.filter(
+    (command) => !currentRegisteredByName.has(command.name)
   );
 
   if (0 < idsNeedToDelete.length) {
@@ -67,11 +69,11 @@ export const registerCommands = async ({
     }
   }
 
-  if (0 < needToRegister.length) {
+  if (0 < needToCreate.length) {
     console.log('コマンドの追加を開始…');
-    for (let i = 0; i < needToRegister.length; ++i) {
-      console.log(`${i + 1}/${needToRegister.length}`);
-      await commandRepo.createCommand(needToRegister[i]);
+    for (let i = 0; i < needToCreate.length; ++i) {
+      console.log(`${i + 1}/${needToCreate.length}`);
+      await commandRepo.createCommand(needToCreate[i]);
     }
   }
   console.log('コマンドの登録に成功しました。');
