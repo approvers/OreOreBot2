@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.47.2](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.47.1...OreOreBot2-v1.47.2) (2023-09-24)
+
+
+### Bug Fixes
+
+* Party一葉のBGMを均一化 ([#1088](https://github.com/approvers/OreOreBot2/issues/1088)) ([5ab8edc](https://github.com/approvers/OreOreBot2/commit/5ab8edc573eb2d69b579a25f0ebcfceb2a3b8f41))
+
 ## [1.47.1](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.47.0...OreOreBot2-v1.47.1) (2023-09-22)
 
 
