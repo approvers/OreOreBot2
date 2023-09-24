@@ -1,10 +1,7 @@
 import { createTimestamp } from '../../model/create-timestamp.js';
 import type { Snowflake } from '../../model/id.js';
-import type {
-  CommandMessage,
-  CommandResponder,
-  HelpInfo
-} from './command-message.js';
+import type { HelpInfo } from '../../runner/command.js';
+import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
 export interface UserStats {
   color: string;
@@ -36,7 +33,7 @@ const SCHEMA = {
   ]
 } as const;
 
-export class UserInfo implements CommandResponder<typeof SCHEMA> {
+export class UserInfo implements CommandResponderFor<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ユーザー秘書艦',
     description:

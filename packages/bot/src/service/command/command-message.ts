@@ -1,6 +1,7 @@
 import type { ParsedSchema, Schema } from '../../model/command-schema.js';
 import type { EmbedMessage, EmbedPage } from '../../model/embed-message.js';
 import type { Snowflake } from '../../model/id.js';
+import type { CommandResponder } from '../../runner/command.js';
 
 /**
  * `CommandMessage.replyPages` のオプション。
@@ -77,22 +78,10 @@ export interface SentMessage {
   edit(newMessage: EmbedMessage): Promise<void>;
 }
 
-export interface HelpInfo {
-  title: string;
-  description: string;
-  /**
-   * はらちょドキュメントサイト(haracho.approvers.dev):
-   * 各コマンドリファレンスのページ名を指定する。
-   * 例: !ping コマンドのリファレンスが `haracho.approvers.dev/commands/ping` にある場合は `ping` を docId に指定する。
-   */
-  pageName: string;
-}
-
-export interface CommandResponder<S extends Schema> {
-  help: Readonly<HelpInfo>;
-  schema: Readonly<S>;
-  on(message: CommandMessage<S>): Promise<void>;
-}
+export type CommandResponderFor<S extends Schema> = CommandResponder<
+  S,
+  CommandMessage<S>
+>;
 
 export const createMockMessage = <S extends Schema>(
   args: Readonly<ParsedSchema<S>>,

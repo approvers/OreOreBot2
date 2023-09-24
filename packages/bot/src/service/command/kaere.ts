@@ -3,14 +3,11 @@ import { addDays, isBefore, setHours, setMinutes, setSeconds } from 'date-fns';
 import type { EmbedMessage } from '../../model/embed-message.js';
 import type { Snowflake } from '../../model/id.js';
 import { Reservation, ReservationTime } from '../../model/reservation.js';
+import type { HelpInfo } from '../../runner/command.js';
 import type { Clock, ScheduleRunner } from '../../runner/index.js';
 import type { StandardOutput } from '../output.js';
 import type { VoiceConnectionFactory } from '../voice-connection.js';
-import type {
-  CommandMessage,
-  CommandResponder,
-  HelpInfo
-} from './command-message.js';
+import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
 export type KaereMusicKey = 'NEROYO';
 
@@ -127,7 +124,7 @@ const SCHEMA = {
 /**
  * `kaere` コマンドでボイスチャンネルの参加者に切断を促す機能。
  */
-export class KaereCommand implements CommandResponder<typeof SCHEMA> {
+export class KaereCommand implements CommandResponderFor<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'Kaere一葉',
     description:

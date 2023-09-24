@@ -3,7 +3,7 @@ import { expect, test, vi } from 'vitest';
 import type { Schema } from '../../model/command-schema.js';
 import type { Snowflake } from '../../model/id.js';
 import { CommandRunner, emptyProxy } from '../../runner/command.js';
-import type { CommandResponder } from './command-message.js';
+import type { CommandResponderFor } from './command-message.js';
 import { PingCommand } from './ping.js';
 import {
   registerCommands,
@@ -49,12 +49,12 @@ test('', async () => {
   commandRunner.addResponder(
     new GetVersionCommand({
       version: 'v0.1.0'
-    }) as unknown as CommandResponder<Schema>
+    }) as unknown as CommandResponderFor<Schema>
   );
   commandRunner.addResponder(
     new PingCommand({
       avgPing: 160
-    }) as unknown as CommandResponder<Schema>
+    }) as unknown as CommandResponderFor<Schema>
   );
   await registerCommands({ commandRepo, commandRunner });
 

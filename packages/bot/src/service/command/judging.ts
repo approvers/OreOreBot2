@@ -4,11 +4,8 @@ import {
   isJudgingStatus,
   waitingJudgingEmoji
 } from '../../model/judging-status.js';
-import type {
-  CommandMessage,
-  CommandResponder,
-  HelpInfo
-} from './command-message.js';
+import type { HelpInfo } from '../../runner/command.js';
+import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
 /**
  * `JudgingCommand` のための乱数生成器。
@@ -64,7 +61,7 @@ const SCHEMA = {
 /**
  * `judge` コマンドで競技プログラミングの判定をシミュレートする。
  */
-export class JudgingCommand implements CommandResponder<typeof SCHEMA> {
+export class JudgingCommand implements CommandResponderFor<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: JUDGING_TITLE,
     description: 'プログラムが適格かどうか判定してあげるよ',

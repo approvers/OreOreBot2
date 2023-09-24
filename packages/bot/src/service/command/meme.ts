@@ -1,11 +1,8 @@
 import yargs from 'yargs';
 
 import type { MemeTemplate } from '../../model/meme-template.js';
-import type {
-  CommandMessage,
-  CommandResponder,
-  HelpInfo
-} from './command-message.js';
+import type { HelpInfo } from '../../runner/command.js';
+import type { CommandMessage, CommandResponderFor } from './command-message.js';
 import { memes } from './meme/index.js';
 
 const memesByCommandName: Record<
@@ -30,7 +27,7 @@ const SCHEMA = {
   ]
 } as const;
 
-export class Meme implements CommandResponder<typeof SCHEMA> {
+export class Meme implements CommandResponderFor<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ミーム構文機能',
     description: '何これ……引数のテキストを構文にはめ込むみたいだよ',

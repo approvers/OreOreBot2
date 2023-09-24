@@ -1,8 +1,5 @@
-import type {
-  CommandMessage,
-  CommandResponder,
-  HelpInfo
-} from './command-message.js';
+import type { HelpInfo } from '../../runner/command.js';
+import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
 export interface Ping {
   /**
@@ -17,7 +14,7 @@ const SCHEMA = {
   subCommands: {}
 } as const;
 
-export class PingCommand implements CommandResponder<typeof SCHEMA> {
+export class PingCommand implements CommandResponderFor<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'Ping',
     description: '現在のレイテンシを表示するよ。',

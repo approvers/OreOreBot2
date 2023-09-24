@@ -1,11 +1,8 @@
 import type { Schema } from '../../model/command-schema.js';
 import type { Snowflake } from '../../model/id.js';
+import type { HelpInfo } from '../../runner/command.js';
 import type { VoiceConnectionFactory } from '../voice-connection.js';
-import type {
-  CommandMessage,
-  CommandResponder,
-  HelpInfo
-} from './command-message.js';
+import type { CommandMessage, CommandResponderFor } from './command-message.js';
 import type { VoiceRoomController } from './kaere.js';
 
 export type GyokuonAssetKey = 'GYOKUON' | 'GYOKUON_SHORT';
@@ -28,7 +25,7 @@ const SCHEMA = {
 /**
  * gyokuon コマンドでこるくの玉音放送をボイスチャンネルに再生する機能
  */
-export class GyokuonCommand implements CommandResponder<typeof SCHEMA> {
+export class GyokuonCommand implements CommandResponderFor<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'こるくの玉音放送',
     description:

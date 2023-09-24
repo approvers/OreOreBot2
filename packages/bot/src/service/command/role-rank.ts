@@ -1,8 +1,5 @@
-import type {
-  CommandMessage,
-  CommandResponder,
-  HelpInfo
-} from './command-message.js';
+import type { HelpInfo } from '../../runner/command.js';
+import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
 export interface MemberWithRole {
   displayName: string;
@@ -19,7 +16,7 @@ const SCHEMA = {
   subCommands: {}
 } as const;
 
-export class RoleRank implements CommandResponder<typeof SCHEMA> {
+export class RoleRank implements CommandResponderFor<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ロール数ランキング',
     description: '各メンバーごとのロール数をランキング形式で表示するよ',
