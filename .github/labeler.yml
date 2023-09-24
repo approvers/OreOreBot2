@@ -1,8 +1,11 @@
 C-GitHub Actions:
   - .github/workflows/*.yml
 
-T-OreOreBot2:
+T-@oreorebot2/common:
+  - *
+
+T-@oreorebot2/bot:
   - packages/bot/**
 
-T-Documents:
+T-@oreorebot2/docs:
   - packages/docs/**
