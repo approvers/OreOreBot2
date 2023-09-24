@@ -15,6 +15,12 @@ export interface CommandProxy {
   ): void;
 }
 
+export const emptyProxy: CommandProxy = {
+  addMessageCreateListener: () => {
+    // do nothing
+  }
+};
+
 export class CommandRunner {
   private readonly responders: CommandResponder<Schema>[] = [];
 
