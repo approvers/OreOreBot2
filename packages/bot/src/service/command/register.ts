@@ -44,11 +44,16 @@ export const registerCommands = async ({
       (name) =>
         (currentRegisteredByName.get(name)?.id ?? 'unknown') as Snowflake
     );
-  const needToUpdate = [...currentRegisteredByName.values()].filter(
-    (registered) =>
-      commandByName.has(registered.name) &&
-      !equal(commandByName.get(registered.name) ?? {}, registered)
-  );
+  const needToUpdate = [...currentRegisteredByName.values()]
+    .filter(
+      (registered) =>
+        commandByName.has(registered.name) &&
+        !equal(commandByName.get(registered.name) ?? {}, registered)
+    )
+    .map(
+      ({ id, name }) =>
+        ({ id, ...commandByName.get(name) }) as RegisteredCommand
+    );
   const needToCreate = commands.filter(
     (command) => !currentRegisteredByName.has(command.name)
   );
