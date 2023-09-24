@@ -1,7 +1,11 @@
 import { REST, Routes } from 'discord.js';
 
 import type { Snowflake } from '../../model/id.js';
-import type { CommandRepository } from '../../service/command/register.js';
+import type {
+  Command,
+  CommandRepository,
+  RegisteredCommand
+} from '../../service/command/register.js';
 
 export class DiscordCommandRepository implements CommandRepository {
   constructor(
@@ -10,15 +14,12 @@ export class DiscordCommandRepository implements CommandRepository {
     private readonly GUILD_ID: string
   ) {}
 
-  async currentCommands(): Promise<unknown[]> {
+  async currentCommands(): Promise<RegisteredCommand[]> {
     return (await this.rest.get(
       Routes.applicationGuildCommands(this.APPLICATION_ID, this.GUILD_ID)
-    )) as unknown[];
+    )) as RegisteredCommand[];
   }
-  async createCommand(command: {
-    [key: string]: unknown;
-    name: string;
-  }): Promise<void> {
+  async createCommand(command: Command): Promise<void> {
     await this.rest.post(
       Routes.applicationGuildCommands(this.APPLICATION_ID, this.GUILD_ID),
       {
@@ -26,11 +27,7 @@ export class DiscordCommandRepository implements CommandRepository {
       }
     );
   }
-  async updateCommand(command: {
-    [key: string]: unknown;
-    name: string;
-    id: string;
-  }): Promise<void> {
+  async updateCommand(command: RegisteredCommand): Promise<void> {
     await this.rest.patch(
       Routes.applicationGuildCommand(
         this.APPLICATION_ID,
