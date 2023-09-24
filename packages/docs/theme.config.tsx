@@ -18,7 +18,7 @@ const themeConfig: DocsThemeConfig = {
       </span>
     </>
   ),
-  docsRepositoryBase: `${pkg.repository}/blob/main/docs`,
+  docsRepositoryBase: `${pkg.repository}/edit/main/packages/docs`,
   primaryHue: 193,
   project: {
     link: pkg.repository
