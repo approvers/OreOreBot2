@@ -66,7 +66,12 @@ test('', async () => {
     name: 'ping',
     options: undefined
   });
-  expect(createCommand).toHaveBeenCalledOnce();
+  expect(createCommand).toHaveBeenCalledWith({
+    description: '現在のレイテンシを表示するよ',
+    name: 'latency',
+    options: undefined
+  });
+  expect(createCommand).toHaveBeenCalledTimes(2);
   expect(updateCommand).toHaveBeenCalledWith({
     id: '0002' as Snowflake,
     description: '現在の私のバージョンを出力するよ！',
