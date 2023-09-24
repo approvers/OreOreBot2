@@ -66,11 +66,14 @@ test('', async () => {
     name: 'ping',
     options: undefined
   });
+  expect(createCommand).toHaveBeenCalledOnce();
   expect(updateCommand).toHaveBeenCalledWith({
     id: '0002' as Snowflake,
     description: '現在の私のバージョンを出力するよ！',
     name: 'version',
     options: undefined
   });
+  expect(updateCommand).toHaveBeenCalledOnce();
   expect(deleteCommand).toHaveBeenCalledWith('0001');
+  expect(deleteCommand).toHaveBeenCalledOnce();
 });
