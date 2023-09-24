@@ -2,11 +2,8 @@ import { expect, test, vi } from 'vitest';
 
 import type { Schema } from '../../model/command-schema.js';
 import type { Snowflake } from '../../model/id.js';
-import {
-  CommandRunner,
-  emptyProxy,
-  type CommandResponder
-} from '../../runner/command.js';
+import { CommandRunner, emptyProxy } from '../../runner/command.js';
+import type { CommandResponder } from './command-message.js';
 import { PingCommand } from './ping.js';
 import {
   registerCommands,
@@ -74,7 +71,7 @@ test('', async () => {
   expect(createCommand).toHaveBeenCalledTimes(2);
   expect(updateCommand).toHaveBeenCalledWith({
     id: '0002' as Snowflake,
-    description: '現在の私のバージョンを出力するよ！',
+    description: '現在の私のバージョンを出力するよ',
     name: 'version',
     options: undefined
   });
