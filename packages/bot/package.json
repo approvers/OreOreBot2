@@ -28,7 +28,7 @@
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3",
     "fast-diff": "^1.2.0",
-    "nanoid": "^4.0.0",
+    "nanoid": "^5.0.0",
     "tweetnacl": "^1.0.3",
     "yaml": "^2.2.2",
     "yargs": "^17.7.1"
