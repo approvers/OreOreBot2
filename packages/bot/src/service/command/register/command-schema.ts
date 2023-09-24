@@ -2,7 +2,8 @@ import type {
   Param,
   Schema,
   SubCommandEntries
-} from '../model/command-schema.js';
+} from '../../../model/command-schema.js';
+import type { Command } from '../register.js';
 
 const entriesToOptions = (entries: SubCommandEntries): unknown[] =>
   Object.keys(entries).map((key) => {
@@ -112,7 +113,7 @@ const paramToOption = (param: Param): unknown => {
       throw new Error('unreachable');
   }
 };
-export const schemaToDiscordFormat = (schema: Schema): unknown[] =>
+export const schemaToDiscordFormat = (schema: Schema): Command[] =>
   schema.names.map((name) => {
     const options = (schema.params?.map(paramToOption) ?? []).concat(
       entriesToOptions(schema.subCommands)
