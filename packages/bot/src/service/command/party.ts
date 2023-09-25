@@ -1,16 +1,13 @@
 import { addHours, getMinutes, setMinutes, setSeconds } from 'date-fns';
 
 import type { EmbedMessage } from '../../model/embed-message.js';
+import type { HelpInfo } from '../../runner/command.js';
 import type { Clock, ScheduleRunner } from '../../runner/index.js';
 import type {
   VoiceConnection,
   VoiceConnectionFactory
 } from '../voice-connection.js';
-import type {
-  CommandMessage,
-  CommandResponder,
-  HelpInfo
-} from './command-message.js';
+import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
 const partyStarting: EmbedMessage = {
   title: 'パーティー Nigth',
@@ -96,7 +93,7 @@ const SCHEMA = {
 /**
  * `party` コマンドで押し掛けPartyする機能。
  */
-export class PartyCommand implements CommandResponder<typeof SCHEMA> {
+export class PartyCommand implements CommandResponderFor<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'Party一葉',
     description:

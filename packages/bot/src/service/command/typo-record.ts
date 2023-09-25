@@ -1,6 +1,7 @@
 import { addDays, setHours, setMinutes } from 'date-fns';
 
 import type { Snowflake } from '../../model/id.js';
+import type { HelpInfo } from '../../runner/command.js';
 import type {
   Clock,
   MessageEvent,
@@ -8,11 +9,7 @@ import type {
   ScheduleRunner,
   ScheduleTask
 } from '../../runner/index.js';
-import type {
-  CommandMessage,
-  CommandResponder,
-  HelpInfo
-} from './command-message.js';
+import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
 /**
  * 監視するメッセージの抽象。
@@ -115,7 +112,7 @@ const SCHEMA = {
 /**
  * `typo` コマンドで今日の Typo 一覧を返信する。
  */
-export class TypoReporter implements CommandResponder<typeof SCHEMA> {
+export class TypoReporter implements CommandResponderFor<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: '今日のTypo',
     description: '「〜だカス」をTypoとして一日間記録するよ',

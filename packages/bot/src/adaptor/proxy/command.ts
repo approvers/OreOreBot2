@@ -14,7 +14,7 @@ import {
 } from 'discord.js';
 
 import { type Schema, makeError } from '../../model/command-schema.js';
-import type { EmbedPage } from '../../model/embed-message.js';
+import type { EmbedMessage, EmbedPage } from '../../model/embed-message.js';
 import { type Snowflake, unknownId } from '../../model/id.js';
 import type {
   CommandProxy,
@@ -28,7 +28,7 @@ import type { RawMessage } from './middleware.js';
 
 const SPACES = /\s+/;
 
-export class DiscordCommandProxy implements CommandProxy {
+export class DiscordCommandProxy implements CommandProxy<unknown> {
   constructor(
     client: Client,
     private readonly prefix: string
@@ -41,12 +41,12 @@ export class DiscordCommandProxy implements CommandProxy {
 
   private readonly listenerMap = new Map<
     string,
-    [Schema, MessageCreateListener]
+    [Schema, MessageCreateListener<unknown>]
   >();
 
   addMessageCreateListener(
     schema: Schema,
-    listener: MessageCreateListener
+    listener: MessageCreateListener<unknown>
   ): void {
     for (const name of schema.names) {
       if (this.listenerMap.has(name)) {
@@ -89,16 +89,18 @@ export class DiscordCommandProxy implements CommandProxy {
       },
       senderName: message.author.username,
       args: parsedArgs,
-      async reply(embed) {
-        const mes = await message.reply({ embeds: [convertEmbed(embed)] });
+      async reply(embed: unknown) {
+        const mes = await message.reply({
+          embeds: [convertEmbed(embed as EmbedMessage)]
+        });
         return {
-          edit: async (embed) => {
-            await mes.edit({ embeds: [convertEmbed(embed)] });
+          edit: async (embed: unknown) => {
+            await mes.edit({ embeds: [convertEmbed(embed as EmbedMessage)] });
           }
         };
       },
       replyPages: replyPages(message),
-      async react(emoji) {
+      async react(emoji: string) {
         await message.react(emoji);
       }
     });
@@ -139,13 +141,13 @@ export class DiscordCommandProxy implements CommandProxy {
       },
       senderName: interaction.user.username,
       args: parsedArgs,
-      async reply(embed) {
+      async reply(embed: unknown) {
         const mes = await interaction.reply({
-          embeds: [convertEmbed(embed)]
+          embeds: [convertEmbed(embed as EmbedMessage)]
         });
         return {
-          async edit(embed) {
-            await mes.edit({ embeds: [convertEmbed(embed)] });
+          async edit(embed: unknown) {
+            await mes.edit({ embeds: [convertEmbed(embed as EmbedMessage)] });
           }
         };
       },

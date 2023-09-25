@@ -1,11 +1,7 @@
 import type { Schema } from '../../model/command-schema.js';
 import type { EmbedPage } from '../../model/embed-message.js';
-import type { CommandRunner } from '../../runner/command.js';
-import type {
-  CommandMessage,
-  CommandResponder,
-  HelpInfo
-} from './command-message.js';
+import type { CommandRunner, HelpInfo } from '../../runner/command.js';
+import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
 const SCHEMA = {
   names: ['help', 'h'],
@@ -13,7 +9,7 @@ const SCHEMA = {
   subCommands: {}
 } as const;
 
-export class HelpCommand implements CommandResponder<typeof SCHEMA> {
+export class HelpCommand implements CommandResponderFor<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'はらちょヘルプ',
     description: 'こんな機能が搭載されてるよ',

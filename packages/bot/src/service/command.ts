@@ -5,7 +5,7 @@ import {
   ChannelInfo,
   type ChannelStatsRepository
 } from './command/channel-info.js';
-import type { CommandResponder } from './command/command-message.js';
+import type { CommandResponderFor } from './command/command-message.js';
 import { DebugCommand, type MessageRepository } from './command/debug.js';
 import { DiceCommand, type DiceQueen } from './command/dice.js';
 import { GuildInfo, type GuildStatsRepository } from './command/guild-info.js';
@@ -117,7 +117,7 @@ export const registerAllCommandResponder = ({
   ];
   for (const responder of allResponders) {
     commandRunner.addResponder(
-      responder as unknown as CommandResponder<Schema>
+      responder as unknown as CommandResponderFor<Schema>
     );
   }
 };

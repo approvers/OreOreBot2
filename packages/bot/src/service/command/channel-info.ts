@@ -1,10 +1,7 @@
 import type { ChannelStats } from '../../model/channel.js';
 import { createTimestamp } from '../../model/create-timestamp.js';
-import type {
-  CommandMessage,
-  CommandResponder,
-  HelpInfo
-} from './command-message.js';
+import type { HelpInfo } from '../../runner/command.js';
+import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
 export interface ChannelStatsRepository {
   fetchStats(channelId: string): Promise<ChannelStats | null>;
@@ -25,7 +22,7 @@ const SCHEMA = {
   ]
 } as const;
 
-export class ChannelInfo implements CommandResponder<typeof SCHEMA> {
+export class ChannelInfo implements CommandResponderFor<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'チャンネル秘書艦',
     description: '指定したチャンネルの情報を調べてくるよ',

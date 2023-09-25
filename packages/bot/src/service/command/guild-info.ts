@@ -1,10 +1,7 @@
 import { createTimestamp } from '../../model/create-timestamp.js';
 import type { Snowflake } from '../../model/id.js';
-import type {
-  CommandMessage,
-  CommandResponder,
-  HelpInfo
-} from './command-message.js';
+import type { HelpInfo } from '../../runner/command.js';
+import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
 export interface GuildStats {
   afkChannelId: Snowflake;
@@ -74,7 +71,7 @@ const SCHEMA = {
   subCommands: {}
 } as const;
 
-export class GuildInfo implements CommandResponder<typeof SCHEMA> {
+export class GuildInfo implements CommandResponderFor<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ギルド秘書艦',
     description: '限界開発鯖の情報を持ってくるよ',

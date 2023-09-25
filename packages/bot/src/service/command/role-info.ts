@@ -1,9 +1,6 @@
 import { createTimestamp } from '../../model/create-timestamp.js';
-import type {
-  CommandMessage,
-  CommandResponder,
-  HelpInfo
-} from './command-message.js';
+import type { HelpInfo } from '../../runner/command.js';
+import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
 export type RoleIcon =
   | {
@@ -40,7 +37,7 @@ const SCHEMA = {
   ]
 } as const;
 
-export class RoleInfo implements CommandResponder<typeof SCHEMA> {
+export class RoleInfo implements CommandResponderFor<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ロール秘書艦',
     description: '指定したロールの情報を調べてくるよ',

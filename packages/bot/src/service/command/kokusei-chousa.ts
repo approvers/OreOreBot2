@@ -1,8 +1,5 @@
-import type {
-  CommandMessage,
-  CommandResponder,
-  HelpInfo
-} from './command-message.js';
+import type { HelpInfo } from '../../runner/command.js';
+import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
 export interface MemberStats {
   allMemberCount(): Promise<number>;
@@ -22,7 +19,7 @@ const SCHEMA = {
   subCommands: {}
 } as const;
 
-export class KokuseiChousa implements CommandResponder<typeof SCHEMA> {
+export class KokuseiChousa implements CommandResponderFor<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: '国勢調査',
     description: '限界開発鯖の人類の数、Botの数とBot率を算出するよ。',

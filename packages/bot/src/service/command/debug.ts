@@ -1,9 +1,6 @@
 import type { Snowflake } from '../../model/id.js';
-import type {
-  CommandMessage,
-  CommandResponder,
-  HelpInfo
-} from './command-message.js';
+import type { HelpInfo } from '../../runner/command.js';
+import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
 export interface MessageRepository {
   getMessageContent(
@@ -27,7 +24,7 @@ const SCHEMA = {
 
 const TRIPLE_BACK_QUOTES = /```/g;
 
-export class DebugCommand implements CommandResponder<typeof SCHEMA> {
+export class DebugCommand implements CommandResponderFor<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'デバッガーはらちょ',
     description:

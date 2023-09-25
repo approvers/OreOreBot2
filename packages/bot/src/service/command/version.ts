@@ -1,8 +1,5 @@
-import type {
-  CommandMessage,
-  CommandResponder,
-  HelpInfo
-} from './command-message.js';
+import type { HelpInfo } from '../../runner/command.js';
+import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
 export interface VersionFetcher {
   version: string;
@@ -14,7 +11,7 @@ const SCHEMA = {
   subCommands: {}
 } as const;
 
-export class GetVersionCommand implements CommandResponder<typeof SCHEMA> {
+export class GetVersionCommand implements CommandResponderFor<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'はらちょバージョン',
     description: '現在の私のバージョンを出力するよ。',

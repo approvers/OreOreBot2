@@ -1,8 +1,5 @@
-import type {
-  CommandMessage,
-  CommandResponder,
-  HelpInfo
-} from './command-message.js';
+import type { HelpInfo } from '../../runner/command.js';
+import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
 export interface RoleCreateManager {
   createRole(
@@ -33,7 +30,7 @@ const SCHEMA = {
   ]
 } as const;
 
-export class RoleCreate implements CommandResponder<typeof SCHEMA> {
+export class RoleCreate implements CommandResponderFor<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ロール作成',
     description: 'ロールを作成するよ',

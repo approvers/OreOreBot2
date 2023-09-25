@@ -1,9 +1,6 @@
 import type { Snowflake } from '../../model/id.js';
-import type {
-  CommandMessage,
-  CommandResponder,
-  HelpInfo
-} from './command-message.js';
+import type { HelpInfo } from '../../runner/command.js';
+import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
 /**
  * `SheriffCommand` のための削除機能。
@@ -38,7 +35,7 @@ const SCHEMA = {
 /**
  * 'sftu' コマンドではらちょの直近のメッセージを削除する。
  */
-export class SheriffCommand implements CommandResponder<typeof SCHEMA> {
+export class SheriffCommand implements CommandResponderFor<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: '治安統率機構',
     description:

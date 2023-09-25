@@ -1,8 +1,5 @@
-import type {
-  CommandMessage,
-  CommandResponder,
-  HelpInfo
-} from './command-message.js';
+import type { HelpInfo } from '../../runner/command.js';
+import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
 /**
  * ダイスの管理者。面白いものの味方。
@@ -49,7 +46,7 @@ const SCHEMA = {
 /**
  * 'dice' コマンド。複数のサイコロを同時に振って出目を確認できる。
  */
-export class DiceCommand implements CommandResponder<typeof SCHEMA> {
+export class DiceCommand implements CommandResponderFor<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'ダイスロール',
     description: '賽子が振れるみたいだよ',
