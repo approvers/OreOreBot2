@@ -4,6 +4,9 @@ export interface CommandFormatProps {
   children: string;
 }
 
+/**
+ * コマンドの入力形式を表す等幅フォントのテキスト
+ */
 export const CommandFormat = ({
   children
 }: CommandFormatProps): JSX.Element => (
