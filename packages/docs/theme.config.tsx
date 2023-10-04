@@ -8,7 +8,7 @@ const themeConfig: DocsThemeConfig = {
   logo: (
     <>
       <Image
-        src={'./assets/haracho-transmission.png'}
+        src={'/assets/haracho-transmission.png'}
         width={50}
         height={50}
         alt={'はらちょのアイコン'}
