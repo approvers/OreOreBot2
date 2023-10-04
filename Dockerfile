@@ -12,14 +12,14 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY .yarn/releases/ ./.yarn/releases/
-COPY packages/ ./packages/
+COPY packages/bot/ ./packages/bot/
 COPY package.json yarn.lock .yarnrc.yml ./
 
 RUN npx --quiet pinst --disable \
-    && yarn install --immutable \
+    && yarn plugin import workspace-tools \
+    && yarn workspaces focus @oreorebot2/bot \
     && yarn cache clean
 
-COPY . .
 RUN yarn build:bot
 
 WORKDIR /build
