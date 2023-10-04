@@ -1,5 +1,6 @@
 import { addHours, getMinutes, setMinutes, setSeconds } from 'date-fns';
 
+import type { Schema } from '../../model/command-schema.js';
 import type { EmbedMessage } from '../../model/embed-message.js';
 import type { HelpInfo } from '../../runner/command.js';
 import type { Clock, ScheduleRunner } from '../../runner/index.js';
@@ -86,9 +87,13 @@ const SCHEMA = {
           choices: assetKeys
         }
       ]
+    },
+    start: {
+      type: 'SUB_COMMAND',
+      description: 'VC内の人類に押しかけてPartyを開くよ。'
     }
   }
-} as const;
+} as const satisfies Schema;
 
 /**
  * `party` コマンドで押し掛けPartyする機能。
@@ -97,7 +102,7 @@ export class PartyCommand implements CommandResponderFor<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'Party一葉',
     description:
-      'VC内の人類に押しかけてPartyを開くよ。引数なしで即起動。どの方式でもコマンド発行者がVCに居ないと動かないよ',
+      'VC内の人類に押しかけてPartyを開くよ。どの方式でもコマンド発行者がVCに居ないと動かないよ',
     // 音声機能関連の機能は voice/ 以下にドキュメントを置いているため
     pageName: 'voice/party'
   };
@@ -118,7 +123,7 @@ export class PartyCommand implements CommandResponderFor<typeof SCHEMA> {
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const { args } = message;
-    if (!args.subCommand) {
+    if (!args.subCommand || args.subCommand.name === 'start') {
       await this.startPartyImmediately(message);
       return;
     }
