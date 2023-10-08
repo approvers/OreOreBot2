@@ -22,6 +22,6 @@
   },
   "devDependencies": {
     "@oreorebot2/common": "workspace:*",
-    "@types/react": "18.2.24"
+    "@types/react": "18.2.25"
   }
 }
