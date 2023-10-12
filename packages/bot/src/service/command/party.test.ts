@@ -41,6 +41,20 @@ describe('party ichiyo', () => {
     );
   });
 
+  it('starts the party', async () => {
+    await responder.on(
+      createMockMessage(
+        parseStringsOrThrow(['party', 'start'], responder.schema),
+        (message) => {
+          expect(message).toStrictEqual({
+            title: `パーティー Nigth`,
+            description: 'хорошо、宴の始まりだ。'
+          });
+        }
+      )
+    );
+  });
+
   it('use case of party', async () => {
     await responder.on(
       createMockMessage(
