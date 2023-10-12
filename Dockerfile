@@ -39,4 +39,4 @@ WORKDIR /app
 COPY --from=build /build .
 
 ENTRYPOINT ["node"]
-CMD ["build/index.js"]
+CMD ["build/index.mjs"]

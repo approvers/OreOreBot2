@@ -145,6 +145,7 @@ const channelRepository = new DiscordChannelRepository(
   client,
   GUILD_ID as Snowflake
 );
+const versionFetcher = new GenVersionFetcher();
 
 if (features.includes('COMMAND')) {
   registerAllCommandResponder({
@@ -170,7 +171,7 @@ if (features.includes('COMMAND')) {
     stats,
     sheriff: new DiscordSheriff(client),
     ping: new DiscordWS(client),
-    fetcher: new GenVersionFetcher(),
+    fetcher: versionFetcher,
     messageRepo: new DiscordMessageRepository(client),
     membersRepo: stats,
     roleRepo: roleManager,
@@ -241,17 +242,14 @@ process.on('SIGTERM', () => {
 });
 
 client.once('ready', () => {
-  const projectVersion = process.env.npm_package_version;
+  const projectVersion = versionFetcher.version;
   const connectionUser = client.user;
   if (connectionUser == null) return;
-  if (projectVersion !== undefined) {
-    connectionUser.setActivity(`v${projectVersion}`);
-  }
   console.log('======================================');
   console.log('起動しました。');
   console.log(`ログインユーザー: ${connectionUser.tag}(${connectionUser.id})`);
   console.log(`バージョン:`);
-  console.log(` - ビルド: v${projectVersion ?? 'unknown'}`);
+  console.log(` - ビルド: v${projectVersion}`);
   console.log(` - discord.js: v${version}`);
   console.log(` - Node.js: ${process.version}`);
   console.log('コンフィグ:');

@@ -1,7 +1,7 @@
 {
   "name": "@oreorebot2/common",
   "private": true,
-  "packageManager": "yarn@3.6.3",
+  "packageManager": "yarn@3.6.4",
   "workspaces": [
     "packages/*"
   ],
@@ -22,11 +22,11 @@
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
-    "@types/node": "20.7.1",
+    "@types/node": "20.8.2",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "8.50.0",
-    "eslint-config-next": "13.5.3",
+    "eslint-config-next": "13.5.4",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-markdown": "^3.0.0",

@@ -53,6 +53,18 @@ it('use case of kaere', async () => {
 
   await responder.on(
     createMockMessage(
+      parseStringsOrThrow(['kaere', 'start'], responder.schema),
+      (message) => {
+        expect(message).toStrictEqual({
+          title: '提督、もうこんな時間だよ',
+          description: '早く寝よう'
+        });
+      }
+    )
+  );
+
+  await responder.on(
+    createMockMessage(
       parseStringsOrThrow(['kaere', 'bed', 'status'], responder.schema),
       (message) => {
         expect(message).toStrictEqual({

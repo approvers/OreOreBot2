@@ -1,5 +1,6 @@
 import { addDays, isBefore, setHours, setMinutes, setSeconds } from 'date-fns';
 
+import type { Schema } from '../../model/command-schema.js';
 import type { EmbedMessage } from '../../model/embed-message.js';
 import type { Snowflake } from '../../model/id.js';
 import { Reservation, ReservationTime } from '../../model/reservation.js';
@@ -117,9 +118,17 @@ const SCHEMA = {
           description: '現在の予約を一覧するよ'
         }
       }
+    },
+    start: {
+      type: 'SUB_COMMAND',
+      description: 'VC内の人類に就寝を促すよ。'
+    },
+    help: {
+      type: 'SUB_COMMAND',
+      description: '専用のヘルプを表示するよ。'
     }
   }
-} as const;
+} as const satisfies Schema;
 
 /**
  * `kaere` コマンドでボイスチャンネルの参加者に切断を促す機能。
@@ -128,7 +137,7 @@ export class KaereCommand implements CommandResponderFor<typeof SCHEMA> {
   help: Readonly<HelpInfo> = {
     title: 'Kaere一葉',
     description:
-      'VC内の人類に就寝を促すよ。引数なしで即起動。どの方式でもコマンド発行者がVCに居ないと動かないよ',
+      'VC内の人類に就寝を促すよ。どの方式でもコマンド発行者がVCに居ないと動かないよ',
     // 音声機能関連の機能は voice/ 以下にドキュメントを置いているため
     pageName: 'voice/kaere'
   };
@@ -153,7 +162,7 @@ export class KaereCommand implements CommandResponderFor<typeof SCHEMA> {
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const { args } = message;
-    if (!args.subCommand) {
+    if (!args.subCommand || args.subCommand.name == 'start') {
       const roomId = message.senderVoiceChannelId;
       if (!roomId) {
         await message.reply({
@@ -172,6 +181,15 @@ export class KaereCommand implements CommandResponderFor<typeof SCHEMA> {
         return this.handleBedCommand(message);
       case 'reserve':
         return this.handleReserveCommand(message);
+      case 'help':
+        await message.reply({
+          title: 'Kaere強制切断モードヘルプ',
+          description: `
+- \`bed enable\`/\`bed disable\`: 強制切断モードの有効/無効化
+- \`bed status\`: 強制切断モードの状態の確認
+`
+        });
+        return;
     }
   }
 
@@ -210,7 +228,13 @@ export class KaereCommand implements CommandResponderFor<typeof SCHEMA> {
   private async handleBedCommand(
     message: CommandMessage<typeof SCHEMA>
   ): Promise<void> {
-    switch (message.args.subCommand?.subCommand.name) {
+    if (
+      message.args.subCommand == null ||
+      message.args.subCommand.name !== 'bed'
+    ) {
+      throw new Error('expected bed command group');
+    }
+    switch (message.args.subCommand.subCommand.name) {
       case 'enable':
         this.bedModeEnabled = true;
         await message.reply({
@@ -231,19 +255,18 @@ export class KaereCommand implements CommandResponderFor<typeof SCHEMA> {
         });
         return;
     }
-    await message.reply({
-      title: 'Kaere強制切断モードヘルプ',
-      description: `
-- \`bed enable\`/\`bed disable\`: 強制切断モードの有効/無効化
-- \`bed status\`: 強制切断モードの状態の確認
-`
-    });
   }
 
   private async handleReserveCommand(
     message: CommandMessage<typeof SCHEMA>
   ): Promise<void> {
-    switch (message.args.subCommand?.subCommand.name) {
+    if (
+      message.args.subCommand == null ||
+      message.args.subCommand.name !== 'reserve'
+    ) {
+      throw new Error('expected reserve command group');
+    }
+    switch (message.args.subCommand.subCommand.name) {
       case 'add':
         {
           const roomId = message.senderVoiceChannelId;
@@ -329,14 +352,6 @@ export class KaereCommand implements CommandResponderFor<typeof SCHEMA> {
         }
         return;
     }
-    await message.reply({
-      title: 'Kaere予約ヘルプ',
-      description: `
-- \`reserve add [HH]:[MM]\`: Kaereの開始を指定時刻で予約
-- \`reserve cancel [HH]:[MM]\`: 指定時刻の予約をキャンセル
-- \`reserve list\`: 予約リストの一覧
-`
-    });
   }
 
   private scheduleToStart(reservation: Reservation) {
