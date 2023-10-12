@@ -23,6 +23,14 @@ jobs:
           node-version: '18'
           cache: yarn
 
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/packages/docs/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yan.lock') }}-${{ hashFiles('packages/docs/**/*.js', 'packages/docs/**/*.jsx', 'packages/docs/**/*.ts', 'packages/docs/**/*.tsx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/yan.lock') }}-
+
       - name: Install packages
         run: yarn install --immutable
 
