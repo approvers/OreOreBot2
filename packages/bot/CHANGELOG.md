@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.48.0](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.47.2...OreOreBot2-v1.48.0) (2023-10-15)
+
+
+### Features
+
+* 引数なしでVC参加するタイプのコマンドにstartサブコマンドを追加 ([#1111](https://github.com/approvers/OreOreBot2/issues/1111)) ([05a61b7](https://github.com/approvers/OreOreBot2/commit/05a61b756c915cdf7551db9a4b90f370b44e7c7c))
+
+
+### Bug Fixes
+
+* ビルドバージョンの表示にVersionFetcherを使用するよう修正 ([#1114](https://github.com/approvers/OreOreBot2/issues/1114)) ([bb03b54](https://github.com/approvers/OreOreBot2/commit/bb03b546c0b7b32ce611cf6b67ee50873083e86f))
+
 ## [1.47.2](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.47.1...OreOreBot2-v1.47.2) (2023-09-24)
 
 
