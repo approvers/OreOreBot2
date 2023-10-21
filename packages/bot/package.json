@@ -37,7 +37,7 @@
     "@codedependant/semantic-release-docker": "^4.1.0",
     "@oreorebot2/common": "workspace:*",
     "@types/deep-equal": "^1.0.1",
-    "@types/node": "20.8.4",
+    "@types/node": "20.8.7",
     "@types/yargs": "^17.0.22",
     "@vitest/coverage-v8": "^0.34.0",
     "esbuild": "^0.19.0",
