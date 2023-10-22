@@ -26,7 +26,7 @@ WORKDIR /build
 RUN cp -r /src/{package.json,yarn.lock,node_modules} . \
     && cp -r /src/packages/bot/{build,assets} .
 
-FROM ubuntu:jammy-20221130
+FROM ubuntu:jammy-20231004
 COPY --from=build /usr/local/include/ /usr/local/include/
 COPY --from=build /usr/local/lib/ /usr/local/lib/
 COPY --from=build /usr/local/bin/ /usr/local/bin/
