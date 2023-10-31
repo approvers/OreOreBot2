@@ -5,7 +5,7 @@ OreOreBot2 のドキュメントを提供するパッケージ。
 ## 必要動作環境
 
 - [Node.js](https://nodejs.org/) v18.x 以上
-- [Yarn](https://yarnpkg.com/) v3
+- [Yarn](https://yarnpkg.com/) v4
 
 ## 開発環境の使用方法
 

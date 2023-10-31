@@ -152,7 +152,7 @@ dist
 next-env.d.ts
 
 
-# yarn v3
+# yarn v4
 .yarn/*
 docs/.yarn/*
 !.yarn/patches
