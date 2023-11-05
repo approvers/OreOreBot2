@@ -14,7 +14,7 @@
     "lint-staged": "lint-staged"
   },
   "dependencies": {
-    "next": "^13.1.6",
+    "next": "^14.0.0",
     "nextra": "^2.2.14",
     "nextra-theme-docs": "^2.2.14",
     "react": "^18.2.0",
