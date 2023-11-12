@@ -19,12 +19,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: yarn
+          cache: pnpm
 
       - name: Install packages
-        run: yarn install --immutable
+        run: pnpm i --frozen-lockfile
       - name: Generate code coverage report
-        run: yarn run coverage
+        run: pnpm coverage
 
       - uses: codecov/codecov-action@v3
         with:

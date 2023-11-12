@@ -16,13 +16,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: yarn
+          cache: pnpm
 
       - name: Install packages
-        run: yarn install --immutable
+        run: pnpm i --frozen-lockfile
 
       - name: prettier (bot)
-        run: yarn run format:bot
+        run: pnpm format:bot
 
       - name: prettier (docs)
-        run: yarn run format:docs
+        run: pnpm format:docs

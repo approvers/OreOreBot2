@@ -21,21 +21,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: yarn
+          cache: pnpm
 
       - uses: actions/cache@v3
         with:
           path: |
             ${{ github.workspace }}/packages/docs/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yan.lock') }}-${{ hashFiles('packages/docs/**/*.js', 'packages/docs/**/*.jsx', 'packages/docs/**/*.ts', 'packages/docs/**/*.tsx', 'packages/docs/**/*.mdx', 'packages/docs/**/*.json') }}
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('packages/docs/**/*.js', 'packages/docs/**/*.jsx', 'packages/docs/**/*.ts', 'packages/docs/**/*.tsx', 'packages/docs/**/*.mdx', 'packages/docs/**/*.json') }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/yan.lock') }}-
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
 
       - name: Install packages
-        run: yarn install --immutable
+        run: pnpm i --frozen-lockfile
 
       - name: Build (bot)
-        run: yarn run build:bot
+        run: pnpm build:bot
 
       - name: Build (docs)
-        run: yarn run build:docs
+        run: pnpm build:docs
