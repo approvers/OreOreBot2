@@ -23,6 +23,10 @@ jobs:
           node-version: '18'
           cache: pnpm
 
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - uses: actions/cache@v3
         with:
           path: |
