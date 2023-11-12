@@ -9,7 +9,7 @@ Discord Bot 本体を提供するパッケージ。
 - git
 - ffmpeg
 - Node.js v18.x 以上
-- yarn v3
+- pnpm v8
 
 ## 環境変数
 
@@ -17,31 +17,31 @@ Discord Bot 本体を提供するパッケージ。
 
 起動時にデフォルト値が存在する変数の値が指定されていない場合は、そのデフォルト値が使われます。
 
-| 変数名            | 説明                                                                                                                                                                           | 必須  |
-| ----------------- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| ----- |
-| `DISCORD_TOKEN`   | BOT のトークン                                                                                                                                                                    | True  |
-| `MAIN_CHANNEL_ID` | VoiceDiff(VC 入退室ログ)を送信する **テキスト** チャンネルの ID                                                                                                                                  | True  |
-| `APPLICATION_ID`  | BOT のアプリケーション ID                                                                                                                                                             | True  |
-| `GUILD_ID`        | 限界開発鯖の ID                                                                                                                                                                    | True  |
-| `PREFIX`          | コマンドの接頭辞、デフォルト値は `"!"`                                                                                                                                                       | False |
+| 変数名            | 説明                                                                                                                                                                                                                             | 必須  |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| `DISCORD_TOKEN`   | BOT のトークン                                                                                                                                                                                                                   | True  |
+| `MAIN_CHANNEL_ID` | VoiceDiff(VC 入退室ログ)を送信する **テキスト** チャンネルの ID                                                                                                                                                                  | True  |
+| `APPLICATION_ID`  | BOT のアプリケーション ID                                                                                                                                                                                                        | True  |
+| `GUILD_ID`        | 限界開発鯖の ID                                                                                                                                                                                                                  | True  |
+| `PREFIX`          | コマンドの接頭辞、デフォルト値は `"!"`                                                                                                                                                                                           | False |
 | `FEATURE`         | 有効にする機能のカンマ区切り文字列、デフォルト値はスラッシュコマンドを除く全ての機能。`"MESSAGE_CREATE"`, `"MESSAGE_UPDATE"`, `"COMMAND"`, `"VOICE_ROOM"`, `"ROLE"`, `"EMOJI"`, `"SLASH_COMMAND"`, `"MEMBER"` を組み合わせ可能。 | False |
 
 ## インストール
 
-### Yarn を使用する場合
+### pnpm を使用する場合
 
 ```shell
 git clone https://github.com/approvers/OreOreBot2.git
 cd OreOreBot2
-corepack enable yarn
-yarn install
-yarn build:bot
-yarn start
+corepack enable pnpm
+pnpm i
+pnpm build:bot
+pnpm start
 ```
 
-`yarn start` での起動時に上記の環境変数を指定してください。`.env` でも指定できます。
+`pnpm start` での起動時に上記の環境変数を指定してください。`.env` でも指定できます。
 
-`yarn dev:bot` を使用することでコンパイルせずに起動することもできます。
+`pnpm dev:bot` を使用することでコンパイルせずに起動することもできます。
 
 ### Docker を使用する場合
 
