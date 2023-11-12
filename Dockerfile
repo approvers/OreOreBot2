@@ -12,7 +12,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY packages/bot/ ./packages/bot/
-COPY package.json pnpm-lock.yaml pnpm-workspace.yml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 RUN npx --quiet pinst --disable
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile --filter @oreorebot2/bot
