@@ -11,19 +11,17 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-COPY .yarn/releases/ ./.yarn/releases/
 COPY packages/bot/ ./packages/bot/
-COPY package.json yarn.lock .yarnrc.yml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
-RUN npx --quiet pinst --disable \
-    && yarn plugin import workspace-tools \
-    && yarn workspaces focus @oreorebot2/bot \
-    && yarn cache clean
-
-RUN yarn build:bot
+RUN npx --quiet pinst --disable
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    corepack enable pnpm \
+    && pnpm install --frozen-lockfile --filter @oreorebot2/bot
+RUN pnpm build:bot
 
 WORKDIR /build
-RUN cp -r /src/{package.json,yarn.lock,node_modules} . \
+RUN cp -r /src/{package.json,pnpm-lock.yaml,pnpm-workspace.yaml,node_modules} . \
     && cp -r /src/packages/bot/{build,assets} .
 
 FROM ubuntu:jammy-20231004

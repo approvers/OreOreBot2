@@ -16,9 +16,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: yarn
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
 
       - name: Install packages
-        run: yarn install --immutable
+        run: pnpm i --frozen-lockfile
       - name: license-checker
         run: npx @guidesmiths/license-checker --failOn /GPL/ --disableReport
