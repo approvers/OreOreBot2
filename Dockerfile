@@ -24,7 +24,7 @@ WORKDIR /build
 RUN cp -r /src/{package.json,pnpm-lock.yaml,pnpm-workspace.yaml,node_modules} . \
     && cp -r /src/packages/bot/{build,assets} .
 
-FROM ubuntu:jammy-20231004
+FROM ubuntu:jammy-20231128
 COPY --from=build /usr/local/include/ /usr/local/include/
 COPY --from=build /usr/local/lib/ /usr/local/lib/
 COPY --from=build /usr/local/bin/ /usr/local/bin/
