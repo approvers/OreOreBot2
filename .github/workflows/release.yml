@@ -22,11 +22,10 @@ jobs:
           app_id: ${{ secrets.HIGUCHI_ICHIYO_APP_ID }}
           private_key: ${{ secrets.HIGUCHI_ICHIYO_PRIVATE_KEY }}
 
-      - uses: google-github-actions/release-please-action@v3
+      - uses: google-github-actions/release-please-action@v4
         id: release
         with:
           token: ${{ steps.token.outputs.token }}
-          command: manifest
 
       - name: Publish the Docker package
         if: steps.release.outputs.releases_created
