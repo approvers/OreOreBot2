@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.49.0](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.48.0...OreOreBot2-v1.49.0) (2023-12-03)
+
+
+### Features
+
+* Add Bun to reaction targets ([#1180](https://github.com/approvers/OreOreBot2/issues/1180)) ([1bcc745](https://github.com/approvers/OreOreBot2/commit/1bcc745a5397bb8168a612fd30237c86e0501798))
+* pnpm へ移行 ([#1182](https://github.com/approvers/OreOreBot2/issues/1182)) ([871fc40](https://github.com/approvers/OreOreBot2/commit/871fc4076c9434275a2e16620826c31c1b6665a9))
+
 ## [1.48.0](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.47.2...OreOreBot2-v1.48.0) (2023-10-15)
 
 
