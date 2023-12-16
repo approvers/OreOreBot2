@@ -1,7 +1,7 @@
 {
   "name": "@oreorebot2/common",
   "private": true,
-  "packageManager": "pnpm@8.11.0",
+  "packageManager": "pnpm@8.12.1",
   "scripts": {
     "start": "pnpm --filter @oreorebot2/bot start",
     "build:bot": "pnpm --filter @oreorebot2/bot build",
