@@ -1,7 +1,7 @@
 {
   "name": "@oreorebot2/common",
   "private": true,
-  "packageManager": "pnpm@8.11.0",
+  "packageManager": "pnpm@8.12.1",
   "scripts": {
     "start": "pnpm --filter @oreorebot2/bot start",
     "build:bot": "pnpm --filter @oreorebot2/bot build",
@@ -19,11 +19,11 @@
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
-    "@types/node": "20.10.3",
+    "@types/node": "20.10.4",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "8.55.0",
-    "eslint-config-next": "14.0.3",
+    "eslint-config-next": "14.0.4",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-markdown": "^3.0.0",
