@@ -2,7 +2,6 @@
 
 name: Release
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
@@ -10,6 +9,8 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    outputs:
+      releases_created: ${{ steps.release.outputs.releases_created }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,7 +29,7 @@ jobs:
           token: ${{ steps.token.outputs.token }}
 
       - name: Publish the Docker package
-        if: steps.release.outputs.releases_created
+        if: ${{ steps.release.outputs.releases_created == 'true' }}
         uses: ./.github/actions/publish
         with:
           major: ${{ steps.release.outputs['packages/bot--major'] }}
