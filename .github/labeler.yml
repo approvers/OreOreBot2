@@ -1,11 +1,15 @@
 C-GitHub Actions:
-  - .github/workflows/*.yml
+  - changed-files:
+    - .github/workflows/*.yml
 
 T-@oreorebot2/common:
-  - '*'
+  - changed-files:
+    - '*'
 
 T-@oreorebot2/bot:
-  - packages/bot/**
+  - changed-files:
+    - packages/bot/**
 
 T-@oreorebot2/docs:
-  - packages/docs/**
+  - changed-files:
+    - packages/docs/**
