@@ -1,15 +1,15 @@
 C-GitHub Actions:
   - changed-files:
-    - .github/workflows/*.yml
+    - any-glob-to-any-file: .github/workflows/*.yml
 
 T-@oreorebot2/common:
   - changed-files:
-    - '*'
+    - any-glob-to-any-file: '*'
 
 T-@oreorebot2/bot:
   - changed-files:
-    - packages/bot/**
+    - any-glob-to-any-file: packages/bot/**
 
 T-@oreorebot2/docs:
   - changed-files:
-    - packages/docs/**
+    - any-glob-to-any-file: packages/docs/**
