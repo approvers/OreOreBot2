@@ -36,6 +36,9 @@ jobs:
     needs: release
     if: ${{ needs.release.outputs.releases_created == 'true' }}
     uses: ./.github/workflows/publish.yml
+    permissions:
+      contents: read
+      packages: write
     with:
       major: ${{ needs.release.outputs.major }}
       minor: ${{ needs.release.outputs.minor }}
