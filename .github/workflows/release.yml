@@ -11,6 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       releases_created: ${{ steps.release.outputs.releases_created }}
+      major: ${{ steps.release.outputs['packages/bot--major'] }}
+      minor: ${{ steps.release.outputs['packages/bot--minor'] }}
+      patch: ${{ steps.release.outputs['packages/bot--patch'] }}
+      sha: ${{ steps.release.outputs['packages/bot--sha'] }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,11 +32,12 @@ jobs:
         with:
           token: ${{ steps.token.outputs.token }}
 
-      - name: Publish the Docker package
-        if: ${{ steps.release.outputs.releases_created == 'true' }}
-        uses: approvers/OreOreBot2/.github/workflows/publish.yml@main
-        with:
-          major: ${{ steps.release.outputs['packages/bot--major'] }}
-          minor: ${{ steps.release.outputs['packages/bot--minor'] }}
-          patch: ${{ steps.release.outputs['packages/bot--patch'] }}
-          sha: ${{ steps.release.outputs['packages/bot--sha'] }}
+  publish:
+    needs: release
+    if: ${{ needs.release.outputs.releases_created == 'true' }}
+    uses: ./.github/workflows/publish.yml
+    with:
+      major: ${{ needs.release.outputs.major }}
+      minor: ${{ needs.release.outputs.minor }}
+      patch: ${{ needs.release.outputs.patch }}
+      sha: ${{ needs.release.outputs.sha }}
