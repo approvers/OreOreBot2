@@ -20,6 +20,23 @@ on:
         required: true
         type: string
   workflow_dispatch:
+    inputs:
+      major:
+        description: Major version number
+        required: true
+        type: string
+      minor:
+        description: Minor version number
+        required: true
+        type: string
+      patch:
+        description: Patch version number
+        required: true
+        type: string
+      sha:
+        description: Git SHA
+        required: true
+        type: string
 
 jobs:
   publish:
