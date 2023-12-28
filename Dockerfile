@@ -39,5 +39,7 @@ COPY --from=build /build .
 COPY --from=build /build/packages ./packages
 COPY --from=build /build/packages/bot ./packages/bot
 
+WORKDIR /app/packages/bot
+
 ENTRYPOINT ["node"]
-CMD ["packages/bot/build/index.mjs"]
+CMD ["build/index.mjs"]
