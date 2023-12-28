@@ -22,7 +22,8 @@ RUN pnpm build:bot
 
 WORKDIR /build
 RUN cp -r /src/{package.json,pnpm-lock.yaml,pnpm-workspace.yaml,node_modules} . \
-    && cp -r /src/packages/bot/{build,assets} .
+    && mkdir -p ./packages/bot \
+    && cp -r /src/packages/bot/{build,assets,node_modules} ./packages/bot
 
 FROM ubuntu:jammy-20231128
 COPY --from=build /usr/local/include/ /usr/local/include/
@@ -35,6 +36,8 @@ ENV NODE_ENV=production
 WORKDIR /app
 
 COPY --from=build /build .
+COPY --from=build /build/packages ./packages
+COPY --from=build /build/packages/bot ./packages/bot
 
 ENTRYPOINT ["node"]
-CMD ["build/index.mjs"]
+CMD ["packages/bot/build/index.mjs"]
