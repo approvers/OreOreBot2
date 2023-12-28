@@ -15,10 +15,6 @@ on:
         description: Patch version number
         required: true
         type: string
-      sha:
-        description: Git SHA
-        required: true
-        type: string
   workflow_dispatch:
     inputs:
       major:
@@ -31,10 +27,6 @@ on:
         type: string
       patch:
         description: Patch version number
-        required: true
-        type: string
-      sha:
-        description: Git SHA
         required: true
         type: string
 
