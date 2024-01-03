@@ -37,7 +37,9 @@ WORKDIR /app
 
 # Sentry に必要なパッケージ
 RUN apt-get update \
-    && apt-get install -y libssl-dev ca-certificates
+    && apt-get install -y --no-install-recommends libssl-dev=3.0.2-0 ca-certificates=20230311 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /build .
 COPY --from=build /build/packages ./packages
