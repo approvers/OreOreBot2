@@ -35,6 +35,10 @@ LABEL org.opencontainers.image.source=https://github.com/approvers/OreOreBot2
 ENV NODE_ENV=production
 WORKDIR /app
 
+# Sentry に必要なパッケージ
+RUN apt-get update \
+    && apt-get install -y libssl-dev ca-certificates
+
 COPY --from=build /build .
 COPY --from=build /build/packages ./packages
 COPY --from=build /build/packages/bot ./packages/bot
