@@ -1,4 +1,4 @@
-FROM mwader/static-ffmpeg:5.1.2 as ffmpeg
+FROM mwader/static-ffmpeg:6.1.1 as ffmpeg
 
 FROM node:20-slim as build
 ARG GIT_TAG
