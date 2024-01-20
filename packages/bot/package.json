@@ -35,7 +35,6 @@
   },
   "devDependencies": {
     "@codedependant/semantic-release-docker": "^4.1.0",
-    "@oreorebot2/common": "workspace:*",
     "@types/deep-equal": "^1.0.1",
     "@types/node": "20.11.23",
     "@types/yargs": "^17.0.22",
