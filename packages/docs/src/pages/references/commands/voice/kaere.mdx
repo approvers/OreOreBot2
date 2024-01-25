@@ -1,5 +1,6 @@
 import { Callout } from 'nextra-theme-docs';
 
+import { VersionBadge } from '../../../../molecules/version-badge';
 import { CommandArgs } from '../../../../organisms/command-args';
 
 # Kaere 一葉
@@ -13,6 +14,12 @@ VC 内の人類に就寝を促します。引数なしで即時発動
 <Callout type="warning">
 
 この機能には FFmpeg が必要です。
+
+</Callout>
+
+<Callout type="info">
+
+スラッシュコマンドを使用している場合の即時発動は `/kaere start` で行なえます。 (<VersionBadge children={'v1.48.0'} /> から利用可能)
 
 </Callout>
 
