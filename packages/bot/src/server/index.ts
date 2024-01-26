@@ -115,12 +115,13 @@ const standardOutput = new DiscordStandardOutput(client, mainChannelId);
 const entranceOutput = new DiscordEntranceOutput(client, entranceChannelId);
 
 const scheduleRunner = new ScheduleRunner(clock);
+const getCurrentDate = () => new Date();
 const messageCreateRunner = new MessageResponseRunner(
   new MessageProxy(client, middlewareForMessage())
 );
 if (features.includes('MESSAGE_CREATE')) {
   messageCreateRunner.addResponder(
-    allMessageEventResponder(typoRepo, sequencesYaml)
+    allMessageEventResponder(typoRepo, sequencesYaml, getCurrentDate)
   );
 
   startTimeSignal({

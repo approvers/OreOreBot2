@@ -26,6 +26,7 @@ const observableMessage = (
   authorId: getAuthorSnowflake(raw),
   author: raw.author?.username ?? '名無し',
   content: raw.content ?? '',
+  createdAt: raw.createdAt,
   async sendEphemeralToSameChannel(message: string): Promise<void> {
     const FIVE_SECONDS_MS = 5000;
     const { channel } = raw;

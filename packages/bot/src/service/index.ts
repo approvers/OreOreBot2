@@ -17,7 +17,8 @@ import {
 } from './command/typo-record.js';
 import {
   type DeletionObservable,
-  DeletionRepeater
+  DeletionRepeater,
+  type GetNow
 } from './deletion-repeater.js';
 import { DifferenceDetector } from './difference-detector.js';
 import { EmojiLog } from './emoji-log.js';
@@ -33,12 +34,13 @@ const stfuIgnorePredicate = (content: string): boolean => content === '!stfu';
 
 export const allMessageEventResponder = (
   repo: TypoRepository,
-  sequencesYaml: string
+  sequencesYaml: string,
+  getNow: GetNow
 ) =>
   composeMessageEventResponders<
     DeletionObservable & TypoObservable & BoldItalicCop & EmojiSeqObservable
   >(
-    new DeletionRepeater(stfuIgnorePredicate),
+    new DeletionRepeater(stfuIgnorePredicate, getNow),
     new TypoRecorder(repo),
     new BoldItalicCopReporter(),
     new EmojiSeqReact(sequencesYaml)

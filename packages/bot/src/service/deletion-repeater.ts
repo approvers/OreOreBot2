@@ -14,6 +14,11 @@ export interface DeletionObservable {
   readonly content: string;
 
   /**
+   * メッセージの送信日時
+   */
+  readonly createdAt: Date;
+
+  /**
    * すぐ消えてしまう `message` のメッセージをこのメッセージと同じチャンネルに送信する。
    *
    * @param message - 送信するメッセージのテキスト
@@ -21,6 +26,13 @@ export interface DeletionObservable {
    */
   sendEphemeralToSameChannel(message: string): Promise<void>;
 }
+/**
+ * 現在時刻を取得するための関数の型
+ *
+ * @returns `Date`オブジェクト
+ */
+
+export type GetNow = () => Date;
 
 /**
  * メッセージの削除を検知して、その内容と作者を復唱する。
@@ -34,14 +46,26 @@ export class DeletionRepeater<M extends DeletionObservable>
    * メッセージを無視するかどうかを判定する述語。
    * この述語がtrueを返した場合、内容を復唱しない。
    */
-  constructor(private readonly isIgnoreTarget: (content: string) => boolean) {}
+  constructor(
+    private readonly isIgnoreTarget: (content: string) => boolean,
+    private readonly getNow: GetNow
+  ) {}
 
   async on(event: MessageEvent, message: M): Promise<void> {
     if (event !== 'DELETE') {
       return;
     }
-    const { author, content } = message;
+    const { author, content, createdAt } = message;
     if (this.isIgnoreTarget(content)) {
+      return;
+    }
+
+    const diff = this.getNow().getSeconds() - createdAt.getSeconds();
+    if (diff <= 3) {
+      await message.sendEphemeralToSameChannel(`${author}さんの恐ろしく早いメッセージの削除。私じゃなきゃ見逃していましたよ。
+\`\`\`
+${content}
+\`\`\``);
       return;
     }
 
