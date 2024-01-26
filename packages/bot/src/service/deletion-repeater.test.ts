@@ -75,3 +75,23 @@ Wall Is Not Stop
     }
   });
 });
+
+it("react to deleted message if it's too fast", async () => {
+  const now = new Date();
+  now.setSeconds(now.getSeconds() - 1);
+
+  const responder = new DeletionRepeater(() => false);
+  await responder.on('DELETE', {
+    author: 'Baba',
+    content: 'Wall Is Stop',
+    createdAt: now,
+    sendEphemeralToSameChannel: (message) => {
+      expect(message)
+        .toEqual(`Babaさんの恐ろしく早いメッセージの削除。私じゃなきゃ見逃していましたよ。
+\`\`\`
+Wall Is Stop
+\`\`\``);
+      return Promise.resolve();
+    }
+  });
+});
