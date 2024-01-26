@@ -30,6 +30,7 @@ import type { EntranceOutput, StandardOutput } from './output.js';
 import { WelcomeMessage } from './welcome-message.js';
 
 const stfuIgnorePredicate = (content: string): boolean => content === '!stfu';
+const getNow = (): Date => new Date();
 
 export const allMessageEventResponder = (
   repo: TypoRepository,
@@ -38,7 +39,7 @@ export const allMessageEventResponder = (
   composeMessageEventResponders<
     DeletionObservable & TypoObservable & BoldItalicCop & EmojiSeqObservable
   >(
-    new DeletionRepeater(stfuIgnorePredicate),
+    new DeletionRepeater(stfuIgnorePredicate, getNow),
     new TypoRecorder(repo),
     new BoldItalicCopReporter(),
     new EmojiSeqReact(sequencesYaml)
