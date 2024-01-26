@@ -54,9 +54,9 @@ export class DeletionRepeater<M extends DeletionObservable>
     const diff = now.getTime() - createdAt.getTime();
     if (diff <= 3) {
       await message.sendEphemeralToSameChannel(`${author}さんの恐ろしく早いメッセージの削除。私じゃなきゃ見逃していましたよ。
-      \`\`\`
-      ${content}
-      \`\`\``);
+\`\`\`
+${content}
+\`\`\``);
       return;
     }
 
