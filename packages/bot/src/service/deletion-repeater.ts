@@ -39,7 +39,10 @@ export class DeletionRepeater<M extends DeletionObservable>
    * メッセージを無視するかどうかを判定する述語。
    * この述語がtrueを返した場合、内容を復唱しない。
    */
-  constructor(private readonly isIgnoreTarget: (content: string) => boolean) {}
+  constructor(
+    private readonly isIgnoreTarget: (content: string) => boolean,
+    private readonly getNow: () => Date
+  ) {}
 
   async on(event: MessageEvent, message: M): Promise<void> {
     if (event !== 'DELETE') {
@@ -50,8 +53,7 @@ export class DeletionRepeater<M extends DeletionObservable>
       return;
     }
 
-    const now = new Date();
-    const diff = now.getSeconds() - createdAt.getSeconds();
+    const diff = this.getNow().getSeconds() - createdAt.getSeconds();
     if (diff <= 3) {
       await message.sendEphemeralToSameChannel(`${author}さんの恐ろしく早いメッセージの削除。私じゃなきゃ見逃していましたよ。
 \`\`\`
