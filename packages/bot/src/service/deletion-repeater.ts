@@ -14,6 +14,11 @@ export interface DeletionObservable {
   readonly content: string;
 
   /**
+   * メッセージの送信日時
+   */
+  readonly createdAt: Date;
+
+  /**
    * すぐ消えてしまう `message` のメッセージをこのメッセージと同じチャンネルに送信する。
    *
    * @param message - 送信するメッセージのテキスト
