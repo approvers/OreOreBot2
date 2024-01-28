@@ -15,7 +15,7 @@
     "test": "pnpm --filter @oreorebot2/bot test",
     "coverage": "pnpm --filter @oreorebot2/bot coverage",
     "lint-staged": "lint-staged",
-    "postinstall": "husky install"
+    "postinstall": "husky"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
@@ -30,7 +30,7 @@
     "eslint-plugin-mdx": "^3.0.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-tsdoc": "^0.2.17",
-    "husky": "^8.0.2",
+    "husky": "^9.0.0",
     "lint-staged": "^15.0.0",
     "prettier": "^3.0.0",
     "typescript": "5.3.3"
