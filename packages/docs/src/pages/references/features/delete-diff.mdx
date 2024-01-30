@@ -10,7 +10,6 @@ import { VersionBadge } from '../../../molecules/version-badge';
 ---
 
 メッセージを削除すると削除したメッセージを晒し上げます。
-
 <Callout type="info">
   削除 Diff
   は一定時間で削除されます。削除せず取っておきたい場合はリアクションを送信することで阻止できます。
@@ -23,3 +22,9 @@ import { VersionBadge } from '../../../molecules/version-badge';
 削除する際は覚悟を決めてください。
 
 </Callout>
+
+### 早すぎる削除
+
+<VersionBadge>v1.50.0</VersionBadge> から利用可能
+
+メッセージを削除したのが送信してから3秒以内であれば特別なメッセージで晒し上げます。
