@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.50.0](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.49.0...OreOreBot2-v1.50.0) (2024-01-30)
+
+
+### Features
+
+* メッセージが投稿後３秒以内に削除された場合に特殊メッセージを送信するように変更 ([#1249](https://github.com/approvers/OreOreBot2/issues/1249)) ([de404ca](https://github.com/approvers/OreOreBot2/commit/de404ca858cb34656934ed5803417cdd5773fadc))
+
 ## [1.49.0](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.48.0...OreOreBot2-v1.49.0) (2023-12-03)
 
 
