@@ -167,7 +167,7 @@ OreOreBot2 (@oreorebot2/common)
 
 - Git
 - FFmpeg ([音楽再生系の機能](#音楽再生系の機能)で必要です)
-- Node.js v18.x 以上
+- Node.js v20.x 以上
 - pnpm v8
 
 #### コーディング規約
