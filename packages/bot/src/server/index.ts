@@ -32,6 +32,7 @@ import {
 } from '../adaptor/index.js';
 import { DiscordCommandProxy } from '../adaptor/proxy/command.js';
 import { memberProxy } from '../adaptor/proxy/member.js';
+import { StickerProxy } from '../adaptor/proxy/sticker.js';
 import { loadSchedule } from '../adaptor/signal-schedule.js';
 import { GenVersionFetcher } from '../adaptor/version/fetch.js';
 import type { Snowflake } from '../model/id.js';
@@ -45,6 +46,7 @@ import {
   VoiceRoomResponseRunner
 } from '../runner/index.js';
 import { MemberResponseRunner } from '../runner/member.js';
+import { StickerResponseRunner } from '../runner/sticker.js';
 import type { GyokuonAssetKey } from '../service/command/gyokuon.js';
 import type { KaereMusicKey } from '../service/command/kaere.js';
 import type { AssetKey } from '../service/command/party.js';
@@ -55,6 +57,7 @@ import {
   allMessageEventResponder,
   allMessageUpdateEventResponder,
   allRoleResponder,
+  allStickerResponder,
   registerAllCommandResponder
 } from '../service/index.js';
 import { startTimeSignal } from '../service/time-signal.js';
@@ -233,6 +236,11 @@ if (features.includes('ROLE')) {
 const emojiRunner = new EmojiResponseRunner(new EmojiProxy(client));
 if (features.includes('EMOJI')) {
   emojiRunner.addResponder(allEmojiResponder(standardOutput));
+}
+
+const stickerRunner = new StickerResponseRunner(new StickerProxy(client));
+if (features.includes('STICKER')) {
+  stickerRunner.addResponder(allStickerResponder(standardOutput));
 }
 
 const memberRunner = new MemberResponseRunner();
