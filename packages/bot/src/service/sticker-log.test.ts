@@ -34,3 +34,18 @@ it('create sticker', async () => {
     ]
   });
 });
+
+it('does not call non-CREATE event', async () => {
+  const sendEmbed = vi.fn(() => Promise.resolve());
+  const responder = new StickerLog({ sendEmbed });
+  await responder.on('UPDATE', {
+    stickerName: 'なないミーム',
+    stickerAuthorId: '596121630930108426' as Snowflake,
+    stickerId: '723382133388738601' as Snowflake,
+    stickerImageUrl: 'https://cdn.discordapp.com/embed/avatars/0.png',
+    stickerDescription: 'ﾁｭﾋﾟﾁｭﾋﾟﾁｬﾊﾟﾁｬﾊﾟwwwﾄﾞｩﾋﾞﾄﾞｩﾋﾞﾀﾞﾊﾞﾀﾞﾊﾞwww',
+    stickerTags: '🐱'
+  });
+
+  expect(sendEmbed).not.toHaveBeenCalled();
+});
