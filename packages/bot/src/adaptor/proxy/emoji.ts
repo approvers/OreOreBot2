@@ -12,9 +12,12 @@ export class EmojiProxy implements EmojiEventProvider<EmojiData> {
   onEmojiCreate(handler: EmojiHandler<EmojiData>): void {
     this.client.on('emojiCreate', async (emoji) => {
       const author = await emoji.fetchAuthor();
+
       await handler({
         emoji: emoji.toString(),
-        emojiAuthorId: author.id as Snowflake
+        id: emoji.id as Snowflake,
+        authorId: author.id as Snowflake,
+        imageUrl: emoji.url
       });
     });
   }
