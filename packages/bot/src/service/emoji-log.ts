@@ -2,9 +2,6 @@ import type { Snowflake } from '../model/id.js';
 import type { EmojiEvent, EmojiEventResponder } from '../runner/index.js';
 import type { StandardOutput } from './output.js';
 
-/**
- *
- */
 export interface EmojiData {
   emoji: string;
   id: Snowflake;
