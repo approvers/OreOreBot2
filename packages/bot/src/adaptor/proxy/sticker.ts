@@ -17,12 +17,12 @@ export class StickerProxy implements StickerEventProvider<StickerData> {
       }
 
       await handler({
-        stickerName: sticker.name,
-        stickerImageUrl: sticker.url,
-        stickerId: sticker.id as Snowflake,
-        stickerAuthorId: author.id as Snowflake,
-        stickerDescription: sticker.description ?? '説明無し',
-        stickerTags: sticker.tags ?? '関連絵文字無し'
+        name: sticker.name,
+        imageUrl: sticker.url,
+        id: sticker.id as Snowflake,
+        authorId: author.id as Snowflake,
+        description: sticker.description ?? '説明無し',
+        tags: sticker.tags ?? '関連絵文字無し'
       });
     });
   }

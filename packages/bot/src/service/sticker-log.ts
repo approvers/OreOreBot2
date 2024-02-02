@@ -7,12 +7,12 @@ export interface StickerData {
    * 初期名が自動で割り当てられる絵文字とは異なり,
    * スタンプは名前を決めてから登録するので名前がuniqueとして有効
    */
-  stickerName: string; // 絵文字名
-  stickerImageUrl: string; // 絵文字の画像URL
-  stickerId: Snowflake; // 絵文字ID
-  stickerAuthorId: Snowflake; // 絵文字を作成したユーザーID
-  stickerDescription: string; // 絵文字の説明
-  stickerTags: string; // 絵文字のタグ (Autocomplete用)
+  name: string; // 絵文字名
+  imageUrl: string; // 絵文字の画像URL
+  id: Snowflake; // 絵文字ID
+  authorId: Snowflake; // 絵文字を作成したユーザーID
+  description: string; // 絵文字の説明
+  tags: string; // 絵文字のタグ (Autocomplete用)
 }
 
 export class StickerLog implements StickerEventResponder<StickerData> {
@@ -27,31 +27,31 @@ export class StickerLog implements StickerEventResponder<StickerData> {
   }
 
   private buildEmbed({
-    stickerName,
-    stickerImageUrl,
-    stickerId,
-    stickerAuthorId,
-    stickerDescription,
-    stickerTags
+    name,
+    imageUrl,
+    id,
+    authorId,
+    description,
+    tags
   }: StickerData) {
     const fields = [
       {
         name: '説明',
-        value: stickerDescription
+        value: description
       },
       {
         name: '関連絵文字',
-        value: stickerTags
+        value: tags
       }
     ];
 
     return {
       title: 'スタンプ警察',
-      description: `<@${stickerAuthorId}> が **${stickerName}** を作成しました`,
+      description: `<@${authorId}> が **${name}** を作成しました`,
       thumbnail: {
-        url: stickerImageUrl
+        url: imageUrl
       },
-      footer: `ID: ${stickerId}`,
+      footer: `ID: ${id}`,
       fields
     };
   }

@@ -7,12 +7,12 @@ it('create sticker', async () => {
   const sendEmbed = vi.fn(() => Promise.resolve());
   const responder = new StickerLog({ sendEmbed });
   await responder.on('CREATE', {
-    stickerName: 'なないミーム',
-    stickerAuthorId: '596121630930108426' as Snowflake,
-    stickerId: '723382133388738601' as Snowflake,
-    stickerImageUrl: 'https://cdn.discordapp.com/embed/avatars/0.png',
-    stickerDescription: 'ﾁｭﾋﾟﾁｭﾋﾟﾁｬﾊﾟﾁｬﾊﾟwwwﾄﾞｩﾋﾞﾄﾞｩﾋﾞﾀﾞﾊﾞﾀﾞﾊﾞwww',
-    stickerTags: '🐱'
+    name: 'なないミーム',
+    authorId: '596121630930108426' as Snowflake,
+    id: '723382133388738601' as Snowflake,
+    imageUrl: 'https://cdn.discordapp.com/embed/avatars/0.png',
+    description: 'ﾁｭﾋﾟﾁｭﾋﾟﾁｬﾊﾟﾁｬﾊﾟwwwﾄﾞｩﾋﾞﾄﾞｩﾋﾞﾀﾞﾊﾞﾀﾞﾊﾞwww',
+    tags: '🐱'
   });
 
   expect(sendEmbed).toHaveBeenCalledWith({
@@ -39,12 +39,12 @@ it('does not call non-CREATE event', async () => {
   const sendEmbed = vi.fn(() => Promise.resolve());
   const responder = new StickerLog({ sendEmbed });
   await responder.on('UPDATE', {
-    stickerName: 'なないミーム',
-    stickerAuthorId: '596121630930108426' as Snowflake,
-    stickerId: '723382133388738601' as Snowflake,
-    stickerImageUrl: 'https://cdn.discordapp.com/embed/avatars/0.png',
-    stickerDescription: 'ﾁｭﾋﾟﾁｭﾋﾟﾁｬﾊﾟﾁｬﾊﾟwwwﾄﾞｩﾋﾞﾄﾞｩﾋﾞﾀﾞﾊﾞﾀﾞﾊﾞwww',
-    stickerTags: '🐱'
+    name: 'なないミーム',
+    authorId: '596121630930108426' as Snowflake,
+    id: '723382133388738601' as Snowflake,
+    imageUrl: 'https://cdn.discordapp.com/embed/avatars/0.png',
+    description: 'ﾁｭﾋﾟﾁｭﾋﾟﾁｬﾊﾟﾁｬﾊﾟwwwﾄﾞｩﾋﾞﾄﾞｩﾋﾞﾀﾞﾊﾞﾀﾞﾊﾞwww',
+    tags: '🐱'
   });
 
   expect(sendEmbed).not.toHaveBeenCalled();
