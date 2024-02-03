@@ -41,7 +41,7 @@
     "@types/node": "20.11.13",
     "@types/yargs": "^17.0.22",
     "@vitest/coverage-v8": "^1.0.0",
-    "esbuild": "^0.19.0",
+    "esbuild": "^0.20.0",
     "make-dir-cli": "^3.0.0",
     "ts-node": "^10.9.1",
     "typescript": "5.3.3",
