@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.51.0](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.50.0...OreOreBot2-v1.51.0) (2024-02-04)
+
+
+### Features
+
+* スタンプ作成ログを送信する機能の実装 ([#1258](https://github.com/approvers/OreOreBot2/issues/1258)) ([dae78be](https://github.com/approvers/OreOreBot2/commit/dae78bee6b5dfd67e783c4571316257149190859))
+* 絵文字作成ログに絵文字画像とIDを表示するように ([#1259](https://github.com/approvers/OreOreBot2/issues/1259)) ([26d6725](https://github.com/approvers/OreOreBot2/commit/26d6725a51b6b62632cfc47c28227493fabd96e4))
+
 ## [1.50.0](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.49.0...OreOreBot2-v1.50.0) (2024-01-30)
 
 
