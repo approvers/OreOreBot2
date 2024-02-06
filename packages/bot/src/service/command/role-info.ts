@@ -1,3 +1,4 @@
+import type { Dep0, DepRegistry } from '../../driver/dep-registry.js';
 import { createTimestamp } from '../../model/create-timestamp.js';
 import type { HelpInfo } from '../../runner/command.js';
 import type { CommandMessage, CommandResponderFor } from './command-message.js';
@@ -23,6 +24,12 @@ export interface RoleStats {
 export interface RoleStatsRepository {
   fetchStats(roleId: string): Promise<RoleStats | null>;
 }
+export interface RoleRepositoryDep extends Dep0 {
+  type: RoleStatsRepository;
+}
+export const roleRepositoryKey = Symbol(
+  'ROLE_REPOSITORY'
+) as unknown as RoleRepositoryDep;
 
 const SCHEMA = {
   names: ['roleinfo', 'role'],
@@ -45,12 +52,12 @@ export class RoleInfo implements CommandResponderFor<typeof SCHEMA> {
   };
   readonly schema = SCHEMA;
 
-  constructor(private readonly repo: RoleStatsRepository) {}
+  constructor(private readonly reg: DepRegistry) {}
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const [roleId] = message.args.params;
 
-    const stats = await this.repo.fetchStats(roleId);
+    const stats = await this.reg.get(roleRepositoryKey).fetchStats(roleId);
     if (!stats) {
       await message.reply({
         title: '引数エラー',

@@ -18,7 +18,7 @@ import { Meme } from './command/meme.js';
 import { PartyCommand } from './command/party.js';
 import { PingCommand } from './command/ping.js';
 import { RoleCreate, type RoleCreateManager } from './command/role-create.js';
-import { RoleInfo, type RoleStatsRepository } from './command/role-info.js';
+import { RoleInfo } from './command/role-info.js';
 import { RoleRank } from './command/role-rank.js';
 import { SheriffCommand } from './command/stfu.js';
 import { TypoReporter } from './command/typo-record.js';
@@ -28,7 +28,6 @@ import { GetVersionCommand } from './command/version.js';
 export const registerAllCommandResponder = (
   commandRunner: CommandRunner,
   {
-    roleRepo,
     userRepo,
     guildRepo,
     roleCreateRepo,
@@ -36,7 +35,6 @@ export const registerAllCommandResponder = (
     channelRepository,
     registry
   }: {
-    roleRepo: RoleStatsRepository;
     userRepo: UserStatsRepository;
     guildRepo: GuildStatsRepository;
     roleCreateRepo: RoleCreateManager;
@@ -59,7 +57,7 @@ export const registerAllCommandResponder = (
     new GetVersionCommand(registry),
     new DebugCommand(registry),
     new RoleRank(registry),
-    new RoleInfo(roleRepo),
+    new RoleInfo(registry),
     new UserInfo(userRepo),
     new GuildInfo(guildRepo),
     new RoleCreate(roleCreateRepo),
