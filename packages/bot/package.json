@@ -8,7 +8,7 @@
   "author": "approvers <info@approvers.dev>",
   "scripts": {
     "start": "node ./build/index.mjs",
-    "dev": "ts-node --esm ./src/server/index.ts",
+    "dev": "tsx ./src/server/index.ts",
     "build": "esbuild ./src/server/index.ts --bundle --minify --charset=utf8 --platform=node --target=node18 --format=esm --packages=external --outfile=build/index.mjs",
     "lint": "eslint \"./src/**/*.{js,ts}\"",
     "format": "prettier --write \"./src/**/*.{js,ts,md}\"",
@@ -43,7 +43,7 @@
     "@vitest/coverage-v8": "^1.0.0",
     "esbuild": "^0.20.0",
     "make-dir-cli": "^3.0.0",
-    "ts-node": "^10.9.1",
+    "tsx": "^4.7.0",
     "typescript": "5.3.3",
     "vitest": "^1.0.0"
   }
