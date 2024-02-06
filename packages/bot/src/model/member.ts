@@ -27,3 +27,8 @@ export interface MemberRepositoryDep extends Dep0 {
 export const membersRepositoryKey = Symbol(
   'MEMBERS_REPOSITORY'
 ) as unknown as MemberRepositoryDep;
+
+export const dummyMemberRepository: MemberRepository = {
+  fetchMembersWithRole: () => Promise.resolve([]),
+  fetchUserStats: () => Promise.resolve(null)
+};

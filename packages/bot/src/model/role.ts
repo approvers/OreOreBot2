@@ -33,3 +33,8 @@ export interface RoleRepositoryDep extends Dep0 {
 export const roleRepositoryKey = Symbol(
   'ROLE_REPOSITORY'
 ) as unknown as RoleRepositoryDep;
+
+export const dummyRoleRepository: RoleRepository = {
+  fetchStats: () => Promise.resolve(null),
+  createRole: () => Promise.resolve()
+};
