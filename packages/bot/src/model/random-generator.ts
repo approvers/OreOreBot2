@@ -51,3 +51,12 @@ export interface RandomGeneratorDep extends Dep0 {
 export const randomGeneratorKey = Symbol(
   'RANDOM_GENERATOR'
 ) as unknown as RandomGeneratorDep;
+
+export const dummyRandomGenerator: RandomGenerator = {
+  minutes: () => 1,
+  pick: ([elem]) => elem,
+  sleep: () => Promise.resolve(),
+  uniform: (from) => from,
+  roll: (_faces: number, howManyRolls: number): number[] =>
+    Array(howManyRolls).map(() => 1)
+};
