@@ -1,12 +1,20 @@
 export type Dep0 = {
   readonly type: unknown;
 } & symbol;
+export type Dep1 = Dep0 & {
+  readonly param1: unknown;
+};
+
+export type Apply1<S, A1> = S & { param1: A1 };
+
 export type GetDep0<S> = S extends Dep0 ? S['type'] : never;
+export type GetDep1<S, A1> = S extends Dep1 ? Apply1<S, A1>['type'] : never;
 
 export class DepRegistry {
   #dict = new Map<symbol, unknown>();
 
-  add<K extends Dep0>(key: K, value: GetDep0<K>): void {
+  add<K extends Dep0>(key: K, value: GetDep0<K>): void;
+  add<K extends Dep1, A1>(key: K, value: GetDep1<K, A1>): void {
     if (this.#dict.has(key)) {
       throw new Error(`exists on key: ${key.description}`);
     }
@@ -17,11 +25,13 @@ export class DepRegistry {
     return this.#dict.has(key);
   }
 
-  get<K extends Dep0>(key: K): GetDep0<K> {
+  get<K extends Dep0>(key: K): GetDep0<K>;
+  get<K extends Dep1, A1>(key: K): GetDep1<K, A1>;
+  get(key: symbol): never {
     if (!this.#dict.has(key)) {
       throw new Error(`not found for key: ${key.description}`);
     }
-    return this.#dict.get(key) as GetDep0<K>;
+    return this.#dict.get(key) as never;
   }
 
   remove(key: symbol): void {
