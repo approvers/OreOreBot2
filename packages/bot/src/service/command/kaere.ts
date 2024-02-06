@@ -5,6 +5,7 @@ import type { Schema } from '../../model/command-schema.js';
 import type { EmbedMessage } from '../../model/embed-message.js';
 import type { Snowflake } from '../../model/id.js';
 import { Reservation, ReservationTime } from '../../model/reservation.js';
+import { voiceRoomControllerKey } from '../../model/voice-room-controller.js';
 import type { HelpInfo } from '../../runner/command.js';
 import { scheduleRunnerKey, clockKey } from '../../runner/index.js';
 import { standardOutputKey } from '../output.js';
@@ -12,26 +13,6 @@ import { voiceConnectionFactoryKey } from '../voice-connection.js';
 import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
 export type KaereMusicKey = 'NEROYO';
-
-/**
- * ボイスチャンネル自体を操作できるコントローラーの抽象.
- */
-export interface VoiceRoomController {
-  /**
-   * そのボイスチャンネルからすべてのユーザーを切断させる.
-   *
-   * @param guildId - サーバの ID
-   * @param roomId - ボイスチャンネルの ID
-   * @returns 切断処理の完了後に解決される `Promise`
-   */
-  disconnectAllUsersIn(guildId: Snowflake, roomId: Snowflake): Promise<void>;
-}
-export interface VoiceRoomControllerDep extends Dep0 {
-  type: VoiceRoomController;
-}
-export const voiceRoomControllerKey = Symbol(
-  'VOICE_ROOM_CONTROLLER'
-) as unknown as VoiceRoomControllerDep;
 
 /**
  * 予約処理の成否を表す型。boolean だとどちらが成功か失敗か分かりづらいので導入した。

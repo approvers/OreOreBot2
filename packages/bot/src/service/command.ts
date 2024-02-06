@@ -9,14 +9,10 @@ import type { CommandResponderFor } from './command/command-message.js';
 import { DebugCommand, type MessageRepository } from './command/debug.js';
 import { DiceCommand, type DiceQueen } from './command/dice.js';
 import { GuildInfo, type GuildStatsRepository } from './command/guild-info.js';
-import { type GyokuonAssetKey, GyokuonCommand } from './command/gyokuon.js';
+import { GyokuonCommand } from './command/gyokuon.js';
 import { HelpCommand } from './command/help.js';
 import { JudgingCommand, type RandomGenerator } from './command/judging.js';
-import {
-  KaereCommand,
-  type KaereMusicKey,
-  type VoiceRoomController
-} from './command/kaere.js';
+import { KaereCommand } from './command/kaere.js';
 import { KokuseiChousa } from './command/kokusei-chousa.js';
 import { Meme } from './command/meme.js';
 import { PartyCommand } from './command/party.js';
@@ -31,12 +27,9 @@ import { type Sheriff, SheriffCommand } from './command/stfu.js';
 import { TypoReporter } from './command/typo-record.js';
 import { UserInfo, type UserStatsRepository } from './command/user-info.js';
 import { GetVersionCommand, type VersionFetcher } from './command/version.js';
-import type { VoiceConnectionFactory } from './voice-connection.js';
 
 export const registerAllCommandResponder = ({
-  factory,
   random,
-  roomController,
   commandRunner,
   sheriff,
   ping,
@@ -51,9 +44,7 @@ export const registerAllCommandResponder = ({
   channelRepository,
   registry
 }: {
-  factory: VoiceConnectionFactory<KaereMusicKey | GyokuonAssetKey>;
   random: RandomGenerator;
-  roomController: VoiceRoomController;
   commandRunner: CommandRunner;
   sheriff: Sheriff;
   ping: Ping;
@@ -72,10 +63,7 @@ export const registerAllCommandResponder = ({
     new TypoReporter(registry),
     new PartyCommand(registry),
     new KaereCommand(registry),
-    new GyokuonCommand({
-      connectionFactory: factory,
-      controller: roomController
-    }),
+    new GyokuonCommand(registry),
     new JudgingCommand(random),
     new Meme(),
     new HelpCommand(commandRunner),

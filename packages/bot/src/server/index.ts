@@ -37,6 +37,7 @@ import { loadSchedule } from '../adaptor/signal-schedule.js';
 import { GenVersionFetcher } from '../adaptor/version/fetch.js';
 import { DepRegistry } from '../driver/dep-registry.js';
 import type { Snowflake } from '../model/id.js';
+import { voiceRoomControllerKey } from '../model/voice-room-controller.js';
 import { CommandRunner } from '../runner/command.js';
 import {
   EmojiResponseRunner,
@@ -51,7 +52,6 @@ import { MemberResponseRunner } from '../runner/member.js';
 import { StickerResponseRunner } from '../runner/sticker.js';
 import type { GyokuonAssetKey } from '../service/command/gyokuon.js';
 import {
-  voiceRoomControllerKey,
   type KaereMusicKey,
   reservationRepositoryKey
 } from '../service/command/kaere.js';
@@ -191,9 +191,7 @@ registry.add(voiceRoomControllerKey, roomController);
 
 if (features.includes('COMMAND')) {
   registerAllCommandResponder({
-    factory,
     random,
-    roomController,
     commandRunner,
     registry,
     sheriff: new DiscordSheriff(client),
