@@ -36,6 +36,7 @@ import { StickerProxy } from '../adaptor/proxy/sticker.js';
 import { loadSchedule } from '../adaptor/signal-schedule.js';
 import { GenVersionFetcher } from '../adaptor/version/fetch.js';
 import { DepRegistry } from '../driver/dep-registry.js';
+import { guildRepositoryKey } from '../model/guild.js';
 import type { Snowflake } from '../model/id.js';
 import { membersRepositoryKey } from '../model/member.js';
 import { voiceRoomControllerKey } from '../model/voice-room-controller.js';
@@ -168,6 +169,7 @@ const commandRunner = new CommandRunner(commandProxy);
 const stats = new DiscordMemberStats(client, GUILD_ID as Snowflake);
 registry.add(memberStatsKey, stats);
 registry.add(membersRepositoryKey, stats);
+registry.add(guildRepositoryKey, stats);
 
 // ほとんど変わらないことが予想され環境変数で管理する必要性が薄いので、ハードコードした。
 const KAWAEMON_ID = '391857452360007680' as Snowflake;
@@ -207,7 +209,6 @@ registry.add(messageRepositoryKey, messageRepo);
 if (features.includes('COMMAND')) {
   registerAllCommandResponder(commandRunner, {
     registry,
-    guildRepo: stats,
     roleCreateRepo: roleManager,
     queen: new MathRandomGenerator(),
     channelRepository
