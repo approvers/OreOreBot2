@@ -1,23 +1,20 @@
 import type { Client, Guild } from 'discord.js';
 
-import type { Snowflake } from '../../model/id.js';
 import type {
   GuildMfaLevel,
   GuildNsfwLevel,
   GuildPremiumTier,
+  GuildRepository,
   GuildStats,
-  GuildStatsRepository,
   GuildVerificationLevel
-} from '../../service/command/guild-info.js';
-import type { MemberStats } from '../../service/command/kokusei-chousa.js';
+} from '../../model/guild.js';
+import type { Snowflake } from '../../model/id.js';
 import type {
+  MemberRepository,
   MemberWithRole,
-  MembersWithRoleRepository
-} from '../../service/command/role-rank.js';
-import type {
-  UserStats,
-  UserStatsRepository
-} from '../../service/command/user-info.js';
+  UserStats
+} from '../../model/member.js';
+import type { MemberStats } from '../../service/command/kokusei-chousa.js';
 
 const mappingMfaLevel: Record<Guild['mfaLevel'], GuildMfaLevel> = {
   0: '2FAを要求しない',
@@ -50,11 +47,7 @@ const mappingVerificationLevel: Record<
 };
 
 export class DiscordMemberStats
-  implements
-    MemberStats,
-    MembersWithRoleRepository,
-    UserStatsRepository,
-    GuildStatsRepository
+  implements MemberStats, MemberRepository, GuildRepository
 {
   constructor(
     private readonly client: Client,
