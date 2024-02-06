@@ -28,35 +28,36 @@ import { TypoReporter } from './command/typo-record.js';
 import { UserInfo, type UserStatsRepository } from './command/user-info.js';
 import { GetVersionCommand, type VersionFetcher } from './command/version.js';
 
-export const registerAllCommandResponder = ({
-  commandRunner,
-  sheriff,
-  ping,
-  fetcher,
-  messageRepo,
-  membersRepo,
-  roleRepo,
-  userRepo,
-  guildRepo,
-  roleCreateRepo,
-  queen,
-  channelRepository,
-  registry
-}: {
-  commandRunner: CommandRunner;
-  sheriff: Sheriff;
-  ping: Ping;
-  fetcher: VersionFetcher;
-  messageRepo: MessageRepository;
-  membersRepo: MembersWithRoleRepository;
-  roleRepo: RoleStatsRepository;
-  userRepo: UserStatsRepository;
-  guildRepo: GuildStatsRepository;
-  roleCreateRepo: RoleCreateManager;
-  queen: DiceQueen;
-  channelRepository: ChannelStatsRepository;
-  registry: DepRegistry;
-}) => {
+export const registerAllCommandResponder = (
+  commandRunner: CommandRunner,
+  {
+    sheriff,
+    ping,
+    fetcher,
+    messageRepo,
+    membersRepo,
+    roleRepo,
+    userRepo,
+    guildRepo,
+    roleCreateRepo,
+    queen,
+    channelRepository,
+    registry
+  }: {
+    sheriff: Sheriff;
+    ping: Ping;
+    fetcher: VersionFetcher;
+    messageRepo: MessageRepository;
+    membersRepo: MembersWithRoleRepository;
+    roleRepo: RoleStatsRepository;
+    userRepo: UserStatsRepository;
+    guildRepo: GuildStatsRepository;
+    roleCreateRepo: RoleCreateManager;
+    queen: DiceQueen;
+    channelRepository: ChannelStatsRepository;
+    registry: DepRegistry;
+  }
+) => {
   const allResponders = [
     new TypoReporter(registry),
     new PartyCommand(registry),
@@ -64,7 +65,7 @@ export const registerAllCommandResponder = ({
     new GyokuonCommand(registry),
     new JudgingCommand(registry),
     new Meme(),
-    new HelpCommand(commandRunner),
+    new HelpCommand(registry),
     new KokuseiChousa(registry),
     new SheriffCommand(sheriff),
     new PingCommand(ping),

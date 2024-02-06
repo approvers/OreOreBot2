@@ -1,3 +1,4 @@
+import type { Dep0 } from '../driver/dep-registry.js';
 import type { Schema } from '../model/command-schema.js';
 
 export type MessageCreateListener<M> = (message: M) => Promise<void>;
@@ -45,3 +46,9 @@ export class CommandRunner {
     return this.responders;
   }
 }
+export interface CommandRunnerDep extends Dep0 {
+  type: CommandRunner;
+}
+export const commandRunnerKey = Symbol(
+  'COMMAND_RUNNER'
+) as unknown as CommandRunnerDep;

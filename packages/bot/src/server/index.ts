@@ -190,8 +190,7 @@ const roomController = new DiscordVoiceRoomController(client);
 registry.add(voiceRoomControllerKey, roomController);
 
 if (features.includes('COMMAND')) {
-  registerAllCommandResponder({
-    commandRunner,
+  registerAllCommandResponder(commandRunner, {
     registry,
     sheriff: new DiscordSheriff(client),
     ping: new DiscordWS(client),
