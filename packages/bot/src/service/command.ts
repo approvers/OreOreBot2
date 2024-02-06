@@ -19,10 +19,7 @@ import { PartyCommand } from './command/party.js';
 import { PingCommand } from './command/ping.js';
 import { RoleCreate, type RoleCreateManager } from './command/role-create.js';
 import { RoleInfo, type RoleStatsRepository } from './command/role-info.js';
-import {
-  type MembersWithRoleRepository,
-  RoleRank
-} from './command/role-rank.js';
+import { RoleRank } from './command/role-rank.js';
 import { SheriffCommand } from './command/stfu.js';
 import { TypoReporter } from './command/typo-record.js';
 import { UserInfo, type UserStatsRepository } from './command/user-info.js';
@@ -31,7 +28,6 @@ import { GetVersionCommand } from './command/version.js';
 export const registerAllCommandResponder = (
   commandRunner: CommandRunner,
   {
-    membersRepo,
     roleRepo,
     userRepo,
     guildRepo,
@@ -40,7 +36,6 @@ export const registerAllCommandResponder = (
     channelRepository,
     registry
   }: {
-    membersRepo: MembersWithRoleRepository;
     roleRepo: RoleStatsRepository;
     userRepo: UserStatsRepository;
     guildRepo: GuildStatsRepository;
@@ -63,7 +58,7 @@ export const registerAllCommandResponder = (
     new PingCommand(registry),
     new GetVersionCommand(registry),
     new DebugCommand(registry),
-    new RoleRank(membersRepo),
+    new RoleRank(registry),
     new RoleInfo(roleRepo),
     new UserInfo(userRepo),
     new GuildInfo(guildRepo),

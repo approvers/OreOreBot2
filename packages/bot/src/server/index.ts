@@ -60,6 +60,7 @@ import { memberStatsKey } from '../service/command/kokusei-chousa.js';
 import type { AssetKey } from '../service/command/party.js';
 import { pingKey } from '../service/command/ping.js';
 import { registerCommands } from '../service/command/register.js';
+import { membersRepositoryKey } from '../service/command/role-rank.js';
 import { sheriffKey } from '../service/command/stfu.js';
 import { typoRepositoryKey } from '../service/command/typo-record.js';
 import { versionFetcherKey } from '../service/command/version.js';
@@ -165,6 +166,7 @@ const commandProxy = new DiscordCommandProxy(client, PREFIX);
 const commandRunner = new CommandRunner(commandProxy);
 const stats = new DiscordMemberStats(client, GUILD_ID as Snowflake);
 registry.add(memberStatsKey, stats);
+registry.add(membersRepositoryKey, stats);
 
 // ほとんど変わらないことが予想され環境変数で管理する必要性が薄いので、ハードコードした。
 const KAWAEMON_ID = '391857452360007680' as Snowflake;
@@ -203,7 +205,6 @@ registry.add(messageRepositoryKey, messageRepo);
 if (features.includes('COMMAND')) {
   registerAllCommandResponder(commandRunner, {
     registry,
-    membersRepo: stats,
     roleRepo: roleManager,
     userRepo: stats,
     guildRepo: stats,
