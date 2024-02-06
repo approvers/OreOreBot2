@@ -22,20 +22,18 @@ import { RoleInfo } from './command/role-info.js';
 import { RoleRank } from './command/role-rank.js';
 import { SheriffCommand } from './command/stfu.js';
 import { TypoReporter } from './command/typo-record.js';
-import { UserInfo, type UserStatsRepository } from './command/user-info.js';
+import { UserInfo } from './command/user-info.js';
 import { GetVersionCommand } from './command/version.js';
 
 export const registerAllCommandResponder = (
   commandRunner: CommandRunner,
   {
-    userRepo,
     guildRepo,
     roleCreateRepo,
     queen,
     channelRepository,
     registry
   }: {
-    userRepo: UserStatsRepository;
     guildRepo: GuildStatsRepository;
     roleCreateRepo: RoleCreateManager;
     queen: DiceQueen;
@@ -58,7 +56,7 @@ export const registerAllCommandResponder = (
     new DebugCommand(registry),
     new RoleRank(registry),
     new RoleInfo(registry),
-    new UserInfo(userRepo),
+    new UserInfo(registry),
     new GuildInfo(guildRepo),
     new RoleCreate(roleCreateRepo),
     new DiceCommand(queen),

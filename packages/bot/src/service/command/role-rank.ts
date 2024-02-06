@@ -1,21 +1,7 @@
-import type { Dep0, DepRegistry } from '../../driver/dep-registry.js';
+import type { DepRegistry } from '../../driver/dep-registry.js';
+import { membersRepositoryKey } from '../../model/member.js';
 import type { HelpInfo } from '../../runner/command.js';
 import type { CommandMessage, CommandResponderFor } from './command-message.js';
-
-export interface MemberWithRole {
-  displayName: string;
-  roles: number;
-}
-
-export interface MembersWithRoleRepository {
-  fetchMembersWithRole(): Promise<MemberWithRole[]>;
-}
-export interface MembersRepositoryDep extends Dep0 {
-  type: MembersWithRoleRepository;
-}
-export const membersRepositoryKey = Symbol(
-  'MEMBERS_REPOSITORY'
-) as unknown as MembersRepositoryDep;
 
 const SCHEMA = {
   names: ['rolerank'],
