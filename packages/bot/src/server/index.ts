@@ -50,7 +50,11 @@ import {
 import { MemberResponseRunner } from '../runner/member.js';
 import { StickerResponseRunner } from '../runner/sticker.js';
 import type { GyokuonAssetKey } from '../service/command/gyokuon.js';
-import type { KaereMusicKey } from '../service/command/kaere.js';
+import {
+  voiceRoomControllerKey,
+  type KaereMusicKey,
+  reservationRepositoryKey
+} from '../service/command/kaere.js';
 import { memberStatsKey } from '../service/command/kokusei-chousa.js';
 import type { AssetKey } from '../service/command/party.js';
 import { registerCommands } from '../service/command/register.js';
@@ -64,6 +68,7 @@ import {
   allStickerResponder,
   registerAllCommandResponder
 } from '../service/index.js';
+import { standardOutputKey } from '../service/output.js';
 import { randomGeneratorKey } from '../service/random-generator.js';
 import { startTimeSignal } from '../service/time-signal.js';
 import { voiceConnectionFactoryKey } from '../service/voice-connection.js';
@@ -119,9 +124,11 @@ Sentry.init({
 const typoRepo = new InMemoryTypoRepository();
 registry.add(typoRepositoryKey, typoRepo);
 const reservationRepo = new InMemoryReservationRepository();
+registry.add(reservationRepositoryKey, reservationRepo);
 const clock = new ActualClock();
 const sequencesYaml = loadEmojiSeqYaml(['assets', 'emoji-seq.yaml']);
 const standardOutput = new DiscordStandardOutput(client, mainChannelId);
+registry.add(standardOutputKey, standardOutput);
 const entranceOutput = new DiscordEntranceOutput(client, entranceChannelId);
 
 const scheduleRunner = new ScheduleRunner(registry);
@@ -179,15 +186,14 @@ const factory = new DiscordVoiceConnectionFactory<
 registry.add(voiceConnectionFactoryKey, factory);
 const random = new MathRandomGenerator();
 registry.add(randomGeneratorKey, random);
+const roomController = new DiscordVoiceRoomController(client);
+registry.add(voiceRoomControllerKey, roomController);
 
 if (features.includes('COMMAND')) {
   registerAllCommandResponder({
-    reservationRepo,
     factory,
-    clock,
-    scheduleRunner,
     random,
-    roomController: new DiscordVoiceRoomController(client),
+    roomController,
     commandRunner,
     registry,
     sheriff: new DiscordSheriff(client),
@@ -200,7 +206,6 @@ if (features.includes('COMMAND')) {
     guildRepo: stats,
     roleCreateRepo: roleManager,
     queen: new MathRandomGenerator(),
-    stdout: standardOutput,
     channelRepository
   });
 }

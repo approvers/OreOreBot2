@@ -1,7 +1,6 @@
 import type { DepRegistry } from '../driver/dep-registry.js';
 import type { Schema } from '../model/command-schema.js';
 import type { CommandRunner } from '../runner/command.js';
-import type { Clock, ScheduleRunner } from '../runner/schedule.js';
 import {
   ChannelInfo,
   type ChannelStatsRepository
@@ -16,7 +15,6 @@ import { JudgingCommand, type RandomGenerator } from './command/judging.js';
 import {
   KaereCommand,
   type KaereMusicKey,
-  type ReservationRepository,
   type VoiceRoomController
 } from './command/kaere.js';
 import { KokuseiChousa } from './command/kokusei-chousa.js';
@@ -33,14 +31,10 @@ import { type Sheriff, SheriffCommand } from './command/stfu.js';
 import { TypoReporter } from './command/typo-record.js';
 import { UserInfo, type UserStatsRepository } from './command/user-info.js';
 import { GetVersionCommand, type VersionFetcher } from './command/version.js';
-import type { StandardOutput } from './output.js';
 import type { VoiceConnectionFactory } from './voice-connection.js';
 
 export const registerAllCommandResponder = ({
-  reservationRepo,
   factory,
-  clock,
-  scheduleRunner,
   random,
   roomController,
   commandRunner,
@@ -54,14 +48,10 @@ export const registerAllCommandResponder = ({
   guildRepo,
   roleCreateRepo,
   queen,
-  stdout,
   channelRepository,
   registry
 }: {
-  reservationRepo: ReservationRepository;
   factory: VoiceConnectionFactory<KaereMusicKey | GyokuonAssetKey>;
-  clock: Clock;
-  scheduleRunner: ScheduleRunner;
   random: RandomGenerator;
   roomController: VoiceRoomController;
   commandRunner: CommandRunner;
@@ -75,21 +65,13 @@ export const registerAllCommandResponder = ({
   guildRepo: GuildStatsRepository;
   roleCreateRepo: RoleCreateManager;
   queen: DiceQueen;
-  stdout: StandardOutput;
   channelRepository: ChannelStatsRepository;
   registry: DepRegistry;
 }) => {
   const allResponders = [
     new TypoReporter(registry),
     new PartyCommand(registry),
-    new KaereCommand({
-      connectionFactory: factory,
-      controller: roomController,
-      clock,
-      scheduleRunner,
-      stdout,
-      repo: reservationRepo
-    }),
+    new KaereCommand(registry),
     new GyokuonCommand({
       connectionFactory: factory,
       controller: roomController

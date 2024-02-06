@@ -7,6 +7,7 @@ import {
 import type { HelpInfo } from '../../runner/command.js';
 import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
+// TODO: merge into services/random-generator.ts
 /**
  * `JudgingCommand` のための乱数生成器。
  */

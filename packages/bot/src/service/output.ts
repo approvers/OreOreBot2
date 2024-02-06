@@ -1,3 +1,4 @@
+import type { Dep0 } from '../driver/dep-registry.js';
 import type { EmbedMessage } from '../model/embed-message.js';
 
 /**
@@ -6,6 +7,12 @@ import type { EmbedMessage } from '../model/embed-message.js';
 export interface StandardOutput {
   sendEmbed(embed: EmbedMessage): Promise<void>;
 }
+export interface StandardOutputDep extends Dep0 {
+  type: StandardOutput;
+}
+export const standardOutputKey = Symbol(
+  'STANDARD_OUTPUT'
+) as unknown as StandardOutputDep;
 
 /**
  * "#玄関" に埋め込みを送信する interface.
