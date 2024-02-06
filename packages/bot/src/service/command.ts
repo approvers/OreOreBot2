@@ -23,7 +23,7 @@ import {
   type MembersWithRoleRepository,
   RoleRank
 } from './command/role-rank.js';
-import { type Sheriff, SheriffCommand } from './command/stfu.js';
+import { SheriffCommand } from './command/stfu.js';
 import { TypoReporter } from './command/typo-record.js';
 import { UserInfo, type UserStatsRepository } from './command/user-info.js';
 import { GetVersionCommand, type VersionFetcher } from './command/version.js';
@@ -31,7 +31,6 @@ import { GetVersionCommand, type VersionFetcher } from './command/version.js';
 export const registerAllCommandResponder = (
   commandRunner: CommandRunner,
   {
-    sheriff,
     ping,
     fetcher,
     messageRepo,
@@ -44,7 +43,6 @@ export const registerAllCommandResponder = (
     channelRepository,
     registry
   }: {
-    sheriff: Sheriff;
     ping: Ping;
     fetcher: VersionFetcher;
     messageRepo: MessageRepository;
@@ -67,7 +65,7 @@ export const registerAllCommandResponder = (
     new Meme(),
     new HelpCommand(registry),
     new KokuseiChousa(registry),
-    new SheriffCommand(sheriff),
+    new SheriffCommand(registry),
     new PingCommand(ping),
     new GetVersionCommand(fetcher),
     new DebugCommand(messageRepo),

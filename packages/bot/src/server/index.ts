@@ -58,6 +58,7 @@ import {
 import { memberStatsKey } from '../service/command/kokusei-chousa.js';
 import type { AssetKey } from '../service/command/party.js';
 import { registerCommands } from '../service/command/register.js';
+import { sheriffKey } from '../service/command/stfu.js';
 import { typoRepositoryKey } from '../service/command/typo-record.js';
 import {
   allEmojiResponder,
@@ -188,11 +189,12 @@ const random = new MathRandomGenerator();
 registry.add(randomGeneratorKey, random);
 const roomController = new DiscordVoiceRoomController(client);
 registry.add(voiceRoomControllerKey, roomController);
+const sheriff = new DiscordSheriff(client);
+registry.add(sheriffKey, sheriff);
 
 if (features.includes('COMMAND')) {
   registerAllCommandResponder(commandRunner, {
     registry,
-    sheriff: new DiscordSheriff(client),
     ping: new DiscordWS(client),
     fetcher: versionFetcher,
     messageRepo: new DiscordMessageRepository(client),
