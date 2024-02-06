@@ -1,12 +1,12 @@
-export interface Dep0 {
+export type Dep0 = {
   readonly type: unknown;
-}
+} & symbol;
 export type GetDep0<S> = S extends Dep0 ? S['type'] : never;
 
 export class DepRegistry {
   #dict = new Map<symbol, unknown>();
 
-  add<K extends symbol>(key: K, value: GetDep0<K>): void {
+  add<K extends Dep0>(key: K, value: GetDep0<K>): void {
     if (this.#dict.has(key)) {
       throw new Error(`exists on key: ${key.description}`);
     }
@@ -17,7 +17,7 @@ export class DepRegistry {
     return this.#dict.has(key);
   }
 
-  get<K extends symbol>(key: K): GetDep0<K> {
+  get<K extends Dep0>(key: K): GetDep0<K> {
     if (!this.#dict.has(key)) {
       throw new Error(`not found for key: ${key.description}`);
     }
