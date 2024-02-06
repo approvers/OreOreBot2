@@ -1,3 +1,4 @@
+import type { DepRegistry } from '../driver/dep-registry.js';
 import type { Snowflake } from '../model/id.js';
 import {
   composeEmojiEventResponders,
@@ -11,11 +12,7 @@ import {
   type BoldItalicCop,
   BoldItalicCopReporter
 } from './bold-italic-cop.js';
-import {
-  type TypoObservable,
-  TypoRecorder,
-  type TypoRepository
-} from './command/typo-record.js';
+import { type TypoObservable, TypoRecorder } from './command/typo-record.js';
 import {
   type DeletionObservable,
   DeletionRepeater,
@@ -35,7 +32,7 @@ import { WelcomeMessage } from './welcome-message.js';
 const stfuIgnorePredicate = (content: string): boolean => content === '!stfu';
 
 export const allMessageEventResponder = (
-  repo: TypoRepository,
+  reg: DepRegistry,
   sequencesYaml: string,
   getNow: GetNow
 ) =>
@@ -43,7 +40,7 @@ export const allMessageEventResponder = (
     DeletionObservable & TypoObservable & BoldItalicCop & EmojiSeqObservable
   >(
     new DeletionRepeater(stfuIgnorePredicate, getNow),
-    new TypoRecorder(repo),
+    new TypoRecorder(reg),
     new BoldItalicCopReporter(),
     new EmojiSeqReact(sequencesYaml)
   );

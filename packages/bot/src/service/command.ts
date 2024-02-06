@@ -34,14 +34,13 @@ import {
   RoleRank
 } from './command/role-rank.js';
 import { type Sheriff, SheriffCommand } from './command/stfu.js';
-import { TypoReporter, type TypoRepository } from './command/typo-record.js';
+import { TypoReporter } from './command/typo-record.js';
 import { UserInfo, type UserStatsRepository } from './command/user-info.js';
 import { GetVersionCommand, type VersionFetcher } from './command/version.js';
 import type { StandardOutput } from './output.js';
 import type { VoiceConnectionFactory } from './voice-connection.js';
 
 export const registerAllCommandResponder = ({
-  typoRepo,
   reservationRepo,
   factory,
   clock,
@@ -63,7 +62,6 @@ export const registerAllCommandResponder = ({
   channelRepository,
   registry
 }: {
-  typoRepo: TypoRepository;
   reservationRepo: ReservationRepository;
   factory: VoiceConnectionFactory<AssetKey | KaereMusicKey | GyokuonAssetKey>;
   clock: Clock;
@@ -86,7 +84,7 @@ export const registerAllCommandResponder = ({
   registry: DepRegistry;
 }) => {
   const allResponders = [
-    new TypoReporter(typoRepo, clock, scheduleRunner),
+    new TypoReporter(registry),
     new PartyCommand({ factory, clock, scheduleRunner, random }),
     new KaereCommand({
       connectionFactory: factory,

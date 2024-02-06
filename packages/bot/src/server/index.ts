@@ -44,7 +44,8 @@ import {
   MessageUpdateResponseRunner,
   RoleResponseRunner,
   ScheduleRunner,
-  VoiceRoomResponseRunner
+  VoiceRoomResponseRunner,
+  scheduleRunnerKey
 } from '../runner/index.js';
 import { MemberResponseRunner } from '../runner/member.js';
 import { StickerResponseRunner } from '../runner/sticker.js';
@@ -53,6 +54,7 @@ import type { KaereMusicKey } from '../service/command/kaere.js';
 import { memberStatsKey } from '../service/command/kokusei-chousa.js';
 import type { AssetKey } from '../service/command/party.js';
 import { registerCommands } from '../service/command/register.js';
+import { typoRepositoryKey } from '../service/command/typo-record.js';
 import {
   allEmojiResponder,
   allMemberResponder,
@@ -96,7 +98,7 @@ const {
 );
 
 const features = FEATURE.split(',');
-
+const registry = new DepRegistry();
 const intents = [
   GatewayIntentBits.Guilds, // GUILD_CREATE による初期化
   GatewayIntentBits.GuildMembers, // メンバーの参加を検知する機能
@@ -113,20 +115,22 @@ Sentry.init({
 });
 
 const typoRepo = new InMemoryTypoRepository();
+registry.add(typoRepositoryKey, typoRepo);
 const reservationRepo = new InMemoryReservationRepository();
 const clock = new ActualClock();
 const sequencesYaml = loadEmojiSeqYaml(['assets', 'emoji-seq.yaml']);
 const standardOutput = new DiscordStandardOutput(client, mainChannelId);
 const entranceOutput = new DiscordEntranceOutput(client, entranceChannelId);
 
-const scheduleRunner = new ScheduleRunner(clock);
+const scheduleRunner = new ScheduleRunner(registry);
+registry.add(scheduleRunnerKey, scheduleRunner);
 const getCurrentDate = () => new Date();
 const messageCreateRunner = new MessageResponseRunner(
   new MessageProxy(client, middlewareForMessage())
 );
 if (features.includes('MESSAGE_CREATE')) {
   messageCreateRunner.addResponder(
-    allMessageEventResponder(typoRepo, sequencesYaml, getCurrentDate)
+    allMessageEventResponder(registry, sequencesYaml, getCurrentDate)
   );
 
   startTimeSignal({
@@ -147,6 +151,7 @@ if (features.includes('MESSAGE_UPDATE')) {
 const commandProxy = new DiscordCommandProxy(client, PREFIX);
 const commandRunner = new CommandRunner(commandProxy);
 const stats = new DiscordMemberStats(client, GUILD_ID as Snowflake);
+registry.add(memberStatsKey, stats);
 
 // ほとんど変わらないことが予想され環境変数で管理する必要性が薄いので、ハードコードした。
 const KAWAEMON_ID = '391857452360007680' as Snowflake;
@@ -158,12 +163,8 @@ const channelRepository = new DiscordChannelRepository(
 );
 const versionFetcher = new GenVersionFetcher();
 
-const registry = new DepRegistry();
-registry.add(memberStatsKey, stats);
-
 if (features.includes('COMMAND')) {
   registerAllCommandResponder({
-    typoRepo,
     reservationRepo,
     factory: new DiscordVoiceConnectionFactory<
       AssetKey | KaereMusicKey | GyokuonAssetKey

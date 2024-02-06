@@ -1,5 +1,7 @@
 import { addMilliseconds, isAfter } from 'date-fns';
 
+import type { Dep0, DepRegistry } from '../driver/dep-registry.js';
+
 /**
  * `ScheduleRunner` に登録するイベントが実装するインターフェイス。戻り値は次に自身を再実行する UTC 時刻。`null` を返した場合は再実行されない。
  */
@@ -16,6 +18,8 @@ export interface Clock {
    */
   now(): Date;
 }
+export type ClockDep = Dep0 & { type: Clock };
+export const clockKey = Symbol('CLOCK') as ClockDep;
 
 const CONSUMPTION_INTERVAL = 100;
 
@@ -23,7 +27,7 @@ const CONSUMPTION_INTERVAL = 100;
  * 機能を指定ミリ秒後や特定時刻に実行する。特定間隔での再実行については `ScheduleTask` を参照。
  */
 export class ScheduleRunner {
-  constructor(private readonly clock: Clock) {
+  constructor(private readonly reg: DepRegistry) {
     this.taskConsumerId = setInterval(() => {
       this.consume();
     }, CONSUMPTION_INTERVAL);
@@ -66,7 +70,7 @@ export class ScheduleRunner {
   runAfter(key: unknown, task: ScheduleTask, milliSeconds: number): void {
     this.queue.set(key, [
       task,
-      addMilliseconds(this.clock.now(), milliSeconds)
+      addMilliseconds(this.reg.get(clockKey).now(), milliSeconds)
     ]);
   }
 
@@ -91,9 +95,11 @@ export class ScheduleRunner {
   }
 
   private extractTaskNeededExe(): [unknown, ScheduleTask][] {
-    const now = this.clock.now();
+    const now = this.reg.get(clockKey).now();
     return [...this.queue.entries()]
       .filter(([, [, start]]) => isAfter(now, start))
       .map(([key, [task]]) => [key, task]);
   }
 }
+export type ScheduleRunnerDep = Dep0 & { type: ScheduleRunner };
+export const scheduleRunnerKey = Symbol('SCHEDULE_RUNNER') as ScheduleRunnerDep;
