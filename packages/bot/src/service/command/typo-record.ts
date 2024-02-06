@@ -54,10 +54,12 @@ export interface TypoRepository {
    */
   clear(): Promise<void>;
 }
-export type TypoRepositoryDep = Dep0 & {
+export interface TypoRepositoryDep extends Dep0 {
   type: TypoRepository;
-};
-export const typoRepositoryKey = Symbol('TYPO_REPOSITORY') as TypoRepositoryDep;
+}
+export const typoRepositoryKey = Symbol(
+  'TYPO_REPOSITORY'
+) as unknown as TypoRepositoryDep;
 
 /**
  * 「だカス」で終わるメッセージを, それを取り除いて記録する。

@@ -18,8 +18,10 @@ export interface Clock {
    */
   now(): Date;
 }
-export type ClockDep = Dep0 & { type: Clock };
-export const clockKey = Symbol('CLOCK') as ClockDep;
+export interface ClockDep extends Dep0 {
+  type: Clock;
+}
+export const clockKey = Symbol('CLOCK') as unknown as ClockDep;
 
 const CONSUMPTION_INTERVAL = 100;
 
@@ -101,5 +103,9 @@ export class ScheduleRunner {
       .map(([key, [task]]) => [key, task]);
   }
 }
-export type ScheduleRunnerDep = Dep0 & { type: ScheduleRunner };
-export const scheduleRunnerKey = Symbol('SCHEDULE_RUNNER') as ScheduleRunnerDep;
+export interface ScheduleRunnerDep extends Dep0 {
+  type: ScheduleRunner;
+}
+export const scheduleRunnerKey = Symbol(
+  'SCHEDULE_RUNNER'
+) as unknown as ScheduleRunnerDep;

@@ -6,10 +6,12 @@ export interface MemberStats {
   allMemberCount(): Promise<number>;
   botMemberCount(): Promise<number>;
 }
-export type MemberStatsDep = Dep0 & {
+export interface MemberStatsDep extends Dep0 {
   readonly type: MemberStats;
-};
-export const memberStatsKey = Symbol('MEMBER_STATS') as MemberStatsDep;
+}
+export const memberStatsKey = Symbol(
+  'MEMBER_STATS'
+) as unknown as MemberStatsDep;
 
 const SCHEMA = {
   names: [

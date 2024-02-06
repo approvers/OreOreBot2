@@ -1,9 +1,9 @@
-export type Dep0 = {
+export interface Dep0 {
   readonly type: unknown;
-} & symbol;
-export type Dep1 = Dep0 & {
+}
+export interface Dep1 extends Dep0 {
   readonly param1: unknown;
-};
+}
 
 export type Apply1<S, A1> = S & { param1: A1 };
 
@@ -14,7 +14,8 @@ export class DepRegistry {
   #dict = new Map<symbol, unknown>();
 
   add<K extends Dep0>(key: K, value: GetDep0<K>): void;
-  add<K extends Dep1, A1>(key: K, value: GetDep1<K, A1>): void {
+  add<K extends Dep1, A1>(key: K, value: GetDep1<K, A1>): void;
+  add(key: symbol, value: never): void {
     if (this.#dict.has(key)) {
       throw new Error(`exists on key: ${key.description}`);
     }
