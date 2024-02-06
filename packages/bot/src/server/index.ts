@@ -191,7 +191,6 @@ registry.add(voiceRoomControllerKey, roomController);
 
 if (features.includes('COMMAND')) {
   registerAllCommandResponder({
-    random,
     commandRunner,
     registry,
     sheriff: new DiscordSheriff(client),

@@ -11,7 +11,7 @@ import { DiceCommand, type DiceQueen } from './command/dice.js';
 import { GuildInfo, type GuildStatsRepository } from './command/guild-info.js';
 import { GyokuonCommand } from './command/gyokuon.js';
 import { HelpCommand } from './command/help.js';
-import { JudgingCommand, type RandomGenerator } from './command/judging.js';
+import { JudgingCommand } from './command/judging.js';
 import { KaereCommand } from './command/kaere.js';
 import { KokuseiChousa } from './command/kokusei-chousa.js';
 import { Meme } from './command/meme.js';
@@ -29,7 +29,6 @@ import { UserInfo, type UserStatsRepository } from './command/user-info.js';
 import { GetVersionCommand, type VersionFetcher } from './command/version.js';
 
 export const registerAllCommandResponder = ({
-  random,
   commandRunner,
   sheriff,
   ping,
@@ -44,7 +43,6 @@ export const registerAllCommandResponder = ({
   channelRepository,
   registry
 }: {
-  random: RandomGenerator;
   commandRunner: CommandRunner;
   sheriff: Sheriff;
   ping: Ping;
@@ -64,7 +62,7 @@ export const registerAllCommandResponder = ({
     new PartyCommand(registry),
     new KaereCommand(registry),
     new GyokuonCommand(registry),
-    new JudgingCommand(random),
+    new JudgingCommand(registry),
     new Meme(),
     new HelpCommand(commandRunner),
     new KokuseiChousa(registry),
