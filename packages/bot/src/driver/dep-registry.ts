@@ -22,8 +22,8 @@ export class DepRegistry {
     this.#dict.set(key, value);
   }
 
-  has(key: symbol): boolean {
-    return this.#dict.has(key);
+  has(key: Dep0): boolean {
+    return this.#dict.has(key as unknown as symbol);
   }
 
   get<K extends Dep0>(key: K): GetDep0<K>;
@@ -35,8 +35,8 @@ export class DepRegistry {
     return this.#dict.get(key) as never;
   }
 
-  remove(key: symbol): void {
-    this.#dict.delete(key);
+  remove(key: Dep0): void {
+    this.#dict.delete(key as unknown as symbol);
   }
 
   clear(): void {
