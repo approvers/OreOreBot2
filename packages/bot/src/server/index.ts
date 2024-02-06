@@ -51,6 +51,7 @@ import {
   RoleResponseRunner,
   ScheduleRunner,
   VoiceRoomResponseRunner,
+  clockKey,
   scheduleRunnerKey
 } from '../runner/index.js';
 import { MemberResponseRunner } from '../runner/member.js';
@@ -134,6 +135,7 @@ registry.add(typoRepositoryKey, typoRepo);
 const reservationRepo = new InMemoryReservationRepository();
 registry.add(reservationRepositoryKey, reservationRepo);
 const clock = new ActualClock();
+registry.add(clockKey, clock);
 const sequencesYaml = loadEmojiSeqYaml(['assets', 'emoji-seq.yaml']);
 const standardOutput = new DiscordStandardOutput(client, mainChannelId);
 registry.add(standardOutputKey, standardOutput);
