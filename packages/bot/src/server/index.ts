@@ -64,7 +64,9 @@ import {
   allStickerResponder,
   registerAllCommandResponder
 } from '../service/index.js';
+import { randomGeneratorKey } from '../service/random-generator.js';
 import { startTimeSignal } from '../service/time-signal.js';
+import { voiceConnectionFactoryKey } from '../service/voice-connection.js';
 import {
   type VoiceChannelParticipant,
   VoiceDiff
@@ -162,25 +164,29 @@ const channelRepository = new DiscordChannelRepository(
   GUILD_ID as Snowflake
 );
 const versionFetcher = new GenVersionFetcher();
+const factory = new DiscordVoiceConnectionFactory<
+  AssetKey | KaereMusicKey | GyokuonAssetKey
+>(client, {
+  COFFIN_INTRO: join('assets', 'party', 'coffin-intro.mp3'),
+  COFFIN_DROP: join('assets', 'party', 'coffin-drop.mp3'),
+  KAKAPO: join('assets', 'party', 'kakapo.mp3'),
+  KAKUSIN_DAISUKE: join('assets', 'party', 'kakusin-daisuke.mp3'),
+  POTATO: join('assets', 'party', 'potato.mp3'),
+  NEROYO: join('assets', 'kaere', 'neroyo.mp3'),
+  GYOKUON: join('assets', 'gyokuon', 'gyokuon.mp3'),
+  GYOKUON_SHORT: join('assets', 'gyokuon', 'gyokuon-short.mp3')
+});
+registry.add(voiceConnectionFactoryKey, factory);
+const random = new MathRandomGenerator();
+registry.add(randomGeneratorKey, random);
 
 if (features.includes('COMMAND')) {
   registerAllCommandResponder({
     reservationRepo,
-    factory: new DiscordVoiceConnectionFactory<
-      AssetKey | KaereMusicKey | GyokuonAssetKey
-    >(client, {
-      COFFIN_INTRO: join('assets', 'party', 'coffin-intro.mp3'),
-      COFFIN_DROP: join('assets', 'party', 'coffin-drop.mp3'),
-      KAKAPO: join('assets', 'party', 'kakapo.mp3'),
-      KAKUSIN_DAISUKE: join('assets', 'party', 'kakusin-daisuke.mp3'),
-      POTATO: join('assets', 'party', 'potato.mp3'),
-      NEROYO: join('assets', 'kaere', 'neroyo.mp3'),
-      GYOKUON: join('assets', 'gyokuon', 'gyokuon.mp3'),
-      GYOKUON_SHORT: join('assets', 'gyokuon', 'gyokuon-short.mp3')
-    }),
+    factory,
     clock,
     scheduleRunner,
-    random: new MathRandomGenerator(),
+    random,
     roomController: new DiscordVoiceRoomController(client),
     commandRunner,
     registry,

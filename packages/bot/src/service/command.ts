@@ -21,11 +21,7 @@ import {
 } from './command/kaere.js';
 import { KokuseiChousa } from './command/kokusei-chousa.js';
 import { Meme } from './command/meme.js';
-import {
-  type AssetKey,
-  PartyCommand,
-  type RandomGenerator as PartyRng
-} from './command/party.js';
+import { PartyCommand } from './command/party.js';
 import { type Ping, PingCommand } from './command/ping.js';
 import { RoleCreate, type RoleCreateManager } from './command/role-create.js';
 import { RoleInfo, type RoleStatsRepository } from './command/role-info.js';
@@ -63,10 +59,10 @@ export const registerAllCommandResponder = ({
   registry
 }: {
   reservationRepo: ReservationRepository;
-  factory: VoiceConnectionFactory<AssetKey | KaereMusicKey | GyokuonAssetKey>;
+  factory: VoiceConnectionFactory<KaereMusicKey | GyokuonAssetKey>;
   clock: Clock;
   scheduleRunner: ScheduleRunner;
-  random: PartyRng & RandomGenerator;
+  random: RandomGenerator;
   roomController: VoiceRoomController;
   commandRunner: CommandRunner;
   sheriff: Sheriff;
@@ -85,7 +81,7 @@ export const registerAllCommandResponder = ({
 }) => {
   const allResponders = [
     new TypoReporter(registry),
-    new PartyCommand({ factory, clock, scheduleRunner, random }),
+    new PartyCommand(registry),
     new KaereCommand({
       connectionFactory: factory,
       controller: roomController,
