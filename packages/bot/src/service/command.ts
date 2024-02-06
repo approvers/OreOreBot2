@@ -17,7 +17,7 @@ import { KokuseiChousa } from './command/kokusei-chousa.js';
 import { Meme } from './command/meme.js';
 import { PartyCommand } from './command/party.js';
 import { PingCommand } from './command/ping.js';
-import { RoleCreate, type RoleCreateManager } from './command/role-create.js';
+import { RoleCreate } from './command/role-create.js';
 import { RoleInfo } from './command/role-info.js';
 import { RoleRank } from './command/role-rank.js';
 import { SheriffCommand } from './command/stfu.js';
@@ -28,12 +28,10 @@ import { GetVersionCommand } from './command/version.js';
 export const registerAllCommandResponder = (
   commandRunner: CommandRunner,
   {
-    roleCreateRepo,
     queen,
     channelRepository,
     registry
   }: {
-    roleCreateRepo: RoleCreateManager;
     queen: DiceQueen;
     channelRepository: ChannelStatsRepository;
     registry: DepRegistry;
@@ -56,7 +54,7 @@ export const registerAllCommandResponder = (
     new RoleInfo(registry),
     new UserInfo(registry),
     new GuildInfo(registry),
-    new RoleCreate(roleCreateRepo),
+    new RoleCreate(registry),
     new DiceCommand(queen),
     new ChannelInfo(channelRepository)
   ];

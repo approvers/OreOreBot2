@@ -39,6 +39,7 @@ import { DepRegistry } from '../driver/dep-registry.js';
 import { guildRepositoryKey } from '../model/guild.js';
 import type { Snowflake } from '../model/id.js';
 import { membersRepositoryKey } from '../model/member.js';
+import { roleRepositoryKey } from '../model/role.js';
 import { voiceRoomControllerKey } from '../model/voice-room-controller.js';
 import { CommandRunner } from '../runner/command.js';
 import {
@@ -62,7 +63,6 @@ import { memberStatsKey } from '../service/command/kokusei-chousa.js';
 import type { AssetKey } from '../service/command/party.js';
 import { pingKey } from '../service/command/ping.js';
 import { registerCommands } from '../service/command/register.js';
-import { roleRepositoryKey } from '../service/command/role-info.js';
 import { sheriffKey } from '../service/command/stfu.js';
 import { typoRepositoryKey } from '../service/command/typo-record.js';
 import { versionFetcherKey } from '../service/command/version.js';
@@ -209,7 +209,6 @@ registry.add(messageRepositoryKey, messageRepo);
 if (features.includes('COMMAND')) {
   registerAllCommandResponder(commandRunner, {
     registry,
-    roleCreateRepo: roleManager,
     queen: new MathRandomGenerator(),
     channelRepository
   });

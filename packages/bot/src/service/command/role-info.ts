@@ -1,35 +1,8 @@
-import type { Dep0, DepRegistry } from '../../driver/dep-registry.js';
+import type { DepRegistry } from '../../driver/dep-registry.js';
 import { createTimestamp } from '../../model/create-timestamp.js';
+import { roleRepositoryKey, type RoleStats } from '../../model/role.js';
 import type { HelpInfo } from '../../runner/command.js';
 import type { CommandMessage, CommandResponderFor } from './command-message.js';
-
-export type RoleIcon =
-  | {
-      isUnicode: true;
-      emoji: string;
-    }
-  | {
-      isUnicode: false;
-      hash: string;
-    };
-
-export interface RoleStats {
-  color: string;
-  createdAt: Date;
-  icon?: RoleIcon;
-  numOfMembersBelonged: number;
-  position: number;
-}
-
-export interface RoleStatsRepository {
-  fetchStats(roleId: string): Promise<RoleStats | null>;
-}
-export interface RoleRepositoryDep extends Dep0 {
-  type: RoleStatsRepository;
-}
-export const roleRepositoryKey = Symbol(
-  'ROLE_REPOSITORY'
-) as unknown as RoleRepositoryDep;
 
 const SCHEMA = {
   names: ['roleinfo', 'role'],
