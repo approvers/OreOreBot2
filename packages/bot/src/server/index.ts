@@ -35,6 +35,7 @@ import { memberProxy } from '../adaptor/proxy/member.js';
 import { StickerProxy } from '../adaptor/proxy/sticker.js';
 import { loadSchedule } from '../adaptor/signal-schedule.js';
 import { GenVersionFetcher } from '../adaptor/version/fetch.js';
+import { DepRegistry } from '../driver/dep-registry.js';
 import type { Snowflake } from '../model/id.js';
 import { CommandRunner } from '../runner/command.js';
 import {
@@ -49,6 +50,7 @@ import { MemberResponseRunner } from '../runner/member.js';
 import { StickerResponseRunner } from '../runner/sticker.js';
 import type { GyokuonAssetKey } from '../service/command/gyokuon.js';
 import type { KaereMusicKey } from '../service/command/kaere.js';
+import { memberStatsKey } from '../service/command/kokusei-chousa.js';
 import type { AssetKey } from '../service/command/party.js';
 import { registerCommands } from '../service/command/register.js';
 import {
@@ -156,6 +158,9 @@ const channelRepository = new DiscordChannelRepository(
 );
 const versionFetcher = new GenVersionFetcher();
 
+const registry = new DepRegistry();
+registry.add(memberStatsKey, stats);
+
 if (features.includes('COMMAND')) {
   registerAllCommandResponder({
     typoRepo,
@@ -177,7 +182,7 @@ if (features.includes('COMMAND')) {
     random: new MathRandomGenerator(),
     roomController: new DiscordVoiceRoomController(client),
     commandRunner,
-    stats,
+    registry,
     sheriff: new DiscordSheriff(client),
     ping: new DiscordWS(client),
     fetcher: versionFetcher,

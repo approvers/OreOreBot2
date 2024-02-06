@@ -1,3 +1,4 @@
+import type { DepRegistry } from '../driver/dep-registry.js';
 import type { Schema } from '../model/command-schema.js';
 import type { CommandRunner } from '../runner/command.js';
 import type { Clock, ScheduleRunner } from '../runner/schedule.js';
@@ -18,7 +19,7 @@ import {
   type ReservationRepository,
   type VoiceRoomController
 } from './command/kaere.js';
-import { KokuseiChousa, type MemberStats } from './command/kokusei-chousa.js';
+import { KokuseiChousa } from './command/kokusei-chousa.js';
 import { Meme } from './command/meme.js';
 import {
   type AssetKey,
@@ -48,7 +49,6 @@ export const registerAllCommandResponder = ({
   random,
   roomController,
   commandRunner,
-  stats,
   sheriff,
   ping,
   fetcher,
@@ -60,7 +60,8 @@ export const registerAllCommandResponder = ({
   roleCreateRepo,
   queen,
   stdout,
-  channelRepository
+  channelRepository,
+  registry
 }: {
   typoRepo: TypoRepository;
   reservationRepo: ReservationRepository;
@@ -70,7 +71,6 @@ export const registerAllCommandResponder = ({
   random: PartyRng & RandomGenerator;
   roomController: VoiceRoomController;
   commandRunner: CommandRunner;
-  stats: MemberStats;
   sheriff: Sheriff;
   ping: Ping;
   fetcher: VersionFetcher;
@@ -83,6 +83,7 @@ export const registerAllCommandResponder = ({
   queen: DiceQueen;
   stdout: StandardOutput;
   channelRepository: ChannelStatsRepository;
+  registry: DepRegistry;
 }) => {
   const allResponders = [
     new TypoReporter(typoRepo, clock, scheduleRunner),
@@ -102,7 +103,7 @@ export const registerAllCommandResponder = ({
     new JudgingCommand(random),
     new Meme(),
     new HelpCommand(commandRunner),
-    new KokuseiChousa(stats),
+    new KokuseiChousa(registry),
     new SheriffCommand(sheriff),
     new PingCommand(ping),
     new GetVersionCommand(fetcher),

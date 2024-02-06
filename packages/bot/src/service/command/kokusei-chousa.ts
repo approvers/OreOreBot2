@@ -1,3 +1,4 @@
+import type { Dep0, DepRegistry } from '../../driver/dep-registry.js';
 import type { HelpInfo } from '../../runner/command.js';
 import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
@@ -5,6 +6,10 @@ export interface MemberStats {
   allMemberCount(): Promise<number>;
   botMemberCount(): Promise<number>;
 }
+export type MemberStatsDep = Dep0 & {
+  readonly type: MemberStats;
+};
+export const memberStatsKey = Symbol('MEMBER_STATS') as MemberStatsDep;
 
 const SCHEMA = {
   names: [
@@ -27,11 +32,12 @@ export class KokuseiChousa implements CommandResponderFor<typeof SCHEMA> {
   };
   readonly schema = SCHEMA;
 
-  constructor(private readonly stats: MemberStats) {}
+  constructor(private readonly reg: DepRegistry) {}
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
-    const botMemberCount = await this.stats.botMemberCount();
-    const allMemberCount = await this.stats.allMemberCount();
+    const stats = this.reg.get(memberStatsKey);
+    const botMemberCount = await stats.botMemberCount();
+    const allMemberCount = await stats.allMemberCount();
     const peopleCount = allMemberCount - botMemberCount;
     const botRate = (botMemberCount / allMemberCount) * 100;
 
