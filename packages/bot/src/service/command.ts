@@ -1,10 +1,7 @@
 import type { DepRegistry } from '../driver/dep-registry.js';
 import type { Schema } from '../model/command-schema.js';
 import type { CommandRunner } from '../runner/command.js';
-import {
-  ChannelInfo,
-  type ChannelStatsRepository
-} from './command/channel-info.js';
+import { ChannelInfo } from './command/channel-info.js';
 import type { CommandResponderFor } from './command/command-message.js';
 import { DebugCommand } from './command/debug.js';
 import { DiceCommand } from './command/dice.js';
@@ -27,13 +24,7 @@ import { GetVersionCommand } from './command/version.js';
 
 export const registerAllCommandResponder = (
   commandRunner: CommandRunner,
-  {
-    channelRepository,
-    registry
-  }: {
-    channelRepository: ChannelStatsRepository;
-    registry: DepRegistry;
-  }
+  registry: DepRegistry
 ) => {
   const allResponders = [
     new TypoReporter(registry),
@@ -54,7 +45,7 @@ export const registerAllCommandResponder = (
     new GuildInfo(registry),
     new RoleCreate(registry),
     new DiceCommand(registry),
-    new ChannelInfo(channelRepository)
+    new ChannelInfo(registry)
   ];
   for (const responder of allResponders) {
     commandRunner.addResponder(

@@ -36,6 +36,7 @@ import { StickerProxy } from '../adaptor/proxy/sticker.js';
 import { loadSchedule } from '../adaptor/signal-schedule.js';
 import { GenVersionFetcher } from '../adaptor/version/fetch.js';
 import { DepRegistry } from '../driver/dep-registry.js';
+import { channelRepositoryKey } from '../model/channel.js';
 import { guildRepositoryKey } from '../model/guild.js';
 import type { Snowflake } from '../model/id.js';
 import { membersRepositoryKey } from '../model/member.js';
@@ -180,6 +181,7 @@ const channelRepository = new DiscordChannelRepository(
   client,
   GUILD_ID as Snowflake
 );
+registry.add(channelRepositoryKey, channelRepository);
 const versionFetcher = new GenVersionFetcher();
 registry.add(versionFetcherKey, versionFetcher);
 const factory = new DiscordVoiceConnectionFactory<
@@ -207,10 +209,7 @@ const messageRepo = new DiscordMessageRepository(client);
 registry.add(messageRepositoryKey, messageRepo);
 
 if (features.includes('COMMAND')) {
-  registerAllCommandResponder(commandRunner, {
-    registry,
-    channelRepository
-  });
+  registerAllCommandResponder(commandRunner, registry);
 }
 
 const rest = new REST().setToken(token);
