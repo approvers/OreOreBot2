@@ -61,6 +61,7 @@ import { pingKey } from '../service/command/ping.js';
 import { registerCommands } from '../service/command/register.js';
 import { sheriffKey } from '../service/command/stfu.js';
 import { typoRepositoryKey } from '../service/command/typo-record.js';
+import { versionFetcherKey } from '../service/command/version.js';
 import {
   allEmojiResponder,
   allMemberResponder,
@@ -173,6 +174,7 @@ const channelRepository = new DiscordChannelRepository(
   GUILD_ID as Snowflake
 );
 const versionFetcher = new GenVersionFetcher();
+registry.add(versionFetcherKey, versionFetcher);
 const factory = new DiscordVoiceConnectionFactory<
   AssetKey | KaereMusicKey | GyokuonAssetKey
 >(client, {
@@ -198,7 +200,6 @@ registry.add(pingKey, ping);
 if (features.includes('COMMAND')) {
   registerAllCommandResponder(commandRunner, {
     registry,
-    fetcher: versionFetcher,
     messageRepo: new DiscordMessageRepository(client),
     membersRepo: stats,
     roleRepo: roleManager,
