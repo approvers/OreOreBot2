@@ -1,13 +1,16 @@
 import { describe, expect, test, vi } from 'vitest';
 
 import { MockClock } from '../adaptor/clock.js';
-import { ScheduleRunner } from '../runner/schedule.js';
+import { DepRegistry } from '../driver/dep-registry.js';
+import { ScheduleRunner, clockKey } from '../runner/schedule.js';
 import type { StandardOutput } from './output.js';
 import { type SignalSchedule, startTimeSignal } from './time-signal.js';
 
 describe('time signal reported', () => {
   const clock = new MockClock(new Date(Date.UTC(2020, 0, 1, 0, 0)));
-  const runner = new ScheduleRunner(clock);
+  const reg = new DepRegistry();
+  reg.add(clockKey, clock);
+  const runner = new ScheduleRunner(reg);
   const output: StandardOutput = { sendEmbed: () => Promise.resolve() };
   test('at now', () => {
     const sendEmbed = vi.spyOn(output, 'sendEmbed');

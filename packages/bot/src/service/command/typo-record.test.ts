@@ -1,15 +1,21 @@
 import { addDays, setHours, setMinutes } from 'date-fns';
 import EventEmitter from 'node:events';
-import { afterAll, describe, expect, it, vi } from 'vitest';
+import { afterAll, afterEach, describe, expect, it, vi } from 'vitest';
 
 import { InMemoryTypoRepository, MockClock } from '../../adaptor/index.js';
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
+import { DepRegistry } from '../../driver/dep-registry.js';
 import type { Snowflake } from '../../model/id.js';
-import { ScheduleRunner } from '../../runner/index.js';
+import {
+  ScheduleRunner,
+  clockKey,
+  scheduleRunnerKey
+} from '../../runner/index.js';
 import { createMockMessage } from './command-message.js';
 import {
   TypoRecorder,
   TypoReporter,
+  typoRepositoryKey,
   type TypoRepository
 } from './typo-record.js';
 
@@ -36,7 +42,9 @@ it('react to だカス', async () => {
     expect(id).toEqual('279614913129742338');
     expect(newTypo).toEqual('京都帝国大学じゃなくて今日とて');
   });
-  const responder = new TypoRecorder(mock);
+  const reg = new DepRegistry();
+  reg.add(typoRepositoryKey, mock);
+  const responder = new TypoRecorder(reg);
   await responder.on('CREATE', {
     content: `京都帝国大学じゃなくて今日とてだカス`,
     authorId: '279614913129742338' as Snowflake
@@ -49,7 +57,9 @@ it('must not react', async () => {
   mock.on('ADD_TYPO', fn);
   mock.on('ALL_TYPOS', fn);
   mock.on('CLEAR', fn);
-  const responder = new TypoRecorder(mock);
+  const reg = new DepRegistry();
+  reg.add(typoRepositoryKey, mock);
+  const responder = new TypoRecorder(reg);
   await responder.on('CREATE', {
     content: `だカス`,
     authorId: '279614913129742338' as Snowflake
@@ -71,21 +81,28 @@ it('must not react', async () => {
 });
 
 describe('typo record command', () => {
+  const reg = new DepRegistry();
   const clock = new MockClock(new Date(0));
-  const runner = new ScheduleRunner(clock);
+  reg.add(clockKey, clock);
+  const runner = new ScheduleRunner(reg);
+  reg.add(scheduleRunnerKey, runner);
 
+  afterEach(() => {
+    reg.remove(typoRepositoryKey);
+  });
   afterAll(() => {
     runner.killAll();
   });
 
   it('show all typos', async () => {
     const db = new InMemoryTypoRepository();
+    reg.add(typoRepositoryKey, db);
     await db.addTypo('279614913129742338' as Snowflake, 'foo');
     await db.addTypo('279614913129742338' as Snowflake, 'hoge');
     await db.addTypo('279614913129742338' as Snowflake, 'fuga');
     await db.addTypo('000000000000000001' as Snowflake, 'null');
 
-    const responder = new TypoReporter(db, clock, runner);
+    const responder = new TypoReporter(reg);
     await responder.on(
       createMockMessage(
         parseStringsOrThrow(['typo'], responder.schema),
@@ -115,9 +132,10 @@ describe('typo record command', () => {
 
   it('clear typos on next day', async () => {
     const db = new InMemoryTypoRepository();
+    reg.add(typoRepositoryKey, db);
     await db.addTypo('279614913129742338' as Snowflake, 'foo');
     await db.addTypo('279614913129742338' as Snowflake, 'hoge');
-    const responder = new TypoReporter(db, clock, runner);
+    const responder = new TypoReporter(reg);
     await responder.on(
       createMockMessage(
         parseStringsOrThrow(['typo'], responder.schema),

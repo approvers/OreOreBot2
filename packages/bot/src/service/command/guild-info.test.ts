@@ -1,16 +1,18 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
+import { DepRegistry } from '../../driver/dep-registry.js';
+import { guildRepositoryKey, type GuildRepository } from '../../model/guild.js';
 import type { Snowflake } from '../../model/id.js';
 import { createMockMessage } from './command-message.js';
-import { GuildInfo, type GuildStatsRepository } from './guild-info.js';
+import { GuildInfo } from './guild-info.js';
 
 describe('GuildInfo', () => {
   afterEach(() => {
     vi.resetAllMocks();
   });
 
-  const repo: GuildStatsRepository = {
+  const repo: GuildRepository = {
     fetchGuildStats: () =>
       Promise.resolve({
         afkChannelId: '888657623182868480' as Snowflake,
@@ -31,8 +33,9 @@ describe('GuildInfo', () => {
         verificationLevel: '最高(電話番号認証要求)'
       })
   };
-
-  const guildInfo = new GuildInfo(repo);
+  const reg = new DepRegistry();
+  reg.add(guildRepositoryKey, repo);
+  const guildInfo = new GuildInfo(reg);
 
   it('Success GuildInfo', async () => {
     const fetchStats = vi.spyOn(repo, 'fetchGuildStats');

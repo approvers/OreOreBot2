@@ -1,15 +1,22 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
+import { DepRegistry } from '../../driver/dep-registry.js';
+import {
+  dummyRoleRepository,
+  roleRepositoryKey,
+  type RoleRepository
+} from '../../model/role.js';
 import { createMockMessage } from './command-message.js';
-import { RoleInfo, type RoleStatsRepository } from './role-info.js';
+import { RoleInfo } from './role-info.js';
 
 describe('RoleRank', () => {
   afterEach(() => {
     vi.restoreAllMocks();
   });
 
-  const repo: RoleStatsRepository = {
+  const repo: RoleRepository = {
+    ...dummyRoleRepository,
     fetchStats: (id) =>
       Promise.resolve(
         id === '101'
@@ -22,7 +29,9 @@ describe('RoleRank', () => {
           : null
       )
   };
-  const roleInfo = new RoleInfo(repo);
+  const reg = new DepRegistry();
+  reg.add(roleRepositoryKey, repo);
+  const roleInfo = new RoleInfo(reg);
 
   it('gets info of role', async () => {
     const fetchStats = vi.spyOn(repo, 'fetchStats');

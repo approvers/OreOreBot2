@@ -1,9 +1,10 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
+import { DepRegistry } from '../../driver/dep-registry.js';
 import type { Snowflake } from '../../model/id.js';
 import { createMockMessage } from './command-message.js';
-import { type Sheriff, SheriffCommand } from './stfu.js';
+import { type Sheriff, SheriffCommand, sheriffKey } from './stfu.js';
 
 describe('stfu', () => {
   afterEach(() => {
@@ -11,7 +12,9 @@ describe('stfu', () => {
   });
 
   const sheriff: Sheriff = { executeMessage: () => Promise.resolve() };
-  const responder = new SheriffCommand(sheriff);
+  const reg = new DepRegistry();
+  reg.add(sheriffKey, sheriff);
+  const responder = new SheriffCommand(reg);
 
   it('use case of stfu', async () => {
     const executeMessage = vi.spyOn(sheriff, 'executeMessage');

@@ -6,19 +6,37 @@ import {
   MockVoiceConnectionFactory
 } from '../../adaptor/index.js';
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
-import { ScheduleRunner } from '../../runner/index.js';
-import type { StandardOutput } from '../output.js';
+import { DepRegistry } from '../../driver/dep-registry.js';
+import { voiceRoomControllerKey } from '../../model/voice-room-controller.js';
+import {
+  ScheduleRunner,
+  clockKey,
+  scheduleRunnerKey
+} from '../../runner/index.js';
+import { standardOutputKey } from '../output.js';
+import { voiceConnectionFactoryKey } from '../voice-connection.js';
 import { createMockMessage } from './command-message.js';
-import { KaereCommand, type KaereMusicKey } from './kaere.js';
+import {
+  KaereCommand,
+  reservationRepositoryKey,
+  type KaereMusicKey
+} from './kaere.js';
 
 it('use case of kaere', async () => {
   const fn = vi.fn();
+  const reg = new DepRegistry();
   const connectionFactory = new MockVoiceConnectionFactory<KaereMusicKey>();
+  reg.add(voiceConnectionFactoryKey, connectionFactory);
   const clock = new MockClock(new Date(0));
-  const scheduleRunner = new ScheduleRunner(clock);
+  reg.add(clockKey, clock);
+  const scheduleRunner = new ScheduleRunner(reg);
+  reg.add(scheduleRunnerKey, scheduleRunner);
   const repo = new InMemoryReservationRepository();
-
-  const output: StandardOutput = {
+  reg.add(reservationRepositoryKey, repo);
+  reg.add(voiceRoomControllerKey, {
+    disconnectAllUsersIn: fn
+  });
+  reg.add(standardOutputKey, {
     sendEmbed(message) {
       expect(message).toStrictEqual({
         title: '提督、もうこんな時間だよ',
@@ -26,18 +44,9 @@ it('use case of kaere', async () => {
       });
       return Promise.resolve();
     }
-  };
-
-  const responder = new KaereCommand({
-    connectionFactory,
-    controller: {
-      disconnectAllUsersIn: fn
-    },
-    clock,
-    scheduleRunner,
-    stdout: output,
-    repo
   });
+
+  const responder = new KaereCommand(reg);
 
   await responder.on(
     createMockMessage(

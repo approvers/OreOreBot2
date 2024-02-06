@@ -1,9 +1,14 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
+import { DepRegistry } from '../../driver/dep-registry.js';
 import type { Snowflake } from '../../model/id.js';
 import { createMockMessage } from './command-message.js';
-import { DebugCommand, type MessageRepository } from './debug.js';
+import {
+  DebugCommand,
+  messageRepositoryKey,
+  type MessageRepository
+} from './debug.js';
 
 describe('debug', () => {
   afterEach(() => {
@@ -13,7 +18,9 @@ describe('debug', () => {
   const repo: MessageRepository = {
     getMessageContent: () => Promise.resolve(undefined)
   };
-  const responder = new DebugCommand(repo);
+  const reg = new DepRegistry();
+  reg.add(messageRepositoryKey, repo);
+  const responder = new DebugCommand(reg);
 
   it('outputs debug format', async () => {
     const getMessageContent = vi

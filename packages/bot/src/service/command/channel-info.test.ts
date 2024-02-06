@@ -1,8 +1,12 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
+import { DepRegistry } from '../../driver/dep-registry.js';
+import {
+  channelRepositoryKey,
+  type ChannelRepository
+} from '../../model/channel.js';
 import type { Snowflake } from '../../model/id.js';
-import type { ChannelStatsRepository } from './channel-info.js';
 import { ChannelInfo } from './channel-info.js';
 import { createMockMessage } from './command-message.js';
 
@@ -11,7 +15,7 @@ describe('ChannelInfo', () => {
     vi.restoreAllMocks();
   });
 
-  const repo: ChannelStatsRepository = {
+  const repo: ChannelRepository = {
     fetchStats: (id) =>
       Promise.resolve(
         id === '101'
@@ -24,7 +28,9 @@ describe('ChannelInfo', () => {
           : null
       )
   };
-  const channelInfo = new ChannelInfo(repo);
+  const reg = new DepRegistry();
+  reg.add(channelRepositoryKey, repo);
+  const channelInfo = new ChannelInfo(reg);
 
   it('gets info of role', async () => {
     const fetchStats = vi.spyOn(repo, 'fetchStats');

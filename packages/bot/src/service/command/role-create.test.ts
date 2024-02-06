@@ -1,23 +1,25 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
+import { DepRegistry } from '../../driver/dep-registry.js';
+import { dummyRoleRepository, roleRepositoryKey } from '../../model/role.js';
 import { createMockMessage } from './command-message.js';
-import { RoleCreate, type RoleCreateManager } from './role-create.js';
+import { RoleCreate } from './role-create.js';
 
 describe('Create a role', () => {
   afterEach(() => {
     vi.restoreAllMocks();
   });
 
-  const manager: RoleCreateManager = {
-    createRole: () => Promise.resolve()
-  };
-  const createRole = new RoleCreate(manager);
+  const reg = new DepRegistry();
+  const repo = dummyRoleRepository;
+  reg.add(roleRepositoryKey, repo);
+  const createRole = new RoleCreate(reg);
 
   it('create a role(command)', async () => {
     const newRoleName = 'かわえもんのおねえさん';
     const newRoleColor = '141313'; //黒
-    const createGuildRole = vi.spyOn(manager, 'createRole');
+    const createGuildRole = vi.spyOn(repo, 'createRole');
     const fn = vi.fn();
 
     await createRole.on(
@@ -44,7 +46,7 @@ describe('Create a role', () => {
   it('create a role(lower case)', async () => {
     const newRoleName = 'かわえもんのおねえさん';
     const newRoleColor = 'faac9b'; //黒
-    const createGuildRole = vi.spyOn(manager, 'createRole');
+    const createGuildRole = vi.spyOn(repo, 'createRole');
     const fn = vi.fn();
 
     await createRole.on(
@@ -71,7 +73,7 @@ describe('Create a role', () => {
   it('create a role(big letter)', async () => {
     const newRoleName = 'かわえもんのおねえさん';
     const newRoleColor = 'FAAC9B'; //黒
-    const createGuildRole = vi.spyOn(manager, 'createRole');
+    const createGuildRole = vi.spyOn(repo, 'createRole');
     const fn = vi.fn();
 
     await createRole.on(
@@ -97,7 +99,7 @@ describe('Create a role', () => {
 
   it('HEX Error (rolecolor)', async () => {
     const newRoleName = 'かわえもんのおねえさん';
-    const createGuildRole = vi.spyOn(manager, 'createRole');
+    const createGuildRole = vi.spyOn(repo, 'createRole');
     const fn = vi.fn();
 
     await createRole.on(
@@ -120,7 +122,7 @@ describe('Create a role', () => {
 
   it('HEX sharp mark', async () => {
     const newRoleName = 'かわえもんのおねえさん';
-    const createGuildRole = vi.spyOn(manager, 'createRole');
+    const createGuildRole = vi.spyOn(repo, 'createRole');
     const fn = vi.fn();
 
     await createRole.on(
