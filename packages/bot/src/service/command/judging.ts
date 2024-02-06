@@ -5,8 +5,8 @@ import {
   isJudgingStatus,
   waitingJudgingEmoji
 } from '../../model/judging-status.js';
+import { randomGeneratorKey } from '../../model/random-generator.js';
 import type { HelpInfo } from '../../runner/command.js';
-import { randomGeneratorKey } from '../random-generator.js';
 import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
 const JUDGING_TITLE = '***†HARACHO ONLINE JUDGING SYSTEM†***';

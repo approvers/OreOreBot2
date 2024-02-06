@@ -7,7 +7,7 @@ import {
 } from './command/channel-info.js';
 import type { CommandResponderFor } from './command/command-message.js';
 import { DebugCommand } from './command/debug.js';
-import { DiceCommand, type DiceQueen } from './command/dice.js';
+import { DiceCommand } from './command/dice.js';
 import { GuildInfo } from './command/guild-info.js';
 import { GyokuonCommand } from './command/gyokuon.js';
 import { HelpCommand } from './command/help.js';
@@ -28,11 +28,9 @@ import { GetVersionCommand } from './command/version.js';
 export const registerAllCommandResponder = (
   commandRunner: CommandRunner,
   {
-    queen,
     channelRepository,
     registry
   }: {
-    queen: DiceQueen;
     channelRepository: ChannelStatsRepository;
     registry: DepRegistry;
   }
@@ -55,7 +53,7 @@ export const registerAllCommandResponder = (
     new UserInfo(registry),
     new GuildInfo(registry),
     new RoleCreate(registry),
-    new DiceCommand(queen),
+    new DiceCommand(registry),
     new ChannelInfo(channelRepository)
   ];
   for (const responder of allResponders) {

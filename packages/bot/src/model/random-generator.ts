@@ -36,6 +36,14 @@ export interface RandomGenerator {
    * @returns 生成した乱数
    */
   uniform(from: number, to: number): number;
+
+  /**
+   *
+   * @param faces - ダイスの面の数
+   * @param howManyRolls - 振るダイスの個数
+   * @returns 降ったダイスの数値のリスト。長さは `howManyRolls` に等しい。
+   */
+  roll(faces: number, howManyRolls: number): number[];
 }
 export interface RandomGeneratorDep extends Dep0 {
   type: RandomGenerator;

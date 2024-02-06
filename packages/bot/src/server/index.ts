@@ -39,6 +39,7 @@ import { DepRegistry } from '../driver/dep-registry.js';
 import { guildRepositoryKey } from '../model/guild.js';
 import type { Snowflake } from '../model/id.js';
 import { membersRepositoryKey } from '../model/member.js';
+import { randomGeneratorKey } from '../model/random-generator.js';
 import { roleRepositoryKey } from '../model/role.js';
 import { voiceRoomControllerKey } from '../model/voice-room-controller.js';
 import { CommandRunner } from '../runner/command.js';
@@ -76,7 +77,6 @@ import {
   registerAllCommandResponder
 } from '../service/index.js';
 import { standardOutputKey } from '../service/output.js';
-import { randomGeneratorKey } from '../service/random-generator.js';
 import { startTimeSignal } from '../service/time-signal.js';
 import { voiceConnectionFactoryKey } from '../service/voice-connection.js';
 import {
@@ -209,7 +209,6 @@ registry.add(messageRepositoryKey, messageRepo);
 if (features.includes('COMMAND')) {
   registerAllCommandResponder(commandRunner, {
     registry,
-    queen: new MathRandomGenerator(),
     channelRepository
   });
 }

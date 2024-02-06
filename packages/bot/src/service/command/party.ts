@@ -3,9 +3,9 @@ import { addHours, getMinutes, setMinutes, setSeconds } from 'date-fns';
 import type { DepRegistry } from '../../driver/dep-registry.js';
 import type { Schema } from '../../model/command-schema.js';
 import type { EmbedMessage } from '../../model/embed-message.js';
+import { randomGeneratorKey } from '../../model/random-generator.js';
 import type { HelpInfo } from '../../runner/command.js';
 import { clockKey, scheduleRunnerKey } from '../../runner/index.js';
-import { randomGeneratorKey } from '../random-generator.js';
 import {
   voiceConnectionFactoryKey,
   type VoiceConnection
