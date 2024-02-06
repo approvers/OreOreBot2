@@ -1,3 +1,4 @@
+import type { Dep0, DepRegistry } from '../../driver/dep-registry.js';
 import type { HelpInfo } from '../../runner/command.js';
 import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
@@ -7,6 +8,10 @@ export interface Ping {
    */
   avgPing: number;
 }
+export interface PingDep extends Dep0 {
+  type: Ping;
+}
+export const pingKey = Symbol('PING') as unknown as PingDep;
 
 const SCHEMA = {
   names: ['ping', 'latency'],
@@ -22,13 +27,13 @@ export class PingCommand implements CommandResponderFor<typeof SCHEMA> {
   };
   readonly schema = SCHEMA;
 
-  constructor(private readonly ping: Ping) {}
+  constructor(private readonly reg: DepRegistry) {}
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     await message.reply({
       title: 'Ping',
       url: 'https://discordstatus.com/',
-      description: `🏓 Pongだよ。 / **${this.ping.avgPing}**ms`
+      description: `🏓 Pongだよ。 / **${this.reg.get(pingKey).avgPing}**ms`
     });
   }
 }

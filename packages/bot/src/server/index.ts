@@ -57,6 +57,7 @@ import {
 } from '../service/command/kaere.js';
 import { memberStatsKey } from '../service/command/kokusei-chousa.js';
 import type { AssetKey } from '../service/command/party.js';
+import { pingKey } from '../service/command/ping.js';
 import { registerCommands } from '../service/command/register.js';
 import { sheriffKey } from '../service/command/stfu.js';
 import { typoRepositoryKey } from '../service/command/typo-record.js';
@@ -191,11 +192,12 @@ const roomController = new DiscordVoiceRoomController(client);
 registry.add(voiceRoomControllerKey, roomController);
 const sheriff = new DiscordSheriff(client);
 registry.add(sheriffKey, sheriff);
+const ping = new DiscordWS(client);
+registry.add(pingKey, ping);
 
 if (features.includes('COMMAND')) {
   registerAllCommandResponder(commandRunner, {
     registry,
-    ping: new DiscordWS(client),
     fetcher: versionFetcher,
     messageRepo: new DiscordMessageRepository(client),
     membersRepo: stats,

@@ -16,7 +16,7 @@ import { KaereCommand } from './command/kaere.js';
 import { KokuseiChousa } from './command/kokusei-chousa.js';
 import { Meme } from './command/meme.js';
 import { PartyCommand } from './command/party.js';
-import { type Ping, PingCommand } from './command/ping.js';
+import { PingCommand } from './command/ping.js';
 import { RoleCreate, type RoleCreateManager } from './command/role-create.js';
 import { RoleInfo, type RoleStatsRepository } from './command/role-info.js';
 import {
@@ -31,7 +31,6 @@ import { GetVersionCommand, type VersionFetcher } from './command/version.js';
 export const registerAllCommandResponder = (
   commandRunner: CommandRunner,
   {
-    ping,
     fetcher,
     messageRepo,
     membersRepo,
@@ -43,7 +42,6 @@ export const registerAllCommandResponder = (
     channelRepository,
     registry
   }: {
-    ping: Ping;
     fetcher: VersionFetcher;
     messageRepo: MessageRepository;
     membersRepo: MembersWithRoleRepository;
@@ -66,7 +64,7 @@ export const registerAllCommandResponder = (
     new HelpCommand(registry),
     new KokuseiChousa(registry),
     new SheriffCommand(registry),
-    new PingCommand(ping),
+    new PingCommand(registry),
     new GetVersionCommand(fetcher),
     new DebugCommand(messageRepo),
     new RoleRank(membersRepo),
