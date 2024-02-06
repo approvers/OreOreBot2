@@ -1,11 +1,11 @@
-import type { ChannelStats } from '../../model/channel.js';
+import type { DepRegistry } from '../../driver/dep-registry.js';
+import {
+  channelRepositoryKey,
+  type ChannelStats
+} from '../../model/channel.js';
 import { createTimestamp } from '../../model/create-timestamp.js';
 import type { HelpInfo } from '../../runner/command.js';
 import type { CommandMessage, CommandResponderFor } from './command-message.js';
-
-export interface ChannelStatsRepository {
-  fetchStats(channelId: string): Promise<ChannelStats | null>;
-}
 
 const SCHEMA = {
   names: ['channel', 'chinfo', 'channelinfo'],
@@ -31,13 +31,15 @@ export class ChannelInfo implements CommandResponderFor<typeof SCHEMA> {
 
   readonly schema = SCHEMA;
 
-  constructor(private readonly repo: ChannelStatsRepository) {}
+  constructor(private readonly reg: DepRegistry) {}
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const [args] = message.args.params;
     const channelId = fetchChannelId(args, message.senderChannelId);
 
-    const stats = await this.repo.fetchStats(channelId);
+    const stats = await this.reg
+      .get(channelRepositoryKey)
+      .fetchStats(channelId);
     if (!stats) {
       await message.reply({
         title: '引数エラー',

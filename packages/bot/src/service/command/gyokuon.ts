@@ -1,9 +1,9 @@
+import type { DepRegistry } from '../../driver/dep-registry.js';
 import type { Schema } from '../../model/command-schema.js';
 import type { Snowflake } from '../../model/id.js';
 import type { HelpInfo } from '../../runner/command.js';
-import type { VoiceConnectionFactory } from '../voice-connection.js';
+import { voiceConnectionFactoryKey } from '../voice-connection.js';
 import type { CommandMessage, CommandResponderFor } from './command-message.js';
-import type { VoiceRoomController } from './kaere.js';
 
 export type GyokuonAssetKey = 'GYOKUON' | 'GYOKUON_SHORT';
 
@@ -35,12 +35,7 @@ export class GyokuonCommand implements CommandResponderFor<typeof SCHEMA> {
   };
   readonly schema = SCHEMA;
 
-  constructor(
-    private readonly deps: {
-      connectionFactory: VoiceConnectionFactory<GyokuonAssetKey>;
-      controller: VoiceRoomController;
-    }
-  ) {}
+  constructor(private readonly reg: DepRegistry) {}
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const [shortFlag] = message.args.params;
@@ -74,10 +69,11 @@ export class GyokuonCommand implements CommandResponderFor<typeof SCHEMA> {
     }
 
     this.doingGyokuon = true;
-    const connectionVC = await this.deps.connectionFactory.connectTo(
-      guildId,
-      roomId
-    );
+    const connectionFactory = this.reg.get<
+      typeof voiceConnectionFactoryKey,
+      GyokuonAssetKey
+    >(voiceConnectionFactoryKey);
+    const connectionVC = await connectionFactory.connectTo(guildId, roomId);
 
     connectionVC.connect();
     connectionVC.onDisconnected(() => {

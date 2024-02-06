@@ -1,9 +1,16 @@
+import type { DepRegistry } from '../../driver/dep-registry.js';
 import type { HelpInfo } from '../../runner/command.js';
 import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
 export interface VersionFetcher {
   version: string;
 }
+export interface VersionFetcherDep {
+  type: VersionFetcher;
+}
+export const versionFetcherKey = Symbol(
+  'VERSION_FETCHER'
+) as unknown as VersionFetcherDep;
 
 const SCHEMA = {
   names: ['version'],
@@ -19,10 +26,10 @@ export class GetVersionCommand implements CommandResponderFor<typeof SCHEMA> {
   };
   readonly schema = SCHEMA;
 
-  constructor(private readonly fetcher: VersionFetcher) {}
+  constructor(private readonly reg: DepRegistry) {}
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
-    const { version } = this.fetcher;
+    const { version } = this.reg.get(versionFetcherKey);
     await message.reply({
       title: 'はらちょバージョン',
       /**

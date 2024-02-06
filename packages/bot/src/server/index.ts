@@ -35,7 +35,14 @@ import { memberProxy } from '../adaptor/proxy/member.js';
 import { StickerProxy } from '../adaptor/proxy/sticker.js';
 import { loadSchedule } from '../adaptor/signal-schedule.js';
 import { GenVersionFetcher } from '../adaptor/version/fetch.js';
+import { DepRegistry } from '../driver/dep-registry.js';
+import { channelRepositoryKey } from '../model/channel.js';
+import { guildRepositoryKey } from '../model/guild.js';
 import type { Snowflake } from '../model/id.js';
+import { membersRepositoryKey } from '../model/member.js';
+import { randomGeneratorKey } from '../model/random-generator.js';
+import { roleRepositoryKey } from '../model/role.js';
+import { voiceRoomControllerKey } from '../model/voice-room-controller.js';
 import { CommandRunner } from '../runner/command.js';
 import {
   EmojiResponseRunner,
@@ -43,14 +50,25 @@ import {
   MessageUpdateResponseRunner,
   RoleResponseRunner,
   ScheduleRunner,
-  VoiceRoomResponseRunner
+  VoiceRoomResponseRunner,
+  clockKey,
+  scheduleRunnerKey
 } from '../runner/index.js';
 import { MemberResponseRunner } from '../runner/member.js';
 import { StickerResponseRunner } from '../runner/sticker.js';
+import { messageRepositoryKey } from '../service/command/debug.js';
 import type { GyokuonAssetKey } from '../service/command/gyokuon.js';
-import type { KaereMusicKey } from '../service/command/kaere.js';
+import {
+  type KaereMusicKey,
+  reservationRepositoryKey
+} from '../service/command/kaere.js';
+import { memberStatsKey } from '../service/command/kokusei-chousa.js';
 import type { AssetKey } from '../service/command/party.js';
+import { pingKey } from '../service/command/ping.js';
 import { registerCommands } from '../service/command/register.js';
+import { sheriffKey } from '../service/command/stfu.js';
+import { typoRepositoryKey } from '../service/command/typo-record.js';
+import { versionFetcherKey } from '../service/command/version.js';
 import {
   allEmojiResponder,
   allMemberResponder,
@@ -60,7 +78,9 @@ import {
   allStickerResponder,
   registerAllCommandResponder
 } from '../service/index.js';
+import { standardOutputKey } from '../service/output.js';
 import { startTimeSignal } from '../service/time-signal.js';
+import { voiceConnectionFactoryKey } from '../service/voice-connection.js';
 import {
   type VoiceChannelParticipant,
   VoiceDiff
@@ -94,7 +114,7 @@ const {
 );
 
 const features = FEATURE.split(',');
-
+const registry = new DepRegistry();
 const intents = [
   GatewayIntentBits.Guilds, // GUILD_CREATE による初期化
   GatewayIntentBits.GuildMembers, // メンバーの参加を検知する機能
@@ -111,20 +131,25 @@ Sentry.init({
 });
 
 const typoRepo = new InMemoryTypoRepository();
+registry.add(typoRepositoryKey, typoRepo);
 const reservationRepo = new InMemoryReservationRepository();
+registry.add(reservationRepositoryKey, reservationRepo);
 const clock = new ActualClock();
+registry.add(clockKey, clock);
 const sequencesYaml = loadEmojiSeqYaml(['assets', 'emoji-seq.yaml']);
 const standardOutput = new DiscordStandardOutput(client, mainChannelId);
+registry.add(standardOutputKey, standardOutput);
 const entranceOutput = new DiscordEntranceOutput(client, entranceChannelId);
 
-const scheduleRunner = new ScheduleRunner(clock);
+const scheduleRunner = new ScheduleRunner(registry);
+registry.add(scheduleRunnerKey, scheduleRunner);
 const getCurrentDate = () => new Date();
 const messageCreateRunner = new MessageResponseRunner(
   new MessageProxy(client, middlewareForMessage())
 );
 if (features.includes('MESSAGE_CREATE')) {
   messageCreateRunner.addResponder(
-    allMessageEventResponder(typoRepo, sequencesYaml, getCurrentDate)
+    allMessageEventResponder(registry, sequencesYaml, getCurrentDate)
   );
 
   startTimeSignal({
@@ -145,52 +170,48 @@ if (features.includes('MESSAGE_UPDATE')) {
 const commandProxy = new DiscordCommandProxy(client, PREFIX);
 const commandRunner = new CommandRunner(commandProxy);
 const stats = new DiscordMemberStats(client, GUILD_ID as Snowflake);
+registry.add(memberStatsKey, stats);
+registry.add(membersRepositoryKey, stats);
+registry.add(guildRepositoryKey, stats);
 
 // ほとんど変わらないことが予想され環境変数で管理する必要性が薄いので、ハードコードした。
 const KAWAEMON_ID = '391857452360007680' as Snowflake;
 const roleManager = new DiscordRoleManager(client, GUILD_ID as Snowflake);
+registry.add(roleRepositoryKey, roleManager);
 
 const channelRepository = new DiscordChannelRepository(
   client,
   GUILD_ID as Snowflake
 );
+registry.add(channelRepositoryKey, channelRepository);
 const versionFetcher = new GenVersionFetcher();
+registry.add(versionFetcherKey, versionFetcher);
+const factory = new DiscordVoiceConnectionFactory<
+  AssetKey | KaereMusicKey | GyokuonAssetKey
+>(client, {
+  COFFIN_INTRO: join('assets', 'party', 'coffin-intro.mp3'),
+  COFFIN_DROP: join('assets', 'party', 'coffin-drop.mp3'),
+  KAKAPO: join('assets', 'party', 'kakapo.mp3'),
+  KAKUSIN_DAISUKE: join('assets', 'party', 'kakusin-daisuke.mp3'),
+  POTATO: join('assets', 'party', 'potato.mp3'),
+  NEROYO: join('assets', 'kaere', 'neroyo.mp3'),
+  GYOKUON: join('assets', 'gyokuon', 'gyokuon.mp3'),
+  GYOKUON_SHORT: join('assets', 'gyokuon', 'gyokuon-short.mp3')
+});
+registry.add(voiceConnectionFactoryKey, factory);
+const random = new MathRandomGenerator();
+registry.add(randomGeneratorKey, random);
+const roomController = new DiscordVoiceRoomController(client);
+registry.add(voiceRoomControllerKey, roomController);
+const sheriff = new DiscordSheriff(client);
+registry.add(sheriffKey, sheriff);
+const ping = new DiscordWS(client);
+registry.add(pingKey, ping);
+const messageRepo = new DiscordMessageRepository(client);
+registry.add(messageRepositoryKey, messageRepo);
 
 if (features.includes('COMMAND')) {
-  registerAllCommandResponder({
-    typoRepo,
-    reservationRepo,
-    factory: new DiscordVoiceConnectionFactory<
-      AssetKey | KaereMusicKey | GyokuonAssetKey
-    >(client, {
-      COFFIN_INTRO: join('assets', 'party', 'coffin-intro.mp3'),
-      COFFIN_DROP: join('assets', 'party', 'coffin-drop.mp3'),
-      KAKAPO: join('assets', 'party', 'kakapo.mp3'),
-      KAKUSIN_DAISUKE: join('assets', 'party', 'kakusin-daisuke.mp3'),
-      POTATO: join('assets', 'party', 'potato.mp3'),
-      NEROYO: join('assets', 'kaere', 'neroyo.mp3'),
-      GYOKUON: join('assets', 'gyokuon', 'gyokuon.mp3'),
-      GYOKUON_SHORT: join('assets', 'gyokuon', 'gyokuon-short.mp3')
-    }),
-    clock,
-    scheduleRunner,
-    random: new MathRandomGenerator(),
-    roomController: new DiscordVoiceRoomController(client),
-    commandRunner,
-    stats,
-    sheriff: new DiscordSheriff(client),
-    ping: new DiscordWS(client),
-    fetcher: versionFetcher,
-    messageRepo: new DiscordMessageRepository(client),
-    membersRepo: stats,
-    roleRepo: roleManager,
-    userRepo: stats,
-    guildRepo: stats,
-    roleCreateRepo: roleManager,
-    queen: new MathRandomGenerator(),
-    stdout: standardOutput,
-    channelRepository
-  });
+  registerAllCommandResponder(commandRunner, registry);
 }
 
 const rest = new REST().setToken(token);

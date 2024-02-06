@@ -1,3 +1,4 @@
+import type { Dep1 } from '../driver/dep-registry.js';
 import type { Snowflake } from '../model/id.js';
 
 /**
@@ -15,6 +16,12 @@ export interface VoiceConnectionFactory<K> {
    */
   connectTo(guildId: Snowflake, roomId: Snowflake): Promise<VoiceConnection<K>>;
 }
+export interface VoiceConnectionFactoryDep extends Dep1 {
+  type: VoiceConnectionFactory<this['param1']>;
+}
+export const voiceConnectionFactoryKey = Symbol(
+  'VOICE_CONNECTION_FACTORY'
+) as unknown as VoiceConnectionFactoryDep;
 
 /**
  * ボイスチャンネルへの接続の抽象。

@@ -1,13 +1,14 @@
 import { addDays, setHours, setMinutes } from 'date-fns';
 
+import type { Dep0, DepRegistry } from '../../driver/dep-registry.js';
 import type { Snowflake } from '../../model/id.js';
 import type { HelpInfo } from '../../runner/command.js';
-import type {
-  Clock,
-  MessageEvent,
-  MessageEventResponder,
-  ScheduleRunner,
-  ScheduleTask
+import {
+  clockKey,
+  scheduleRunnerKey,
+  type MessageEvent,
+  type MessageEventResponder,
+  type ScheduleTask
 } from '../../runner/index.js';
 import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
@@ -53,12 +54,18 @@ export interface TypoRepository {
    */
   clear(): Promise<void>;
 }
+export interface TypoRepositoryDep extends Dep0 {
+  type: TypoRepository;
+}
+export const typoRepositoryKey = Symbol(
+  'TYPO_REPOSITORY'
+) as unknown as TypoRepositoryDep;
 
 /**
  * 「だカス」で終わるメッセージを, それを取り除いて記録する。
  */
 export class TypoRecorder implements MessageEventResponder<TypoObservable> {
-  constructor(private readonly repo: TypoRepository) {}
+  constructor(private readonly reg: DepRegistry) {}
 
   async on(event: MessageEvent, message: TypoObservable): Promise<void> {
     if (event !== 'CREATE') {
@@ -72,22 +79,22 @@ export class TypoRecorder implements MessageEventResponder<TypoObservable> {
     if (sliced === '') {
       return;
     }
-    await this.repo.addTypo(id, sliced);
+    await this.reg.get(typoRepositoryKey).addTypo(id, sliced);
   }
 }
 
-const next6OClock = (clock: Clock) => {
-  const now = clock.now();
+const next6OClock = (reg: DepRegistry) => {
+  const now = reg.get(clockKey).now();
   const nextDay = addDays(now, 1);
   const nextDay6 = setHours(nextDay, 6);
   return setMinutes(nextDay6, 0);
 };
 
 const typoRecordResetTask =
-  (repo: TypoRepository, clock: Clock): ScheduleTask =>
+  (reg: DepRegistry): ScheduleTask =>
   async () => {
-    await repo.clear();
-    return next6OClock(clock);
+    await reg.get(typoRepositoryKey).clear();
+    return next6OClock(reg);
   };
 
 const SCHEMA = {
@@ -120,16 +127,10 @@ export class TypoReporter implements CommandResponderFor<typeof SCHEMA> {
   };
   readonly schema = SCHEMA;
 
-  constructor(
-    private readonly repo: TypoRepository,
-    clock: Clock,
-    scheduleRunner: ScheduleRunner
-  ) {
-    scheduleRunner.runOnNextTime(
-      this,
-      typoRecordResetTask(repo, clock),
-      next6OClock(clock)
-    );
+  constructor(private readonly reg: DepRegistry) {
+    reg
+      .get(scheduleRunnerKey)
+      .runOnNextTime(this, typoRecordResetTask(reg), next6OClock(reg));
   }
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
@@ -148,7 +149,9 @@ export class TypoReporter implements CommandResponderFor<typeof SCHEMA> {
     senderId: Snowflake,
     senderName: string
   ) {
-    const typos = await this.repo.allTyposByDate(senderId);
+    const typos = await this.reg
+      .get(typoRepositoryKey)
+      .allTyposByDate(senderId);
     const description =
       `***† 今日の${senderName}のtypo †***\n` +
       typos.map((typo) => `- ${typo}`).join('\n');

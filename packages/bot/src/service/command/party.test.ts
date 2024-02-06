@@ -2,26 +2,39 @@ import { afterAll, describe, expect, it, vi } from 'vitest';
 
 import { MockClock, MockVoiceConnectionFactory } from '../../adaptor/index.js';
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
+import { DepRegistry } from '../../driver/dep-registry.js';
 import type { EmbedMessage } from '../../model/embed-message.js';
-import { ScheduleRunner } from '../../runner/index.js';
+import {
+  dummyRandomGenerator,
+  randomGeneratorKey,
+  type RandomGenerator
+} from '../../model/random-generator.js';
+import {
+  ScheduleRunner,
+  clockKey,
+  scheduleRunnerKey
+} from '../../runner/index.js';
+import { voiceConnectionFactoryKey } from '../voice-connection.js';
 import { createMockMessage } from './command-message.js';
-import { type AssetKey, PartyCommand, type RandomGenerator } from './party.js';
+import { type AssetKey, PartyCommand } from './party.js';
 
 const random: RandomGenerator = {
-  minutes: () => 42,
-  pick: ([first]) => first
+  ...dummyRandomGenerator,
+  minutes: () => 42
 };
 
 describe('party ichiyo', () => {
-  const factory = new MockVoiceConnectionFactory<AssetKey>();
   const clock = new MockClock(new Date(0));
-  const scheduleRunner = new ScheduleRunner(clock);
-  const responder = new PartyCommand({
-    factory,
-    clock,
-    scheduleRunner,
-    random
-  });
+  const reg = new DepRegistry();
+  reg.add(randomGeneratorKey, random);
+  reg.add(
+    voiceConnectionFactoryKey,
+    new MockVoiceConnectionFactory<AssetKey>()
+  );
+  reg.add(clockKey, clock);
+  const scheduleRunner = new ScheduleRunner(reg);
+  reg.add(scheduleRunnerKey, scheduleRunner);
+  const responder = new PartyCommand(reg);
 
   afterAll(() => {
     scheduleRunner.killAll();

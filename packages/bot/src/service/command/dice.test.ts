@@ -1,17 +1,26 @@
 import { describe, expect, it, vi } from 'vitest';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
+import { DepRegistry } from '../../driver/dep-registry.js';
+import {
+  dummyRandomGenerator,
+  randomGeneratorKey,
+  type RandomGenerator
+} from '../../model/random-generator.js';
 import { createMockMessage } from './command-message.js';
-import { DiceCommand, type DiceQueen } from './dice.js';
+import { DiceCommand } from './dice.js';
 
 describe('dice', () => {
-  const diceQueen: DiceQueen = {
+  const rng: RandomGenerator = {
+    ...dummyRandomGenerator,
     roll: (face, num) => [...new Array<undefined>(num)].map(() => face)
   };
-  const diceCommand = new DiceCommand(diceQueen);
+  const reg = new DepRegistry();
+  reg.add(randomGeneratorKey, rng);
+  const diceCommand = new DiceCommand(reg);
 
   it('case of 1d6', async () => {
-    const roll = vi.spyOn(diceQueen, 'roll');
+    const roll = vi.spyOn(rng, 'roll');
     const fn = vi.fn();
 
     await diceCommand.on(
@@ -29,7 +38,7 @@ describe('dice', () => {
   });
 
   it('case of defaultValue', async () => {
-    const roll = vi.spyOn(diceQueen, 'roll');
+    const roll = vi.spyOn(rng, 'roll');
     const fn = vi.fn();
 
     await diceCommand.on(
@@ -44,7 +53,7 @@ describe('dice', () => {
   });
 
   it('case of verbose mode false', async () => {
-    const roll = vi.spyOn(diceQueen, 'roll');
+    const roll = vi.spyOn(rng, 'roll');
     const fn = vi.fn();
 
     await diceCommand.on(
@@ -62,7 +71,7 @@ describe('dice', () => {
   });
 
   it('case of verbose mode true', async () => {
-    const roll = vi.spyOn(diceQueen, 'roll');
+    const roll = vi.spyOn(rng, 'roll');
     const fn = vi.fn();
 
     await diceCommand.on(
@@ -80,7 +89,7 @@ describe('dice', () => {
   });
 
   it('case of 101D20', async () => {
-    const roll = vi.spyOn(diceQueen, 'roll');
+    const roll = vi.spyOn(rng, 'roll');
     const fn = vi.fn();
 
     await diceCommand.on(
@@ -98,7 +107,7 @@ describe('dice', () => {
   });
 
   it('case of 100D21', async () => {
-    const roll = vi.spyOn(diceQueen, 'roll');
+    const roll = vi.spyOn(rng, 'roll');
     const fn = vi.fn();
 
     await diceCommand.on(
@@ -116,7 +125,7 @@ describe('dice', () => {
   });
 
   it('case of 0D6', async () => {
-    const roll = vi.spyOn(diceQueen, 'roll');
+    const roll = vi.spyOn(rng, 'roll');
     const fn = vi.fn();
 
     await diceCommand.on(
@@ -134,7 +143,7 @@ describe('dice', () => {
   });
 
   it('case of 10D6d50', async () => {
-    const roll = vi.spyOn(diceQueen, 'roll');
+    const roll = vi.spyOn(rng, 'roll');
     const fn = vi.fn();
 
     await diceCommand.on(

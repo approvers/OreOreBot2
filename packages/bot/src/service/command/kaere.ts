@@ -1,30 +1,18 @@
 import { addDays, isBefore, setHours, setMinutes, setSeconds } from 'date-fns';
 
+import type { Dep0, DepRegistry } from '../../driver/dep-registry.js';
 import type { Schema } from '../../model/command-schema.js';
 import type { EmbedMessage } from '../../model/embed-message.js';
 import type { Snowflake } from '../../model/id.js';
 import { Reservation, ReservationTime } from '../../model/reservation.js';
+import { voiceRoomControllerKey } from '../../model/voice-room-controller.js';
 import type { HelpInfo } from '../../runner/command.js';
-import type { Clock, ScheduleRunner } from '../../runner/index.js';
-import type { StandardOutput } from '../output.js';
-import type { VoiceConnectionFactory } from '../voice-connection.js';
+import { scheduleRunnerKey, clockKey } from '../../runner/index.js';
+import { standardOutputKey } from '../output.js';
+import { voiceConnectionFactoryKey } from '../voice-connection.js';
 import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
 export type KaereMusicKey = 'NEROYO';
-
-/**
- * ボイスチャンネル自体を操作できるコントローラーの抽象.
- */
-export interface VoiceRoomController {
-  /**
-   * そのボイスチャンネルからすべてのユーザーを切断させる.
-   *
-   * @param guildId - サーバの ID
-   * @param roomId - ボイスチャンネルの ID
-   * @returns 切断処理の完了後に解決される `Promise`
-   */
-  disconnectAllUsersIn(guildId: Snowflake, roomId: Snowflake): Promise<void>;
-}
 
 /**
  * 予約処理の成否を表す型。boolean だとどちらが成功か失敗か分かりづらいので導入した。
@@ -63,6 +51,12 @@ export interface ReservationRepository {
    */
   cancel(reservation: Reservation): Promise<ReservationResult>;
 }
+export interface ReservationRepositoryDep extends Dep0 {
+  type: ReservationRepository;
+}
+export const reservationRepositoryKey = Symbol(
+  'RESERVATION_REPOSITORY'
+) as unknown as ReservationRepositoryDep;
 
 const timeFormatErrorMessage: EmbedMessage = {
   title: '時刻の形式として読めないよ。',
@@ -143,21 +137,15 @@ export class KaereCommand implements CommandResponderFor<typeof SCHEMA> {
   };
   readonly schema = SCHEMA;
 
-  constructor(
-    private readonly deps: {
-      connectionFactory: VoiceConnectionFactory<KaereMusicKey>;
-      controller: VoiceRoomController;
-      clock: Clock;
-      scheduleRunner: ScheduleRunner;
-      stdout: StandardOutput;
-      repo: ReservationRepository;
-    }
-  ) {
-    void deps.repo.all().then((all) => {
-      for (const reservation of all) {
-        this.scheduleToStart(reservation);
-      }
-    });
+  constructor(private readonly reg: DepRegistry) {
+    void reg
+      .get(reservationRepositoryKey)
+      .all()
+      .then((all) => {
+        for (const reservation of all) {
+          this.scheduleToStart(reservation);
+        }
+      });
   }
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
@@ -201,22 +189,25 @@ export class KaereCommand implements CommandResponderFor<typeof SCHEMA> {
       return;
     }
     this.doingKaere = true;
-    const connection = await this.deps.connectionFactory.connectTo(
-      guildId,
-      roomId
-    );
+    const connectionFactory = this.reg.get<
+      typeof voiceConnectionFactoryKey,
+      KaereMusicKey
+    >(voiceConnectionFactoryKey);
+    const connection = await connectionFactory.connectTo(guildId, roomId);
     connection.connect();
     connection.onDisconnected(() => {
       this.doingKaere = false;
     });
-    await this.deps.stdout.sendEmbed({
+    await this.reg.get(standardOutputKey).sendEmbed({
       title: '提督、もうこんな時間だよ',
       description: '早く寝よう'
     });
     await connection.playToEnd('NEROYO');
     if (this.bedModeEnabled) {
       try {
-        await this.deps.controller.disconnectAllUsersIn(guildId, roomId);
+        await this.reg
+          .get(voiceRoomControllerKey)
+          .disconnectAllUsersIn(guildId, roomId);
       } catch (e) {
         console.error('強制切断に失敗');
       }
@@ -266,6 +257,8 @@ export class KaereCommand implements CommandResponderFor<typeof SCHEMA> {
     ) {
       throw new Error('expected reserve command group');
     }
+
+    const repo = this.reg.get(reservationRepositoryKey);
     switch (message.args.subCommand.subCommand.name) {
       case 'add':
         {
@@ -289,7 +282,7 @@ export class KaereCommand implements CommandResponderFor<typeof SCHEMA> {
             message.senderGuildId,
             roomId
           );
-          if ((await this.deps.repo.reserve(reservation)) === 'Err') {
+          if ((await repo.reserve(reservation)) === 'Err') {
             await message.reply({
               title: '予約に失敗したよ。',
               description: `あれ、${time.intoJapanese()}にはもう予約が入ってるよ。`
@@ -312,7 +305,7 @@ export class KaereCommand implements CommandResponderFor<typeof SCHEMA> {
             await message.reply(timeFormatErrorMessage);
             return;
           }
-          const reservation = await this.deps.repo.reservationAt(time);
+          const reservation = await repo.reservationAt(time);
           if (!reservation) {
             await message.reply({
               title: '予約キャンセルに失敗したよ。',
@@ -320,8 +313,8 @@ export class KaereCommand implements CommandResponderFor<typeof SCHEMA> {
             });
             return;
           }
-          this.deps.scheduleRunner.stop(reservation.id);
-          if ((await this.deps.repo.cancel(reservation)) === 'Err') {
+          this.reg.get(scheduleRunnerKey).stop(reservation.id);
+          if ((await repo.cancel(reservation)) === 'Err') {
             await message.reply({
               title: '予約キャンセルに失敗したよ。',
               description: 'データベースに問題があったのかもしれない。'
@@ -336,7 +329,7 @@ export class KaereCommand implements CommandResponderFor<typeof SCHEMA> {
         return;
       case 'list':
         {
-          const reservations = await this.deps.repo.all();
+          const reservations = await repo.all();
           if (reservations.length === 0) {
             await message.reply({
               title: '今は誰も予約してないようだね。'
@@ -355,17 +348,17 @@ export class KaereCommand implements CommandResponderFor<typeof SCHEMA> {
   }
 
   private scheduleToStart(reservation: Reservation) {
-    const now = this.deps.clock.now();
+    const now = this.reg.get(clockKey).now();
     let set = setHours(now, reservation.time.hours);
     set = setMinutes(set, reservation.time.minutes);
     set = setSeconds(set, 0);
     if (isBefore(set, now)) {
       set = addDays(set, 1);
     }
-    this.deps.scheduleRunner.runOnNextTime(
+    this.reg.get(scheduleRunnerKey).runOnNextTime(
       reservation.id,
       async () => {
-        await this.deps.repo.cancel(reservation);
+        await this.reg.get(reservationRepositoryKey).cancel(reservation);
         await this.start(reservation.guildId, reservation.voiceRoomId);
         return null;
       },

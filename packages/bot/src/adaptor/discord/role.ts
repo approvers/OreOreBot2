@@ -1,17 +1,10 @@
 import type { Client } from 'discord.js';
 
 import type { Snowflake } from '../../model/id.js';
-import type { RoleCreateManager } from '../../service/command/role-create.js';
-import type {
-  RoleIcon,
-  RoleStats,
-  RoleStatsRepository
-} from '../../service/command/role-info.js';
+import type { RoleIcon, RoleRepository, RoleStats } from '../../model/role.js';
 import type { RoleManager } from '../../service/kawaemon-has-all-roles.js';
 
-export class DiscordRoleManager
-  implements RoleManager, RoleCreateManager, RoleStatsRepository
-{
+export class DiscordRoleManager implements RoleManager, RoleRepository {
   constructor(
     private readonly client: Client,
     private readonly guildId: Snowflake

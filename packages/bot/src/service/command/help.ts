@@ -1,6 +1,7 @@
+import type { DepRegistry } from '../../driver/dep-registry.js';
 import type { Schema } from '../../model/command-schema.js';
 import type { EmbedPage } from '../../model/embed-message.js';
-import type { CommandRunner, HelpInfo } from '../../runner/command.js';
+import { commandRunnerKey, type HelpInfo } from '../../runner/command.js';
 import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
 const SCHEMA = {
@@ -17,10 +18,11 @@ export class HelpCommand implements CommandResponderFor<typeof SCHEMA> {
   };
   readonly schema = SCHEMA;
 
-  constructor(private readonly runner: CommandRunner) {}
+  constructor(private readonly reg: DepRegistry) {}
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
-    const helpAndSchema = this.runner
+    const helpAndSchema = this.reg
+      .get(commandRunnerKey)
       .getResponders()
       .map((responder) => ({ ...responder.help, ...responder.schema }));
     const pages: EmbedPage[] = helpAndSchema.map((helpScheme) =>

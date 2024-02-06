@@ -1,19 +1,7 @@
+import type { DepRegistry } from '../../driver/dep-registry.js';
+import { randomGeneratorKey } from '../../model/random-generator.js';
 import type { HelpInfo } from '../../runner/command.js';
 import type { CommandMessage, CommandResponderFor } from './command-message.js';
-
-/**
- * ダイスの管理者。面白いものの味方。
- * 今後詳細値がほしい場合があるかも知れないので、各ダイスについてどんな出目が出たかを判断する。
- */
-export interface DiceQueen {
-  /**
-   *
-   * @param faces - ダイスの面の数
-   * @param howManyRolls - 振るダイスの個数
-   * @returns 降ったダイスの数値のリスト。長さは `howManyRolls` に等しい。
-   */
-  roll(faces: number, howManyRolls: number): number[];
-}
 
 const regExState = /^(?<num>\d+)[dD](?<faces>\d+)$/;
 
@@ -54,7 +42,7 @@ export class DiceCommand implements CommandResponderFor<typeof SCHEMA> {
   };
   readonly schema = SCHEMA;
 
-  constructor(private readonly diceQueen: DiceQueen) {}
+  constructor(private readonly reg: DepRegistry) {}
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const [arg, verbose] = message.args.params;
@@ -94,7 +82,9 @@ export class DiceCommand implements CommandResponderFor<typeof SCHEMA> {
       return;
     }
 
-    const diceResult = this.diceQueen.roll(diceFaces, diceNum);
+    const diceResult = this.reg
+      .get(randomGeneratorKey)
+      .roll(diceFaces, diceNum);
     const diceSum = diceResult.reduce((a, x) => a + x);
 
     switch (verbose % (SCHEMA.params[1].choices.length / 2)) {

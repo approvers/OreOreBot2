@@ -1,22 +1,9 @@
+import type { DepRegistry } from '../../driver/dep-registry.js';
 import { createTimestamp } from '../../model/create-timestamp.js';
 import type { Snowflake } from '../../model/id.js';
+import { membersRepositoryKey, type UserStats } from '../../model/member.js';
 import type { HelpInfo } from '../../runner/command.js';
 import type { CommandMessage, CommandResponderFor } from './command-message.js';
-
-export interface UserStats {
-  color: string;
-  displayName: string;
-  joinedAt?: Date;
-  createdAt: Date;
-  bot: boolean;
-  userName: string;
-  hoistRoleId?: Snowflake | undefined;
-  avatarUrl: string;
-}
-
-export interface UserStatsRepository {
-  fetchUserStats(userId: string): Promise<UserStats | null>;
-}
 
 const SCHEMA = {
   names: ['userinfo', 'user'],
@@ -42,7 +29,7 @@ export class UserInfo implements CommandResponderFor<typeof SCHEMA> {
   };
   readonly schema = SCHEMA;
 
-  constructor(private readonly repo: UserStatsRepository) {}
+  constructor(private readonly reg: DepRegistry) {}
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const [arg] = message.args.params;
@@ -56,7 +43,9 @@ export class UserInfo implements CommandResponderFor<typeof SCHEMA> {
       return;
     }
 
-    const stats = await this.repo.fetchUserStats(userId);
+    const stats = await this.reg
+      .get(membersRepositoryKey)
+      .fetchUserStats(userId);
     if (!stats) {
       await message.reply({
         title: '引数エラー',

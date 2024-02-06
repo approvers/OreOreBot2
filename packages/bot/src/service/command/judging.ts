@@ -1,32 +1,13 @@
+import type { DepRegistry } from '../../driver/dep-registry.js';
 import {
   emojiOf,
   hasNoTestCases,
   isJudgingStatus,
   waitingJudgingEmoji
 } from '../../model/judging-status.js';
+import { randomGeneratorKey } from '../../model/random-generator.js';
 import type { HelpInfo } from '../../runner/command.js';
 import type { CommandMessage, CommandResponderFor } from './command-message.js';
-
-/**
- * `JudgingCommand` のための乱数生成器。
- */
-export interface RandomGenerator {
-  /**
-   * ランダムに少しの間だけ待ってから解決する `Promise` を返す。
-   *
-   * @returns ランダムな経過時間後に解決される `Promise`
-   */
-  sleep(): Promise<void>;
-
-  /**
-   * `from` 以上 `to` 未満の一様にランダムな整数を返す。
-   *
-   * @param from - 生成する乱数の下限 (同じ数値を含む)
-   * @param to - 生成する乱数の上限 (同じ数値を含まない)
-   * @returns 生成した乱数
-   */
-  uniform(from: number, to: number): number;
-}
 
 const JUDGING_TITLE = '***†HARACHO ONLINE JUDGING SYSTEM†***';
 
@@ -69,7 +50,7 @@ export class JudgingCommand implements CommandResponderFor<typeof SCHEMA> {
   };
   readonly schema = SCHEMA;
 
-  constructor(private readonly rng: RandomGenerator) {}
+  constructor(private readonly reg: DepRegistry) {}
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const {
@@ -110,7 +91,7 @@ export class JudgingCommand implements CommandResponderFor<typeof SCHEMA> {
         title: JUDGING_TITLE,
         description: `${i} / ${count} ${waitingJudgingEmoji}`
       });
-      await this.rng.sleep();
+      await this.reg.get(randomGeneratorKey).sleep();
     }
     await sent.edit({
       title: JUDGING_TITLE,
@@ -134,7 +115,8 @@ export class JudgingCommand implements CommandResponderFor<typeof SCHEMA> {
       description: `0 / ${count} ${waitingJudgingEmoji}`
     });
 
-    const errorAt = errorFromStart ? 1 : this.rng.uniform(1, count + 1);
+    const rng = this.reg.get(randomGeneratorKey);
+    const errorAt = errorFromStart ? 1 : rng.uniform(1, count + 1);
 
     for (let i = 1; i <= count - 1; ++i) {
       await sent.edit({
@@ -143,7 +125,7 @@ export class JudgingCommand implements CommandResponderFor<typeof SCHEMA> {
           errorAt <= i ? result : waitingJudgingEmoji
         }`
       });
-      await this.rng.sleep();
+      await rng.sleep();
     }
     await sent.edit({
       title: JUDGING_TITLE,

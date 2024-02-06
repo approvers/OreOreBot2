@@ -1,15 +1,22 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
+import { DepRegistry } from '../../driver/dep-registry.js';
+import {
+  dummyMemberRepository,
+  membersRepositoryKey,
+  type MemberRepository
+} from '../../model/member.js';
 import { createMockMessage } from './command-message.js';
-import { type MembersWithRoleRepository, RoleRank } from './role-rank.js';
+import { RoleRank } from './role-rank.js';
 
 describe('RoleRank', () => {
   afterEach(() => {
     vi.restoreAllMocks();
   });
 
-  const repo: MembersWithRoleRepository = {
+  const repo: MemberRepository = {
+    ...dummyMemberRepository,
     fetchMembersWithRole: () =>
       Promise.resolve([
         {
@@ -38,7 +45,9 @@ describe('RoleRank', () => {
         }
       ])
   };
-  const roleRank = new RoleRank(repo);
+  const reg = new DepRegistry();
+  reg.add(membersRepositoryKey, repo);
+  const roleRank = new RoleRank(reg);
 
   it('ranks members', async () => {
     const fetchMembersWithRole = vi.spyOn(repo, 'fetchMembersWithRole');

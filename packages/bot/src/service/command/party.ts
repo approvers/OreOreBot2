@@ -1,12 +1,14 @@
 import { addHours, getMinutes, setMinutes, setSeconds } from 'date-fns';
 
+import type { DepRegistry } from '../../driver/dep-registry.js';
 import type { Schema } from '../../model/command-schema.js';
 import type { EmbedMessage } from '../../model/embed-message.js';
+import { randomGeneratorKey } from '../../model/random-generator.js';
 import type { HelpInfo } from '../../runner/command.js';
-import type { Clock, ScheduleRunner } from '../../runner/index.js';
-import type {
-  VoiceConnection,
-  VoiceConnectionFactory
+import { clockKey, scheduleRunnerKey } from '../../runner/index.js';
+import {
+  voiceConnectionFactoryKey,
+  type VoiceConnection
 } from '../voice-connection.js';
 import type { CommandMessage, CommandResponderFor } from './command-message.js';
 
@@ -24,28 +26,6 @@ const assetKeys = [
 ] as const;
 
 export type AssetKey = (typeof assetKeys)[number];
-
-export interface RandomGenerator {
-  /**
-   * 0 以上 59 以下の乱数を生成する。
-   *
-   * @returns 生成した乱数
-   */
-  minutes(): number;
-
-  /**
-   * `array` からランダムな一要素を取り出す。
-   *
-   * @typeParam T - リストの型
-   * @param array - 取り出す対象のリスト
-   * @returns `array` から取り出した 1 つの要素
-   *
-   * @remarks
-   *
-   * `array` の長さは `1` 以上でなければならない。さもなくば `T` 型の値が返ることは保証されない。
-   */
-  pick<T>(array: readonly T[]): T;
-}
 
 const SCHEMA = {
   names: ['party'],
@@ -108,14 +88,7 @@ export class PartyCommand implements CommandResponderFor<typeof SCHEMA> {
   };
   readonly schema = SCHEMA;
 
-  constructor(
-    private readonly deps: {
-      factory: VoiceConnectionFactory<AssetKey>;
-      clock: Clock;
-      scheduleRunner: ScheduleRunner;
-      random: RandomGenerator;
-    }
-  ) {}
+  constructor(private readonly reg: DepRegistry) {}
 
   private nextMusicKey: AssetKey | null = null;
   private connection: VoiceConnection<AssetKey> | null = null;
@@ -147,7 +120,7 @@ export class PartyCommand implements CommandResponderFor<typeof SCHEMA> {
           if (0 <= args.subCommand.params[0]) {
             minutes = minutes % 60;
           } else {
-            minutes = this.deps.random.minutes();
+            minutes = this.reg.get(randomGeneratorKey).minutes();
           }
           this.startPartyAt(minutes, message);
           await message.reply({
@@ -171,7 +144,7 @@ export class PartyCommand implements CommandResponderFor<typeof SCHEMA> {
       this.nextMusicKey = null;
       return next;
     }
-    return this.deps.random.pick(assetKeys);
+    return this.reg.get(randomGeneratorKey).pick(assetKeys);
   }
 
   private async startPartyImmediately(
@@ -189,10 +162,11 @@ export class PartyCommand implements CommandResponderFor<typeof SCHEMA> {
       });
       return 'BREAK';
     }
-    this.connection = await this.deps.factory.connectTo(
-      message.senderGuildId,
-      roomId
-    );
+    this.connection = await this.reg
+      .get<typeof voiceConnectionFactoryKey, AssetKey>(
+        voiceConnectionFactoryKey
+      )
+      .connectTo(message.senderGuildId, roomId);
     this.connection.connect();
     this.connection.onDisconnected(() => {
       this.connection = null;
@@ -205,7 +179,7 @@ export class PartyCommand implements CommandResponderFor<typeof SCHEMA> {
   }
 
   private nextTime(minutes: number): Date {
-    let nextTime = this.deps.clock.now();
+    let nextTime = this.reg.get(clockKey).now();
     if (minutes <= getMinutes(nextTime)) {
       nextTime = addHours(nextTime, 1);
     }
@@ -217,7 +191,7 @@ export class PartyCommand implements CommandResponderFor<typeof SCHEMA> {
     minutes: number,
     message: CommandMessage<typeof SCHEMA>
   ) {
-    this.deps.scheduleRunner.runOnNextTime(
+    this.reg.get(scheduleRunnerKey).runOnNextTime(
       'party-once',
       async () => {
         await this.startPartyImmediately(message);
@@ -229,21 +203,21 @@ export class PartyCommand implements CommandResponderFor<typeof SCHEMA> {
 
   private activateRandomized(message: CommandMessage<typeof SCHEMA>) {
     this.randomizedEnabled = true;
-    this.deps.scheduleRunner.runOnNextTime(
+    this.reg.get(scheduleRunnerKey).runOnNextTime(
       'party-random',
       async () => {
         if ((await this.startPartyImmediately(message)) === 'BREAK') {
           this.randomizedEnabled = false;
           return null;
         }
-        return this.nextTime(this.deps.random.minutes());
+        return this.nextTime(this.reg.get(randomGeneratorKey).minutes());
       },
-      this.nextTime(this.deps.random.minutes())
+      this.nextTime(this.reg.get(randomGeneratorKey).minutes())
     );
   }
 
   private stopRandomized() {
-    this.deps.scheduleRunner.stop('party-random');
+    this.reg.get(scheduleRunnerKey).stop('party-random');
     this.randomizedEnabled = false;
   }
 }

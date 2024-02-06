@@ -1,16 +1,23 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
+import { DepRegistry } from '../../driver/dep-registry.js';
 import type { Snowflake } from '../../model/id.js';
+import {
+  dummyMemberRepository,
+  membersRepositoryKey,
+  type MemberRepository
+} from '../../model/member.js';
 import { createMockMessage } from './command-message.js';
-import { UserInfo, type UserStatsRepository } from './user-info.js';
+import { UserInfo } from './user-info.js';
 
 describe('UserInfo', () => {
   afterEach(() => {
     vi.restoreAllMocks();
   });
 
-  const repo: UserStatsRepository = {
+  const repo: MemberRepository = {
+    ...dummyMemberRepository,
     fetchUserStats: (id) =>
       Promise.resolve(
         id === '586824421470109716'
@@ -27,7 +34,9 @@ describe('UserInfo', () => {
           : null
       )
   };
-  const userInfo = new UserInfo(repo);
+  const reg = new DepRegistry();
+  reg.add(membersRepositoryKey, repo);
+  const userInfo = new UserInfo(reg);
 
   it('gets info of user', async () => {
     const fetchStats = vi.spyOn(repo, 'fetchUserStats');
@@ -185,7 +194,8 @@ describe('BotInfo', () => {
     vi.restoreAllMocks();
   });
 
-  const repo: UserStatsRepository = {
+  const repo: MemberRepository = {
+    ...dummyMemberRepository,
     fetchUserStats: (id) =>
       Promise.resolve(
         id === '279614913129742338'
@@ -202,7 +212,9 @@ describe('BotInfo', () => {
           : null
       )
   };
-  const userInfo = new UserInfo(repo);
+  const reg = new DepRegistry();
+  reg.add(membersRepositoryKey, repo);
+  const userInfo = new UserInfo(reg);
 
   it('gets info bot user (old username system)', async () => {
     const fetchStats = vi.spyOn(repo, 'fetchUserStats');

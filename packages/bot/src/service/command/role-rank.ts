@@ -1,14 +1,7 @@
+import type { DepRegistry } from '../../driver/dep-registry.js';
+import { membersRepositoryKey } from '../../model/member.js';
 import type { HelpInfo } from '../../runner/command.js';
 import type { CommandMessage, CommandResponderFor } from './command-message.js';
-
-export interface MemberWithRole {
-  displayName: string;
-  roles: number;
-}
-
-export interface MembersWithRoleRepository {
-  fetchMembersWithRole(): Promise<MemberWithRole[]>;
-}
 
 const SCHEMA = {
   names: ['rolerank'],
@@ -24,10 +17,12 @@ export class RoleRank implements CommandResponderFor<typeof SCHEMA> {
   };
   readonly schema = SCHEMA;
 
-  constructor(private readonly repo: MembersWithRoleRepository) {}
+  constructor(private readonly reg: DepRegistry) {}
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
-    const members = await this.repo.fetchMembersWithRole();
+    const members = await this.reg
+      .get(membersRepositoryKey)
+      .fetchMembersWithRole();
     members.sort((a, b) => b.roles - a.roles);
     members.splice(5);
     const fields = members.map(({ displayName, roles }, index) => ({

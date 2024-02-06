@@ -1,3 +1,4 @@
+import type { Dep0, DepRegistry } from '../../driver/dep-registry.js';
 import type { Snowflake } from '../../model/id.js';
 import type { HelpInfo } from '../../runner/command.js';
 import type { CommandMessage, CommandResponderFor } from './command-message.js';
@@ -14,6 +15,10 @@ export interface Sheriff {
    */
   executeMessage(channel: Snowflake, historyRange: number): Promise<void>;
 }
+export interface SheriffDep extends Dep0 {
+  type: Sheriff;
+}
+export const sheriffKey = Symbol('SHERIFF') as unknown as SheriffDep;
 
 const SCHEMA = {
   names: ['stfu'],
@@ -44,13 +49,13 @@ export class SheriffCommand implements CommandResponderFor<typeof SCHEMA> {
   };
   readonly schema = SCHEMA;
 
-  constructor(private readonly sheriff: Sheriff) {}
+  constructor(private readonly reg: DepRegistry) {}
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const [toRemove] = message.args.params;
     for (let i = 0; i < toRemove; ++i) {
       const channel = message.senderChannelId;
-      await this.sheriff.executeMessage(channel, 50);
+      await this.reg.get(sheriffKey).executeMessage(channel, 50);
     }
     await message.react('👌');
   }

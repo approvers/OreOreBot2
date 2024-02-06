@@ -1,13 +1,7 @@
+import type { DepRegistry } from '../../driver/dep-registry.js';
+import { roleRepositoryKey } from '../../model/role.js';
 import type { HelpInfo } from '../../runner/command.js';
 import type { CommandMessage, CommandResponderFor } from './command-message.js';
-
-export interface RoleCreateManager {
-  createRole(
-    roleName: string,
-    roleColor: string,
-    createSenderName: string
-  ): Promise<void>;
-}
 
 const HEX_FORMAT = /^#?[0-9a-fA-F]{6}$/m;
 
@@ -38,7 +32,7 @@ export class RoleCreate implements CommandResponderFor<typeof SCHEMA> {
   };
   readonly schema = SCHEMA;
 
-  constructor(private readonly manager: RoleCreateManager) {}
+  constructor(private readonly reg: DepRegistry) {}
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const [roleName, roleColor] = message.args.params;
@@ -52,11 +46,9 @@ export class RoleCreate implements CommandResponderFor<typeof SCHEMA> {
     }
     const roleColorRemoveSharp = roleColor.replace('#', '');
 
-    await this.manager.createRole(
-      roleName,
-      roleColorRemoveSharp,
-      message.senderName
-    );
+    await this.reg
+      .get(roleRepositoryKey)
+      .createRole(roleName, roleColorRemoveSharp, message.senderName);
     await message.reply({
       title: 'ロール作成',
       description: 'ロールを作成したよ'

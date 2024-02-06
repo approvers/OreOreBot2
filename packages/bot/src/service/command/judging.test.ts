@@ -1,16 +1,20 @@
 import { expect, it, vi } from 'vitest';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
+import { DepRegistry } from '../../driver/dep-registry.js';
 import type { EmbedMessage } from '../../model/embed-message.js';
 import { emojiOf, waitingJudgingEmoji } from '../../model/judging-status.js';
+import {
+  dummyRandomGenerator,
+  randomGeneratorKey
+} from '../../model/random-generator.js';
 import { createMockMessage } from './command-message.js';
 import { JudgingCommand } from './judging.js';
 
 it('use case of jd', async () => {
-  const responder = new JudgingCommand({
-    sleep: () => Promise.resolve(),
-    uniform: () => 2
-  });
+  const reg = new DepRegistry();
+  reg.add(randomGeneratorKey, { ...dummyRandomGenerator, uniform: () => 2 });
+  const responder = new JudgingCommand(reg);
   const fn = vi.fn<[EmbedMessage], Promise<void>>();
 
   await responder.on(
@@ -40,10 +44,9 @@ it('use case of jd', async () => {
 });
 
 it('use case of judge', async () => {
-  const responder = new JudgingCommand({
-    sleep: () => Promise.resolve(),
-    uniform: () => 0
-  });
+  const reg = new DepRegistry();
+  reg.add(randomGeneratorKey, { ...dummyRandomGenerator, uniform: () => 0 });
+  const responder = new JudgingCommand(reg);
   const fn = vi.fn<[EmbedMessage], Promise<void>>();
 
   await responder.on(
@@ -67,10 +70,9 @@ it('use case of judge', async () => {
 });
 
 it('max number of cases', async () => {
-  const responder = new JudgingCommand({
-    sleep: () => Promise.resolve(),
-    uniform: () => 1
-  });
+  const reg = new DepRegistry();
+  reg.add(randomGeneratorKey, { ...dummyRandomGenerator, uniform: () => 1 });
+  const responder = new JudgingCommand(reg);
 
   await responder.on(
     createMockMessage(

@@ -1,11 +1,13 @@
 import { expect, it } from 'vitest';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
+import { DepRegistry } from '../../driver/dep-registry.js';
 import { createMockMessage } from './command-message.js';
-import { KokuseiChousa } from './kokusei-chousa.js';
+import { KokuseiChousa, memberStatsKey } from './kokusei-chousa.js';
 
 it('use case of kokusei-chousa', async () => {
-  const responder = new KokuseiChousa({
+  const reg = new DepRegistry();
+  reg.add(memberStatsKey, {
     allMemberCount(): Promise<number> {
       return Promise.resolve(150);
     },
@@ -13,6 +15,7 @@ it('use case of kokusei-chousa', async () => {
       return Promise.resolve(50);
     }
   });
+  const responder = new KokuseiChousa(reg);
   await responder.on(
     createMockMessage(
       parseStringsOrThrow(['kokusei'], responder.schema),
