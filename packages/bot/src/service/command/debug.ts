@@ -1,3 +1,4 @@
+import type { Dep0, DepRegistry } from '../../driver/dep-registry.js';
 import type { Snowflake } from '../../model/id.js';
 import type { HelpInfo } from '../../runner/command.js';
 import type { CommandMessage, CommandResponderFor } from './command-message.js';
@@ -8,6 +9,12 @@ export interface MessageRepository {
     messageId: Snowflake
   ): Promise<string | undefined>;
 }
+export interface MessageRepositoryDep extends Dep0 {
+  type: MessageRepository;
+}
+export const messageRepositoryKey = Symbol(
+  'MESSAGE_REPOSITORY'
+) as unknown as MessageRepositoryDep;
 
 const SCHEMA = {
   names: ['debug'],
@@ -33,17 +40,16 @@ export class DebugCommand implements CommandResponderFor<typeof SCHEMA> {
   };
   readonly schema = SCHEMA;
 
-  constructor(private readonly repo: MessageRepository) {}
+  constructor(private readonly reg: DepRegistry) {}
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const {
       params: [messageId]
     } = message.args;
 
-    const content = await this.repo.getMessageContent(
-      message.senderChannelId,
-      messageId as Snowflake
-    );
+    const content = await this.reg
+      .get(messageRepositoryKey)
+      .getMessageContent(message.senderChannelId, messageId as Snowflake);
     if (!content) {
       await message.reply({
         title: '指定のメッセージが見つからなかったよ',

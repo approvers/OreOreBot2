@@ -6,7 +6,7 @@ import {
   type ChannelStatsRepository
 } from './command/channel-info.js';
 import type { CommandResponderFor } from './command/command-message.js';
-import { DebugCommand, type MessageRepository } from './command/debug.js';
+import { DebugCommand } from './command/debug.js';
 import { DiceCommand, type DiceQueen } from './command/dice.js';
 import { GuildInfo, type GuildStatsRepository } from './command/guild-info.js';
 import { GyokuonCommand } from './command/gyokuon.js';
@@ -31,7 +31,6 @@ import { GetVersionCommand } from './command/version.js';
 export const registerAllCommandResponder = (
   commandRunner: CommandRunner,
   {
-    messageRepo,
     membersRepo,
     roleRepo,
     userRepo,
@@ -41,7 +40,6 @@ export const registerAllCommandResponder = (
     channelRepository,
     registry
   }: {
-    messageRepo: MessageRepository;
     membersRepo: MembersWithRoleRepository;
     roleRepo: RoleStatsRepository;
     userRepo: UserStatsRepository;
@@ -64,7 +62,7 @@ export const registerAllCommandResponder = (
     new SheriffCommand(registry),
     new PingCommand(registry),
     new GetVersionCommand(registry),
-    new DebugCommand(messageRepo),
+    new DebugCommand(registry),
     new RoleRank(membersRepo),
     new RoleInfo(roleRepo),
     new UserInfo(userRepo),

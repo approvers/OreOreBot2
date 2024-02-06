@@ -50,6 +50,7 @@ import {
 } from '../runner/index.js';
 import { MemberResponseRunner } from '../runner/member.js';
 import { StickerResponseRunner } from '../runner/sticker.js';
+import { messageRepositoryKey } from '../service/command/debug.js';
 import type { GyokuonAssetKey } from '../service/command/gyokuon.js';
 import {
   type KaereMusicKey,
@@ -196,11 +197,12 @@ const sheriff = new DiscordSheriff(client);
 registry.add(sheriffKey, sheriff);
 const ping = new DiscordWS(client);
 registry.add(pingKey, ping);
+const messageRepo = new DiscordMessageRepository(client);
+registry.add(messageRepositoryKey, messageRepo);
 
 if (features.includes('COMMAND')) {
   registerAllCommandResponder(commandRunner, {
     registry,
-    messageRepo: new DiscordMessageRepository(client),
     membersRepo: stats,
     roleRepo: roleManager,
     userRepo: stats,
