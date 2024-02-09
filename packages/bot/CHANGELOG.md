@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.51.1](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.51.0...OreOreBot2-v1.51.1) (2024-02-09)
+
+
+### Bug Fixes
+
+* force-release OreOreBot2 v1.51.1 ([1d540c7](https://github.com/approvers/OreOreBot2/commit/1d540c7564ea40e39238af3cdb52747cf8b1d4dc))
+
 ## [1.51.0](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.50.0...OreOreBot2-v1.51.0) (2024-02-04)
 
 
