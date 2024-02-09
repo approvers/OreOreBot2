@@ -23,7 +23,6 @@
     "@discordjs/opus": "^0.9.0",
     "@discordjs/voice": "^0.16.0",
     "@js-temporal/polyfill": "^0.4.3",
-    "@sentry/node": "^7.91.0",
     "date-fns": "^3.0.0",
     "deep-equal": "^2.2.2",
     "discord.js": "^14.7.1",

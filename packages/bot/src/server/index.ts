@@ -1,5 +1,4 @@
 import { generateDependencyReport } from '@discordjs/voice';
-import * as Sentry from '@sentry/node';
 import { Client, GatewayIntentBits, REST, Routes, version } from 'discord.js';
 import dotenv from 'dotenv';
 import { join } from 'node:path';
@@ -125,10 +124,6 @@ const intents = [
 ];
 
 const client = new Client({ intents });
-
-Sentry.init({
-  dsn: 'https://55c3207ddee962e0fae247233a3f6404@sentry.approvers.dev/3'
-});
 
 const typoRepo = new InMemoryTypoRepository();
 registry.add(typoRepositoryKey, typoRepo);
