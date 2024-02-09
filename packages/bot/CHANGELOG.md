@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.51.2](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.51.1...OreOreBot2-v1.51.2) (2024-02-09)
+
+
+### Bug Fixes
+
+* **docker:** Sentry 依存のパッケージを削除 ([#1275](https://github.com/approvers/OreOreBot2/issues/1275)) ([9522e86](https://github.com/approvers/OreOreBot2/commit/9522e867eb8d637e92485e67ff3d4f9558472b6b))
+
 ## [1.51.1](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.51.0...OreOreBot2-v1.51.1) (2024-02-09)
 
 
