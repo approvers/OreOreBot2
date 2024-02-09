@@ -36,10 +36,10 @@ ENV NODE_ENV=production
 WORKDIR /app
 
 # Sentry に必要なパッケージ
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends libssl-dev=3.0.2-0ubuntu1.13 ca-certificates=20230311ubuntu0.22.04.1 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# RUN apt-get update \
+#     && apt-get install -y --no-install-recommends libssl-dev=3.0.2-0ubuntu1.13 ca-certificates=20230311ubuntu0.22.04.1 \
+#     && apt-get clean \
+#     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /build .
 COPY --from=build /build/packages ./packages
