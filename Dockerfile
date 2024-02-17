@@ -25,7 +25,7 @@ RUN cp -r /src/{package.json,pnpm-lock.yaml,pnpm-workspace.yaml,node_modules} . 
     && mkdir -p ./packages/bot \
     && cp -r /src/packages/bot/{build,assets,node_modules} ./packages/bot
 
-FROM ubuntu:jammy-20240125
+FROM ubuntu:jammy-20240212
 COPY --from=build /usr/local/include/ /usr/local/include/
 COPY --from=build /usr/local/lib/ /usr/local/lib/
 COPY --from=build /usr/local/bin/ /usr/local/bin/
