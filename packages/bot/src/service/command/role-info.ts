@@ -49,7 +49,7 @@ export class RoleInfo implements CommandResponderFor<typeof SCHEMA> {
     const fields = [
       {
         name: 'ID',
-        value: `${roleId}`,
+        value: roleId,
         inline: true
       },
       {
