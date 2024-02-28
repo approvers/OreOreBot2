@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.52.0](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.51.2...OreOreBot2-v1.52.0) (2024-02-28)
+
+
+### Features
+
+* ウェルカムメッセージを更新する ([#1296](https://github.com/approvers/OreOreBot2/issues/1296)) ([d0b9266](https://github.com/approvers/OreOreBot2/commit/d0b92669491d719ae8d6298a30b66f2409dd3480))
+
 ## [1.51.2](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.51.1...OreOreBot2-v1.51.2) (2024-02-09)
 
 
