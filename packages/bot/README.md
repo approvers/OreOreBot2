@@ -8,7 +8,6 @@ Discord Bot 本体を提供するパッケージ。
 
 - git
 - ffmpeg
-- Node.js v20.x 以上
 - bun v1
 
 ## 環境変数

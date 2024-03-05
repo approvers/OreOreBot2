@@ -7,7 +7,7 @@
   "repository": "https://github.com/approvers/OreOreBot2",
   "author": "approvers <info@approvers.dev>",
   "scripts": {
-    "start": "node ./build/index.mjs",
+    "start": "bun run ./build/index.mjs",
     "dev": "tsx ./src/server/index.ts",
     "build": "esbuild ./src/server/index.ts --bundle --minify --charset=utf8 --platform=node --target=node18 --format=esm --packages=external --outfile=build/index.mjs",
     "lint": "eslint \"./src/**/*.{js,ts}\"",
@@ -15,9 +15,6 @@
     "test": "vitest run",
     "coverage": "vitest run --coverage",
     "lint-staged": "lint-staged"
-  },
-  "engines": {
-    "node": ">=20"
   },
   "dependencies": {
     "@discordjs/opus": "^0.9.0",

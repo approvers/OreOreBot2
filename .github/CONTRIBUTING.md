@@ -167,7 +167,6 @@ OreOreBot2 (@oreorebot2/common)
 
 - Git
 - FFmpeg ([音楽再生系の機能](#音楽再生系の機能)で必要です)
-- Node.js v20.x 以上
 - bun v1
 
 #### コーディング規約
@@ -341,7 +340,6 @@ it('use case of hukueki', async () => {
 以下のものをインストールしていることを想定しています。
 
 - Git
-- Node.js v18.x 以上
 - bun v1
 
 #### コーディング規約
