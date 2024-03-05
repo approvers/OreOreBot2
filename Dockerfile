@@ -21,7 +21,7 @@ RUN bun run build:bot
 WORKDIR /build
 RUN cp -r /src/{package.json,bun.lockb,node_modules} . \
     && mkdir -p ./packages/bot \
-    && cp -r /src/packages/bot/{build,assets,node_modules} ./packages/bot
+    && cp -r /src/packages/bot/{build,assets} ./packages/bot
 
 FROM ubuntu:jammy-20240212
 COPY --from=build /usr/local/include/ /usr/local/include/
