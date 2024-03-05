@@ -193,17 +193,13 @@ OreOreBot2 (@oreorebot2/common)
 **コマンド**
 
 ```ts
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, mock, spyOn } from 'bun:test';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 import { createMockMessage } from './command-message.js';
 import { RoleInfo, RoleStatsRepository } from './role-info.js';
 
 describe('RoleRank', () => {
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
   const repo: RoleStatsRepository = {
     fetchStats: (id) =>
       Promise.resolve(
@@ -217,11 +213,11 @@ describe('RoleRank', () => {
           : null
       )
   };
+  const fetchStats = spyOn(repo, 'fetchStats');
   const roleInfo = new RoleInfo(repo);
 
   it('gets info of role', async () => {
-    const fetchStats = vi.spyOn(repo, 'fetchStats');
-    const fn = vi.fn();
+    const fn = mock();
 
     await roleInfo.on(
       createMockMessage(
@@ -262,12 +258,11 @@ describe('RoleRank', () => {
       ],
       thumbnail: undefined
     });
-    expect(fetchStats).toHaveBeenCalledOnce();
+    expect(fetchStats).toHaveBeenCalledTimes(1);
   });
 
   it('errors with invalid id', async () => {
-    const fetchStats = vi.spyOn(repo, 'fetchStats');
-    const fn = vi.fn();
+    const fn = mock();
 
     await roleInfo.on(
       createMockMessage(
@@ -280,7 +275,7 @@ describe('RoleRank', () => {
       title: '引数エラー',
       description: '指定のIDのロールが見つからないみたい……'
     });
-    expect(fetchStats).toHaveBeenCalledOnce();
+    expect(fetchStats).toHaveBeenCalledTimes(1);
   });
 });
 ```
@@ -288,13 +283,13 @@ describe('RoleRank', () => {
 **ミーム**
 
 ```ts
-import { expect, it, vi } from 'vitest';
+import { expect, it, mock } from 'bun:test';
 
 import { createMockMessage } from './command-message.js';
 import { Meme } from './meme.js';
 
 it('use case of hukueki', async () => {
-  const fn = vi.fn();
+  const fn = mock();
   const responder = new Meme();
   await responder.on(
     createMockMessage(
