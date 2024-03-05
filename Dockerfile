@@ -11,11 +11,11 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-COPY packages/bot/ ./packages/bot/
-COPY package.json bun.lockb ./
+COPY packages/ ./packages/
+COPY package.json bun.lockb LICENSE ./
 
 RUN --mount=type=cache,id=bun,target=/root/.bin/install/cache \
-    bun install --frozen-lockfile --cwd packages/bot
+    bun install --frozen-lockfile
 RUN bun run build:bot
 
 WORKDIR /build
