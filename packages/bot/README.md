@@ -8,8 +8,7 @@ Discord Bot 本体を提供するパッケージ。
 
 - git
 - ffmpeg
-- Node.js v20.x 以上
-- pnpm v8
+- bun v1
 
 ## 環境変数
 
@@ -28,20 +27,19 @@ Discord Bot 本体を提供するパッケージ。
 
 ## インストール
 
-### pnpm を使用する場合
+### Bun を使用する場合
 
 ```shell
 git clone https://github.com/approvers/OreOreBot2.git
 cd OreOreBot2
-corepack enable pnpm
-pnpm i
-pnpm build:bot
-pnpm start
+bun install
+bun build:bot
+bun start
 ```
 
-`pnpm start` での起動時に上記の環境変数を指定してください。`.env` でも指定できます。
+`bun start` での起動時に上記の環境変数を指定してください。`.env` でも指定できます。
 
-`pnpm dev:bot` を使用することでコンパイルせずに起動することもできます。
+`bun dev:bot` を使用することでコンパイルせずに起動することもできます。
 
 ### Docker を使用する場合
 

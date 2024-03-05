@@ -1,25 +1,25 @@
 {
   "name": "@oreorebot2/common",
   "private": true,
-  "packageManager": "pnpm@8.15.3",
+  "packageManager": "bun@1.0.24",
   "scripts": {
-    "start": "pnpm --filter @oreorebot2/bot start",
-    "build:bot": "pnpm --filter @oreorebot2/bot build",
-    "build:docs": "pnpm --filter @oreorebot2/docs build",
-    "dev:bot": "pnpm --filter @oreorebot2/bot dev",
-    "dev:docs": "pnpm --filter @oreorebot2/docs dev",
-    "lint:bot": "pnpm --filter @oreorebot2/bot lint",
-    "lint:docs": "pnpm --filter @oreorebot2/docs lint",
-    "format:bot": "pnpm --filter @oreorebot2/bot format",
-    "format:docs": "pnpm --filter @oreorebot2/docs format",
-    "test": "pnpm --filter @oreorebot2/bot test",
-    "coverage": "pnpm --filter @oreorebot2/bot coverage",
+    "start": "bun run --cwd packages/bot start",
+    "build:bot": "bun run --cwd packages/bot build",
+    "build:docs": "bun run --cwd packages/docs build",
+    "dev:bot": "bun run --cwd packages/bot dev",
+    "dev:docs": "bun run --cwd packages/docs dev",
+    "lint:bot": "bun run --cwd packages/bot lint",
+    "lint:docs": "bun run --cwd packages/docs lint",
+    "format:bot": "bun run --cwd packages/bot format",
+    "format:docs": "bun run --cwd packages/docs format",
+    "test": "bun run --cwd packages/bot test",
+    "coverage": "bun run --cwd packages/bot coverage",
     "lint-staged": "lint-staged",
-    "postinstall": "husky"
+    "prepare": "husky"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
-    "@types/node": "20.11.23",
+    "@types/bun": "^1.0.2",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
     "eslint": "8.56.0",
@@ -34,5 +34,6 @@
     "lint-staged": "^15.0.0",
     "prettier": "^3.0.0",
     "typescript": "5.3.3"
-  }
+  },
+  "workspaces": ["packages/*"]
 }

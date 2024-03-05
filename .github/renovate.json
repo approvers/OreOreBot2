@@ -10,7 +10,7 @@
   "dependencyDashboard": true,
   "semanticCommits": "enabled",
   "fetchReleaseNotes": true,
-  "enabledManagers": ["npm", "github-actions", "dockerfile", "docker-compose"],
+  "enabledManagers": ["bun", "github-actions", "dockerfile", "docker-compose"],
   "packageRules": [
     {
       "matchDatasources": ["npm"],

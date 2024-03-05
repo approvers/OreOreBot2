@@ -11,21 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
+      - uses: oven-sh/setup-bun@v1
       - name: Install packages
-        run: pnpm i --frozen-lockfile
+        run: bun install --frozen-lockfile
 
       - name: prettier (bot)
-        run: pnpm format:bot
+        run: bun format:bot
 
       - name: prettier (docs)
-        run: pnpm format:docs
+        run: bun format:docs

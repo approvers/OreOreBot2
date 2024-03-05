@@ -21,7 +21,6 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@oreorebot2/common": "workspace:*",
     "@types/react": "18.2.60"
   }
 }

@@ -64,7 +64,7 @@ git clone https://github.com/approvers/OreOreBot2.git
 **必ず、ルートディレクトリ上で実行してください**。
 
 ```shell
-pnpm i
+bun install
 ```
 
 4. ブランチを作成、チェックアウトする
@@ -101,7 +101,7 @@ OreOreBot2 (@oreorebot2/common)
 ```
 
 - ルートディレクトリ (`@oreorebot2/common`) 上は `@oreorebot2/bot`・`@oreorebot2/docs` で使用される依存関係やコンフィグファイルが管理されています。
-  - このディレクトリ上で `pnpm i` を実行すると、`@oreorebot2/common`・`@oreorebot2/bot`・`@oreorebot2/docs` の依存関係がインストールされます。
+  - このディレクトリ上で `bun install` を実行すると、`@oreorebot2/common`・`@oreorebot2/bot`・`@oreorebot2/docs` の依存関係がインストールされます。
 - ルートディレクトリ (`@oreorebot2/common`) 上から `@oreorebot2/bot`・`@oreorebot2/docs` のスクリプトにアクセスすることが可能です。
 - 依存関係をインストールする必要がある場合はインストール先に注意してください。それぞれパッケージの依存関係はそれぞれのディレクトリ上でインストールする必要があります。
   - 2つのパッケージ (`@oreorebot2/bot`・`@oreorebot2/docs`) に共通するような依存関係は `@oreorebot2/common` 上でインストールしてください。
@@ -167,8 +167,7 @@ OreOreBot2 (@oreorebot2/common)
 
 - Git
 - FFmpeg ([音楽再生系の機能](#音楽再生系の機能)で必要です)
-- Node.js v20.x 以上
-- pnpm v8
+- bun v1
 
 #### コーディング規約
 
@@ -341,8 +340,7 @@ it('use case of hukueki', async () => {
 以下のものをインストールしていることを想定しています。
 
 - Git
-- Node.js v18.x 以上
-- pnpm v8
+- bun v1
 
 #### コーディング規約
 

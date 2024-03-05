@@ -1,29 +1,27 @@
 FROM mwader/static-ffmpeg:6.1.1 as ffmpeg
 
-FROM node:20-slim as build
+FROM oven/bun:1-slim as build
 ARG GIT_TAG
 SHELL ["/bin/bash", "-c"]
 WORKDIR /src
 
 # node-gyp requires Python and basic packages needed to compile C libs
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends python3=3.11.2-1+b1 build-essential=12.9 \
+    && apt-get install -y --no-install-recommends python3=3.9.2-3 build-essential=12.9 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-COPY packages/bot/ ./packages/bot/
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY packages/ ./packages/
+COPY package.json bun.lockb LICENSE ./
 
-RUN npx --quiet pinst --disable
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
-    corepack enable pnpm \
-    && pnpm install --frozen-lockfile --filter @oreorebot2/bot
-RUN pnpm build:bot
+RUN --mount=type=cache,id=bun,target=/root/.bin/install/cache \
+    bun install --frozen-lockfile
+RUN bun run build:bot
 
 WORKDIR /build
-RUN cp -r /src/{package.json,pnpm-lock.yaml,pnpm-workspace.yaml,node_modules} . \
+RUN cp -r /src/{package.json,bun.lockb,node_modules} . \
     && mkdir -p ./packages/bot \
-    && cp -r /src/packages/bot/{build,assets,node_modules} ./packages/bot
+    && cp -r /src/packages/bot/{build,assets} ./packages/bot
 
 FROM ubuntu:jammy-20240212
 COPY --from=build /usr/local/include/ /usr/local/include/
@@ -47,5 +45,5 @@ COPY --from=build /build/packages/bot ./packages/bot
 
 WORKDIR /app/packages/bot
 
-ENTRYPOINT ["node"]
+ENTRYPOINT ["bun", "run"]
 CMD ["build/index.mjs"]
