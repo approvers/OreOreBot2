@@ -1,10 +1,10 @@
-import { expect, it, vi } from 'vitest';
+import { expect, it, mock } from 'bun:test';
 
 import type { Snowflake } from '../model/id.js';
 import { StickerLog } from './sticker-log.js';
 
 it('create sticker', async () => {
-  const sendEmbed = vi.fn(() => Promise.resolve());
+  const sendEmbed = mock(() => Promise.resolve());
   const responder = new StickerLog({ sendEmbed });
   await responder.on('CREATE', {
     name: 'なないミーム',
@@ -36,7 +36,7 @@ it('create sticker', async () => {
 });
 
 it('does not call non-CREATE event', async () => {
-  const sendEmbed = vi.fn(() => Promise.resolve());
+  const sendEmbed = mock(() => Promise.resolve());
   const responder = new StickerLog({ sendEmbed });
   await responder.on('UPDATE', {
     name: 'なないミーム',

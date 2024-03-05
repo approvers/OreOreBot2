@@ -1,6 +1,6 @@
+import { afterAll, afterEach, describe, expect, it, mock } from 'bun:test';
 import { addDays, setHours, setMinutes } from 'date-fns';
 import EventEmitter from 'node:events';
-import { afterAll, afterEach, describe, expect, it, vi } from 'vitest';
 
 import { InMemoryTypoRepository, MockClock } from '../../adaptor/index.js';
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
@@ -52,13 +52,13 @@ it('react to だカス', async () => {
 });
 
 it('must not react', async () => {
-  const fn = vi.fn();
-  const mock = new MockRepository();
-  mock.on('ADD_TYPO', fn);
-  mock.on('ALL_TYPOS', fn);
-  mock.on('CLEAR', fn);
+  const fn = mock();
+  const mockTypoRepo = new MockRepository();
+  mockTypoRepo.on('ADD_TYPO', fn);
+  mockTypoRepo.on('ALL_TYPOS', fn);
+  mockTypoRepo.on('CLEAR', fn);
   const reg = new DepRegistry();
-  reg.add(typoRepositoryKey, mock);
+  reg.add(typoRepositoryKey, mockTypoRepo);
   const responder = new TypoRecorder(reg);
   await responder.on('CREATE', {
     content: `だカス`,
@@ -111,6 +111,7 @@ describe('typo record command', () => {
             description:
               '***† 今日のMikuroさいなのtypo †***\n- foo\n- hoge\n- fuga'
           });
+          return undefined;
         }
       )
     );
@@ -125,6 +126,7 @@ describe('typo record command', () => {
             description:
               '***† 今日の<@279614913129742338>のtypo †***\n- foo\n- hoge\n- fuga'
           });
+          return undefined;
         }
       )
     );
@@ -143,6 +145,7 @@ describe('typo record command', () => {
           expect(message).toStrictEqual({
             description: '***† 今日のMikuroさいなのtypo †***\n- foo\n- hoge'
           });
+          return undefined;
         }
       )
     );
@@ -160,6 +163,7 @@ describe('typo record command', () => {
           expect(message).toStrictEqual({
             description: '***† 今日のMikuroさいなのtypo †***\n'
           });
+          return undefined;
         }
       )
     );

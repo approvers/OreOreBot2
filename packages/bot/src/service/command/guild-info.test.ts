@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, mock, spyOn } from 'bun:test';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 import { DepRegistry } from '../../driver/dep-registry.js';
@@ -8,10 +8,6 @@ import { createMockMessage } from './command-message.js';
 import { GuildInfo } from './guild-info.js';
 
 describe('GuildInfo', () => {
-  afterEach(() => {
-    vi.resetAllMocks();
-  });
-
   const repo: GuildRepository = {
     fetchGuildStats: () =>
       Promise.resolve({
@@ -33,13 +29,18 @@ describe('GuildInfo', () => {
         verificationLevel: '最高(電話番号認証要求)'
       })
   };
+  const fetchStats = spyOn(repo, 'fetchGuildStats');
+
   const reg = new DepRegistry();
   reg.add(guildRepositoryKey, repo);
   const guildInfo = new GuildInfo(reg);
 
+  afterEach(() => {
+    fetchStats.mockClear();
+  });
+
   it('Success GuildInfo', async () => {
-    const fetchStats = vi.spyOn(repo, 'fetchGuildStats');
-    const fn = vi.fn();
+    const fn = mock();
 
     await guildInfo.on(
       createMockMessage(
@@ -124,12 +125,12 @@ describe('GuildInfo', () => {
         }
       ]
     });
-    expect(fetchStats).toHaveBeenCalledOnce();
+    expect(fetchStats).toHaveBeenCalledTimes(1);
   });
 
   it('Fail GuildInfo', async () => {
-    const fetchStats = vi.spyOn(repo, 'fetchGuildStats');
-    const fn = vi.fn();
+    fetchStats.mockImplementation(() => Promise.resolve(undefined));
+    const fn = mock();
 
     await guildInfo.on(
       createMockMessage(
@@ -142,6 +143,6 @@ describe('GuildInfo', () => {
       title: '取得エラー',
       description: '限界開発鯖の情報が見つからないみたい……'
     });
-    expect(fetchStats).toHaveBeenCalledOnce();
+    expect(fetchStats).toHaveBeenCalledTimes(1);
   });
 });

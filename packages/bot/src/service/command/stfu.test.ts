@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, mock, spyOn } from 'bun:test';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 import { DepRegistry } from '../../driver/dep-registry.js';
@@ -7,19 +7,20 @@ import { createMockMessage } from './command-message.js';
 import { type Sheriff, SheriffCommand, sheriffKey } from './stfu.js';
 
 describe('stfu', () => {
-  afterEach(() => {
-    vi.resetAllMocks();
-  });
-
   const sheriff: Sheriff = { executeMessage: () => Promise.resolve() };
+  const executeMessage = spyOn(sheriff, 'executeMessage');
+
   const reg = new DepRegistry();
   reg.add(sheriffKey, sheriff);
   const responder = new SheriffCommand(reg);
 
+  afterEach(() => {
+    executeMessage.mockClear();
+  });
+
   it('use case of stfu', async () => {
-    const executeMessage = vi.spyOn(sheriff, 'executeMessage');
-    const fn = vi.fn();
-    const react = vi.fn<[string]>(() => Promise.resolve());
+    const fn = mock();
+    const react = mock(() => Promise.resolve());
     await responder.on(
       createMockMessage(parseStringsOrThrow(['stfu'], responder.schema), fn, {
         react
@@ -35,9 +36,8 @@ describe('stfu', () => {
   });
 
   it('executes specified times', async () => {
-    const executeMessage = vi.spyOn(sheriff, 'executeMessage');
-    const fn = vi.fn();
-    const react = vi.fn<[string]>(() => Promise.resolve());
+    const fn = mock();
+    const react = mock(() => Promise.resolve());
     await responder.on(
       createMockMessage(
         parseStringsOrThrow(['stfu', '25'], responder.schema),
@@ -49,7 +49,7 @@ describe('stfu', () => {
     );
 
     expect(fn).not.toHaveBeenCalled();
-    expect(executeMessage).nthCalledWith(
+    expect(executeMessage).toHaveBeenNthCalledWith(
       25,
       '711127633810817026' as Snowflake,
       50

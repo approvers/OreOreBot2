@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, mock } from 'bun:test';
 
 import { EmojiSeqReact } from './emoji-seq-react.js';
 
@@ -10,17 +10,21 @@ describe('EmojiSeqReact', () => {
 `);
 
   it('adds the reaction to creation a message that contains Hibiki', async () => {
-    const addReaction = vi.fn<[string], Promise<void>>(() => Promise.resolve());
+    const addReaction = mock<(emoji: string) => Promise<void>>(() =>
+      Promise.resolve()
+    );
     await responder.on('CREATE', {
       content: '響き',
       addReaction
     });
-    expect(addReaction).toBeCalledTimes(1);
+    expect(addReaction).toHaveBeenCalledTimes(1);
     expect(addReaction).toHaveBeenCalledWith('<:haracho:684424533997912096>');
   });
 
   it('does not anything on deletion', async () => {
-    const addReaction = vi.fn<[string], Promise<void>>(() => Promise.resolve());
+    const addReaction = mock<(emoji: string) => Promise<void>>(() =>
+      Promise.resolve()
+    );
     await responder.on('DELETE', {
       content: '響',
       addReaction

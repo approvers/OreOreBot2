@@ -1,22 +1,21 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, spyOn } from 'bun:test';
 
 import type { Snowflake } from '../model/id.js';
 import type { EntranceOutput } from './output.js';
 import { WelcomeMessage } from './welcome-message.js';
 
 describe('WelcomeMessage', () => {
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
   const output: EntranceOutput = {
     sendEmbedWithMention: () => Promise.resolve()
   };
+  const sendEmbed = spyOn(output, 'sendEmbedWithMention');
   const responder = new WelcomeMessage(output);
 
-  it('send welcome message', async () => {
-    const sendEmbed = vi.spyOn(output, 'sendEmbedWithMention');
+  afterEach(() => {
+    sendEmbed.mockClear();
+  });
 
+  it('send welcome message', async () => {
     await responder.on('JOIN', {
       userId: '586824421470109716' as Snowflake,
       isBot: false
@@ -59,8 +58,6 @@ describe('WelcomeMessage', () => {
   });
 
   it('skip welcome message (join a bot)', async () => {
-    const sendEmbed = vi.spyOn(output, 'sendEmbedWithMention');
-
     await responder.on('JOIN', {
       userId: '586824421470109716' as Snowflake,
       isBot: true

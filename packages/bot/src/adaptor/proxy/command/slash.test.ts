@@ -1,5 +1,5 @@
+import { expect, test } from 'bun:test';
 import type { ChatInputCommandInteraction } from 'discord.js';
-import { expect, test } from 'vitest';
 
 import { parseOptions } from './slash.js';
 

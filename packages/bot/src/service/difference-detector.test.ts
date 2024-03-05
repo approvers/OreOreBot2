@@ -1,10 +1,10 @@
-import { expect, it, vi } from 'vitest';
+import { expect, it, mock } from 'bun:test';
 
 import { DifferenceDetector } from './difference-detector.js';
 
 it('react to edited message', async () => {
   const responder = new DifferenceDetector();
-  const fn = vi.fn();
+  const fn = mock();
   await responder.on(
     'UPDATE',
     {
@@ -119,7 +119,7 @@ wow`,
 
 it('not react to unedited message', async () => {
   const responder = new DifferenceDetector();
-  const fn = vi.fn(() => Promise.resolve());
+  const fn = mock(() => Promise.resolve());
 
   await responder.on(
     'UPDATE',

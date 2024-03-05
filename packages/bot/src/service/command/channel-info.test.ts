@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, mock, spyOn } from 'bun:test';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 import { DepRegistry } from '../../driver/dep-registry.js';
@@ -11,10 +11,6 @@ import { ChannelInfo } from './channel-info.js';
 import { createMockMessage } from './command-message.js';
 
 describe('ChannelInfo', () => {
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
   const repo: ChannelRepository = {
     fetchStats: (id) =>
       Promise.resolve(
@@ -28,13 +24,17 @@ describe('ChannelInfo', () => {
           : null
       )
   };
+  const fetchStats = spyOn(repo, 'fetchStats');
   const reg = new DepRegistry();
   reg.add(channelRepositoryKey, repo);
   const channelInfo = new ChannelInfo(reg);
 
+  afterEach(() => {
+    fetchStats.mockClear();
+  });
+
   it('gets info of role', async () => {
-    const fetchStats = vi.spyOn(repo, 'fetchStats');
-    const fn = vi.fn();
+    const fn = mock();
 
     await channelInfo.on(
       createMockMessage(
@@ -65,12 +65,11 @@ describe('ChannelInfo', () => {
         }
       ]
     });
-    expect(fetchStats).toHaveBeenCalledOnce();
+    expect(fetchStats).toHaveBeenCalledTimes(1);
   });
 
   it('gets info of sender channel', async () => {
-    const fetchStats = vi.spyOn(repo, 'fetchStats');
-    const fn = vi.fn();
+    const fn = mock();
 
     await channelInfo.on(
       createMockMessage(
@@ -104,12 +103,11 @@ describe('ChannelInfo', () => {
         }
       ]
     });
-    expect(fetchStats).toHaveBeenCalledOnce();
+    expect(fetchStats).toHaveBeenCalledTimes(1);
   });
 
   it('errors with invalid id', async () => {
-    const fetchStats = vi.spyOn(repo, 'fetchStats');
-    const fn = vi.fn();
+    const fn = mock();
 
     await channelInfo.on(
       createMockMessage(
@@ -122,6 +120,6 @@ describe('ChannelInfo', () => {
       title: '引数エラー',
       description: '指定したIDのチャンネルが見つからないみたい...'
     });
-    expect(fetchStats).toHaveBeenCalledOnce();
+    expect(fetchStats).toHaveBeenCalledTimes(1);
   });
 });

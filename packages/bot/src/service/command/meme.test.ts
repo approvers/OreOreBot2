@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, mock } from 'bun:test';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 import { createMockMessage } from './command-message.js';
@@ -13,11 +13,11 @@ describe('meme', () => {
    */
 
   it('report error only once', async () => {
-    const fn = vi.fn();
+    const fn = mock();
     await responder.on(
       createMockMessage(parseStringsOrThrow(['hukueki'], responder.schema), fn)
     );
-    expect(fn).toHaveBeenCalledOnce();
+    expect(fn).toHaveBeenCalledTimes(1);
     expect(fn).toHaveBeenCalledWith({
       title: '引数が不足してるみたいだ。',
       description: '服役できなかった。'

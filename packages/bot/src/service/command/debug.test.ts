@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, mock, spyOn } from 'bun:test';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 import { DepRegistry } from '../../driver/dep-registry.js';
@@ -11,22 +11,21 @@ import {
 } from './debug.js';
 
 describe('debug', () => {
-  afterEach(() => {
-    vi.resetAllMocks();
-  });
-
   const repo: MessageRepository = {
     getMessageContent: () => Promise.resolve(undefined)
   };
+  const getMessageContent = spyOn(repo, 'getMessageContent');
   const reg = new DepRegistry();
   reg.add(messageRepositoryKey, repo);
   const responder = new DebugCommand(reg);
 
+  beforeEach(() => {
+    getMessageContent.mockClear();
+  });
+
   it('outputs debug format', async () => {
-    const getMessageContent = vi
-      .spyOn(repo, 'getMessageContent')
-      .mockImplementation(() => Promise.resolve('🅰️ Hoge'));
-    const reply = vi.fn();
+    getMessageContent.mockImplementation(() => Promise.resolve('🅰️ Hoge'));
+    const reply = mock();
     await responder.on(
       createMockMessage(
         parseStringsOrThrow(['debug', '1423523'], responder.schema),
@@ -44,14 +43,12 @@ describe('debug', () => {
   });
 
   it('replaces triple back quotes', async () => {
-    const getMessageContent = vi
-      .spyOn(repo, 'getMessageContent')
-      .mockImplementation(() =>
-        Promise.resolve(`\`\`\`js
+    getMessageContent.mockImplementation(() =>
+      Promise.resolve(`\`\`\`js
 console.log(\`Hello, \${name}!\`);
 \`\`\``)
-      );
-    const reply = vi.fn();
+    );
+    const reply = mock();
     await responder.on(
       createMockMessage(
         parseStringsOrThrow(['debug', '1423523'], responder.schema),
@@ -75,8 +72,8 @@ console.log(\`Hello, \${name}!\`);
   });
 
   it('errors on message not found', async () => {
-    const getMessageContent = vi.spyOn(repo, 'getMessageContent');
-    const reply = vi.fn();
+    getMessageContent.mockImplementation(() => Promise.resolve(undefined));
+    const reply = mock();
     await responder.on(
       createMockMessage(
         parseStringsOrThrow(['debug', '1423523'], responder.schema),

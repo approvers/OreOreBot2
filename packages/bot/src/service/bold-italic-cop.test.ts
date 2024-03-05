@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, mock } from 'bun:test';
 
 import { BoldItalicCopReporter } from './bold-italic-cop.js';
 
@@ -6,7 +6,7 @@ describe('bold italic cop', () => {
   const responder = new BoldItalicCopReporter();
 
   it('reacts', async () => {
-    const replyMessage = vi.fn(() => Promise.resolve());
+    const replyMessage = mock(() => Promise.resolve());
     await responder.on('CREATE', {
       content: '***foge***',
       replyMessage
@@ -17,7 +17,7 @@ describe('bold italic cop', () => {
   });
 
   it('reacts to 4 asterisks', async () => {
-    const replyMessage = vi.fn(() => Promise.resolve());
+    const replyMessage = mock(() => Promise.resolve());
     await responder.on('CREATE', {
       content: '****foge****',
       replyMessage
@@ -28,7 +28,7 @@ describe('bold italic cop', () => {
   });
 
   it('does not react 4 asterisks on one side', async () => {
-    const replyMessage = vi.fn();
+    const replyMessage = mock();
     await responder.on('CREATE', {
       content: '****hoge',
       replyMessage
@@ -37,7 +37,7 @@ describe('bold italic cop', () => {
   });
 
   it('2 asterisk', async () => {
-    const replyMessage = vi.fn();
+    const replyMessage = mock();
     await responder.on('CREATE', {
       content: '**hoge',
       replyMessage
@@ -46,7 +46,7 @@ describe('bold italic cop', () => {
   });
 
   it('bold', async () => {
-    const replyMessage = vi.fn();
+    const replyMessage = mock();
     await responder.on('CREATE', {
       content: '**hoge**',
       replyMessage
@@ -55,7 +55,7 @@ describe('bold italic cop', () => {
   });
 
   it('delete case', async () => {
-    const replyMessage = vi.fn();
+    const replyMessage = mock();
     await responder.on('DELETE', {
       content: '***hoge***',
       replyMessage

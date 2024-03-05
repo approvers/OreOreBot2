@@ -1,10 +1,10 @@
-import { expect, it, vi } from 'vitest';
+import { expect, it, mock } from 'bun:test';
 
 import type { Snowflake } from '../model/id.js';
 import { EmojiLog } from './emoji-log.js';
 
 it('create emoji', async () => {
-  const sendEmbed = vi.fn(() => Promise.resolve());
+  const sendEmbed = mock(() => Promise.resolve());
   const responder = new EmojiLog({ sendEmbed });
   await responder.on('CREATE', {
     emoji: '<:kawaehand:903283802443501618>',
@@ -24,7 +24,7 @@ it('create emoji', async () => {
 });
 
 it('does not call non-CREATE event', async () => {
-  const sendEmbed = vi.fn(() => Promise.resolve());
+  const sendEmbed = mock(() => Promise.resolve());
   const responder = new EmojiLog({ sendEmbed });
   await responder.on('UPDATE', {
     emoji: '<:kawaehand:903283802443501618>',

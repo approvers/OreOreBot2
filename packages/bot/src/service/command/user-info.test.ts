@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, spyOn, mock } from 'bun:test';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 import { DepRegistry } from '../../driver/dep-registry.js';
@@ -12,10 +12,6 @@ import { createMockMessage } from './command-message.js';
 import { UserInfo } from './user-info.js';
 
 describe('UserInfo', () => {
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
   const repo: MemberRepository = {
     ...dummyMemberRepository,
     fetchUserStats: (id) =>
@@ -34,13 +30,17 @@ describe('UserInfo', () => {
           : null
       )
   };
+  const fetchStats = spyOn(repo, 'fetchUserStats');
   const reg = new DepRegistry();
   reg.add(membersRepositoryKey, repo);
   const userInfo = new UserInfo(reg);
 
+  beforeEach(() => {
+    fetchStats.mockClear();
+  });
+
   it('gets info of user', async () => {
-    const fetchStats = vi.spyOn(repo, 'fetchUserStats');
-    const fn = vi.fn();
+    const fn = mock();
 
     await userInfo.on(
       createMockMessage(
@@ -99,12 +99,11 @@ describe('UserInfo', () => {
       ],
       thumbnail: { url: 'https://example.com/meru.png' }
     });
-    expect(fetchStats).toHaveBeenCalledOnce();
+    expect(fetchStats).toHaveBeenCalledTimes(1);
   });
 
   it('gets info self', async () => {
-    const fetchStats = vi.spyOn(repo, 'fetchUserStats');
-    const fn = vi.fn();
+    const fn = mock();
 
     await userInfo.on(
       createMockMessage(
@@ -163,12 +162,11 @@ describe('UserInfo', () => {
       ],
       thumbnail: { url: 'https://example.com/meru.png' }
     });
-    expect(fetchStats).toHaveBeenCalledOnce();
+    expect(fetchStats).toHaveBeenCalledTimes(1);
   });
 
   it('error with invalid arg', async () => {
-    const fetchStats = vi.spyOn(repo, 'fetchUserStats');
-    const fn = vi.fn();
+    const fn = mock();
 
     await userInfo.on(
       createMockMessage(
@@ -184,16 +182,12 @@ describe('UserInfo', () => {
       title: '引数エラー',
       description: '指定したユーザーは存在しないよ'
     });
-    expect(fetchStats).toHaveBeenCalledOnce();
+    expect(fetchStats).toHaveBeenCalledTimes(1);
   });
 });
 
 // "UserInfo" として定義してもいいが、見通し良くするために新しいスイートを定義する
 describe('BotInfo', () => {
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
   const repo: MemberRepository = {
     ...dummyMemberRepository,
     fetchUserStats: (id) =>
@@ -212,13 +206,17 @@ describe('BotInfo', () => {
           : null
       )
   };
+  const fetchStats = spyOn(repo, 'fetchUserStats');
   const reg = new DepRegistry();
   reg.add(membersRepositoryKey, repo);
   const userInfo = new UserInfo(reg);
 
+  beforeEach(() => {
+    fetchStats.mockClear();
+  });
+
   it('gets info bot user (old username system)', async () => {
-    const fetchStats = vi.spyOn(repo, 'fetchUserStats');
-    const fn = vi.fn();
+    const fn = mock();
 
     await userInfo.on(
       createMockMessage(
@@ -277,6 +275,6 @@ describe('BotInfo', () => {
       ],
       thumbnail: { url: 'https://example.com/mikuro.png' }
     });
-    expect(fetchStats).toHaveBeenCalledOnce();
+    expect(fetchStats).toHaveBeenCalledTimes(1);
   });
 });

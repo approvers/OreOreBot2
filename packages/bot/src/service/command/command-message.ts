@@ -85,10 +85,13 @@ export type CommandResponderFor<S extends Schema> = CommandResponder<
 
 export const createMockMessage = <S extends Schema>(
   args: Readonly<ParsedSchema<S>>,
-  reply?:
-    | ((message: EmbedMessage) => void)
-    | ((message: EmbedMessage) => Promise<SentMessage> | Promise<void>),
-  partial?: Readonly<Partial<Omit<CommandMessage<S>, 'reply'>>>
+  reply:
+    | ((message: EmbedMessage) => undefined)
+    | ((message: EmbedMessage) => Promise<SentMessage | undefined>) = () =>
+    Promise.resolve({
+      edit: () => Promise.resolve()
+    }),
+  partial: Readonly<Partial<Omit<CommandMessage<S>, 'reply'>>> = {}
 ): CommandMessage<S> => ({
   senderId: '279614913129742338' as Snowflake,
   senderGuildId: '683939861539192860' as Snowflake,
@@ -96,15 +99,14 @@ export const createMockMessage = <S extends Schema>(
   senderVoiceChannelId: '683939861539192865' as Snowflake,
   senderName: 'Mikuroさいな',
   args,
-  reply: reply
-    ? async (mes) =>
-        ((await reply(mes)) as SentMessage | undefined) ?? {
-          edit: () => Promise.resolve()
-        }
-    : () =>
-        Promise.resolve({
-          edit: () => Promise.resolve()
-        }),
+  reply: async (mes) => {
+    const sentMessage = await reply(mes);
+    return (
+      sentMessage ?? {
+        edit: () => Promise.resolve()
+      }
+    );
+  },
   replyPages: () => Promise.resolve(),
   react: () => Promise.resolve(),
   ...partial

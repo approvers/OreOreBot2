@@ -1,9 +1,8 @@
-import { afterAll, describe, expect, it, vi } from 'vitest';
+import { afterAll, describe, expect, it, mock } from 'bun:test';
 
 import { MockClock, MockVoiceConnectionFactory } from '../../adaptor/index.js';
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 import { DepRegistry } from '../../driver/dep-registry.js';
-import type { EmbedMessage } from '../../model/embed-message.js';
 import {
   dummyRandomGenerator,
   randomGeneratorKey,
@@ -49,6 +48,7 @@ describe('party ichiyo', () => {
             title: `パーティー Nigth`,
             description: 'хорошо、宴の始まりだ。'
           });
+          return undefined;
         }
       )
     );
@@ -63,6 +63,7 @@ describe('party ichiyo', () => {
             title: `パーティー Nigth`,
             description: 'хорошо、宴の始まりだ。'
           });
+          return undefined;
         }
       )
     );
@@ -76,6 +77,7 @@ describe('party ichiyo', () => {
           expect(message).toStrictEqual({
             title: 'ゲリラは現在無効だよ。'
           });
+          return undefined;
         }
       )
     );
@@ -86,6 +88,7 @@ describe('party ichiyo', () => {
           expect(message).toStrictEqual({
             title: 'ゲリラを有効化しておいたよ。'
           });
+          return undefined;
         }
       )
     );
@@ -96,6 +99,7 @@ describe('party ichiyo', () => {
           expect(message).toStrictEqual({
             title: 'ゲリラは現在有効だよ。'
           });
+          return undefined;
         }
       )
     );
@@ -106,6 +110,7 @@ describe('party ichiyo', () => {
           expect(message).toStrictEqual({
             title: 'ゲリラを無効化しておいたよ。'
           });
+          return undefined;
         }
       )
     );
@@ -116,13 +121,14 @@ describe('party ichiyo', () => {
           expect(message).toStrictEqual({
             title: 'ゲリラは現在無効だよ。'
           });
+          return undefined;
         }
       )
     );
   });
 
   it('party time', async () => {
-    const fn = vi.fn(() => Promise.resolve());
+    const fn = mock(() => Promise.resolve(undefined));
     await responder.on(
       createMockMessage(
         parseStringsOrThrow(['party', 'time'], responder.schema),
@@ -135,7 +141,7 @@ describe('party ichiyo', () => {
   });
 
   it('party specified time', async () => {
-    const fn = vi.fn(() => Promise.resolve());
+    const fn = mock(() => Promise.resolve(undefined));
     await responder.on(
       createMockMessage(
         parseStringsOrThrow(['party', 'time', '36'], responder.schema),
@@ -148,8 +154,8 @@ describe('party ichiyo', () => {
   });
 
   it('party enable but must cancel', async () => {
-    const fn = vi.fn();
-    const reply = vi.fn<[EmbedMessage]>(() => Promise.resolve({ edit: fn }));
+    const fn = mock();
+    const reply = mock(() => Promise.resolve({ edit: fn }));
     await responder.on(
       createMockMessage(
         parseStringsOrThrow(['party', 'enable'], responder.schema),

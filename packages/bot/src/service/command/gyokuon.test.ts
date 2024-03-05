@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, mock } from 'bun:test';
 
 import { MockVoiceConnectionFactory } from '../../adaptor/index.js';
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
@@ -9,7 +9,7 @@ import { createMockMessage } from './command-message.js';
 import { type GyokuonAssetKey, GyokuonCommand } from './gyokuon.js';
 
 describe('play gyokuon', () => {
-  const fn = vi.fn();
+  const fn = mock();
   const reg = new DepRegistry();
   const connectionFactory = new MockVoiceConnectionFactory<GyokuonAssetKey>();
   reg.add(voiceConnectionFactoryKey, connectionFactory);
@@ -25,6 +25,7 @@ describe('play gyokuon', () => {
             title: 'こるく天皇の玉音放送だよ',
             description: '全鯖民に対しての大詔だから椅子から立って聞いてね'
           });
+          return undefined;
         }
       )
     );
@@ -39,6 +40,7 @@ describe('play gyokuon', () => {
             title: 'こるく天皇の玉音放送だよ',
             description: '全鯖民に対しての大詔だから椅子から立って聞いてね'
           });
+          return undefined;
         }
       )
     );

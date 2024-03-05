@@ -1,4 +1,4 @@
-import { expect, it, vi } from 'vitest';
+import { expect, it, mock } from 'bun:test';
 
 import {
   InMemoryReservationRepository,
@@ -23,7 +23,7 @@ import {
 } from './kaere.js';
 
 it('use case of kaere', async () => {
-  const fn = vi.fn();
+  const fn = mock();
   const reg = new DepRegistry();
   const connectionFactory = new MockVoiceConnectionFactory<KaereMusicKey>();
   reg.add(voiceConnectionFactoryKey, connectionFactory);
@@ -56,6 +56,7 @@ it('use case of kaere', async () => {
           title: '提督、もうこんな時間だよ',
           description: '早く寝よう'
         });
+        return undefined;
       }
     )
   );
@@ -68,6 +69,7 @@ it('use case of kaere', async () => {
           title: '提督、もうこんな時間だよ',
           description: '早く寝よう'
         });
+        return undefined;
       }
     )
   );
@@ -79,6 +81,7 @@ it('use case of kaere', async () => {
         expect(message).toStrictEqual({
           title: '強制切断モードは現在無効だよ。'
         });
+        return undefined;
       }
     )
   );
@@ -89,6 +92,7 @@ it('use case of kaere', async () => {
         expect(message).toStrictEqual({
           title: '強制切断モードを有効化したよ。'
         });
+        return undefined;
       }
     )
   );
@@ -99,6 +103,7 @@ it('use case of kaere', async () => {
         expect(message).toStrictEqual({
           title: '強制切断モードは現在有効だよ。'
         });
+        return undefined;
       }
     )
   );
@@ -109,6 +114,7 @@ it('use case of kaere', async () => {
         expect(message).toStrictEqual({
           title: '強制切断モードを無効化したよ。'
         });
+        return undefined;
       }
     )
   );
@@ -119,6 +125,7 @@ it('use case of kaere', async () => {
         expect(message).toStrictEqual({
           title: '強制切断モードは現在無効だよ。'
         });
+        return undefined;
       }
     )
   );
@@ -134,6 +141,7 @@ it('use case of kaere', async () => {
           title: '予約に成功したよ。',
           description: '午前1時0分に予約を入れておくね。'
         });
+        return undefined;
       }
     )
   );
@@ -145,6 +153,7 @@ it('use case of kaere', async () => {
           title: '現在の予約状況をお知らせするね。',
           description: '- 午前1時0分'
         });
+        return undefined;
       }
     )
   );
@@ -159,6 +168,7 @@ it('use case of kaere', async () => {
           title: '予約キャンセルに成功したよ。',
           description: '午前1時0分の予約はキャンセルしておくね。'
         });
+        return undefined;
       }
     )
   );
@@ -169,6 +179,7 @@ it('use case of kaere', async () => {
         expect(message).toStrictEqual({
           title: '今は誰も予約してないようだね。'
         });
+        return undefined;
       }
     )
   );

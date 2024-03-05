@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, spyOn, mock } from 'bun:test';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 import { DepRegistry } from '../../driver/dep-registry.js';
@@ -11,10 +11,6 @@ import { createMockMessage } from './command-message.js';
 import { RoleInfo } from './role-info.js';
 
 describe('RoleRank', () => {
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
   const repo: RoleRepository = {
     ...dummyRoleRepository,
     fetchStats: (id) =>
@@ -29,13 +25,17 @@ describe('RoleRank', () => {
           : null
       )
   };
+  const fetchStats = spyOn(repo, 'fetchStats');
   const reg = new DepRegistry();
   reg.add(roleRepositoryKey, repo);
   const roleInfo = new RoleInfo(reg);
 
+  afterEach(() => {
+    fetchStats.mockClear();
+  });
+
   it('gets info of role', async () => {
-    const fetchStats = vi.spyOn(repo, 'fetchStats');
-    const fn = vi.fn();
+    const fn = mock();
 
     await roleInfo.on(
       createMockMessage(
@@ -76,12 +76,11 @@ describe('RoleRank', () => {
       ],
       thumbnail: undefined
     });
-    expect(fetchStats).toHaveBeenCalledOnce();
+    expect(fetchStats).toHaveBeenCalledTimes(1);
   });
 
   it('errors with invalid id', async () => {
-    const fetchStats = vi.spyOn(repo, 'fetchStats');
-    const fn = vi.fn();
+    const fn = mock();
 
     await roleInfo.on(
       createMockMessage(
@@ -94,6 +93,6 @@ describe('RoleRank', () => {
       title: '引数エラー',
       description: '指定のIDのロールが見つからないみたい……'
     });
-    expect(fetchStats).toHaveBeenCalledOnce();
+    expect(fetchStats).toHaveBeenCalledTimes(1);
   });
 });

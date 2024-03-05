@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, spyOn } from 'bun:test';
 
 import type { Snowflake } from '../model/id.js';
 import {
@@ -10,22 +10,24 @@ import type { StandardOutput } from './output.js';
 const KAWAEMON_ID = '391857452360007680' as Snowflake;
 
 describe('kawaemon has all roles', () => {
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
   const manager: RoleManager = {
     addRole: () => Promise.resolve(),
     removeRole: () => Promise.resolve()
   };
   const output: StandardOutput = { sendEmbed: () => Promise.resolve() };
   const responder = new KawaemonHasAllRoles(KAWAEMON_ID, manager, output);
+  const addRole = spyOn(manager, 'addRole');
+  const removeRole = spyOn(manager, 'removeRole');
+  const sendEmbed = spyOn(output, 'sendEmbed');
+
+  beforeEach(() => {
+    addRole.mockClear();
+    removeRole.mockClear();
+    sendEmbed.mockClear();
+  });
 
   it('kawaemon get a new role', async () => {
     const newRoleId = '18475613045613281703151' as Snowflake;
-    const addRole = vi.spyOn(manager, 'addRole');
-    const removeRole = vi.spyOn(manager, 'removeRole');
-    const sendEmbed = vi.spyOn(output, 'sendEmbed');
 
     await responder.on('CREATE', {
       roleId: newRoleId,
@@ -42,9 +44,9 @@ describe('kawaemon has all roles', () => {
 
   it('must not drop a new role', async () => {
     const updatedRoleId = '18475613045613281703151' as Snowflake;
-    const addRole = vi.spyOn(manager, 'addRole');
-    const removeRole = vi.spyOn(manager, 'removeRole');
-    const sendEmbed = vi.spyOn(output, 'sendEmbed');
+    const addRole = spyOn(manager, 'addRole');
+    const removeRole = spyOn(manager, 'removeRole');
+    const sendEmbed = spyOn(output, 'sendEmbed');
 
     await responder.on('UPDATE', {
       roleId: updatedRoleId,

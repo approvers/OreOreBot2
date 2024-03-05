@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'bun:test';
 
 import { parseStringsOrThrow } from '../../../../adaptor/proxy/command/schema.js';
 import { createMockMessage } from '../../command-message.js';

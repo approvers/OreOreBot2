@@ -1,4 +1,4 @@
-import { expect, it } from 'vitest';
+import { expect, it } from 'bun:test';
 
 import type { StandardOutput } from './output.js';
 import { VoiceDiff } from './voice-diff.js';

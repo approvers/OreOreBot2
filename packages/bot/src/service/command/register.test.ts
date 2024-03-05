@@ -1,26 +1,25 @@
-import { expect, test, vi } from 'vitest';
+import { expect, test, mock } from 'bun:test';
 
-import type { Schema } from '../../model/command-schema.js';
+import { DepRegistry } from '../../driver/dep-registry.js';
 import type { Snowflake } from '../../model/id.js';
 import { CommandRunner, emptyProxy } from '../../runner/command.js';
-import type { CommandResponderFor } from './command-message.js';
-import { PingCommand } from './ping.js';
+import { PingCommand, pingKey } from './ping.js';
 import {
   registerCommands,
   type CommandRepository,
   type Command,
   type RegisteredCommand
 } from './register.js';
-import { GetVersionCommand } from './version.js';
+import { GetVersionCommand, versionFetcherKey } from './version.js';
 
 test('', async () => {
-  const createCommand = vi.fn<[Command], Promise<void>>(() =>
+  const createCommand = mock<(_: Command) => Promise<void>>(() =>
     Promise.resolve()
   );
-  const updateCommand = vi.fn<[RegisteredCommand], Promise<void>>(() =>
+  const updateCommand = mock<(_: RegisteredCommand) => Promise<void>>(() =>
     Promise.resolve()
   );
-  const deleteCommand = vi.fn<[Snowflake], Promise<void>>(() =>
+  const deleteCommand = mock<(_: Snowflake) => Promise<void>>(() =>
     Promise.resolve()
   );
 
@@ -45,17 +44,16 @@ test('', async () => {
     updateCommand,
     deleteCommand
   };
+
+  const reg = new DepRegistry();
+  reg.add(versionFetcherKey, { version: 'v0.1.0' });
+  reg.add(pingKey, {
+    avgPing: 160
+  });
   const commandRunner = new CommandRunner(emptyProxy);
-  commandRunner.addResponder(
-    new GetVersionCommand({
-      version: 'v0.1.0'
-    }) as unknown as CommandResponderFor<Schema>
-  );
-  commandRunner.addResponder(
-    new PingCommand({
-      avgPing: 160
-    }) as unknown as CommandResponderFor<Schema>
-  );
+  commandRunner.addResponder(new GetVersionCommand(reg));
+  commandRunner.addResponder(new PingCommand(reg));
+
   await registerCommands({ commandRepo, commandRunner });
 
   expect(createCommand).toHaveBeenCalledWith({
@@ -75,7 +73,7 @@ test('', async () => {
     name: 'version',
     options: undefined
   });
-  expect(updateCommand).toHaveBeenCalledOnce();
+  expect(updateCommand).toHaveBeenCalledTimes(1);
   expect(deleteCommand).toHaveBeenCalledWith('0001');
-  expect(deleteCommand).toHaveBeenCalledOnce();
+  expect(deleteCommand).toHaveBeenCalledTimes(1);
 });

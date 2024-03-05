@@ -1,4 +1,4 @@
-import { expect, it, vi } from 'vitest';
+import { expect, it, mock } from 'bun:test';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 import { DepRegistry } from '../../driver/dep-registry.js';
@@ -15,7 +15,7 @@ it('use case of jd', async () => {
   const reg = new DepRegistry();
   reg.add(randomGeneratorKey, { ...dummyRandomGenerator, uniform: () => 2 });
   const responder = new JudgingCommand(reg);
-  const fn = vi.fn<[EmbedMessage], Promise<void>>();
+  const fn = mock<(mes: EmbedMessage) => Promise<void>>();
 
   await responder.on(
     createMockMessage(
@@ -30,7 +30,7 @@ it('use case of jd', async () => {
     )
   );
 
-  expect(fn).toBeCalledTimes(5);
+  expect(fn).toHaveBeenCalledTimes(5);
   for (let i = 0; i < 4; ++i) {
     expect(fn.mock.calls[i][0]).toStrictEqual({
       title: '***†HARACHO ONLINE JUDGING SYSTEM†***',
@@ -47,7 +47,7 @@ it('use case of judge', async () => {
   const reg = new DepRegistry();
   reg.add(randomGeneratorKey, { ...dummyRandomGenerator, uniform: () => 0 });
   const responder = new JudgingCommand(reg);
-  const fn = vi.fn<[EmbedMessage], Promise<void>>();
+  const fn = mock<(mes: EmbedMessage) => Promise<void>>();
 
   await responder.on(
     createMockMessage(
@@ -62,7 +62,7 @@ it('use case of judge', async () => {
     )
   );
 
-  expect(fn).toBeCalledTimes(1);
+  expect(fn).toHaveBeenCalledTimes(1);
   expect(fn.mock.calls[0][0]).toStrictEqual({
     title: '***†HARACHO ONLINE JUDGING SYSTEM†***',
     description: `1 / 1 WWW`
@@ -82,6 +82,7 @@ it('max number of cases', async () => {
           title: '***†HARACHO ONLINE JUDGING SYSTEM†***',
           description: `0 / 1 ${waitingJudgingEmoji}`
         });
+        return undefined;
       }
     )
   );
@@ -93,6 +94,7 @@ it('max number of cases', async () => {
           title: '***†HARACHO ONLINE JUDGING SYSTEM†***',
           description: `0 / 64 ${waitingJudgingEmoji}`
         });
+        return undefined;
       }
     )
   );

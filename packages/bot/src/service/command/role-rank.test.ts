@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, spyOn, mock } from 'bun:test';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 import { DepRegistry } from '../../driver/dep-registry.js';
@@ -11,10 +11,6 @@ import { createMockMessage } from './command-message.js';
 import { RoleRank } from './role-rank.js';
 
 describe('RoleRank', () => {
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
   const repo: MemberRepository = {
     ...dummyMemberRepository,
     fetchMembersWithRole: () =>
@@ -45,13 +41,17 @@ describe('RoleRank', () => {
         }
       ])
   };
+  const fetchMembersWithRole = spyOn(repo, 'fetchMembersWithRole');
   const reg = new DepRegistry();
   reg.add(membersRepositoryKey, repo);
   const roleRank = new RoleRank(reg);
 
+  afterEach(() => {
+    fetchMembersWithRole.mockClear();
+  });
+
   it('ranks members', async () => {
-    const fetchMembersWithRole = vi.spyOn(repo, 'fetchMembersWithRole');
-    const fn = vi.fn();
+    const fn = mock();
 
     await roleRank.on(
       createMockMessage(parseStringsOrThrow(['rolerank'], roleRank.schema), fn)
@@ -82,6 +82,6 @@ describe('RoleRank', () => {
         }
       ]
     });
-    expect(fetchMembersWithRole).toHaveBeenCalledOnce();
+    expect(fetchMembersWithRole).toHaveBeenCalledTimes(1);
   });
 });

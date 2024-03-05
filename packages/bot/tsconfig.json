@@ -1,28 +1,28 @@
 {
-  "compileOnSave": true,
   "compilerOptions": {
+    // Enable latest features
+    "lib": ["ESNext"],
     "target": "ESNext",
-    "module": "NodeNext",
-    "outDir": "./build",
-    "rootDir": ".",
+    "module": "ESNext",
+    "moduleDetection": "force",
+    "jsx": "react-jsx",
+    "allowJs": true,
+
+    // Bundler mode
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
     "noEmit": true,
-    "removeComments": true,
-    "skipLibCheck": true,
+
+    // Best practices
     "strict": true,
-    "noImplicitThis": true,
+    "skipLibCheck": true,
+    "noFallthroughCasesInSwitch": true,
+
+    // Some stricter flags
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node16",
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "pretty": true,
-    "newLine": "CRLF",
-    "resolveJsonModule": true,
-    "verbatimModuleSyntax": true,
-    "typeRoots": ["./node_modules/@types", "./src/typings"]
+    "noPropertyAccessFromIndexSignature": true
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules"]

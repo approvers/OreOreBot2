@@ -1,4 +1,4 @@
-import { expect, it } from 'vitest';
+import { expect, it } from 'bun:test';
 
 import type { Snowflake } from './id.js';
 import {

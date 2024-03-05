@@ -1,4 +1,4 @@
-import { expect, it, vi } from 'vitest';
+import { expect, it, mock } from 'bun:test';
 
 import { DeletionRepeater } from './deletion-repeater.js';
 
@@ -38,7 +38,7 @@ Wall Is Stop
 
 it('must not react', async () => {
   const responder = new DeletionRepeater(() => false, deletedDate);
-  const fn = vi.fn();
+  const fn = mock();
   await responder.on('CREATE', {
     author: 'Baba',
     content: 'Wall Is Not Stop',
@@ -53,7 +53,7 @@ it("must not react if it's ignore target", async () => {
     (content) => content === 'Wall Is Stop',
     deletedDate
   );
-  const fn = vi.fn();
+  const fn = mock();
   await responder.on('DELETE', {
     author: 'Baba',
     content: 'Wall Is Stop',

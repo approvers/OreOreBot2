@@ -1,4 +1,4 @@
-import { describe, expect, test, vi } from 'vitest';
+import { describe, expect, test, spyOn } from 'bun:test';
 
 import { MockClock } from '../adaptor/clock.js';
 import { DepRegistry } from '../driver/dep-registry.js';
@@ -13,7 +13,7 @@ describe('time signal reported', () => {
   const runner = new ScheduleRunner(reg);
   const output: StandardOutput = { sendEmbed: () => Promise.resolve() };
   test('at now', () => {
-    const sendEmbed = vi.spyOn(output, 'sendEmbed');
+    const sendEmbed = spyOn(output, 'sendEmbed');
     const schedule: SignalSchedule = {
       MORNING: {
         time: {
@@ -42,7 +42,7 @@ describe('time signal reported', () => {
     clock.placeholder = new Date(Date.UTC(2020, 0, 1, 3, 1));
     runner.consume();
 
-    expect(sendEmbed).toHaveBeenCalledOnce();
+    expect(sendEmbed).toHaveBeenCalledTimes(1);
     expect(sendEmbed).toHaveBeenCalledWith({
       title: 'はらちょ時報システム',
       description: 'fuga',
