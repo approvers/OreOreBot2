@@ -14,7 +14,6 @@ RUN apt-get update \
 COPY packages/bot/ ./packages/bot/
 COPY package.json bun.lockb ./
 
-RUN bun x pinst --disable
 RUN --mount=type=cache,id=bun,target=/root/.bin/install/cache \
     bun install --frozen-lockfile --cwd packages/bot
 RUN bun run build:bot

@@ -15,7 +15,7 @@
     "test": "bun run --cwd packages/bot test",
     "coverage": "bun run --cwd packages/bot coverage",
     "lint-staged": "lint-staged",
-    "postinstall": "husky"
+    "prepare": "husky"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
