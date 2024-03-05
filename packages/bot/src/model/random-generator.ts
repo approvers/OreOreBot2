@@ -58,5 +58,5 @@ export const dummyRandomGenerator: RandomGenerator = {
   sleep: () => Promise.resolve(),
   uniform: (from) => from,
   roll: (_faces: number, howManyRolls: number): number[] =>
-    Array(howManyRolls).map(() => 1)
+    [...Array<undefined>(howManyRolls)].map(() => 1)
 };
