@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.53.0](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.52.0...OreOreBot2-v1.53.0) (2024-03-23)
+
+
+### Features
+
+* Bun への移行 ([#1311](https://github.com/approvers/OreOreBot2/issues/1311)) ([65b943e](https://github.com/approvers/OreOreBot2/commit/65b943ef5c8a5d5843b32ef4da418adeda09234b))
+
 ## [1.52.0](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.51.2...OreOreBot2-v1.52.0) (2024-02-28)
 
 
