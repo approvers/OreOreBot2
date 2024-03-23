@@ -34,3 +34,29 @@ jobs:
 
       - name: Build (docs)
         run: bun build:docs
+
+  eslint:
+    name: eslint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+      - name: Install packages
+        run: bun install --frozen-lockfile
+
+      - name: eslint (bot)
+        run: bun lint:bot
+
+      - name: eslint (docs)
+        run: bun lint:docs
+
+  license_checker:
+    name: license-checker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+      - name: Install packages
+        run: bun install --frozen-lockfile
+      - name: license-checker
+        run: bun x @guidesmiths/license-checker --failOn /GPL/ --disableReport
