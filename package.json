@@ -26,6 +26,7 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-markdown": "^4.0.0",
     "eslint-plugin-mdx": "^3.0.0",
+    "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-simple-import-sort": "^12.0.0",
     "eslint-plugin-tsdoc": "^0.2.17",
     "globals": "^15.0.0",
