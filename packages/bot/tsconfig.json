@@ -24,6 +24,6 @@
     "verbatimModuleSyntax": true,
     "typeRoots": ["./node_modules/@types", "./src/typings"]
   },
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "eslint.config.js"],
   "exclude": ["node_modules"]
 }
