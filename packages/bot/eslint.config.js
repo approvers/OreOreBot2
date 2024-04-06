@@ -1,5 +1,6 @@
 // @ts-check
 import eslint from '@eslint/js';
+import prettier from 'eslint-config-prettier';
 import markdown from 'eslint-plugin-markdown';
 import tsdoc from 'eslint-plugin-tsdoc';
 import globals from 'globals';
@@ -10,6 +11,7 @@ export default tsESLint.config(
   ...tsESLint.configs.recommended,
   ...tsESLint.configs.strictTypeChecked,
   ...tsESLint.configs.stylisticTypeChecked,
+  prettier,
   {
     languageOptions: {
       ecmaVersion: 2021,
