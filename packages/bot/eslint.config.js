@@ -16,7 +16,8 @@ export default tsESLint.config(
       globals: globals.browser,
       parserOptions: {
         sourceType: 'module',
-        project: true
+        project: true,
+        tsconfigRootDir: import.meta.dir
       }
     },
     plugins: {
