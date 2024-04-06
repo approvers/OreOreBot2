@@ -73,7 +73,7 @@ export class RoleInfo implements CommandResponderFor<typeof SCHEMA> {
         inline: true
       }
     ];
-    if (icon && icon.isUnicode) {
+    if (icon?.isUnicode) {
       fields.push({
         name: 'アイコン',
         value: icon.emoji,

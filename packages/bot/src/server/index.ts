@@ -291,4 +291,6 @@ client.once('ready', () => {
   console.log('======================================');
 });
 
-client.login(token).catch(console.error);
+client.login(token).catch((e: unknown) => {
+  console.error(e);
+});
