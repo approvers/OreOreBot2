@@ -3,7 +3,6 @@ import eslint from '@eslint/js';
 import nextPlugin from '@next/eslint-plugin-next';
 import prettier from 'eslint-config-prettier';
 import * as mdx from 'eslint-plugin-mdx';
-import reactRecommended from 'eslint-plugin-react/configs/recommended.js';
 import globals from 'globals';
 import tsESLint from 'typescript-eslint';
 
@@ -14,7 +13,7 @@ export default tsESLint.config(
   mdx.flat,
   mdx.flatCodeBlocks,
   {
-    files: ['**/*.ts', '**/*.tsx'],
+    files: ['**/*.ts', '**/*.tsx', '**/*.mdx'],
     languageOptions: {
       ecmaVersion: 2021,
       globals: globals.browser,
@@ -24,28 +23,14 @@ export default tsESLint.config(
         ecmaFeatures: {
           jsx: true
         },
-        tsconfigRootDir: import.meta.dir
+        tsconfigRootDir: import.meta.dir,
+        globals: {
+          ...globals.browser
+        }
       }
     },
     plugins: {
       '@next/next': nextPlugin
-    },
-    rules: {
-      ...nextPlugin.configs.recommended.rules,
-      'max-params': 'error',
-      // disabled for a glitch on these
-      '@next/next/no-duplicate-head': 'off',
-      '@next/next/no-page-custom-font': 'off'
-    }
-  },
-  {
-    files: ['**/*.{js,jsx,ts,tsx,mdx}'],
-    ...reactRecommended,
-    languageOptions: {
-      ...reactRecommended.languageOptions,
-      globals: {
-        ...globals.browser
-      }
     },
     settings: {
       react: {
@@ -53,7 +38,11 @@ export default tsESLint.config(
       }
     },
     rules: {
-      // disabled for a glitch on this
+      ...nextPlugin.configs.recommended.rules,
+      'max-params': 'error',
+      // disabled for a glitch on these
+      '@next/next/no-duplicate-head': 'off',
+      '@next/next/no-page-custom-font': 'off',
       'react/display-name': 'off'
     }
   },
