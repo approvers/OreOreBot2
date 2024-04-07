@@ -1,4 +1,4 @@
-// @ts-checks
+// @ts-check
 
 const withNextra = require('nextra')({
   theme: 'nextra-theme-docs',
