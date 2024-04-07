@@ -1,6 +1,7 @@
 {
   "name": "@oreorebot2/docs",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
   "repository": "https://github.com/approvers/OreOreBot2",
   "author": "approvers <info@approvers.dev>",
@@ -9,7 +10,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "lint": "next lint",
+    "lint": "eslint './src/**/*.{ts,tsx,js,jsx,md,mdx}'",
     "format": "prettier --write \"./src/**/*.{js,ts,jsx,tsx,md,mdx}\"",
     "lint-staged": "lint-staged"
   },
@@ -21,6 +22,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "^14.1.4",
     "@types/react": "18.2.60"
   }
 }

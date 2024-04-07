@@ -17,7 +17,9 @@ export class DepRegistry {
   add<K extends Dep1, A1>(key: K, value: GetDep1<K, A1>): void;
   add(key: symbol, value: never): void {
     if (this.#dict.has(key)) {
-      throw new Error(`exists on key: ${key.description}`);
+      throw new Error(
+        `exists on key: ${key.description ?? '(no description)'}`
+      );
     }
     this.#dict.set(key, value);
   }
@@ -30,7 +32,9 @@ export class DepRegistry {
   get<K extends Dep1, A1>(key: K): GetDep1<K, A1>;
   get(key: symbol): never {
     if (!this.#dict.has(key)) {
-      throw new Error(`not found for key: ${key.description}`);
+      throw new Error(
+        `not found for key: ${key.description ?? '(no description)'}`
+      );
     }
     return this.#dict.get(key) as never;
   }
