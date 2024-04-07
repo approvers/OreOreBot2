@@ -3,6 +3,7 @@ import eslint from '@eslint/js';
 import nextPlugin from '@next/eslint-plugin-next';
 import prettier from 'eslint-config-prettier';
 import * as mdx from 'eslint-plugin-mdx';
+import reactPlugin from 'eslint-plugin-react';
 import globals from 'globals';
 import tsESLint from 'typescript-eslint';
 
@@ -30,7 +31,8 @@ export default tsESLint.config(
       }
     },
     plugins: {
-      '@next/next': nextPlugin
+      '@next/next': nextPlugin,
+      react: reactPlugin
     },
     settings: {
       react: {
@@ -39,6 +41,7 @@ export default tsESLint.config(
     },
     rules: {
       ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs['core-web-vitals'].rules,
       'max-params': 'error',
       // disabled for a glitch on these
       '@next/next/no-duplicate-head': 'off',
