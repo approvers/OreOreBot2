@@ -26,7 +26,7 @@
     "eslint-config-next": "14.2.3",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-markdown": "^4.0.0",
+    "eslint-plugin-markdown": "^5.0.0",
     "eslint-plugin-mdx": "^3.0.0",
     "eslint-plugin-simple-import-sort": "^12.0.0",
     "eslint-plugin-tsdoc": "^0.2.17",
