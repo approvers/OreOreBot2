@@ -27,7 +27,7 @@ jobs:
           app_id: ${{ secrets.HIGUCHI_ICHIYO_APP_ID }}
           private_key: ${{ secrets.HIGUCHI_ICHIYO_PRIVATE_KEY }}
 
-      - uses: google-github-actions/release-please-action@v4
+      - uses: googleapis/release-please-action@v4
         id: release
         with:
           token: ${{ steps.token.outputs.token }}
