@@ -42,7 +42,7 @@ import { membersRepositoryKey } from '../model/member.js';
 import { randomGeneratorKey } from '../model/random-generator.js';
 import { roleRepositoryKey } from '../model/role.js';
 import { voiceRoomControllerKey } from '../model/voice-room-controller.js';
-import { CommandRunner } from '../runner/command.js';
+import { CommandRunner, commandRunnerKey } from '../runner/command.js';
 import {
   EmojiResponseRunner,
   MessageResponseRunner,
@@ -164,6 +164,7 @@ if (features.includes('MESSAGE_UPDATE')) {
 
 const commandProxy = new DiscordCommandProxy(client, PREFIX);
 const commandRunner = new CommandRunner(commandProxy);
+registry.add(commandRunnerKey, commandRunner);
 const stats = new DiscordMemberStats(client, GUILD_ID as Snowflake);
 registry.add(memberStatsKey, stats);
 registry.add(membersRepositoryKey, stats);
