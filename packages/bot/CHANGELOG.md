@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.53.0](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.52.0...OreOreBot2-v1.53.0) (2024-05-31)
+
+
+### Features
+
+* Bun への移行 ([#1311](https://github.com/approvers/OreOreBot2/issues/1311)) ([65b943e](https://github.com/approvers/OreOreBot2/commit/65b943ef5c8a5d5843b32ef4da418adeda09234b))
+
+
+### Bug Fixes
+
+* Add command runner into registry ([#1341](https://github.com/approvers/OreOreBot2/issues/1341)) ([c6aacfb](https://github.com/approvers/OreOreBot2/commit/c6aacfb0adad48a8661c0fda3fc8a3aa69c7b157))
+
 ## [1.52.0](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.51.2...OreOreBot2-v1.52.0) (2024-02-28)
 
 
