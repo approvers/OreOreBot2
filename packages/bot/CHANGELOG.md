@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.54.0](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.53.0...OreOreBot2-v1.54.0) (2024-05-31)
+
+
+### Features
+
+* Improve condition of updating commands ([#1345](https://github.com/approvers/OreOreBot2/issues/1345)) ([fd882ad](https://github.com/approvers/OreOreBot2/commit/fd882ade91885462c4ba2b562fe9369ac6f5b38f))
+
 ## [1.53.0](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.52.0...OreOreBot2-v1.53.0) (2024-05-31)
 
 
