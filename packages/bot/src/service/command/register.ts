@@ -38,6 +38,24 @@ export const registerCommands = async ({
     .flatMap((responder) => schemaToDiscordFormat(responder.schema));
   const commandByName = new Map(commands.map((obj) => [obj.name, obj]));
 
+  const isCommandUpdated = (registered: RegisteredCommand): boolean => {
+    if (!commandByName.has(registered.name)) {
+      return false;
+    }
+    const mapped = {
+      ...(commandByName.get(registered.name) ?? {}),
+      id: registered.id
+    };
+    const filteredRegistered = {
+      name: registered.name,
+      description: registered.description,
+      options: registered.options,
+      id: registered.id
+    };
+    console.log({ mapped, filteredRegistered });
+    return !equal(mapped, filteredRegistered);
+  };
+
   const idsNeedToDelete = [...currentRegisteredByName.keys()]
     .filter((name) => !commandByName.has(name))
     .map(
@@ -45,11 +63,7 @@ export const registerCommands = async ({
         (currentRegisteredByName.get(name)?.id ?? 'unknown') as Snowflake
     );
   const needToUpdate = [...currentRegisteredByName.values()]
-    .filter(
-      (registered) =>
-        commandByName.has(registered.name) &&
-        !equal(commandByName.get(registered.name) ?? {}, registered)
-    )
+    .filter(isCommandUpdated)
     .map(
       ({ id, name }) =>
         ({ id, ...commandByName.get(name) }) as RegisteredCommand
