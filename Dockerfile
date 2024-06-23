@@ -1,4 +1,4 @@
-FROM mwader/static-ffmpeg:6.1.1 as ffmpeg
+FROM mwader/static-ffmpeg:7.0.1 as ffmpeg
 
 FROM oven/bun:1.1.15-slim as build
 ARG GIT_TAG
