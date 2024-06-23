@@ -1,5 +1,5 @@
 import {
-  type AudioPlayer,
+  AudioPlayer,
   AudioPlayerStatus,
   type VoiceConnection as RawVoiceConnection,
   VoiceConnectionStatus,
@@ -15,7 +15,7 @@ import {
 } from 'discord.js';
 
 import type { Snowflake } from '../../model/id.js';
-import type { VoiceRoomController } from '../../service/command/kaere.js';
+import type { VoiceRoomController } from '../../model/voice-room-controller.js';
 import type {
   VoiceConnection,
   VoiceConnectionFactory
@@ -77,8 +77,8 @@ export class DiscordVoiceConnection<K extends string | number | symbol>
     return new Promise((resolve, reject) => {
       const resource = createAudioResource(this.audioRecord[key]);
 
-      this.player.once('error', reject);
-      this.player.once(AudioPlayerStatus.Idle, () => {
+      this.player.on('error', reject);
+      this.player.on(AudioPlayerStatus.Idle, () => {
         resolve();
       });
 
