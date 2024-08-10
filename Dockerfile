@@ -1,6 +1,6 @@
 FROM mwader/static-ffmpeg:7.0.2 as ffmpeg
 
-FROM oven/bun:1.1.21-slim as build
+FROM oven/bun:1.1.22-slim as build
 ARG GIT_TAG
 SHELL ["/bin/bash", "-c"]
 WORKDIR /src
