@@ -1,0 +1,28 @@
+.tabs {
+  width: 100%;
+}
+
+.tabList {
+  margin-top: 1rem;
+  border-bottom: 1px solid rgba(38 38 38);
+}
+
+.tabButton {
+  cursor: pointer;
+  background: transparent;
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+  margin-bottom: -0.125rem;
+  outline-offset: 2px;
+  outline: 2px solid transparent;
+  border: 0;
+}
+.tabButton[data-selected='true'] {
+  border-bottom: 2px solid hsl(193deg 100% 50%);
+}
+
+.tabBody {
+}
+
+.tab {
+}
