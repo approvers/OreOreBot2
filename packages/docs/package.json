@@ -1,26 +1,24 @@
 {
   "name": "@oreorebot2/docs",
   "version": "1.0.0",
-  "main": "index.js",
+  "private": true,
   "repository": "https://github.com/approvers/OreOreBot2",
   "author": "approvers <info@approvers.dev>",
   "description": "新生はらちょドキュメントサイト",
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "lint": "next lint",
+    "dev": "gatsby develop",
+    "build": "gatsby build",
+    "lint": "eslint",
     "format": "prettier --write \"./src/**/*.{js,ts,jsx,tsx,md,mdx}\"",
     "lint-staged": "lint-staged"
   },
   "dependencies": {
-    "next": "^14.0.0",
-    "nextra": "^2.2.14",
-    "nextra-theme-docs": "^2.2.14",
+    "gatsby": "^5.13.7",
+    "gatsby-omni-font-loader": "^2.0.2",
+    "gatsby-plugin-manifest": "^5.13.1",
+    "gatsby-transformer-remark": "^6.13.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
-  },
-  "devDependencies": {
-    "@types/react": "18.2.60"
   }
 }
