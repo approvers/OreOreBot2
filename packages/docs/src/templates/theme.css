@@ -1,0 +1,20 @@
+:root {
+  --primary-color: hsl(193deg 100% 50%);
+}
+
+* {
+  accent-color: var(--primary-color);
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  color: var(--primary-color);
+  font-style: italic;
+}
+
+main {
+  margin: 0.5rem;
+}
