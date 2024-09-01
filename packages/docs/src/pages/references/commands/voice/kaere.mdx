@@ -1,0 +1,60 @@
+import { VersionBadge } from '../../../../molecules/version-badge';
+import { CommandArgs } from '../../../../organisms/command-args';
+
+# Kaere 一葉
+
+<CommandArgs versionAvailableFrom="v1.1.0" commandName="kaere" />
+
+---
+
+VC 内の人類に就寝を促します。引数なしで即時発動
+
+> [!WARNING]
+>
+> この機能には FFmpeg が必要です。
+
+> [!INFO]
+>
+> スラッシュコマンドを使用している場合の即時発動は `/kaere start` で行なえます。 (<VersionBadge>v1.48.0</VersionBadge> から利用可能)
+
+> [!NOTE]
+>
+> 実行者がボイスチャンネルにいないとこのコマンドは安全装置によって封じ込められます。
+>
+> 予約機能についても同様で、実行時間にボイスチャンネルにいないと実行されません。
+
+---
+
+### `!kaere bed status`
+
+[強制切断モード](#強制切断モード)の状態を表示します。
+
+### `!kaere bed enable`
+
+[強制切断モード](#強制切断モード)を有効にします。
+
+### `!kaere bed disable`
+
+[強制切断モード](#強制切断モード)を無効にします。
+
+### `!kaere reserve add <時間>`
+
+指定した時間に就寝推奨を予約します。
+
+例: `!kaere reserve add 22:00` で 22:00 に就寝推奨を開始します。
+
+> [!WARNING]
+>
+> 同じ時間に予約することは出来ません。
+
+### `!kaere reserve list`
+
+予約状況を表示します。
+
+### `!kaere reserve cancel <時間>`
+
+指定した時間の予約をキャンセルします。
+
+### 強制切断モード
+
+強制切断モードは、就寝推奨が終了後、ボイスチャンネルにいるメンバーを強制的に切断します。

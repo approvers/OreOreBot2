@@ -1,0 +1,28 @@
+import { CommandArgs } from '../../../../organisms/command-args';
+
+# コウメ太夫構文
+
+<CommandArgs
+  versionAvailableFrom="v1.29.0"
+  commandName="koume"
+  args={[
+    {
+      name: 'テキスト1',
+      about: 'テンプレートに挿入する1つ目のテキストです。'
+    },
+    {
+      name: 'テキスト2',
+      about: 'テンプレートに挿入する2つ目のテキストです。'
+    }
+  ]}
+/>
+
+### 使用例
+
+`!koume 課題を出そう 通信制限で間に合いません`
+
+```
+>> 課題を出そうと思ったら〜♪
+通信制限で間に合いませんでした〜♪
+チクショー！！　#まいにちチクショー
+```

@@ -1,0 +1,22 @@
+import { CommandArgs } from '../../../organisms/command-args';
+
+# 治安統率機構
+
+<CommandArgs
+  versionAvailableFrom="v1.12.0"
+  commandName="stfu"
+  args={[
+    {
+      name: '個数',
+      about: 'はらちょのメッセージを削除する個数',
+      defaultValue: '1'
+    }
+  ]}
+/>
+
+第 1 引数で指定した個数、実行したチャンネルに存在するはらちょのメッセージを最新順から削除します。
+
+> [!WARNING]
+>
+> 送信日時が2週間前のメッセージは Discord API の制約上削除することができません。
+> そのようなメッセージに対して治安統率機構は機能しません。
