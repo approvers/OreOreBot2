@@ -16,6 +16,7 @@ export default function Layout({
     body: string;
     title: string;
     siblings: Page[];
+    children: Page[];
   }
 >): JSX.Element {
   return (
@@ -29,7 +30,10 @@ export default function Layout({
           <MDXProvider>{children}</MDXProvider>
         </main>
         <aside>
-          <SideBar siblings={pageContext.siblings} />
+          <SideBar
+            siblings={pageContext.siblings}
+            childrenPages={pageContext.children}
+          />
         </aside>
         <footer>Copyright 2021 Approvers</footer>
       </div>
