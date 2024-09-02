@@ -5,10 +5,18 @@ import { Page } from './src/types';
 
 export const createPages: GatsbyNode['createPages'] = async (api) => {
   // get mdx pages
+  type Content = {
+    url: string;
+    title: string;
+    items?: Content[];
+  };
   const res = await api.graphql<{
     allMdx: {
       nodes: {
         body: string;
+        tableOfContents: {
+          items?: Content[];
+        };
         parent: {
           dir: string;
           relativePath: string;
@@ -24,6 +32,7 @@ export const createPages: GatsbyNode['createPages'] = async (api) => {
       allMdx {
         nodes {
           body
+          tableOfContents
           parent {
             ... on File {
               dir
@@ -47,13 +56,15 @@ export const createPages: GatsbyNode['createPages'] = async (api) => {
     ({
       body,
       parent: { dir, relativePath, absolutePath },
-      frontmatter: { title }
+      frontmatter: { title },
+      tableOfContents
     }): Page => ({
       body,
       dir,
       uri: '/' + relativePath.replace(/(index)?\.mdx$/, ''),
       absolutePath,
-      title
+      title,
+      headings: tableOfContents.items
     })
   );
 
@@ -79,7 +90,7 @@ export const createPages: GatsbyNode['createPages'] = async (api) => {
 
   const componentPath = path.resolve('src/templates/layout.tsx');
   for (const page of pages) {
-    const { body, dir, uri, absolutePath, title } = page;
+    const { body, dir, uri, absolutePath, title, headings } = page;
 
     const siblings = pagesByDir[dir] ?? [];
     const children = (childrenDirsByPath[absolutePath] ?? []).flatMap(
@@ -92,7 +103,8 @@ export const createPages: GatsbyNode['createPages'] = async (api) => {
         body,
         title,
         siblings,
-        children
+        children,
+        headings
       }
     });
   }

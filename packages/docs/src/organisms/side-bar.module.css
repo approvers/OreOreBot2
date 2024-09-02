@@ -1,11 +1,39 @@
 .container {
+  transform: translateY(-100%);
+  transition: transform 0.45s cubic-bezier(0.52, 0.16, 0.04, 1);
+  z-index: 15;
+  background-color: #fff;
+  padding-top: 4rem;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+.container[data-shown='true'] {
+  transform: translateY(0);
 }
 
 .neighborPages {
+  flex-grow: 1;
+  padding: 1rem;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .neighborPageList {
 }
 
 .themeSwitch {
+  position: sticky;
+  bottom: 0;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin-right: 1rem;
+  margin-left: 1rem;
+  border-top-width: 1px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }

@@ -1,10 +1,10 @@
 import { MDXProvider } from '@mdx-js/react';
 import type { PageProps } from 'gatsby';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { NavHeader } from '../organisms/nav-header';
 import { SideBar } from '../organisms/side-bar';
-import { Page } from '../types';
+import { Heading, Page } from '../types';
 import './theme.css';
 
 export default function Layout({
@@ -17,22 +17,30 @@ export default function Layout({
     title: string;
     siblings: Page[];
     children: Page[];
+    headings?: Heading[];
   }
 >): JSX.Element {
+  const [sideMenuShown, setSideMenuShown] = useState(false);
+  function toggleMenu() {
+    setSideMenuShown((flag) => !flag);
+  }
   return (
     <>
       <title>{pageContext.title} - OreOreBot2 Documents</title>
       <div>
         <header>
-          <NavHeader />
+          <NavHeader onClickMenu={toggleMenu} />
         </header>
         <main>
           <MDXProvider>{children}</MDXProvider>
         </main>
         <aside>
           <SideBar
+            shown={sideMenuShown}
+            onClickItem={toggleMenu}
             siblings={pageContext.siblings}
             childrenPages={pageContext.children}
+            headings={pageContext.headings}
           />
         </aside>
         <footer>Copyright 2021 Approvers</footer>

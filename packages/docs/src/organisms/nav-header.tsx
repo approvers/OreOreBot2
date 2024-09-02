@@ -4,17 +4,30 @@ import React from 'react';
 import iconImg from '../../assets/haracho-transmission.png';
 import * as styles from './nav-header.module.css';
 
-export function NavHeader(): JSX.Element {
+export type NavHeaderProps = {
+  onClickMenu?: () => void;
+};
+
+export function NavHeader({ onClickMenu }: NavHeaderProps): JSX.Element {
   return (
-    <nav className={styles.navBar}>
-      <Link to="/" className={styles.topLink}>
-        <img src={iconImg} alt="" loading="lazy" width="50" height="50" />
-        <span className={styles.siteName}>OreOreBot2 Documents</span>
-      </Link>
-      <Link to="/references">リファレンス</Link>
-      <Link to="/development">開発ガイド</Link>
-      search-bar
-      <a href="https://github.com/approvers/OreOreBot2">GitHub</a>
-    </nav>
+    <div className={styles.navBarContainer}>
+      <nav className={styles.navBar}>
+        <Link to="/" className={styles.topLink}>
+          <img src={iconImg} alt="" loading="lazy" width="50" height="50" />
+          <span className={styles.siteName}>OreOreBot2 Documents</span>
+        </Link>
+        <Link to="/references" className={styles.showOnWide}>
+          リファレンス
+        </Link>
+        <Link to="/development" className={styles.showOnWide}>
+          開発ガイド
+        </Link>
+        <div className={styles.showOnWide}>search-bar</div>
+        <a href="https://github.com/approvers/OreOreBot2">GitHub</a>
+        <button className={styles.menuButton} onClick={onClickMenu}>
+          <span>≡</span>
+        </button>
+      </nav>
+    </div>
   );
 }
