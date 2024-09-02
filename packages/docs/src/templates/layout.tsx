@@ -1,16 +1,38 @@
-import React, { ReactNode } from 'react';
+import { MDXProvider } from '@mdx-js/react';
+import type { PageProps } from 'gatsby';
+import React from 'react';
 
 import { NavHeader } from '../organisms/nav-header';
+import { SideBar } from '../organisms/side-bar';
+import { Page } from '../types';
 import './theme.css';
 
-export function Layout({ children }: { children: ReactNode }): JSX.Element {
+export default function Layout({
+  children,
+  pageContext
+}: PageProps<
+  unknown,
+  {
+    body: string;
+    title: string;
+    siblings: Page[];
+  }
+>): JSX.Element {
   return (
-    <div>
-      <header>
-        <NavHeader />
-      </header>
-      <main>{children}</main>
-      <footer></footer>
-    </div>
+    <>
+      <title>{pageContext.title} - OreOreBot2 Documents</title>
+      <div>
+        <header>
+          <NavHeader />
+        </header>
+        <main>
+          <MDXProvider>{children}</MDXProvider>
+        </main>
+        <aside>
+          <SideBar siblings={pageContext.siblings} />
+        </aside>
+        <footer>Copyright 2021 Approvers</footer>
+      </div>
+    </>
   );
 }
