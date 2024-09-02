@@ -1,5 +1,10 @@
 :root {
-  --primary-color: hsl(193deg 100% 50%);
+  --primary-color: #00c8ff;
+  --primary-text-background-color: color-mix(
+    in srgb,
+    var(--primary-color) 12%,
+    transparent
+  );
 }
 
 * {
@@ -54,4 +59,10 @@ blockquote {
 table {
   display: block;
   overflow-x: auto;
+}
+
+pre {
+  background-color: var(--primary-text-background-color);
+  border-radius: 0.75rem;
+  padding: 1rem;
 }
