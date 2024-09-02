@@ -25,6 +25,14 @@ const config = {
     {
       resolve: 'gatsby-plugin-mdx',
       options: {
+        gatsbyRemarkPlugins: [
+          {
+            resolve: 'gatsby-remark-autolink-headers',
+            options: {
+              offsetY: '78'
+            }
+          }
+        ],
         mdxOptions: {
           remarkPlugins: [remarkGfm]
         }

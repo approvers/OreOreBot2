@@ -76,26 +76,24 @@ export const createPages: GatsbyNode['createPages'] = async (api) => {
     }
     pagesByDir[page.dir].push(page);
   }
-  const childrenDirsByPath: Record<string, string[]> = {};
+  const childrenByPath: Record<string, Page[]> = {};
   for (const page of pages) {
     const superPath = page.absolutePath.endsWith('/index.mdx')
-      ? path.dirname(path.dirname(page.absolutePath)) + '/index.mdx'
-      : path.basename(page.absolutePath) + '/index.mdx';
-    console.log({ path: page.absolutePath, superPath });
-    if (!childrenDirsByPath[superPath]) {
-      childrenDirsByPath[superPath] = [];
+      ? path.dirname(path.dirname(page.dir))
+      : path.dirname(page.dir);
+    console.log({ dir: page.dir, superPath });
+    if (!childrenByPath[superPath]) {
+      childrenByPath[superPath] = [];
     }
-    childrenDirsByPath[superPath].push(page.dir);
+    childrenByPath[superPath].push(page);
   }
 
-  const componentPath = path.resolve('src/templates/layout.tsx');
+  const componentPath = path.resolve('src/templates/entry.jsx');
   for (const page of pages) {
     const { body, dir, uri, absolutePath, title, headings } = page;
 
     const siblings = pagesByDir[dir] ?? [];
-    const children = (childrenDirsByPath[absolutePath] ?? []).flatMap(
-      (childrenDirs) => pagesByDir[childrenDirs] ?? []
-    );
+    const children = childrenByPath[dir] ?? [];
     api.actions.createPage({
       path: uri,
       component: `${componentPath}?__contentFilePath=${absolutePath}`,
