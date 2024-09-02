@@ -22,7 +22,6 @@ export function NavHeader({ onClickMenu }: NavHeaderProps): JSX.Element {
         <Link to="/development" className={styles.showOnWide}>
           開発ガイド
         </Link>
-        <div className={styles.showOnWide}>search-bar</div>
         <a href="https://github.com/approvers/OreOreBot2">GitHub</a>
         <button className={styles.menuButton} onClick={onClickMenu}>
           <span>≡</span>
