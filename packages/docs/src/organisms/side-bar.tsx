@@ -1,3 +1,4 @@
+import { Link } from 'gatsby';
 import React from 'react';
 
 import { Heading, Page } from '../types';
@@ -5,7 +6,7 @@ import * as styles from './side-bar.module.css';
 
 function HeadingLink({ title, url, items }: Heading): JSX.Element {
   return (
-    <li>
+    <li key={url}>
       <a href={url}>
         <div>{title}</div>
       </a>
@@ -37,9 +38,9 @@ export function SideBar({
         <ol className={styles.neighborPageList}>
           {siblings.map(({ title, uri }) => (
             <li key={uri}>
-              <a href={uri}>
+              <Link to={uri}>
                 <div>{title}</div>
-              </a>
+              </Link>
             </li>
           ))}
         </ol>
@@ -47,9 +48,9 @@ export function SideBar({
         <ol className={styles.neighborPageList}>
           {childrenPages.map(({ title, uri }) => (
             <li key={uri}>
-              <a href={uri}>
+              <Link to={uri}>
                 <div>{title}</div>
-              </a>
+              </Link>
             </li>
           ))}
         </ol>
