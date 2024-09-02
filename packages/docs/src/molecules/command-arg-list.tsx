@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
 
-import style from './command-arg-list.module.css';
+import * as style from './command-arg-list.module.css';
 import { VersionBadge } from './version-badge';
 
 /**

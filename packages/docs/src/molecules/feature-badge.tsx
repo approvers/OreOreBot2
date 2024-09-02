@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Badge } from '../atoms/badge';
-import style from './feature-badge.module.css';
+import * as style from './feature-badge.module.css';
 
 export interface FeatureProps {
   children: React.ReactNode;
