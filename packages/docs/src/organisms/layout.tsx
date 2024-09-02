@@ -2,12 +2,11 @@ import { MDXProvider } from '@mdx-js/react';
 import type { PageProps } from 'gatsby';
 import React, { useState } from 'react';
 
-import { NavHeader } from '../organisms/nav-header';
-import { SideBar } from '../organisms/side-bar';
 import { Heading, Page } from '../types';
-import './theme.css';
+import { NavHeader } from './nav-header';
+import { SideBar } from './side-bar';
 
-export default function Layout({
+export function Layout({
   children,
   pageContext
 }: PageProps<
