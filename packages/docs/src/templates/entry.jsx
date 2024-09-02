@@ -3,11 +3,6 @@ import React from 'react';
 
 import './theme.css';
 
-export default function Entry({
-  children,
-  pageContext
-}) {
-  return (
-    <Layout pageContext={pageContext}>{children}</Layout>
-  );
+export default function Entry(props) {
+  return <Layout {...props} />;
 }
