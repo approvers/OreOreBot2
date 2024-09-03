@@ -46,6 +46,11 @@ a {
 main {
   margin: 0.5rem;
   margin-top: 5rem;
+  max-width: 72rem;
+  padding-right: 16px;
+  padding-left: 16px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 blockquote {
