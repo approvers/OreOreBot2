@@ -16,4 +16,6 @@ rules:
   'max-params': 'error'
 settings:
   'mdx/code-blocks': true
+  react:
+    version: 'detect'
 root: true
