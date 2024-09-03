@@ -69,13 +69,6 @@ export const createPages: GatsbyNode['createPages'] = async (api) => {
   );
 
   // group pages by its directory
-  const pagesByDir: Record<string, Page[]> = {};
-  for (const page of pages) {
-    if (!pagesByDir[page.dir]) {
-      pagesByDir[page.dir] = [];
-    }
-    pagesByDir[page.dir].push(page);
-  }
   const childrenByPath: Record<string, Page[]> = {};
   for (const page of pages) {
     const superPath = page.absolutePath.endsWith('/index.mdx')
@@ -91,7 +84,7 @@ export const createPages: GatsbyNode['createPages'] = async (api) => {
   for (const page of pages) {
     const { body, dir, uri, absolutePath, title, headings } = page;
 
-    const siblings = pagesByDir[dir] ?? [];
+    const siblings = childrenByPath[path.dirname(dir)] ?? [];
     const children = childrenByPath[dir] ?? [];
     api.actions.createPage({
       path: uri,
