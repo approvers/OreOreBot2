@@ -20,7 +20,7 @@ export class MessageProxy<M> implements MessageEventProvider<M> {
   onMessageCreate(handler: MessageHandler<M>): void {
     this.client.on('messageCreate', async (m) => {
       try {
-        return handler(await this.map(m));
+        await handler(await this.map(m));
       } catch {
         // 変換処理の結果として続行すべきでないと判断されたため, 無視できます。
       }
@@ -30,7 +30,7 @@ export class MessageProxy<M> implements MessageEventProvider<M> {
   onMessageDelete(handler: MessageHandler<M>): void {
     const wrapper = async (m: RawMessage) => {
       try {
-        return handler(await this.map(m));
+        await handler(await this.map(m));
       } catch {
         // 変換処理の結果として続行すべきでないと判断されたため, 無視できます。
       }

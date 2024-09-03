@@ -17,6 +17,9 @@ plugins:
 rules:
   'max-params': 'error'
   'tsdoc/syntax': 'warn'
+  '@typescript-eslint/restrict-template-expressions':
+    - 'error'
+    - allowNumber: true
 overrides:
   - files: ['**/*.md']
     processor: 'markdown/markdown'

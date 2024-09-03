@@ -5,7 +5,7 @@ import { parse } from 'yaml';
 import { messageTypes, type SignalSchedule } from '../service/time-signal.js';
 
 const messageFields = ['time', 'message'] as const;
-const timeFields = ['hours', 'minutes'] as const;
+type TimeFields = ['hours', 'minutes'];
 
 const validate = (object: unknown): object is SignalSchedule => {
   if (!(typeof object === 'object' && object !== null)) {
@@ -35,7 +35,7 @@ const validate = (object: unknown): object is SignalSchedule => {
       return false;
     }
     const { hours, minutes } = timeUnsafe as Record<
-      (typeof timeFields)[number],
+      TimeFields[number],
       unknown
     >;
     if (

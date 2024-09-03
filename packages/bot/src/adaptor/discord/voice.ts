@@ -87,7 +87,9 @@ export class DiscordVoiceConnection<K extends string | number | symbol>
     });
   }
   play(key: K): void {
-    this.playToEnd(key).catch(console.error);
+    this.playToEnd(key).catch((err: unknown) => {
+      console.error(err);
+    });
   }
   private reserveToPlay() {
     const subscription = this.connection?.subscribe(this.player);

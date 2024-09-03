@@ -36,7 +36,7 @@ export class RoleCreate implements CommandResponderFor<typeof SCHEMA> {
 
   async on(message: CommandMessage<typeof SCHEMA>): Promise<void> {
     const [roleName, roleColor] = message.args.params;
-    if (!roleColor.match(HEX_FORMAT)) {
+    if (!HEX_FORMAT.exec(roleColor)) {
       await message.reply({
         title: 'コマンド形式エラー',
         description:
