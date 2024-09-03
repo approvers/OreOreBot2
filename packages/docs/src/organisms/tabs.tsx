@@ -52,6 +52,7 @@ export function Tabs({ choiceKey, items, children }: TabsProps): JSX.Element {
       <div className={styles.tabList}>
         {items.map((item, index) => (
           <button
+            key={index}
             className={styles.tabButton}
             data-selected={index === selectedIndex}
             onClick={selectTab(index)}
