@@ -208,7 +208,7 @@ export class KaereCommand implements CommandResponderFor<typeof SCHEMA> {
         await this.reg
           .get(voiceRoomControllerKey)
           .disconnectAllUsersIn(guildId, roomId);
-      } catch (e) {
+      } catch {
         console.error('強制切断に失敗');
       }
     }

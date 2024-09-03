@@ -45,7 +45,7 @@ export class ScheduleRunner {
     const neededExe = this.extractTaskNeededExe();
     for (const [key, task] of neededExe) {
       void task()
-        .catch((e) => {
+        .catch((e: unknown) => {
           console.error(e);
           return null;
         })

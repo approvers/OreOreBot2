@@ -17,7 +17,7 @@ export class DiscordMessageRepository implements MessageRepository {
     try {
       const message = await channel.messages.fetch(messageId);
       return message.content || '';
-    } catch (e) {
+    } catch {
       return undefined;
     }
   }

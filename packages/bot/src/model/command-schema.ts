@@ -80,25 +80,26 @@ export type ParamType = Param['type'];
 export type ParamValue<P extends Param> = P extends BooleanParam
   ? boolean
   : P extends NumberParam | ChoicesParam
-  ? number
-  : P extends VariadicParam
-  ? string[]
-  : string;
+    ? number
+    : P extends VariadicParam
+      ? string[]
+      : string;
 
 // From https://github.com/type-challenges/type-challenges/blob/48346888871d9fdbbd7b315ad73a529987dd59a1/utils/index.d.ts#L7-L9
-type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y
-  ? 1
-  : 2
-  ? true
-  : false;
+type Equal<X, Y> =
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
+  (<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y ? 1 : 2
+    ? true
+    : false;
 
-export type ParamsValues<S> = Equal<S, readonly Param[]> extends true
-  ? unknown[]
-  : S extends readonly [infer H, ...infer R]
-  ? H extends Param
-    ? [ParamValue<H>, ...ParamsValues<R>]
-    : []
-  : [];
+export type ParamsValues<S> =
+  Equal<S, readonly Param[]> extends true
+    ? unknown[]
+    : S extends readonly [infer H, ...infer R]
+      ? H extends Param
+        ? [ParamValue<H>, ...ParamsValues<R>]
+        : []
+      : [];
 
 /**
  * コマンドの中で分岐する細かいサブコマンド。
@@ -184,11 +185,11 @@ export type ParsedParameter<S> = S extends SubCommand
       params: ParamsValues<Params<S>>;
     }
   : S extends SubCommandGroup
-  ? {
-      type: 'SUB_COMMAND';
-      subCommand: ParsedSubCommand<SubCommands<S>>;
-    }
-  : never;
+    ? {
+        type: 'SUB_COMMAND';
+        subCommand: ParsedSubCommand<SubCommands<S>>;
+      }
+    : never;
 
 export type HasSubCommand = Schema | SubCommandGroup;
 

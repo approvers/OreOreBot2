@@ -292,4 +292,6 @@ client.once('ready', () => {
   console.log('======================================');
 });
 
-client.login(token).catch(console.error);
+client.login(token).catch((err: unknown) => {
+  console.error(err);
+});
