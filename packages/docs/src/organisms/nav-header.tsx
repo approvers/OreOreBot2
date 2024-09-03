@@ -13,7 +13,14 @@ export function NavHeader({ onClickMenu }: NavHeaderProps): JSX.Element {
     <div className={styles.navBarContainer}>
       <nav className={styles.navBar}>
         <Link to="/" className={styles.topLink}>
-          <img src={iconImg} alt="" loading="lazy" width="50" height="50" />
+          <img
+            className={styles.rounded}
+            src={iconImg}
+            alt=""
+            loading="lazy"
+            width="50"
+            height="50"
+          />
           <span className={styles.siteName}>OreOreBot2 Documents</span>
         </Link>
         <Link to="/references" className={styles.showOnWide}>

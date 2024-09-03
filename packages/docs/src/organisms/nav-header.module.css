@@ -47,6 +47,10 @@
   margin-right: auto;
 }
 
+.rounded {
+  border-radius: 9999px;
+}
+
 .siteName {
   margin-left: 0.4em;
 }
