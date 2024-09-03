@@ -1,26 +1,34 @@
 {
   "name": "@oreorebot2/docs",
   "version": "1.0.0",
-  "main": "index.js",
+  "private": true,
   "repository": "https://github.com/approvers/OreOreBot2",
   "author": "approvers <info@approvers.dev>",
   "description": "新生はらちょドキュメントサイト",
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "lint": "next lint",
-    "format": "prettier --write \"./src/**/*.{js,ts,jsx,tsx,md,mdx}\"",
-    "lint-staged": "lint-staged"
+    "dev": "gatsby develop",
+    "build": "gatsby build",
+    "lint": "eslint --ignore-path .gitignore \"./{src,pages}/**/*.{js,ts,jsx,tsx,md,mdx}\"",
+    "format": "prettier --write \"./{src,pages}/**/*.{js,ts,jsx,tsx,md,mdx}\""
   },
   "dependencies": {
-    "next": "^14.0.0",
-    "nextra": "^2.2.14",
-    "nextra-theme-docs": "^2.2.14",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "@mdx-js/mdx": "^3.0.1",
+    "@mdx-js/react": "^3.0.1",
+    "gatsby": "^5.13.7",
+    "gatsby-omni-font-loader": "^2.0.2",
+    "gatsby-plugin-manifest": "^5.13.1",
+    "gatsby-plugin-mdx": "^5.13.1",
+    "gatsby-remark-autolink-headers": "^6.13.1",
+    "gatsby-source-filesystem": "^5.13.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remark-gfm": "^3.0.0"
   },
   "devDependencies": {
-    "@types/react": "18.2.60"
+    "@typescript-eslint/eslint-plugin": "^8.4.0",
+    "@typescript-eslint/parser": "^8.4.0",
+    "eslint-plugin-mdx": "^3.1.5",
+    "eslint-plugin-react": "^7.35.1"
   }
 }

@@ -1,0 +1,91 @@
+.navBarContainer {
+  width: 100svw;
+  height: 4rem;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--background);
+  box-shadow: 0px 4px 2px color-mix(in srgb, var(--shadow) 10%, transparent);
+  display: flex;
+  align-items: center;
+}
+
+.navBar {
+  max-width: 90rem;
+  padding-right: max(env(safe-area-inset-right), 1.5rem);
+  padding-left: max(env(safe-area-inset-left), 1.5rem);
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: flex-end;
+  margin: auto;
+  margin-left: auto;
+
+  a {
+    color: unset;
+    font-style: normal;
+    text-decoration: none;
+  }
+  a:hover {
+    opacity: 0.75;
+  }
+}
+
+.showOnWide {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .showOnWide {
+    display: inline-block;
+  }
+}
+
+.topLink {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+}
+
+.rounded {
+  border-radius: 9999px;
+}
+
+.siteName {
+  margin-left: 0.4em;
+}
+
+.menuButton {
+  padding: 0.5rem;
+  background-color: transparent;
+  border-radius: 0.25rem;
+  margin-right: -0.5rem;
+  outline-offset: 2px;
+  outline: 2px solid transparent;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    background-color: color-mix(
+      in srgb,
+      var(--surface-variant) 8%,
+      transparent
+    );
+  }
+  &:active {
+    background-color: color-mix(
+      in srgb,
+      var(--surface-variant) 20%,
+      transparent
+    );
+  }
+
+  & > span {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    font-size: 32px;
+    line-height: 24px;
+    transform: translateY(-7%);
+  }
+}

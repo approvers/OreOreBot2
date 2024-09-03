@@ -1,4 +1,6 @@
-import style from './command-format.module.css';
+import React from 'react';
+
+import * as style from './command-format.module.css';
 
 export interface CommandFormatProps {
   children: string;

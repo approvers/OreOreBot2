@@ -1,0 +1,185 @@
+:root {
+  --primary: rgb(18 102 130);
+  --surface-tint: rgb(18 102 130);
+  --on-primary: rgb(255 255 255);
+  --primary-container: rgb(190 233 255);
+  --on-primary-container: rgb(0 31 42);
+  --secondary: rgb(77 97 108);
+  --on-secondary: rgb(255 255 255);
+  --secondary-container: rgb(208 230 242);
+  --on-secondary-container: rgb(8 30 39);
+  --tertiary: rgb(91 88 145);
+  --on-tertiary: rgb(255 255 255);
+  --tertiary-container: rgb(227 223 255);
+  --on-tertiary-container: rgb(23 19 74);
+  --error: rgb(186 26 26);
+  --on-error: rgb(255 255 255);
+  --error-container: rgb(255 218 214);
+  --on-error-container: rgb(65 0 2);
+  --background: rgb(246 250 253);
+  --on-background: rgb(23 28 31);
+  --surface: rgb(246 250 253);
+  --on-surface: rgb(23 28 31);
+  --surface-variant: rgb(220 228 233);
+  --on-surface-variant: rgb(64 72 76);
+  --outline: rgb(112 120 125);
+  --outline-variant: rgb(192 200 205);
+  --shadow: rgb(0 0 0);
+  --scrim: rgb(0 0 0);
+  --inverse-surface: rgb(44 49 52);
+  --inverse-on-surface: rgb(237 241 245);
+  --inverse-primary: rgb(139 208 240);
+  --primary-fixed: rgb(190 233 255);
+  --on-primary-fixed: rgb(0 31 42);
+  --primary-fixed-dim: rgb(139 208 240);
+  --on-primary-fixed-variant: rgb(0 77 100);
+  --secondary-fixed: rgb(208 230 242);
+  --on-secondary-fixed: rgb(8 30 39);
+  --secondary-fixed-dim: rgb(180 202 214);
+  --on-secondary-fixed-variant: rgb(53 74 84);
+  --tertiary-fixed: rgb(227 223 255);
+  --on-tertiary-fixed: rgb(23 19 74);
+  --tertiary-fixed-dim: rgb(196 192 255);
+  --on-tertiary-fixed-variant: rgb(67 64 120);
+  --surface-dim: rgb(214 219 222);
+  --surface-bright: rgb(246 250 253);
+  --surface-container-lowest: rgb(255 255 255);
+  --surface-container-low: rgb(240 244 248);
+  --surface-container: rgb(234 238 242);
+  --surface-container-high: rgb(228 233 236);
+  --surface-container-highest: rgb(223 227 231);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary: rgb(139 208 240);
+    --surface-tint: rgb(139 208 240);
+    --on-primary: rgb(0 53 70);
+    --primary-container: rgb(0 77 100);
+    --on-primary-container: rgb(190 233 255);
+    --secondary: rgb(180 202 214);
+    --on-secondary: rgb(31 51 60);
+    --secondary-container: rgb(53 74 84);
+    --on-secondary-container: rgb(208 230 242);
+    --tertiary: rgb(196 192 255);
+    --on-tertiary: rgb(44 41 96);
+    --tertiary-container: rgb(67 64 120);
+    --on-tertiary-container: rgb(227 223 255);
+    --error: rgb(255 180 171);
+    --on-error: rgb(105 0 5);
+    --error-container: rgb(147 0 10);
+    --on-error-container: rgb(255 218 214);
+    --background: rgb(15 20 23);
+    --on-background: rgb(223 227 231);
+    --surface: rgb(15 20 23);
+    --on-surface: rgb(223 227 231);
+    --surface-variant: rgb(64 72 76);
+    --on-surface-variant: rgb(192 200 205);
+    --outline: rgb(138 146 151);
+    --outline-variant: rgb(64 72 76);
+    --shadow: rgb(0 0 0);
+    --scrim: rgb(0 0 0);
+    --inverse-surface: rgb(223 227 231);
+    --inverse-on-surface: rgb(44 49 52);
+    --inverse-primary: rgb(18 102 130);
+    --primary-fixed: rgb(190 233 255);
+    --on-primary-fixed: rgb(0 31 42);
+    --primary-fixed-dim: rgb(139 208 240);
+    --on-primary-fixed-variant: rgb(0 77 100);
+    --secondary-fixed: rgb(208 230 242);
+    --on-secondary-fixed: rgb(8 30 39);
+    --secondary-fixed-dim: rgb(180 202 214);
+    --on-secondary-fixed-variant: rgb(53 74 84);
+    --tertiary-fixed: rgb(227 223 255);
+    --on-tertiary-fixed: rgb(23 19 74);
+    --tertiary-fixed-dim: rgb(196 192 255);
+    --on-tertiary-fixed-variant: rgb(67 64 120);
+    --surface-dim: rgb(15 20 23);
+    --surface-bright: rgb(53 58 61);
+    --surface-container-lowest: rgb(10 15 17);
+    --surface-container-low: rgb(23 28 31);
+    --surface-container: rgb(27 32 35);
+    --surface-container-high: rgb(38 43 46);
+    --surface-container-highest: rgb(48 53 56);
+  }
+}
+
+* {
+  accent-color: var(--primary);
+  border: 0 solid var(--outline);
+}
+
+html {
+  color: var(--on-background);
+  background-color: var(--background);
+  scroll-padding-top: 5rem;
+  font-size: 1rem;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Noto Sans,
+    Ubuntu,
+    Cantarell,
+    Helvetica Neue,
+    Arial,
+    sans-serif,
+    Apple Color Emoji,
+    Segoe UI Emoji,
+    Segoe UI Symbol,
+    Noto Color Emoji;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  color: var(--primary);
+  font-style: italic;
+}
+
+main {
+  margin: 0.5rem;
+  margin-top: 5rem;
+  max-width: 72rem;
+  padding-right: 16px;
+  padding-left: 16px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+button {
+  color: var(--on-surface-variant);
+  background: none;
+  border: 0;
+}
+
+blockquote {
+  margin-left: 0;
+  padding-left: 1.5rem;
+  font-style: italic;
+  color: var(--on-surface);
+  background-color: var(--surface);
+  border-left: 2px solid var(--outline-variant);
+}
+
+table {
+  display: block;
+  overflow-x: auto;
+}
+
+pre {
+  color: var(--on-primary-container);
+  background-color: var(--primary-container);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+li {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}

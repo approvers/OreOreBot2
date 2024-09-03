@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Badge } from '../atoms/badge';
-import style from './version-badge.module.css';
+import * as style from './version-badge.module.css';
 
 export interface VersionProps {
   children: React.ReactNode;
