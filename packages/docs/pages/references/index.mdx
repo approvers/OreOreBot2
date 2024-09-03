@@ -2,35 +2,15 @@
 title: 'リファレンス'
 ---
 
+import { Link } from 'gatsby';
+
 import { VersionBadge } from '../../src/molecules/version-badge';
 
 # はじめに
 
-新生はらちょ (OreOreBot2) は限界開発鯖で利用できる Discord Bot です。
+新生はらちょ (OreOreBot2) は限界開発鯖で利用できる Discord Bot です。このボットには主に以下の 2 種類の機能があります。
 
-## 使い方
+- <Link to="./commands/">ユーザーの命令で動作するコマンド機能</Link>
+- <Link to="./features/">サーバー内での行動に反応するパッシブ機能</Link>
 
-新生はらちょは以下のコマンド形態に対応しています。
-
-- メッセージ方式 (従来)
-- スラッシュコマンド方式
-
-どちらの方法でも利用できます。
-
-### メッセージ方式 (従来)
-
-メッセージ方式では Prefix `!` で利用できるコマンド形態です。
-
-### スラッシュコマンド方式
-
-<VersionBadge>v1.45.0</VersionBadge> 以降使用可能なコマンド形態です。
-
-## インタラクション応答の制限
-
-Discord API ではインタラクションが送信された際、クライアントには3秒以内に応答することが期待されています。
-
-> Interaction tokens are valid for 15 minutes and can be used to send followup messages but you must send an initial response within 3 seconds of receiving the event. If the 3 second deadline is exceeded, the token will be invalidated.
-
-3秒以内に応答できなかった場合、クライアントにはインタラクション失敗というメッセージが表示されます。
-
-OreOreBot2 の処理に時間がかかると、3秒以内への応答に間に合わず失敗してしまう場合があります。その際は再実行するかメッセージ方式での実行をお試しください。
+詳しくはそれぞれのページをご覧ください。
