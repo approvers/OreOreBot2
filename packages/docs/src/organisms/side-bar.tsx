@@ -6,11 +6,13 @@ import * as styles from './side-bar.module.css';
 
 function HeadingLink({ title, url, items }: Heading): JSX.Element {
   return (
-    <li key={url}>
-      <a href={url}>
+    <li className={styles.neighborPage} key={url}>
+      <a className={styles.neighborLink} href={url}>
         <div>{title}</div>
       </a>
-      {items && <ol>{items.map(HeadingLink)}</ol>}
+      {items && (
+        <ol className={styles.neighborPageList}>{items.map(HeadingLink)}</ol>
+      )}
     </li>
   );
 }
@@ -33,27 +35,32 @@ export function SideBar({
   return (
     <div className={styles.container} data-shown={shown}>
       <div className={styles.neighborPages}>
-        <ol onClick={onClickItem}>{headings?.map(HeadingLink)}</ol>
+        <p>目次</p>
+        <ol className={styles.neighborPageList} onClick={onClickItem}>
+          {headings?.map(HeadingLink)}
+        </ol>
         <hr />
-        <ol className={styles.neighborPageList}>
+        <p>隣のページ</p>
+        <ul className={styles.neighborPageList}>
           {siblings.map(({ title, uri }) => (
-            <li key={uri}>
-              <Link to={uri}>
+            <li className={styles.neighborPage} key={uri}>
+              <Link className={styles.neighborLink} to={uri}>
                 <div>{title}</div>
               </Link>
             </li>
           ))}
-        </ol>
+        </ul>
         <hr />
-        <ol className={styles.neighborPageList}>
+        <p>子のページ</p>
+        <ul className={styles.neighborPageList}>
           {childrenPages.map(({ title, uri }) => (
             <li key={uri}>
-              <Link to={uri}>
+              <Link className={styles.neighborLink} to={uri}>
                 <div>{title}</div>
               </Link>
             </li>
           ))}
-        </ol>
+        </ul>
       </div>
       <div className={styles.themeSwitch}>Light to Dark</div>
     </div>

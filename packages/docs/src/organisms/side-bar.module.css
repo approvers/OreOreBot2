@@ -20,9 +20,35 @@
   padding: 1rem;
   overflow-x: hidden;
   overflow-y: auto;
+
+  & > hr {
+    border-width: 1px;
+  }
 }
 
 .neighborPageList {
+  list-style: none;
+}
+
+.neighborPage {
+  margin-top: 0.25rem;
+}
+
+.neighborLink {
+  display: flex;
+  flex-direction: column;
+  word-break: break-word;
+  font-size: 0.875rem;
+  padding: 0.375rem 00.5rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+
+  color: rgba(107 114 128);
+
+  &:hover {
+    color: rgba(17 24 39);
+    background-color: rgba(243 244 246);
+  }
 }
 
 .themeSwitch {
