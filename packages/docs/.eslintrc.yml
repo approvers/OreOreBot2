@@ -1,11 +1,17 @@
 env:
+  browser: true
   node: true
   es2021: true
 extends:
   - 'prettier'
-  - plugin:mdx/recommended
+  - 'eslint:recommended'
+  - 'plugin:mdx/recommended'
+  - 'plugin:@typescript-eslint/recommended'
+  - 'plugin:react/recommended'
+  - 'plugin:mdx/recommended'
 plugins:
   - '@typescript-eslint'
+  - 'react'
 rules:
   'max-params': 'error'
 settings:
