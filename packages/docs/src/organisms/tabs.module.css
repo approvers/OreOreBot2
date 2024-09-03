@@ -4,7 +4,7 @@
 
 .tabList {
   margin-top: 1rem;
-  border-bottom: 1px solid rgba(38 38 38);
+  border-bottom: 1px solid var(--outline);
 }
 
 .tabButton {
@@ -18,7 +18,7 @@
   border: 0;
 }
 .tabButton[data-selected='true'] {
-  border-bottom: 2px solid hsl(193deg 100% 50%);
+  border-bottom: 2px solid var(--primary);
 }
 
 .tabBody {

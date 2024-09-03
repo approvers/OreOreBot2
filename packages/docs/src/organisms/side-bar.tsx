@@ -62,7 +62,6 @@ export function SideBar({
           ))}
         </ul>
       </div>
-      <div className={styles.themeSwitch}>Light to Dark</div>
     </div>
   );
 }
