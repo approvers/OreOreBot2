@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "gatsby develop",
     "build": "gatsby build",
-    "lint": "eslint --ignore-path .gitignore \"./{src,pages}/**/*.{js,ts,jsx,tsx,md,mdx}\"",
+    "lint": "eslint \"./{src,pages}/**/*.{js,ts,jsx,tsx,md,mdx}\"",
     "format": "prettier --write \"./{src,pages}/**/*.{js,ts,jsx,tsx,md,mdx}\""
   },
   "dependencies": {
