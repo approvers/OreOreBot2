@@ -79,9 +79,8 @@ export const createPages: GatsbyNode['createPages'] = async (api) => {
   const childrenByPath: Record<string, Page[]> = {};
   for (const page of pages) {
     const superPath = page.absolutePath.endsWith('/index.mdx')
-      ? path.dirname(path.dirname(page.dir))
-      : path.dirname(page.dir);
-    console.log({ dir: page.dir, superPath });
+      ? path.dirname(page.dir)
+      : page.dir;
     if (!childrenByPath[superPath]) {
       childrenByPath[superPath] = [];
     }
