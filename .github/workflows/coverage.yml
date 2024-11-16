@@ -20,7 +20,7 @@ jobs:
       - name: Generate code coverage report
         run: bun coverage
 
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v5
         with:
           files: ./packages/bot/coverage/clover.xml
           flags: unittests
