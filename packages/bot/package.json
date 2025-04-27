@@ -20,7 +20,7 @@
     "@discordjs/opus": "^0.10.0",
     "@discordjs/voice": "^0.18.0",
     "@js-temporal/polyfill": "^0.5.0",
-    "date-fns": "^3.0.0",
+    "date-fns": "^4.0.0",
     "deep-equal": "^2.2.2",
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3",
