@@ -128,7 +128,7 @@ describe('GuildInfo', () => {
   });
 
   it('Fail GuildInfo', async () => {
-    const fetchStats = vi.spyOn(repo, 'fetchGuildStats');
+    const fetchStats = vi.spyOn(repo, 'fetchGuildStats').mockImplementation(() => Promise.resolve(null));
     const fn = vi.fn();
 
     await guildInfo.on(
