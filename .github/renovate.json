@@ -1,5 +1,6 @@
 {
-  "reviewers": ["m1sk9", "MikuroXina"],
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "reviewers": ["MikuroXina"],
   "ignoreTests": false,
   "automerge": true,
   "major": {
@@ -9,6 +10,7 @@
   "prConcurrentLimit": 5,
   "dependencyDashboard": true,
   "semanticCommits": "enabled",
+  "minimumReleaseAge": "3 days",
   "fetchReleaseNotes": true,
   "enabledManagers": ["bun", "github-actions", "dockerfile", "docker-compose"],
   "packageRules": [
@@ -32,9 +34,7 @@
     "enabled": true,
     "automerge": true,
     "labels": ["C-security"],
-    "assignees": [
-      "m1sk9", "MikuroXina"
-    ]
+    "assignees": ["MikuroXina"]
   },
   "extends": [":timezone(Asia/Tokyo)"],
   "schedule": ["on the first day of the week"]
