@@ -82,6 +82,7 @@
     "esbuild",
     "sharp",
     "@discordjs/opus",
+    "gatsby",
     "gatsby-cli",
   ],
   "packages": {

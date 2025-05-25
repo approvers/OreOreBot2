@@ -41,6 +41,7 @@
   "trustedDependencies": [
     "@discordjs/opus",
     "esbuild",
+    "gatsby",
     "gatsby-cli",
     "lmdb",
     "sharp"
