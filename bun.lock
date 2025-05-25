@@ -78,6 +78,10 @@
     },
   },
   "trustedDependencies": [
+    "lmdb",
+    "esbuild",
+    "sharp",
+    "@discordjs/opus",
     "gatsby-cli",
   ],
   "packages": {

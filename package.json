@@ -39,6 +39,10 @@
   },
   "workspaces": ["packages/*"],
   "trustedDependencies": [
-    "gatsby-cli"
+    "@discordjs/opus",
+    "esbuild",
+    "gatsby-cli",
+    "lmdb",
+    "sharp"
   ]
 }
