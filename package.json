@@ -1,7 +1,7 @@
 {
   "name": "@oreorebot2/common",
   "private": true,
-  "packageManager": "bun@1.0.35",
+  "packageManager": "bun@1.2.14",
   "scripts": {
     "start": "bun run --cwd packages/bot start",
     "build:bot": "bun run --cwd packages/bot build",
