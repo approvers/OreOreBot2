@@ -28,7 +28,7 @@
     "nanoid": "^5.0.0",
     "tweetnacl": "^1.0.3",
     "yaml": "^2.2.2",
-    "yargs": "^17.7.1"
+    "yargs": "^18.0.0"
   },
   "devDependencies": {
     "@codedependant/semantic-release-docker": "^5.0.0",
