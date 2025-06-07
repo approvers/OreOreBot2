@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.55.0](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.54.0...OreOreBot2-v1.55.0) (2025-06-07)
+
+
+### Features
+
+* Add oss meme ([#1477](https://github.com/approvers/OreOreBot2/issues/1477)) ([01fb877](https://github.com/approvers/OreOreBot2/commit/01fb8777284d4972338498d03e64708ce056cb44))
+* Add procon32 ([#1475](https://github.com/approvers/OreOreBot2/issues/1475)) ([19ef14c](https://github.com/approvers/OreOreBot2/commit/19ef14ce71e901ce9e34fc786a42b0f0736b4195))
+
 ## [1.54.0](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.53.0...OreOreBot2-v1.54.0) (2024-05-31)
 
 
