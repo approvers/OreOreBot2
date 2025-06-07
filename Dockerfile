@@ -23,7 +23,7 @@ RUN cp -r /src/{package.json,bun.lockb,node_modules} . \
     && mkdir -p ./packages/bot \
     && cp -r /src/packages/bot/{build,assets} ./packages/bot
 
-FROM ubuntu:jammy-20250415.1
+FROM ubuntu:jammy-20250530
 COPY --from=build /usr/local/include/ /usr/local/include/
 COPY --from=build /usr/local/lib/ /usr/local/lib/
 COPY --from=build /usr/local/bin/ /usr/local/bin/
