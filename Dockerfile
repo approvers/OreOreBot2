@@ -1,25 +1,25 @@
-FROM mwader/static-ffmpeg:7.1.1 as ffmpeg
+FROM mwader/static-ffmpeg:7.1.1 AS ffmpeg
 
-FROM oven/bun:1.2.15-slim as build
+FROM oven/bun:1.2.15-slim AS build
 ARG GIT_TAG
 SHELL ["/bin/bash", "-c"]
 WORKDIR /src
 
 # node-gyp requires Python and basic packages needed to compile C libs
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends python3=3.9.2-3 build-essential=12.9 \
+    && apt-get install -y --no-install-recommends python3=3.11.2-1+b1 build-essential=12.9 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 COPY packages/ ./packages/
-COPY package.json bun.lockb LICENSE ./
+COPY package.json bun.lock LICENSE ./
 
 RUN --mount=type=cache,id=bun,target=/root/.bin/install/cache \
     bun install --frozen-lockfile
 RUN bun run build:bot
 
 WORKDIR /build
-RUN cp -r /src/{package.json,bun.lockb,node_modules} . \
+RUN cp -r /src/{package.json,bun.lock,node_modules} . \
     && mkdir -p ./packages/bot \
     && cp -r /src/packages/bot/{build,assets} ./packages/bot
 
