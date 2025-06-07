@@ -10,6 +10,7 @@ import { n } from './n.js';
 import { nigetane } from './nigetane.js';
 import { nine } from './nine.js';
 import { ojaru } from './ojaru.js';
+import { oss } from './oss.js';
 import { procon32 } from './procon32.js';
 import { syakai } from './syakai.js';
 import { takopi } from './takopi.js';
@@ -34,4 +35,5 @@ export const memes = [
   clang,
   failure,
   procon32,
+  oss,
 ];

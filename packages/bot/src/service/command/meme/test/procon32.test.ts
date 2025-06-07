@@ -7,7 +7,7 @@ import { Meme } from '../../meme.js';
 describe('meme', () => {
   const responder = new Meme();
 
-  it('use case of web3', async () => {
+  it('use case of procon32', async () => {
     await responder.on(
       createMockMessage(
         parseStringsOrThrow(['procon32', 'Blockly'], responder.schema),
@@ -36,7 +36,7 @@ describe('meme', () => {
     );
   });
 
-  it('args null (web3)', async () => {
+  it('args null (procon32)', async () => {
     await responder.on(
       createMockMessage(
         parseStringsOrThrow(['procon32'], responder.schema),
