@@ -12,14 +12,14 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY packages/ ./packages/
-COPY package.json bun.lockb LICENSE ./
+COPY package.json bun.lock LICENSE ./
 
 RUN --mount=type=cache,id=bun,target=/root/.bin/install/cache \
     bun install --frozen-lockfile
 RUN bun run build:bot
 
 WORKDIR /build
-RUN cp -r /src/{package.json,bun.lockb,node_modules} . \
+RUN cp -r /src/{package.json,bun.lock,node_modules} . \
     && mkdir -p ./packages/bot \
     && cp -r /src/packages/bot/{build,assets} ./packages/bot
 
