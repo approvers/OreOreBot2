@@ -23,7 +23,7 @@
     "date-fns": "^4.0.0",
     "deep-equal": "^2.2.2",
     "discord.js": "^14.7.1",
-    "dotenv": "^16.0.3",
+    "dotenv": "^17.0.0",
     "fast-diff": "^1.2.0",
     "nanoid": "^5.0.0",
     "tweetnacl": "^1.0.3",
