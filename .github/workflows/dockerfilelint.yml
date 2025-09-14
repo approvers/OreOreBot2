@@ -23,7 +23,7 @@ jobs:
           no-fail: false
 
       - name: Create pull request comment
-        uses: actions/github-script@v7.1.0
+        uses: actions/github-script@v8.0.0
         if: github.event_name == 'pull_request'
         with:
           script: |
