@@ -97,7 +97,7 @@ export class Reservation {
     voiceRoomId: Snowflake
   ): Reservation {
     return new Reservation({
-      id: nanoid() as ReservationId,
+      id: nanoid(),
       time,
       guildId,
       voiceRoomId

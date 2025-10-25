@@ -10,20 +10,22 @@ export class StickerProxy implements StickerEventProvider<StickerData> {
   constructor(private readonly client: Client) {}
 
   onStickerCreate(handler: StickerHandler<StickerData>): void {
-    this.client.on('stickerCreate', async (sticker) => {
-      const author = await sticker.fetchUser();
-      if (!author) {
-        throw new Error('Failed to fetch sticker author');
-      }
+    this.client.on('stickerCreate', (sticker) => {
+      void (async () => {
+        const author = await sticker.fetchUser();
+        if (!author) {
+          throw new Error('Failed to fetch sticker author');
+        }
 
-      await handler({
-        name: sticker.name,
-        imageUrl: sticker.url,
-        id: sticker.id as Snowflake,
-        authorId: author.id as Snowflake,
-        description: sticker.description ?? '説明無し',
-        tags: sticker.tags ?? '関連絵文字無し'
-      });
+        await handler({
+          name: sticker.name,
+          imageUrl: sticker.url,
+          id: sticker.id as Snowflake,
+          authorId: author.id as Snowflake,
+          description: sticker.description ?? '説明無し',
+          tags: sticker.tags ?? '関連絵文字無し'
+        });
+      })();
     });
   }
 }

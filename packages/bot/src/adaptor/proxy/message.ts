@@ -18,12 +18,14 @@ export class MessageProxy<M> implements MessageEventProvider<M> {
   ) {}
 
   onMessageCreate(handler: MessageHandler<M>): void {
-    this.client.on('messageCreate', async (m) => {
-      try {
-        await handler(await this.map(m));
-      } catch {
-        // 変換処理の結果として続行すべきでないと判断されたため, 無視できます。
-      }
+    this.client.on('messageCreate', (m) => {
+      void (async () => {
+        try {
+          await handler(await this.map(m));
+        } catch {
+          // 変換処理の結果として続行すべきでないと判断されたため, 無視できます。
+        }
+      })();
     });
   }
 
@@ -36,9 +38,11 @@ export class MessageProxy<M> implements MessageEventProvider<M> {
       }
     };
 
-    this.client.on('messageDelete', wrapper);
-    this.client.on('messageDeleteBulk', async (messages) => {
-      await Promise.all(messages.map(wrapper));
+    this.client.on('messageDelete', (m) => {
+      void wrapper(m);
+    });
+    this.client.on('messageDeleteBulk', (messages) => {
+      void Promise.all(messages.map(wrapper));
     });
   }
 }
@@ -58,8 +62,8 @@ export class MessageUpdateProxy<M> implements MessageUpdateEventProvider<M> {
         // 変換処理の結果として続行すべきでないと判断されたため, 無視できます。
       }
     };
-    this.client.on('messageUpdate', async (before, after) => {
-      await mapped([before, after]);
+    this.client.on('messageUpdate', (before, after) => {
+      void mapped([before, after]);
     });
   }
 }

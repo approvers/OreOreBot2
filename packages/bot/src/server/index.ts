@@ -120,7 +120,7 @@ const intents = [
   GatewayIntentBits.GuildMessages, // ほとんどのメッセージに反応する機能
   GatewayIntentBits.GuildMessageReactions, // タイマー削除をリアクションでキャンセルする機能
   GatewayIntentBits.GuildVoiceStates, // VoiceDiff 機能
-  GatewayIntentBits.GuildEmojisAndStickers // EmojiLog機能
+  GatewayIntentBits.GuildExpressions // EmojiLog機能
 ];
 
 const client = new Client({ intents });

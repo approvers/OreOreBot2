@@ -15,8 +15,10 @@ export const roleProxy = (
   client: Client,
   runner: RoleResponseRunner<AllRoleModel>
 ) => {
-  client.on('roleCreate', (role) => runner.triggerEvent('CREATE', map(role)));
-  client.on('roleUpdate', async (_, role) => {
-    await runner.triggerEvent('UPDATE', map(role));
+  client.on('roleCreate', (role) => {
+    void runner.triggerEvent('CREATE', map(role));
+  });
+  client.on('roleUpdate', (_, role) => {
+    void runner.triggerEvent('UPDATE', map(role));
   });
 };
