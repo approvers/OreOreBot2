@@ -59,4 +59,4 @@ jobs:
       - name: Install packages
         run: pnpm install --frozen-lockfile
       - name: license-checker
-        run: pnpm exec @guidesmiths/license-checker --failOn /GPL/ --disableReport
+        run: pnpm dlx @guidesmiths/license-checker --failOn /GPL/ --disableReport
