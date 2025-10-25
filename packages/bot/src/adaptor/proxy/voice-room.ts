@@ -18,7 +18,7 @@ export class VoiceRoomProxy<V> implements VoiceRoomEventProvider<V> {
     toObserve: keyof VoiceState,
     expected: ObserveExpectation
   ): void {
-    this.client.on('voiceStateUpdate', async (oldState, newState) => {
+    this.client.on('voiceStateUpdate', (oldState, newState) => {
       if (oldState.member?.user.bot) {
         return;
       }
@@ -34,7 +34,7 @@ export class VoiceRoomProxy<V> implements VoiceRoomEventProvider<V> {
         } else {
           vcState = newState;
         }
-        await handler(this.map(vcState));
+        void handler(this.map(vcState));
       }
     });
   }

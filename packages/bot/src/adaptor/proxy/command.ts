@@ -1,6 +1,6 @@
 import {
   type APIActionRowComponent,
-  type APIMessageActionRowComponent,
+  type APIComponentInMessageActionRow,
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
@@ -33,10 +33,12 @@ export class DiscordCommandProxy implements CommandProxy<unknown> {
     client: Client,
     private readonly prefix: string
   ) {
-    client.on('messageCreate', (message) => this.onMessageCreate(message));
-    client.on('interactionCreate', (interaction) =>
-      this.onInteractionCreate(interaction)
-    );
+    client.on('messageCreate', (message) => {
+      void this.onMessageCreate(message);
+    });
+    client.on('interactionCreate', (interaction) => {
+      void this.onInteractionCreate(interaction);
+    });
   }
 
   private readonly listenerMap = new Map<
@@ -160,7 +162,7 @@ export class DiscordCommandProxy implements CommandProxy<unknown> {
 }
 
 const ONE_MINUTE_MS = 60_000;
-const CONTROLS: APIActionRowComponent<APIMessageActionRowComponent> =
+const CONTROLS: APIActionRowComponent<APIComponentInMessageActionRow> =
   new ActionRowBuilder<MessageActionRowComponentBuilder>()
     .addComponents(
       new ButtonBuilder()
@@ -175,7 +177,7 @@ const CONTROLS: APIActionRowComponent<APIMessageActionRowComponent> =
         .setEmoji('⏩')
     )
     .toJSON();
-const CONTROLS_DISABLED: APIActionRowComponent<APIMessageActionRowComponent> =
+const CONTROLS_DISABLED: APIActionRowComponent<APIComponentInMessageActionRow> =
   new ActionRowBuilder<MessageActionRowComponentBuilder>()
     .addComponents(
       new ButtonBuilder()
@@ -224,7 +226,7 @@ const replyPages =
     const isLimitedToPaginate = options?.usersCanPaginate !== undefined;
 
     let currentPage = 0;
-    collector.on('collect', async (interaction) => {
+    collector.on('collect', (interaction) => {
       if (
         isLimitedToPaginate &&
         !options.usersCanPaginate.includes(interaction.user.id as Snowflake)
@@ -250,9 +252,9 @@ const replyPages =
         default:
           return;
       }
-      await interaction.update({ embeds: [generatePage(currentPage)] });
+      void interaction.update({ embeds: [generatePage(currentPage)] });
     });
-    collector.on('end', async () => {
-      await paginated.edit({ components: [CONTROLS_DISABLED] });
+    collector.on('end', () => {
+      void paginated.edit({ components: [CONTROLS_DISABLED] });
     });
   };

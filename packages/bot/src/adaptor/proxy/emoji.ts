@@ -10,15 +10,17 @@ export class EmojiProxy implements EmojiEventProvider<EmojiData> {
   constructor(private readonly client: Client) {}
 
   onEmojiCreate(handler: EmojiHandler<EmojiData>): void {
-    this.client.on('emojiCreate', async (emoji) => {
-      const author = await emoji.fetchAuthor();
+    this.client.on('emojiCreate', (emoji) => {
+      void (async () => {
+        const author = await emoji.fetchAuthor();
 
-      await handler({
-        emoji: emoji.toString(),
-        id: emoji.id as Snowflake,
-        authorId: author.id as Snowflake,
-        imageUrl: emoji.url
-      });
+        await handler({
+          emoji: emoji.toString(),
+          id: emoji.id as Snowflake,
+          authorId: author.id as Snowflake,
+          imageUrl: emoji.url
+        });
+      })();
     });
   }
 }

@@ -219,10 +219,7 @@ export class KaereCommand implements CommandResponderFor<typeof SCHEMA> {
   private async handleBedCommand(
     message: CommandMessage<typeof SCHEMA>
   ): Promise<void> {
-    if (
-      message.args.subCommand == null ||
-      message.args.subCommand.name !== 'bed'
-    ) {
+    if (message.args.subCommand?.name !== 'bed') {
       throw new Error('expected bed command group');
     }
     switch (message.args.subCommand.subCommand.name) {
@@ -251,10 +248,7 @@ export class KaereCommand implements CommandResponderFor<typeof SCHEMA> {
   private async handleReserveCommand(
     message: CommandMessage<typeof SCHEMA>
   ): Promise<void> {
-    if (
-      message.args.subCommand == null ||
-      message.args.subCommand.name !== 'reserve'
-    ) {
+    if (message.args.subCommand?.name !== 'reserve') {
       throw new Error('expected reserve command group');
     }
 

@@ -64,13 +64,13 @@ export class DiscordRoleManager implements RoleManager, RoleRepository {
           emoji: role.unicodeEmoji
         } as const)
       : role.icon
-      ? ({
-          isUnicode: false,
-          hash: role.icon
-        } as const)
-      : undefined;
+        ? ({
+            isUnicode: false,
+            hash: role.icon
+          } as const)
+        : undefined;
     return {
-      color: role.color.toString(16).padStart(6, '0'),
+      color: role.colors.primaryColor.toString(16).padStart(6, '0'),
       createdAt: role.createdAt,
       icon,
       numOfMembersBelonged: role.members.size,

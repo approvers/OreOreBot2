@@ -1,29 +1,27 @@
 FROM mwader/static-ffmpeg:7.1.1 AS ffmpeg
 
-FROM oven/bun:1.3.0-slim AS build
+FROM node:24-alpine AS build
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 ARG GIT_TAG
-SHELL ["/bin/bash", "-c"]
 WORKDIR /src
 
 # node-gyp requires Python and basic packages needed to compile C libs
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends python3=3.11.2-1+b1 build-essential=12.9 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# RUN apt-get update \
+#     && apt-get install -y --no-install-recommends python3=3.11.2-1+b1 build-essential=12.9 \
+#     && apt-get clean \
+#     && rm -rf /var/lib/apt/lists/*
 
 COPY packages/ ./packages/
-COPY package.json bun.lock LICENSE ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml LICENSE ./
 
-RUN --mount=type=cache,id=bun,target=/root/.bin/install/cache \
-    bun install --frozen-lockfile
-RUN bun run build:bot
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    pnpm install --frozen-lockfile
+RUN pnpm run build:bot \
+    && pnpm deploy --prod --filter "./packages/bot" /build
 
-WORKDIR /build
-RUN cp -r /src/{package.json,bun.lock,node_modules} . \
-    && mkdir -p ./packages/bot \
-    && cp -r /src/packages/bot/{build,assets} ./packages/bot
-
-FROM ubuntu:jammy-20251001
+FROM gcr.io/distroless/nodejs24-debian12:nonroot
 COPY --from=build /usr/local/include/ /usr/local/include/
 COPY --from=build /usr/local/lib/ /usr/local/lib/
 COPY --from=build /usr/local/bin/ /usr/local/bin/
@@ -40,10 +38,5 @@ WORKDIR /app
 #     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /build .
-COPY --from=build /build/packages ./packages
-COPY --from=build /build/packages/bot ./packages/bot
 
-WORKDIR /app/packages/bot
-
-ENTRYPOINT ["bun", "run"]
 CMD ["build/index.mjs"]

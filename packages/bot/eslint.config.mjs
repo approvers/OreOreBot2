@@ -1,8 +1,8 @@
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
+import markdown from '@eslint/markdown';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
-import markdown from 'eslint-plugin-markdown';
 import tsdoc from 'eslint-plugin-tsdoc';
 import globals from 'globals';
 import path from 'node:path';

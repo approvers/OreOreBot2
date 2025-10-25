@@ -13,7 +13,7 @@ export const memberProxy = (
   client: Client,
   runner: MemberResponseRunner<AllMemberModel>
 ) => {
-  client.on('guildMemberAdd', (member) =>
-    runner.triggerEvent('JOIN', map(member))
-  );
+  client.on('guildMemberAdd', (member) => {
+    void runner.triggerEvent('JOIN', map(member));
+  });
 };
