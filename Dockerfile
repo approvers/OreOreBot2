@@ -1,6 +1,6 @@
 FROM mwader/static-ffmpeg:7.1.1 AS ffmpeg
 
-FROM node:24-alpine AS build
+FROM node:25-alpine AS build
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
