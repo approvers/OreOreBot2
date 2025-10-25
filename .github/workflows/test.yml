@@ -13,8 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: oven-sh/setup-bun@v2
+      - uses: pnpm/action-setup@v4
       - name: Install packages
-        run: bun install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: Test
-        run: bun run test
+        run: pnpm run test

@@ -57,14 +57,14 @@ gh repo clone approvers/OreOreBot2
 次のコマンドを実行します。
 
 ```bash
-bun install
+pnpm install
 ```
 
 > [!WARNING]
 >
-> OreOreBot2 は bun v1 を使用しています。
+> OreOreBot2 は pnpm v10 を使用しています。
 >
-> 使用している bun のバージョンが低すぎるとエラーが発生する可能性があります。
+> 使用している pnpm のバージョンが低すぎるとエラーが発生する可能性があります。
 >
 > アップデートをお忘れなく。
 
@@ -101,7 +101,7 @@ FEATURE=MESSAGE_CREATE,MESSAGE_UPDATE,COMMAND,VOICE_ROOM,ROLE,EMOJI
 次のコマンドを実行します。(デバックモードで起動します)
 
 ```bash
-bun dev:bot
+pnpm dev:bot
 ```
 
 接続クライアント情報と依存関係レポートが表示されたら起動完了です。
@@ -136,6 +136,6 @@ FFmpeg
 ビルドしたものを起動する場合は以下のコマンドを実行します。
 
 ```bash
-bun build
-bun start
+pnpm build
+pnpm start
 ```
