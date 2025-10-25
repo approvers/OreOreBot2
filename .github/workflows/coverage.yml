@@ -14,11 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v6
+        with:
+          cache: "pnpm"
       - name: Install packages
-        run: bun install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: Generate code coverage report
-        run: bun coverage
+        run: pnpm coverage
 
       - uses: codecov/codecov-action@v5
         with:

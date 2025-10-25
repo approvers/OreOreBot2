@@ -12,7 +12,7 @@
   "semanticCommits": "enabled",
   "minimumReleaseAge": "3 days",
   "fetchReleaseNotes": true,
-  "enabledManagers": ["bun", "github-actions", "dockerfile", "docker-compose"],
+  "enabledManagers": ["npm", "github-actions", "dockerfile", "docker-compose"],
   "packageRules": [
     {
       "matchDatasources": ["npm"],

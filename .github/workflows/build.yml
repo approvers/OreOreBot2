@@ -16,47 +16,53 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v6
+        with:
+          cache: "pnpm"
 
       - uses: actions/cache@v4
         with:
           path: |
             ${{ github.workspace }}/packages/docs/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/bun.lockb') }}-${{ hashFiles('packages/docs/**/*.js', 'packages/docs/**/*.jsx', 'packages/docs/**/*.ts', 'packages/docs/**/*.tsx', 'packages/docs/**/*.mdx', 'packages/docs/**/*.json') }}
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('packages/docs/**/*.js', 'packages/docs/**/*.jsx', 'packages/docs/**/*.ts', 'packages/docs/**/*.tsx', 'packages/docs/**/*.mdx', 'packages/docs/**/*.json') }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/bun.lockb') }}-
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
 
       - name: Install packages
-        run: bun install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Build (bot)
-        run: bun build:bot
+        run: pnpm build:bot
 
       - name: Build (docs)
-        run: bun build:docs
+        run: pnpm build:docs
 
   eslint:
     name: eslint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v6
+        with:
+          cache: "pnpm"
       - name: Install packages
-        run: bun install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: eslint (bot)
-        run: bun lint:bot
+        run: pnpm lint:bot
 
       - name: eslint (docs)
-        run: bun lint:docs
+        run: pnpm lint:docs
 
   license_checker:
     name: license-checker
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v6
+        with:
+          cache: "pnpm"
       - name: Install packages
-        run: bun install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: license-checker
-        run: bun x @guidesmiths/license-checker --failOn /GPL/ --disableReport
+        run: pnpm exec @guidesmiths/license-checker --failOn /GPL/ --disableReport
