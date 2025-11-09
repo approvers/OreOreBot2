@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { parseStringsOrThrow } from '../../adaptor/proxy/command/schema.js';
 import { DepRegistry } from '../../driver/dep-registry.js';
@@ -18,6 +18,10 @@ describe('dice', () => {
   const reg = new DepRegistry();
   reg.add(randomGeneratorKey, rng);
   const diceCommand = new DiceCommand(reg);
+
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
 
   it('case of 1d6', async () => {
     const roll = vi.spyOn(rng, 'roll');
