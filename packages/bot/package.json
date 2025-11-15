@@ -35,7 +35,7 @@
     "@types/deep-equal": "^1.0.1",
     "@types/yargs": "^17.0.22",
     "@vitest/coverage-v8": "^4.0.0",
-    "esbuild": "^0.25.0",
+    "esbuild": "^0.27.0",
     "make-dir-cli": "^4.0.0",
     "tsx": "^4.7.0",
     "typescript": "5.9.3",
