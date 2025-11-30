@@ -14,13 +14,13 @@ import {
 import { GetVersionCommand } from './version.js';
 
 test('', async () => {
-  const createCommand = vi.fn<[Command], Promise<void>>(() =>
+  const setCommands = vi.fn<(commands: Command[]) => Promise<void>>(() =>
     Promise.resolve()
   );
-  const updateCommand = vi.fn<[RegisteredCommand], Promise<void>>(() =>
-    Promise.resolve()
+  const updateCommand = vi.fn<(command: RegisteredCommand) => Promise<void>>(
+    () => Promise.resolve()
   );
-  const deleteCommand = vi.fn<[Snowflake], Promise<void>>(() =>
+  const deleteCommand = vi.fn<(id: Snowflake) => Promise<void>>(() =>
     Promise.resolve()
   );
 
@@ -29,6 +29,7 @@ test('', async () => {
       Promise.resolve([
         {
           id: '0001' as Snowflake,
+          description: '',
           name: 'hoge',
           x: {
             foo: 2
@@ -41,7 +42,7 @@ test('', async () => {
           options: undefined
         }
       ]),
-    createCommand,
+    setCommands,
     updateCommand,
     deleteCommand
   };
@@ -58,17 +59,19 @@ test('', async () => {
   );
   await registerCommands({ commandRepo, commandRunner });
 
-  expect(createCommand).toHaveBeenCalledWith({
-    description: '現在のレイテンシを表示するよ',
-    name: 'ping',
-    options: undefined
-  });
-  expect(createCommand).toHaveBeenCalledWith({
-    description: '現在のレイテンシを表示するよ',
-    name: 'latency',
-    options: undefined
-  });
-  expect(createCommand).toHaveBeenCalledTimes(2);
+  expect(setCommands).toHaveBeenCalledWith([
+    {
+      description: '現在のレイテンシを表示するよ',
+      name: 'ping',
+      options: undefined
+    },
+    {
+      description: '現在のレイテンシを表示するよ',
+      name: 'latency',
+      options: undefined
+    }
+  ]);
+  expect(setCommands).toHaveBeenCalledOnce();
   expect(updateCommand).toHaveBeenCalledWith({
     id: '0002' as Snowflake,
     description: '現在の私のバージョンを出力するよ',
