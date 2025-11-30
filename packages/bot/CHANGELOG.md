@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.56.1](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.56.0...OreOreBot2-v1.56.1) (2025-11-30)
+
+
+### Bug Fixes
+
+* Migrate deprecation from disscord.js v15 ([#1568](https://github.com/approvers/OreOreBot2/issues/1568)) ([8c26f3e](https://github.com/approvers/OreOreBot2/commit/8c26f3e64ce31d83c1c2a194697186c5268e33b1))
+
 ## [1.56.0](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.55.0...OreOreBot2-v1.56.0) (2025-11-30)
 
 
