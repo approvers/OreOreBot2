@@ -1,5 +1,12 @@
 import { generateDependencyReport } from '@discordjs/voice';
-import { Client, GatewayIntentBits, REST, Routes, version } from 'discord.js';
+import {
+  Client,
+  Events,
+  GatewayIntentBits,
+  REST,
+  Routes,
+  version
+} from 'discord.js';
 import dotenv from 'dotenv';
 import { join } from 'node:path';
 
@@ -212,11 +219,7 @@ if (features.includes('COMMAND')) {
 
 const rest = new REST().setToken(token);
 if (features.includes('SLASH_COMMAND')) {
-  const commandRepo = new DiscordCommandRepository(
-    rest,
-    APPLICATION_ID,
-    GUILD_ID
-  );
+  const commandRepo = new DiscordCommandRepository(client);
   await registerCommands({ commandRepo, commandRunner });
 } else {
   try {
@@ -272,7 +275,7 @@ process.on('SIGTERM', () => {
   process.exit(0);
 });
 
-client.once('ready', () => {
+client.once(Events.ClientReady, () => {
   const projectVersion = versionFetcher.version;
   const connectionUser = client.user;
   if (connectionUser == null) return;

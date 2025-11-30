@@ -1,4 +1,4 @@
-import { REST, Routes } from 'discord.js';
+import type { Client } from 'discord.js';
 
 import type { Snowflake } from '../../model/id.js';
 import type {
@@ -8,40 +8,18 @@ import type {
 } from '../../service/command/register.js';
 
 export class DiscordCommandRepository implements CommandRepository {
-  constructor(
-    private readonly rest: REST,
-    private readonly APPLICATION_ID: string,
-    private readonly GUILD_ID: string
-  ) {}
-
+  constructor(private readonly client: Client) {}
   async currentCommands(): Promise<RegisteredCommand[]> {
-    return (await this.rest.get(
-      Routes.applicationGuildCommands(this.APPLICATION_ID, this.GUILD_ID)
-    )) as RegisteredCommand[];
+    const commands = await this.client.application?.commands.fetch();
+    return (commands ?? []) as RegisteredCommand[];
   }
-  async createCommand(command: Command): Promise<void> {
-    await this.rest.post(
-      Routes.applicationGuildCommands(this.APPLICATION_ID, this.GUILD_ID),
-      {
-        body: command
-      }
-    );
+  async setCommands(command: Command[]): Promise<void> {
+    await this.client.application?.commands.set(command);
   }
   async updateCommand(command: RegisteredCommand): Promise<void> {
-    await this.rest.patch(
-      Routes.applicationGuildCommand(
-        this.APPLICATION_ID,
-        this.GUILD_ID,
-        command.id
-      ),
-      {
-        body: command
-      }
-    );
+    await this.client.application?.commands.edit(command.id, command);
   }
   async deleteCommand(id: Snowflake): Promise<void> {
-    await this.rest.delete(
-      Routes.applicationGuildCommand(this.APPLICATION_ID, this.GUILD_ID, id)
-    );
+    await this.client.application?.commands.delete(id);
   }
 }

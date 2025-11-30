@@ -6,6 +6,7 @@ import { schemaToDiscordFormat } from './register/command-schema.js';
 
 export interface Command {
   name: string;
+  description: string;
   [key: string]: unknown;
 }
 
@@ -15,7 +16,7 @@ export interface RegisteredCommand extends Command {
 
 export interface CommandRepository {
   currentCommands(): Promise<RegisteredCommand[]>;
-  createCommand(command: Command): Promise<void>;
+  setCommands(command: Command[]): Promise<void>;
   updateCommand(command: RegisteredCommand): Promise<void>;
   deleteCommand(id: Snowflake): Promise<void>;
 }
@@ -52,7 +53,7 @@ export const registerCommands = async ({
       options: registered.options,
       id: registered.id
     };
-    console.log({ mapped, filteredRegistered });
+    console.dir({ mapped, filteredRegistered });
     return !equal(mapped, filteredRegistered);
   };
 
@@ -90,10 +91,7 @@ export const registerCommands = async ({
 
   if (0 < needToCreate.length) {
     console.log('コマンドの追加を開始…');
-    for (let i = 0; i < needToCreate.length; ++i) {
-      console.log(`${i + 1}/${needToCreate.length}`);
-      await commandRepo.createCommand(needToCreate[i]);
-    }
+    await commandRepo.setCommands(needToCreate);
   }
   console.log('コマンドの登録に成功しました。');
 };
