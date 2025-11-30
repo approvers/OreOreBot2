@@ -15,7 +15,7 @@ jobs:
     name: Build OreOreBot2
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v4
 
       - name: Install packages
@@ -28,7 +28,7 @@ jobs:
     name: eslint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v4
       - name: Install packages
         run: pnpm install --frozen-lockfile
@@ -40,7 +40,7 @@ jobs:
     name: license-checker
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v4
       - name: Install packages
         run: pnpm install --frozen-lockfile
