@@ -50,9 +50,3 @@ OreOreBot2 は以下のパッケージ構成で運用されています。
 
 開発に関する質問は **限界開発鯖内 プロジェクトチャンネル [`#新生はらちょ`](https://discordapp.com/channels/683939861539192860/947208529561927710)
 または [Discussions](https://github.com/approvers/OreOreBot2/discussions)** までどうぞ。
-
-### OreOreBot2 Discussion
-
-OreOreBot2 の [Discussions](https://github.com/approvers/OreOreBot2/discussions) では開発の議論などを行っています。
-
-- [Discussion の使い方](https://github.com/approvers/OreOreBot2/discussions/147)
