@@ -1,4 +1,4 @@
-FROM mwader/static-ffmpeg:7.1.1 AS ffmpeg
+FROM mwader/static-ffmpeg:8.0.1 AS ffmpeg
 
 FROM node:24-alpine AS build
 ENV PNPM_HOME="/pnpm"
