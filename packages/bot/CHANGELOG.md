@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.56.0](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.55.0...OreOreBot2-v1.56.0) (2025-11-30)
+
+
+### Features
+
+* Migrate from bun to pnpm ([#1521](https://github.com/approvers/OreOreBot2/issues/1521)) ([5d4e656](https://github.com/approvers/OreOreBot2/commit/5d4e6567b18906c6aeb7a9291588d78cf95269e0))
+
 ## [1.55.0](https://github.com/approvers/OreOreBot2/compare/OreOreBot2-v1.54.0...OreOreBot2-v1.55.0) (2025-06-07)
 
 
