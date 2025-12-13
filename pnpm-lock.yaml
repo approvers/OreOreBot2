@@ -23,7 +23,7 @@ importers:
         version: 6.0.0(prettier@3.7.4)
       '@types/node':
         specifier: ^24.10.1
-        version: 24.10.2
+        version: 24.10.3
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.48.0
         version: 8.49.0(@typescript-eslint/parser@8.48.1(eslint@9.39.1)(typescript@5.9.3))(eslint@9.39.1)(typescript@5.9.3)
@@ -2229,8 +2229,8 @@ packages:
   '@types/node@22.19.2':
     resolution: {integrity: sha512-LPM2G3Syo1GLzXLGJAKdqoU35XvrWzGJ21/7sgZTUpbkBaOasTj8tjwn6w+hCkqaa1TfJ/w67rJSwYItlJ2mYw==}
 
-  '@types/node@24.10.2':
-    resolution: {integrity: sha512-WOhQTZ4G8xZ1tjJTvKOpyEVSGgOTvJAfDK3FNFgELyaTpzhdgHVHeqW8V+UJvzF5BT+/B54T/1S2K6gd9c7bbA==}
+  '@types/node@24.10.3':
+    resolution: {integrity: sha512-gqkrWUsS8hcm0r44yn7/xZeV1ERva/nLgrLxFRUGb7aoNMIJfZJ3AC261zDQuOAKC7MiXai1WCpYc48jAHoShQ==}
 
   '@types/node@25.0.1':
     resolution: {integrity: sha512-czWPzKIAXucn9PtsttxmumiQ9N0ok9FrBwgRWrwmVLlp86BrMExzvXRLFYRJ+Ex3g6yqj+KuaxfX1JTgV2lpfg==}
@@ -10387,7 +10387,7 @@ snapshots:
 
   '@types/concat-stream@2.0.3':
     dependencies:
-      '@types/node': 24.10.2
+      '@types/node': 24.10.3
 
   '@types/cors@2.8.19':
     dependencies:
@@ -10464,7 +10464,7 @@ snapshots:
     dependencies:
       undici-types: 6.21.0
 
-  '@types/node@24.10.2':
+  '@types/node@24.10.3':
     dependencies:
       undici-types: 7.16.0
 
