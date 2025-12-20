@@ -117,7 +117,7 @@ importers:
         version: 17.0.35
       '@vitest/coverage-v8':
         specifier: ^4.0.0
-        version: 4.0.15(vitest@4.0.15(@types/node@25.0.3)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.2))
+        version: 4.0.16(vitest@4.0.15(@types/node@25.0.3)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.2))
       esbuild:
         specifier: ^0.27.0
         version: 0.27.1
@@ -2435,11 +2435,11 @@ packages:
   '@vercel/webpack-asset-relocator-loader@1.7.3':
     resolution: {integrity: sha512-vizrI18v8Lcb1PmNNUBz7yxPxxXoOeuaVEjTG9MjvDrphjiSxFZrRJ5tIghk+qdLFRCXI5HBCshgobftbmrC5g==}
 
-  '@vitest/coverage-v8@4.0.15':
-    resolution: {integrity: sha512-FUJ+1RkpTFW7rQITdgTi93qOCWJobWhBirEPCeXh2SW2wsTlFxy51apDz5gzG+ZEYt/THvWeNmhdAoS9DTwpCw==}
+  '@vitest/coverage-v8@4.0.16':
+    resolution: {integrity: sha512-2rNdjEIsPRzsdu6/9Eq0AYAzYdpP6Bx9cje9tL3FE5XzXRQF1fNU9pe/1yE8fCrS0HD+fBtt6gLPh6LI57tX7A==}
     peerDependencies:
-      '@vitest/browser': 4.0.15
-      vitest: 4.0.15
+      '@vitest/browser': 4.0.16
+      vitest: 4.0.16
     peerDependenciesMeta:
       '@vitest/browser':
         optional: true
@@ -2461,6 +2461,9 @@ packages:
   '@vitest/pretty-format@4.0.15':
     resolution: {integrity: sha512-SWdqR8vEv83WtZcrfLNqlqeQXlQLh2iilO1Wk1gv4eiHKjEzvgHb2OVc3mIPyhZE6F+CtfYjNlDJwP5MN6Km7A==}
 
+  '@vitest/pretty-format@4.0.16':
+    resolution: {integrity: sha512-eNCYNsSty9xJKi/UdVD8Ou16alu7AYiS2fCPRs0b1OdhJiV89buAXQLpTbe+X8V9L6qrs9CqyvU7OaAopJYPsA==}
+
   '@vitest/runner@4.0.15':
     resolution: {integrity: sha512-+A+yMY8dGixUhHmNdPUxOh0la6uVzun86vAbuMT3hIDxMrAOmn5ILBHm8ajrqHE0t8R9T1dGnde1A5DTnmi3qw==}
 
@@ -2472,6 +2475,9 @@ packages:
 
   '@vitest/utils@4.0.15':
     resolution: {integrity: sha512-HXjPW2w5dxhTD0dLwtYHDnelK3j8sR8cWIaLxr22evTyY6q8pRCjZSmhRWVjBaOVXChQd6AwMzi9pucorXCPZA==}
+
+  '@vitest/utils@4.0.16':
+    resolution: {integrity: sha512-h8z9yYhV3e1LEfaQ3zdypIrnAg/9hguReGZoS7Gl0aBG5xgA410zBqECqmaF/+RkTggRsfnzc1XaAHA6bmUufA==}
 
   '@vladfrangu/async_event_emitter@2.4.7':
     resolution: {integrity: sha512-Xfe6rpCTxSxfbswi/W/Pz7zp1WWSNn4A0eW4mLkQUewCrXXtMj31lCg+iQyTkh/CkusZSq9eDflu7tjEDXUY6g==}
@@ -2740,8 +2746,8 @@ packages:
   ast-types-flow@0.0.8:
     resolution: {integrity: sha512-OH/2E5Fg20h2aPrbe+QL8JZQFko0YZaF+j4mnQ7BGhfavO7OpSLa8a0y9sBwomHdSbkhTS8TQNayBfnW5DwbvQ==}
 
-  ast-v8-to-istanbul@0.3.8:
-    resolution: {integrity: sha512-szgSZqUxI5T8mLKvS7WTjF9is+MVbOeLADU73IseOcrqhxr/VAvy6wfoVE39KnKzA7JRhjF5eUagNlHwvZPlKQ==}
+  ast-v8-to-istanbul@0.3.9:
+    resolution: {integrity: sha512-dSC6tJeOJxbZrPzPbv5mMd6CMiQ1ugaVXXPRad2fXUSsy1kstFn9XQWemV9VW7Y7kpxgQ/4WMoZfwdH8XSU48w==}
 
   astral-regex@2.0.0:
     resolution: {integrity: sha512-Z7tMw1ytTXt5jqMcOP+OQteU1VuNK9Y02uuJtKQ1Sv69jXQKKg5cibLwGJow8yzZP+eAc18EmLGPal0bp36rvQ==}
@@ -10715,11 +10721,11 @@ snapshots:
     dependencies:
       resolve: 1.22.11
 
-  '@vitest/coverage-v8@4.0.15(vitest@4.0.15(@types/node@25.0.3)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.2))':
+  '@vitest/coverage-v8@4.0.16(vitest@4.0.15(@types/node@25.0.3)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.2))':
     dependencies:
       '@bcoe/v8-coverage': 1.0.2
-      '@vitest/utils': 4.0.15
-      ast-v8-to-istanbul: 0.3.8
+      '@vitest/utils': 4.0.16
+      ast-v8-to-istanbul: 0.3.9
       istanbul-lib-coverage: 3.2.2
       istanbul-lib-report: 3.0.1
       istanbul-lib-source-maps: 5.0.6
@@ -10753,6 +10759,10 @@ snapshots:
     dependencies:
       tinyrainbow: 3.0.3
 
+  '@vitest/pretty-format@4.0.16':
+    dependencies:
+      tinyrainbow: 3.0.3
+
   '@vitest/runner@4.0.15':
     dependencies:
       '@vitest/utils': 4.0.15
@@ -10769,6 +10779,11 @@ snapshots:
   '@vitest/utils@4.0.15':
     dependencies:
       '@vitest/pretty-format': 4.0.15
+      tinyrainbow: 3.0.3
+
+  '@vitest/utils@4.0.16':
+    dependencies:
+      '@vitest/pretty-format': 4.0.16
       tinyrainbow: 3.0.3
 
   '@vladfrangu/async_event_emitter@2.4.7': {}
@@ -11064,7 +11079,7 @@ snapshots:
 
   ast-types-flow@0.0.8: {}
 
-  ast-v8-to-istanbul@0.3.8:
+  ast-v8-to-istanbul@0.3.9:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       estree-walker: 3.0.3
