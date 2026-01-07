@@ -11,7 +11,7 @@ export class DiscordMessageRepository implements MessageRepository {
     messageId: Snowflake
   ): Promise<string | undefined> {
     const channel = await this.client.channels.fetch(channelId);
-    if (!channel || channel.type !== ChannelType.GuildText) {
+    if (channel?.type !== ChannelType.GuildText) {
       throw new Error(`text channel (${channelId}) not found`);
     }
     try {

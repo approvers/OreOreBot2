@@ -12,7 +12,7 @@ export class DiscordStandardOutput implements StandardOutput {
 
   async sendEmbed(embed: EmbedMessage): Promise<void> {
     const channel = await this.client.channels.fetch(this.channelId);
-    if (!channel || channel.type !== ChannelType.GuildText) {
+    if (channel?.type !== ChannelType.GuildText) {
       throw new Error(`the channel (${this.channelId}) is not text channel`);
     }
 
@@ -35,7 +35,7 @@ export class DiscordEntranceOutput implements EntranceOutput {
   ): Promise<void> {
     const channel = await this.client.channels.fetch(this.channelId);
 
-    if (!channel || channel.type !== ChannelType.GuildText) {
+    if (channel?.type !== ChannelType.GuildText) {
       throw new Error(`the channel (${this.channelId}) is not text channel`);
     }
 
