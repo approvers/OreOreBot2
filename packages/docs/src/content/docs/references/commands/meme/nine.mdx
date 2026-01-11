@@ -1,0 +1,30 @@
+---
+title: 'nine'
+---
+
+import { CommandArgs } from '@/organisms/command-args';
+
+<CommandArgs
+  availableFrom="v1.21.0"
+  names={['nine']}
+  args={[
+    {
+      name: 'テキスト1',
+      about: 'テンプレートに挿入する1つ目のテキストです。'
+    },
+    {
+      name: 'テキスト2',
+      about: 'テンプレートに挿入する2つ目のテキストです。'
+    }
+  ]}
+/>
+
+> 〇〇は〇〇が 9 割
+
+### 使用例
+
+`!nine 高専生 単位`
+
+```
+>> 高専生は単位が9割
+```

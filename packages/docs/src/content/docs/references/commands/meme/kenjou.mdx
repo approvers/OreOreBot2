@@ -1,0 +1,30 @@
+---
+title: 'kenjou'
+---
+
+import { CommandArgs } from '@/organisms/command-args';
+
+<CommandArgs
+  availableFrom="v1.27.0"
+  names={['kenjou']}
+  args={[
+    {
+      name: 'テキスト',
+      about: 'テンプレートに挿入するテキストです。'
+    }
+  ]}
+/>
+
+健常者エミュレーター構文.
+
+### 使用例
+
+`!kenjou ドキュメントはちゃんと作ったほうがいい`
+
+```
+>> ドキュメントはちゃんと作ったほうがいい - 健常者エミュレータ事例集Wiki
+```
+
+:::note
+健常者エミュレーター事例集 にありそうなタイトルを指定すればうまくいきます。
+:::

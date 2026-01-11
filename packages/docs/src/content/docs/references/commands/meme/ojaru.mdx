@@ -1,0 +1,37 @@
+---
+title: 'ojaru'
+---
+
+import { CommandArgs } from '@/organisms/command-args';
+
+<CommandArgs
+  availableFrom="v1.30.0"
+  names={['ojaru']}
+  args={[
+    {
+      name: 'フラグ',
+      about: '`-g` で口調が「ございます！」に変化します。',
+      defaultValue: '指定なし'
+    },
+    {
+      name: 'テキスト',
+      about: 'テンプレートに挿入するテキストです。'
+    }
+  ]}
+/>
+
+あっぱれおじゃる様ミーム構文.
+
+### 使用例
+
+`!ojaru 課題の出し忘れで留年`
+
+```
+>> あっぱれおじゃる様！見事課題の出し忘れで留年されました！
+```
+
+`!ojaru -g 課題の出し忘れで留年`
+
+```
+>> あっぱれおじゃる様！課題の出し忘れで留年でございます！
+```
