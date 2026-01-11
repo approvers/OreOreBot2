@@ -1,0 +1,32 @@
+---
+title: '編集 Diff'
+---
+
+import { FeatureBadge } from '@/molecules/feature-badge';
+import { VersionBadge } from '@/molecules/version-badge';
+
+<FeatureBadge>ログ</FeatureBadge>,<VersionBadge>v1.0.0</VersionBadge>
+
+---
+
+メッセージを編集すると編集差分を晒し上げます。
+
+## Diff の見方
+
+削除部分は 取り消し線 で表されます。追加部分は 斜め文字 で表されます。
+
+> hoge **~~hoge~~**
+>
+> hogehoge **_hoge_**
+
+---
+
+:::note
+編集 Diff は一定時間で削除されます。削除せず取っておきたい場合はリアクションを送信することで阻止できます。
+:::
+
+:::caution
+編集したメッセージにスポイラーが含まれている場合は編集時に開示されます。
+
+編集する際は覚悟を決めてください。
+:::

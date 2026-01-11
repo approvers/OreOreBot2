@@ -1,10 +1,18 @@
 {
-  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "plugins": ["prettier-plugin-astro", "@trivago/prettier-plugin-sort-imports"],
   "singleQuote": true,
   "semi": true,
   "trailingComma": "none",
   "importOrder": ["^[./]"],
   "importOrderParserPlugins": ["importAssertions", "typescript", "jsx"],
   "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true
+  "importOrderSortSpecifiers": true,
+  "overrides": [
+    {
+      "files": "*.astro",
+      "options": {
+        "parser": "astro"
+      }
+    }
+  ]
 }

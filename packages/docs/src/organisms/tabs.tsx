@@ -1,4 +1,10 @@
-import React, { ReactElement, ReactNode, useEffect, useState } from 'react';
+import React, {
+  type JSX,
+  type ReactElement,
+  type ReactNode,
+  useEffect,
+  useState
+} from 'react';
 
 import * as styles from './tabs.module.css';
 
@@ -37,7 +43,7 @@ export function Tabs({ choiceKey, items, children }: TabsProps): JSX.Element {
 
     const onStorageUpdate = (e: StorageEvent) => {
       if (e.key === storageKey) {
-        setSelectedIndex(parseInt(e.newValue, 10));
+        setSelectedIndex(parseInt(e.newValue ?? '', 10));
       }
     };
 

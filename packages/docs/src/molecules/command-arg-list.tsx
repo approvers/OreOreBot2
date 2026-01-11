@@ -1,4 +1,4 @@
-import React, { type ReactNode } from 'react';
+import React, { type JSX, type ReactNode } from 'react';
 
 import * as style from './command-arg-list.module.css';
 import { VersionBadge } from './version-badge';
@@ -18,7 +18,7 @@ export interface CommandArg {
   /**
    * その引数がはじめて利用可能になったバージョン
    */
-  versionAvailableFrom?: string;
+  availableFrom?: string;
   /**
    * その引数が未指定だったときの既定値
    */
@@ -28,7 +28,7 @@ export interface CommandArg {
 const CommandArgListItem = ({
   name,
   about,
-  versionAvailableFrom,
+  availableFrom,
   defaultValue
 }: CommandArg) => (
   <>
@@ -36,9 +36,9 @@ const CommandArgListItem = ({
     {': '}
     {about}
     <ul className={style.parameter}>
-      {versionAvailableFrom && (
+      {availableFrom && (
         <li>
-          <VersionBadge>{versionAvailableFrom}</VersionBadge> から利用可能
+          <VersionBadge>{availableFrom}</VersionBadge> から利用可能
         </li>
       )}
       {defaultValue && (

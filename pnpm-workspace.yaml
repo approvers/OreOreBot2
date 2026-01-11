@@ -1,7 +1,9 @@
 packages:
-  - 'packages/*'
+  - packages/*
 
 injectWorkspacePackages: true
 
 onlyBuiltDependencies:
-  - "sharp"
+  - '@discordjs/opus'
+  - esbuild
+  - sharp

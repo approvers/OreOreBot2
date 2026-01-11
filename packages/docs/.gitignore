@@ -1,3 +1,2 @@
-# gatsby built
-.cache
-public/
+# Astro built
+.astro/

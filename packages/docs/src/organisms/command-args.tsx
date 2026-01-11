@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CommandArg, CommandArgList } from '../molecules/command-arg-list';
+import { type CommandArg, CommandArgList } from '../molecules/command-arg-list';
 import { CommandFormat } from '../molecules/command-format';
 import { VersionBadge } from '../molecules/version-badge';
 
@@ -11,11 +11,11 @@ export interface CommandArgsProps {
   /**
    * コマンドがはじめて利用可能になったバージョン
    */
-  versionAvailableFrom: string;
+  availableFrom: string;
   /**
    * コマンド名
    */
-  commandName: string;
+  names: string[];
   /**
    * コマンドの引数の定義
    */
@@ -51,13 +51,13 @@ export const buildCommandFormat = (
  * コマンドとその引数の説明の章節
  */
 export const CommandArgs = ({
-  versionAvailableFrom,
-  commandName,
+  availableFrom,
+  names,
   args
 }: CommandArgsProps) => (
   <>
-    <VersionBadge>{versionAvailableFrom}</VersionBadge> から利用可能
-    <CommandFormat>{buildCommandFormat(commandName, args)}</CommandFormat>
+    <VersionBadge>{availableFrom}</VersionBadge> から利用可能
+    <CommandFormat>{buildCommandFormat(names.join('/'), args)}</CommandFormat>
     {args && <CommandArgList args={args} />}
   </>
 );

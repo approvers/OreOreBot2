@@ -11,7 +11,7 @@ export interface CommandFormatProps {
  */
 export const CommandFormat = ({
   children
-}: CommandFormatProps): JSX.Element => (
+}: CommandFormatProps): React.JSX.Element => (
   <div className={style.command}>
     <code>{children}</code>
   </div>
