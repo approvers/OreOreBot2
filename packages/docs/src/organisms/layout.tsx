@@ -1,49 +1,47 @@
-import { MDXProvider } from '@mdx-js/react';
-import type { PageProps } from 'gatsby';
-import React, { useState } from 'react';
+import type { Command, Page } from '@/types';
+import React, { type JSX, type ReactNode, useState } from 'react';
 
-import { Heading, Page } from '../types';
+import { CommandArgs } from './command-args';
 import { NavHeader } from './nav-header';
 import { SideBar } from './side-bar';
 
+export interface LayoutProps {
+  title: string;
+  command?: Command;
+  siblings: Page[];
+  childrenPages: Page[];
+  children: ReactNode;
+}
+
 export function Layout({
-  children,
-  pageContext
-}: PageProps<
-  unknown,
-  {
-    body: string;
-    title: string;
-    siblings: Page[];
-    children: Page[];
-    headings?: Heading[];
-  }
->): JSX.Element {
+  title,
+  command,
+  siblings,
+  childrenPages,
+  children
+}: LayoutProps): JSX.Element {
   const [sideMenuShown, setSideMenuShown] = useState(false);
   function toggleMenu() {
     setSideMenuShown((flag) => !flag);
   }
   return (
     <>
-      <title>{pageContext.title} - OreOreBot2 Documents</title>
-      <div>
-        <header>
-          <NavHeader onClickMenu={toggleMenu} />
-        </header>
-        <main>
-          <MDXProvider>{children}</MDXProvider>
-        </main>
-        <aside>
-          <SideBar
-            shown={sideMenuShown}
-            onClickItem={toggleMenu}
-            siblings={pageContext.siblings}
-            childrenPages={pageContext.children}
-            headings={pageContext.headings}
-          />
-        </aside>
-        <footer>Copyright 2021 Approvers</footer>
-      </div>
+      <header>
+        <NavHeader onClickMenu={toggleMenu} />
+      </header>
+      <main>
+        <h1>{title}</h1>
+        {command && <CommandArgs {...command} />}
+        {children}
+      </main>
+      <aside>
+        <SideBar
+          shown={sideMenuShown}
+          siblings={siblings}
+          childrenPages={childrenPages}
+        />
+      </aside>
+      <footer>Copyright 2021 Approvers</footer>
     </>
   );
 }

@@ -380,13 +380,11 @@ help: Readonly<HelpInfo> = {
 コンポーネント `CommandArgs` を使用することで綺麗に記述可能です。
 
 ```mdx
-import { CommandArgs } from '../../../organisms/command-args';
-
-# チャンネル情報表示
+import { CommandArgs } from '@/organisms/command-args';
 
 <CommandArgs
-  versionAvailableFrom="v1.37.0"
-  commandName="channelinfo/channel/chinfo"
+  availableFrom="v1.37.0"
+  names={["channelinfo", "channel", "chinfo"]}
   args={[
     {
       name: 'チャンネルID',
@@ -400,13 +398,11 @@ import { CommandArgs } from '../../../organisms/command-args';
 - どのバージョンから利用可能になったのか
   - 機能追加系のPRの場合は基本的にマイナーバージョンがあがります。
 
-コンポーネント `CommandArgs` の `versionAvailableFrom` を指定するか、機能リファレンスの場合は `VersionBadge` を使用してください。
+コンポーネント `CommandArgs` の `availableFrom` を指定するか、機能リファレンスの場合は `VersionBadge` を使用してください。
 
 ```mdx
 import { FeatureBadge } from '../../../molecules/feature-badge';
 import { VersionBadge } from '../../../molecules/version-badge';
-
-# Kawaemon has given a new role
 
 <FeatureBadge>その他</FeatureBadge>,<VersionBadge>v1.16.0</VersionBadge>
 ```

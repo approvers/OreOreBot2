@@ -10,7 +10,7 @@ export interface FeatureProps {
 /**
  * 特定の feature の有効化が必要であることを表す水色のバッジ
  */
-export const FeatureBadge = ({ children }: FeatureProps): JSX.Element => {
+export const FeatureBadge = ({ children }: FeatureProps): React.JSX.Element => {
   return (
     <span className={style.feature}>
       <Badge>{children}</Badge>

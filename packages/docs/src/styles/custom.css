@@ -1,0 +1,24 @@
+[data-callout] {
+  margin: 0.25rem 0;
+  padding: 0.5rem;
+  border-radius: 4px;
+  background-color: #23262f;
+}
+
+[data-callout-title] {
+  font-size: 105%;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+[data-callout-type='info'] > [data-callout-title]::before {
+  content: '（i）';
+  margin-right: 12px;
+  color: #4b8fb9;
+}
+
+[data-callout-type='warning'] > [data-callout-title]::before {
+  content: '／!＼';
+  margin-right: 12px;
+  color: #b2b94b;
+}

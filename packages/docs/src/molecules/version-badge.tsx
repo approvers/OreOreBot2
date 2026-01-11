@@ -10,7 +10,7 @@ export interface VersionProps {
 /**
  * OreOreBot2 の特定のバージョンを表す緑色のバッジ
  */
-export const VersionBadge = ({ children }: VersionProps): JSX.Element => {
+export const VersionBadge = ({ children }: VersionProps): React.JSX.Element => {
   return (
     <span className={style.version}>
       <Badge>{children}</Badge>

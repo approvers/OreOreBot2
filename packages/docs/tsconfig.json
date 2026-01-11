@@ -1,20 +1,13 @@
 {
-  "parser": "@typescript-eslint/parser",
+  "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": false,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
     "incremental": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve"
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
-  "include": ["**/*.ts", "**/*.tsx", "gatsby-config.mjs"],
-  "exclude": ["node_modules"]
+  "include": ["**/*", ".astro/types.d.ts"],
+  "exclude": ["dist"]
 }
