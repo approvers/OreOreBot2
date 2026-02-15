@@ -22,8 +22,8 @@ importers:
         specifier: ^6.0.0
         version: 6.0.2(prettier@3.8.1)
       '@types/node':
-        specifier: ^24.10.1
-        version: 24.10.13
+        specifier: ^25.0.0
+        version: 25.2.3
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.48.0
         version: 8.55.0(@typescript-eslint/parser@8.55.0(eslint@9.39.2)(typescript@5.9.3))(eslint@9.39.2)(typescript@5.9.3)
@@ -1472,9 +1472,6 @@ packages:
 
   '@types/node@22.19.11':
     resolution: {integrity: sha512-BH7YwL6rA93ReqeQS1c4bsPpcfOmJasG+Fkr6Y59q83f9M1WcBRHR2vM+P9eOisYRcN3ujQoiZY8uk5W+1WL8w==}
-
-  '@types/node@24.10.13':
-    resolution: {integrity: sha512-oH72nZRfDv9lADUBSo104Aq7gPHpQZc4BTx38r9xf9pg5LfP6EzSyH2n7qFmmxRQXh7YlUXODcYsg6PuTDSxGg==}
 
   '@types/node@25.2.3':
     resolution: {integrity: sha512-m0jEgYlYz+mDJZ2+F4v8D1AyQb+QzsNqRuI7xg1VQX/KlKS0qT9r1Mo16yo5F/MtifXFgaofIFsdFMox2SxIbQ==}
@@ -6075,7 +6072,7 @@ snapshots:
 
   '@types/concat-stream@2.0.3':
     dependencies:
-      '@types/node': 24.10.13
+      '@types/node': 25.2.3
 
   '@types/debug@4.1.12':
     dependencies:
@@ -6125,10 +6122,6 @@ snapshots:
     dependencies:
       undici-types: 6.21.0
 
-  '@types/node@24.10.13':
-    dependencies:
-      undici-types: 7.16.0
-
   '@types/node@25.2.3':
     dependencies:
       undici-types: 7.16.0
@@ -6143,7 +6136,7 @@ snapshots:
 
   '@types/sax@1.2.7':
     dependencies:
-      '@types/node': 17.0.45
+      '@types/node': 25.2.3
 
   '@types/supports-color@8.1.3': {}
 
