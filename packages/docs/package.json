@@ -17,7 +17,7 @@
     "@astrojs/markdown-remark": "^6.3.10",
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/react": "^4.4.2",
-    "@astrojs/starlight": "^0.37.2",
+    "@astrojs/starlight": "^0.38.0",
     "@r4ai/remark-callout": "^0.6.2",
     "astro": "^5.16.8",
     "react": "^19.0.0",
