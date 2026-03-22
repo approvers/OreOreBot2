@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^6.3.10",
-    "@astrojs/mdx": "^4.3.13",
+    "@astrojs/mdx": "^5.0.0",
     "@astrojs/react": "^4.4.2",
     "@astrojs/starlight": "^0.38.0",
     "@r4ai/remark-callout": "^0.6.2",
