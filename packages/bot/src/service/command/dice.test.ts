@@ -107,7 +107,7 @@ describe('dice', () => {
       title: '引数が範囲外だよ',
       description: 'ダイスは非負整数で100面20個以下にしてね。'
     });
-    expect(roll).toBeCalledTimes(0);
+    expect(roll).toHaveBeenCalledTimes(0);
   });
 
   it('case of 100D21', async () => {
@@ -125,7 +125,7 @@ describe('dice', () => {
       title: '引数が範囲外だよ',
       description: 'ダイスは非負整数で100面20個以下にしてね。'
     });
-    expect(roll).toBeCalledTimes(0);
+    expect(roll).toHaveBeenCalledTimes(0);
   });
 
   it('case of 0D6', async () => {
@@ -143,7 +143,7 @@ describe('dice', () => {
       title: '引数が範囲外だよ',
       description: 'ダイスは非負整数で100面20個以下にしてね。'
     });
-    expect(roll).toBeCalledTimes(0);
+    expect(roll).toHaveBeenCalledTimes(0);
   });
 
   it('case of 10D6d50', async () => {
@@ -162,6 +162,6 @@ describe('dice', () => {
       description:
         '引数の形は`<num>d<num>`をとる必要があるよ。`<num>`は非負整数にしてね。'
     });
-    expect(roll).toBeCalledTimes(0);
+    expect(roll).toHaveBeenCalledTimes(0);
   });
 });
