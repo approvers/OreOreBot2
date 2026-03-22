@@ -137,8 +137,8 @@ importers:
   packages/docs:
     dependencies:
       '@astrojs/markdown-remark':
-        specifier: ^6.3.10
-        version: 6.3.11
+        specifier: ^7.0.0
+        version: 7.0.0
       '@astrojs/mdx':
         specifier: ^4.3.13
         version: 4.3.14(astro@5.18.1(@types/node@25.5.0)(rollup@4.59.0)(terser@5.44.0)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.3))
@@ -8834,7 +8834,7 @@ snapshots:
     dependencies:
       '@types/mdast': 4.0.4
       devlop: 1.1.0
-      mdast-util-from-markdown: 2.0.2
+      mdast-util-from-markdown: 2.0.3
       mdast-util-to-markdown: 2.1.2
       micromark-util-normalize-identifier: 2.0.1
     transitivePeerDependencies:
@@ -8848,7 +8848,7 @@ snapshots:
   mdast-util-gfm-strikethrough@2.0.0:
     dependencies:
       '@types/mdast': 4.0.4
-      mdast-util-from-markdown: 2.0.2
+      mdast-util-from-markdown: 2.0.3
       mdast-util-to-markdown: 2.1.2
     transitivePeerDependencies:
       - supports-color
@@ -8867,7 +8867,7 @@ snapshots:
       '@types/mdast': 4.0.4
       devlop: 1.1.0
       markdown-table: 3.0.4
-      mdast-util-from-markdown: 2.0.2
+      mdast-util-from-markdown: 2.0.3
       mdast-util-to-markdown: 2.1.2
     transitivePeerDependencies:
       - supports-color
@@ -8881,7 +8881,7 @@ snapshots:
     dependencies:
       '@types/mdast': 4.0.4
       devlop: 1.1.0
-      mdast-util-from-markdown: 2.0.2
+      mdast-util-from-markdown: 2.0.3
       mdast-util-to-markdown: 2.1.2
     transitivePeerDependencies:
       - supports-color

@@ -14,7 +14,7 @@
     "format": "prettier --write \"./{src,pages}/**/*.{js,ts,jsx,tsx,md,mdx}\""
   },
   "dependencies": {
-    "@astrojs/markdown-remark": "^6.3.10",
+    "@astrojs/markdown-remark": "^7.0.0",
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/react": "^4.4.2",
     "@astrojs/starlight": "^0.38.0",
