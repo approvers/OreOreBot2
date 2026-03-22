@@ -15,7 +15,7 @@ describe('EmojiSeqReact', () => {
       content: '響き',
       addReaction
     });
-    expect(addReaction).toBeCalledTimes(1);
+    expect(addReaction).toHaveBeenCalledTimes(1);
     expect(addReaction).toHaveBeenCalledWith('<:haracho:684424533997912096>');
   });
 

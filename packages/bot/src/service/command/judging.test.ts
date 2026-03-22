@@ -30,7 +30,7 @@ it('use case of jd', async () => {
     )
   );
 
-  expect(fn).toBeCalledTimes(5);
+  expect(fn).toHaveBeenCalledTimes(5);
   for (let i = 0; i < 4; ++i) {
     expect(fn.mock.calls[i][0]).toStrictEqual({
       title: '***†HARACHO ONLINE JUDGING SYSTEM†***',
@@ -62,7 +62,7 @@ it('use case of judge', async () => {
     )
   );
 
-  expect(fn).toBeCalledTimes(1);
+  expect(fn).toHaveBeenCalledTimes(1);
   expect(fn.mock.calls[0][0]).toStrictEqual({
     title: '***†HARACHO ONLINE JUDGING SYSTEM†***',
     description: `1 / 1 WWW`
