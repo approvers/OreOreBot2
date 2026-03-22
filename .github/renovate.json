@@ -1,6 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "reviewers": ["MikuroXina"],
+  "reviewers": [
+    "MikuroXina"
+  ],
   "ignoreTests": false,
   "automerge": true,
   "major": {
@@ -11,39 +13,71 @@
   "dependencyDashboard": true,
   "semanticCommits": "enabled",
   "minimumReleaseAge": "3 days",
-  "fetchReleaseNotes": true,
-  "enabledManagers": ["npm", "github-actions", "dockerfile", "docker-compose"],
+  "fetchChangeLogs": "pr",
+  "enabledManagers": [
+    "npm",
+    "github-actions",
+    "dockerfile",
+    "docker-compose"
+  ],
   "packageRules": [
     {
-      "matchDatasources": ["npm"],
-      "labels": ["R-Update(npm)"]
+      "matchDatasources": [
+        "npm"
+      ],
+      "labels": [
+        "R-Update(npm)"
+      ]
     },
     {
-      "matchDatasources": ["github-actions"],
-      "labels": ["R-Update(gh-actions)"]
+      "matchDatasources": [
+        "github-actions"
+      ],
+      "labels": [
+        "R-Update(gh-actions)"
+      ]
     },
     {
-      "matchDatasources": ["dockerfile", "docker-compose"],
-      "labels": ["R-Update(Docker)"]
+      "matchDatasources": [
+        "dockerfile",
+        "docker-compose"
+      ],
+      "labels": [
+        "R-Update(Docker)"
+      ]
     },
     {
-      "matchPackagePatterns": ["^astro", "^@astro"],
       "groupName": "Astro packages",
+      "matchPackageNames": [
+        "/^astro/",
+        "/^@astro/"
+      ]
     },
     {
-      "matchPackagePatterns": ["^eslint", "@eslint"],
       "groupName": "ESLint packages",
+      "matchPackageNames": [
+        "/^eslint/",
+        "/@eslint/"
+      ]
     }
   ],
   "npm": {
-    "stabilityDays": 3
+    "minimumReleaseAge": "3 days"
   },
   "vulnerabilityAlerts": {
     "enabled": true,
     "automerge": true,
-    "labels": ["C-security"],
-    "assignees": ["MikuroXina"]
+    "labels": [
+      "C-security"
+    ],
+    "assignees": [
+      "MikuroXina"
+    ]
   },
-  "extends": [":timezone(Asia/Tokyo)"],
-  "schedule": ["on the first day of the week"]
+  "extends": [
+    ":timezone(Asia/Tokyo)"
+  ],
+  "schedule": [
+    "on the first day of the week"
+  ]
 }
