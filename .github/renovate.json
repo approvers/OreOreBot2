@@ -25,6 +25,14 @@
     {
       "matchDatasources": ["dockerfile", "docker-compose"],
       "labels": ["R-Update(Docker)"]
+    },
+    {
+      "matchPackagePatterns": ["^astro", "^@astro"],
+      "groupName": "Astro packages",
+    },
+    {
+      "matchPackagePatterns": ["^eslint", "@eslint"],
+      "groupName": "ESLint packages",
     }
   ],
   "npm": {
