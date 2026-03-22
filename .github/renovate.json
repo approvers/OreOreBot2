@@ -57,7 +57,7 @@
       "groupName": "ESLint packages",
       "matchPackageNames": [
         "/^eslint/",
-        "/@eslint/"
+        "/^@eslint/"
       ]
     }
   ],
