@@ -32,7 +32,7 @@
     "yargs": "^18.0.0"
   },
   "devDependencies": {
-    "@codedependant/semantic-release-docker": "^5.0.0",
+    "@codedependant/semantic-release-docker": "^6.0.0",
     "@types/deep-equal": "^1.0.1",
     "@types/yargs": "^17.0.22",
     "@vitest/coverage-v8": "^4.0.0",
