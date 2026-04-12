@@ -144,7 +144,7 @@ importers:
         version: 5.0.2(astro@6.0.8(@types/node@25.6.0)(rollup@4.60.0)(terser@5.44.0)(tsx@4.21.0)(typescript@6.0.2)(yaml@2.8.3))
       '@astrojs/react':
         specifier: ^5.0.0
-        version: 5.0.1(@types/node@25.6.0)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.5))(react@19.2.5)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.3)
+        version: 5.0.1(@types/node@25.6.0)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.3)
       '@astrojs/starlight':
         specifier: ^0.38.0
         version: 0.38.2(astro@6.0.8(@types/node@25.6.0)(rollup@4.60.0)(terser@5.44.0)(tsx@4.21.0)(typescript@6.0.2)(yaml@2.8.3))
@@ -159,7 +159,7 @@ importers:
         version: 19.2.5
       react-dom:
         specifier: ^19.0.0
-        version: 19.2.4(react@19.2.5)
+        version: 19.2.5(react@19.2.5)
       rehype-autolink-headings:
         specifier: ^7.1.0
         version: 7.1.0
@@ -3911,10 +3911,10 @@ packages:
   radix3@1.1.2:
     resolution: {integrity: sha512-b484I/7b8rDEdSDKckSSBA8knMpcdsXudlE/LNL639wFoHKwLbEkQFZHWEYwDC0wa0FKUcCY+GAF73Z7wxNVFA==}
 
-  react-dom@19.2.4:
-    resolution: {integrity: sha512-AXJdLo8kgMbimY95O2aKQqsz2iWi9jMgKJhRBAxECE4IFxfcazB2LmzloIoibJI3C12IlY20+KFaLv+71bUJeQ==}
+  react-dom@19.2.5:
+    resolution: {integrity: sha512-J5bAZz+DXMMwW/wV3xzKke59Af6CHY7G4uYLN1OvBcKEsWOs4pQExj86BBKamxl/Ik5bx9whOrvBlSDfWzgSag==}
     peerDependencies:
-      react: ^19.2.4
+      react: ^19.2.5
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -4965,7 +4965,7 @@ snapshots:
     dependencies:
       prismjs: 1.30.0
 
-  '@astrojs/react@5.0.1(@types/node@25.6.0)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.5))(react@19.2.5)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.3)':
+  '@astrojs/react@5.0.1(@types/node@25.6.0)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.3)':
     dependencies:
       '@astrojs/internal-helpers': 0.8.0
       '@types/react': 19.2.14
@@ -4973,7 +4973,7 @@ snapshots:
       '@vitejs/plugin-react': 5.2.0(vite@7.3.1(@types/node@25.6.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.3))
       devalue: 5.6.4
       react: 19.2.5
-      react-dom: 19.2.4(react@19.2.5)
+      react-dom: 19.2.5(react@19.2.5)
       ultrahtml: 1.6.0
       vite: 7.3.1(@types/node@25.6.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.3)
     transitivePeerDependencies:
@@ -9584,7 +9584,7 @@ snapshots:
 
   radix3@1.1.2: {}
 
-  react-dom@19.2.4(react@19.2.5):
+  react-dom@19.2.5(react@19.2.5):
     dependencies:
       react: 19.2.5
       scheduler: 0.27.0
