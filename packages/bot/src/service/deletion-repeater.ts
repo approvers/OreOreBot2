@@ -39,9 +39,9 @@ export type GetNow = () => Date;
  *
  * @typeParam M - `DeletionObservable` を満たした、監視するメッセージの型
  */
-export class DeletionRepeater<M extends DeletionObservable>
-  implements MessageEventResponder<M>
-{
+export class DeletionRepeater<
+  M extends DeletionObservable
+> implements MessageEventResponder<M> {
   /**
    * メッセージを無視するかどうかを判定する述語。
    * この述語がtrueを返した場合、内容を復唱しない。

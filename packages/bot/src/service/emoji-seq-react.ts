@@ -7,9 +7,9 @@ export interface EmojiSeqObservable {
   addReaction(reaction: string): Promise<void>;
 }
 
-export class EmojiSeqReact<M extends EmojiSeqObservable>
-  implements MessageEventResponder<M>
-{
+export class EmojiSeqReact<
+  M extends EmojiSeqObservable
+> implements MessageEventResponder<M> {
   private readonly sequences: EmojiSeqSet;
 
   constructor(sequencesYaml: string) {

@@ -1,17 +1,16 @@
 import { expect, test, vi } from 'vitest';
 
-import type { Schema } from '../../model/command-schema.js';
+import { DepRegistry } from '../../driver/dep-registry.js';
 import type { Snowflake } from '../../model/id.js';
 import { CommandRunner, emptyProxy } from '../../runner/command.js';
-import type { CommandResponderFor } from './command-message.js';
-import { PingCommand } from './ping.js';
+import { PingCommand, pingKey } from './ping.js';
 import {
   registerCommands,
   type CommandRepository,
   type Command,
   type RegisteredCommand
 } from './register.js';
-import { GetVersionCommand } from './version.js';
+import { GetVersionCommand, versionFetcherKey } from './version.js';
 
 test('', async () => {
   const setCommands = vi.fn<(commands: Command[]) => Promise<void>>(() =>
@@ -47,16 +46,11 @@ test('', async () => {
     deleteCommand
   };
   const commandRunner = new CommandRunner(emptyProxy);
-  commandRunner.addResponder(
-    new GetVersionCommand({
-      version: 'v0.1.0'
-    }) as unknown as CommandResponderFor<Schema>
-  );
-  commandRunner.addResponder(
-    new PingCommand({
-      avgPing: 160
-    }) as unknown as CommandResponderFor<Schema>
-  );
+  const registry = new DepRegistry();
+  registry.add(versionFetcherKey, { version: 'v0.1.0' });
+  registry.add(pingKey, { avgPing: 160 });
+  commandRunner.addResponder(new GetVersionCommand(registry));
+  commandRunner.addResponder(new PingCommand(registry));
   await registerCommands({ commandRepo, commandRunner });
 
   expect(setCommands).toHaveBeenCalledWith([

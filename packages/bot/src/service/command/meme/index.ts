@@ -35,5 +35,5 @@ export const memes = [
   clang,
   failure,
   procon32,
-  oss,
+  oss
 ];

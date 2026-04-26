@@ -13,8 +13,7 @@ describe('meme', () => {
         parseStringsOrThrow(['procon32', 'Blockly'], responder.schema),
         (message) => {
           expect(message).toStrictEqual({
-            description:
-              `ちょっとねー僕はちょっと怒ってますはい。あの、みなさんこれ気づいてないのかもしんないけど
+            description: `ちょっとねー僕はちょっと怒ってますはい。あの、みなさんこれ気づいてないのかもしんないけど
 これBlocklyのサイトを見ていただければわかるんですけど
 これBlocklyそのままです
 そうですよねぇw、あなたたち何を作ったんですか？

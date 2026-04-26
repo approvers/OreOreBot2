@@ -16,9 +16,7 @@ export interface BoldItalicCop {
   replyMessage(message: { content: string }): Promise<void>;
 }
 
-export class BoldItalicCopReporter
-  implements MessageEventResponder<BoldItalicCop>
-{
+export class BoldItalicCopReporter implements MessageEventResponder<BoldItalicCop> {
   async on(event: MessageEvent, message: BoldItalicCop): Promise<void> {
     if (event !== 'CREATE') return;
     const boldItalicSize = message.content.match(boldItalic);

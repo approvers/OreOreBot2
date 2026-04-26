@@ -46,9 +46,7 @@ const diffComposer = (before: string, after: string): string => {
   return composed;
 };
 
-export class DifferenceDetector
-  implements MessageUpdateEventResponder<EditingObservable>
-{
+export class DifferenceDetector implements MessageUpdateEventResponder<EditingObservable> {
   async on(
     _event: 'UPDATE',
     before: EditingObservable,
