@@ -13,8 +13,7 @@ describe('meme', () => {
         parseStringsOrThrow(['oss', '高専生'], responder.schema),
         (message) => {
           expect(message).toStrictEqual({
-            description:
-              `えっ、丸パクリじゃん。
+            description: `えっ、丸パクリじゃん。
 せめてどこから取ってきたかぐらい
 もっと書くべき。
 高専生だからって、何でも許されるわけと

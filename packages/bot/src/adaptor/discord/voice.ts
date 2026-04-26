@@ -26,9 +26,9 @@ import type {
  */
 const TIMEOUT_MS = 2500;
 
-export class DiscordVoiceConnectionFactory<K extends string | number | symbol>
-  implements VoiceConnectionFactory<K>
-{
+export class DiscordVoiceConnectionFactory<
+  K extends string | number | symbol
+> implements VoiceConnectionFactory<K> {
   constructor(
     private readonly client: Client,
     private readonly audioRecord: Record<K, string>
@@ -54,9 +54,9 @@ export class DiscordVoiceConnectionFactory<K extends string | number | symbol>
   }
 }
 
-export class DiscordVoiceConnection<K extends string | number | symbol>
-  implements VoiceConnection<K>
-{
+export class DiscordVoiceConnection<
+  K extends string | number | symbol
+> implements VoiceConnection<K> {
   /**
    * Discord のボイスチャンネルへの接続を作成する。
    *

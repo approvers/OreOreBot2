@@ -10,9 +10,7 @@ export interface VoiceChannelParticipant {
   channelName: string;
 }
 
-export class VoiceDiff
-  implements VoiceRoomEventResponder<VoiceChannelParticipant>
-{
+export class VoiceDiff implements VoiceRoomEventResponder<VoiceChannelParticipant> {
   constructor(private readonly stdout: StandardOutput) {}
 
   async on(

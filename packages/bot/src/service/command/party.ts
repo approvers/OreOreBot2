@@ -163,9 +163,10 @@ export class PartyCommand implements CommandResponderFor<typeof SCHEMA> {
       return 'BREAK';
     }
     this.connection = await this.reg
-      .get<typeof voiceConnectionFactoryKey, AssetKey>(
-        voiceConnectionFactoryKey
-      )
+      .get<
+        typeof voiceConnectionFactoryKey,
+        AssetKey
+      >(voiceConnectionFactoryKey)
       .connectTo(message.senderGuildId, roomId);
     this.connection.connect();
     this.connection.onDisconnected(() => {

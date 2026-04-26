@@ -5,9 +5,9 @@ import type {
   VoiceConnectionFactory
 } from '../service/voice-connection.js';
 
-export class MockVoiceConnectionFactory<K>
-  implements VoiceConnectionFactory<K>
-{
+export class MockVoiceConnectionFactory<
+  K
+> implements VoiceConnectionFactory<K> {
   connectTo(): Promise<VoiceConnection<K>> {
     return Promise.resolve(new MockVoiceConnection());
   }
