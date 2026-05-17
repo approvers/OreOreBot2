@@ -101,7 +101,7 @@ importers:
         version: 1.0.3
       yaml:
         specifier: ^2.2.2
-        version: 2.8.4
+        version: 2.9.0
       yargs:
         specifier: ^18.0.0
         version: 18.0.0
@@ -132,7 +132,7 @@ importers:
         version: 6.0.3
       vitest:
         specifier: ^4.0.0
-        version: 4.1.6(@types/node@25.8.0)(@vitest/coverage-v8@4.1.6)(vite@7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4))
+        version: 4.1.6(@types/node@25.8.0)(@vitest/coverage-v8@4.1.6)(vite@7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0))
 
   packages/docs:
     dependencies:
@@ -141,19 +141,19 @@ importers:
         version: 7.1.2
       '@astrojs/mdx':
         specifier: ^5.0.0
-        version: 5.0.5(astro@6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4))
+        version: 5.0.5(astro@6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0))
       '@astrojs/react':
         specifier: ^5.0.0
-        version: 5.0.5(@types/node@25.8.0)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4)
+        version: 5.0.5(@types/node@25.8.0)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0)
       '@astrojs/starlight':
         specifier: ^0.39.0
-        version: 0.39.2(astro@6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4))(typescript@6.0.3)
+        version: 0.39.2(astro@6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0))(typescript@6.0.3)
       '@r4ai/remark-callout':
         specifier: ^0.6.2
         version: 0.6.2
       astro:
         specifier: ^6.0.0
-        version: 6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4)
+        version: 6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0)
       react:
         specifier: ^19.0.0
         version: 19.2.6
@@ -4880,8 +4880,8 @@ packages:
     engines: {node: '>= 14.6'}
     hasBin: true
 
-  yaml@2.8.4:
-    resolution: {integrity: sha512-ml/JPOj9fOQK8RNnWojA67GbZ0ApXAUlN2UQclwv2eVgTgn7O9gg9o7paZWKMp4g0H3nTLtS9LVzhkpOFIKzog==}
+  yaml@2.9.0:
+    resolution: {integrity: sha512-2AvhNX3mb8zd6Zy7INTtSpl1F15HW6Wnqj0srWlkKLcpYl/gMIMJiyuGq2KeI2YFxUPjdlB+3Lc10seMLtL4cA==}
     engines: {node: '>= 14.6'}
     hasBin: true
 
@@ -4965,12 +4965,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/mdx@5.0.5(astro@6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4))':
+  '@astrojs/mdx@5.0.5(astro@6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0))':
     dependencies:
       '@astrojs/markdown-remark': 7.1.2
       '@mdx-js/mdx': 3.1.1
       acorn: 8.16.0
-      astro: 6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4)
+      astro: 6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0)
       es-module-lexer: 2.1.0
       estree-util-visit: 2.0.0
       hast-util-to-html: 9.0.5
@@ -4988,17 +4988,17 @@ snapshots:
     dependencies:
       prismjs: 1.30.0
 
-  '@astrojs/react@5.0.5(@types/node@25.8.0)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4)':
+  '@astrojs/react@5.0.5(@types/node@25.8.0)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0)':
     dependencies:
       '@astrojs/internal-helpers': 0.9.1
       '@types/react': 19.2.14
       '@types/react-dom': 19.2.3(@types/react@19.2.14)
-      '@vitejs/plugin-react': 5.2.0(vite@7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4))
+      '@vitejs/plugin-react': 5.2.0(vite@7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0))
       devalue: 5.8.1
       react: 19.2.6
       react-dom: 19.2.6(react@19.2.6)
       ultrahtml: 1.6.0
-      vite: 7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4)
+      vite: 7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
@@ -5019,17 +5019,17 @@ snapshots:
       stream-replace-string: 2.0.0
       zod: 4.4.3
 
-  '@astrojs/starlight@0.39.2(astro@6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4))(typescript@6.0.3)':
+  '@astrojs/starlight@0.39.2(astro@6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0))(typescript@6.0.3)':
     dependencies:
       '@astrojs/markdown-remark': 7.1.2
-      '@astrojs/mdx': 5.0.5(astro@6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4))
+      '@astrojs/mdx': 5.0.5(astro@6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0))
       '@astrojs/sitemap': 3.7.2
       '@pagefind/default-ui': 1.5.2
       '@types/hast': 3.0.4
       '@types/js-yaml': 4.0.9
       '@types/mdast': 4.0.4
-      astro: 6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4)
-      astro-expressive-code: 0.42.0(astro@6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4))
+      astro: 6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0)
+      astro-expressive-code: 0.42.0(astro@6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0))
       bcp-47: 2.1.0
       hast-util-from-html: 2.0.3
       hast-util-select: 6.0.4
@@ -6400,7 +6400,7 @@ snapshots:
 
   '@ungap/structured-clone@1.3.1': {}
 
-  '@vitejs/plugin-react@5.2.0(vite@7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4))':
+  '@vitejs/plugin-react@5.2.0(vite@7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0))':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.29.0)
@@ -6408,7 +6408,7 @@ snapshots:
       '@rolldown/pluginutils': 1.0.0-rc.3
       '@types/babel__core': 7.20.5
       react-refresh: 0.18.0
-      vite: 7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4)
+      vite: 7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -6424,7 +6424,7 @@ snapshots:
       obug: 2.1.1
       std-env: 4.1.0
       tinyrainbow: 3.1.0
-      vitest: 4.1.6(@types/node@25.8.0)(@vitest/coverage-v8@4.1.6)(vite@7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4))
+      vitest: 4.1.6(@types/node@25.8.0)(@vitest/coverage-v8@4.1.6)(vite@7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0))
 
   '@vitest/expect@4.1.6':
     dependencies:
@@ -6435,13 +6435,13 @@ snapshots:
       chai: 6.2.2
       tinyrainbow: 3.1.0
 
-  '@vitest/mocker@4.1.6(vite@7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4))':
+  '@vitest/mocker@4.1.6(vite@7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0))':
     dependencies:
       '@vitest/spy': 4.1.6
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4)
+      vite: 7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0)
 
   '@vitest/pretty-format@4.1.6':
     dependencies:
@@ -6627,12 +6627,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  astro-expressive-code@0.42.0(astro@6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4)):
+  astro-expressive-code@0.42.0(astro@6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0)):
     dependencies:
-      astro: 6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4)
+      astro: 6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0)
       rehype-expressive-code: 0.42.0
 
-  astro@6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4):
+  astro@6.3.2(@types/node@25.8.0)(rollup@4.60.4)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0):
     dependencies:
       '@astrojs/compiler': 4.0.0
       '@astrojs/internal-helpers': 0.9.1
@@ -6684,8 +6684,8 @@ snapshots:
       unist-util-visit: 5.1.0
       unstorage: 1.17.5
       vfile: 6.0.3
-      vite: 7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4)
-      vitefu: 1.1.3(vite@7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4))
+      vite: 7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0)
+      vitefu: 1.1.3(vite@7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0))
       xxhash-wasm: 1.1.0
       yargs-parser: 22.0.0
       zod: 4.4.3
@@ -10396,7 +10396,7 @@ snapshots:
       vfile-message: 4.0.3
       vfile-reporter: 8.1.1
       vfile-statistics: 3.0.0
-      yaml: 2.8.4
+      yaml: 2.9.0
     transitivePeerDependencies:
       - bluebird
       - supports-color
@@ -10587,7 +10587,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vite@7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4):
+  vite@7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0):
     dependencies:
       esbuild: 0.27.7
       fdir: 6.5.0(picomatch@4.0.4)
@@ -10600,16 +10600,16 @@ snapshots:
       fsevents: 2.3.3
       terser: 5.44.0
       tsx: 4.21.0
-      yaml: 2.8.4
+      yaml: 2.9.0
 
-  vitefu@1.1.3(vite@7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4)):
+  vitefu@1.1.3(vite@7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0)):
     optionalDependencies:
-      vite: 7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4)
+      vite: 7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0)
 
-  vitest@4.1.6(@types/node@25.8.0)(@vitest/coverage-v8@4.1.6)(vite@7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4)):
+  vitest@4.1.6(@types/node@25.8.0)(@vitest/coverage-v8@4.1.6)(vite@7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0)):
     dependencies:
       '@vitest/expect': 4.1.6
-      '@vitest/mocker': 4.1.6(vite@7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4))
+      '@vitest/mocker': 4.1.6(vite@7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0))
       '@vitest/pretty-format': 4.1.6
       '@vitest/runner': 4.1.6
       '@vitest/snapshot': 4.1.6
@@ -10626,7 +10626,7 @@ snapshots:
       tinyexec: 1.1.2
       tinyglobby: 0.2.16
       tinyrainbow: 3.1.0
-      vite: 7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.4)
+      vite: 7.3.3(@types/node@25.8.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.9.0)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 25.8.0
@@ -10741,7 +10741,7 @@ snapshots:
 
   yaml@2.8.3: {}
 
-  yaml@2.8.4: {}
+  yaml@2.9.0: {}
 
   yargs-parser@22.0.0: {}
 
