@@ -50,7 +50,7 @@ importers:
         version: 0.5.2(eslint@10.8.0(supports-color@9.4.0))(supports-color@9.4.0)(typescript@6.0.3)
       globals:
         specifier: ^17.0.0
-        version: 17.8.0
+        version: 17.9.0
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -2571,10 +2571,6 @@ packages:
 
   globals@14.0.0:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
-    engines: {node: '>=18'}
-
-  globals@17.8.0:
-    resolution: {integrity: sha512-Zz/LMDZScFmkakeL2cTHzf+PbWKdpU3uclqkZT7TjDG58j5WPt0PpA+n9uPI24fZtlw07q0OtEi84K+umsRzqQ==}
     engines: {node: '>=18'}
 
   globals@17.9.0:
@@ -7752,8 +7748,6 @@ snapshots:
       path-is-absolute: 1.0.1
 
   globals@14.0.0: {}
-
-  globals@17.8.0: {}
 
   globals@17.9.0: {}
 
