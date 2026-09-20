@@ -107,8 +107,8 @@ importers:
         version: 18.1.0
     devDependencies:
       '@codedependant/semantic-release-docker':
-        specifier: ^7.0.0
-        version: 7.0.0(supports-color@9.4.0)
+        specifier: ^8.0.0
+        version: 8.0.0(supports-color@9.4.0)
       '@types/deep-equal':
         specifier: ^1.0.1
         version: 1.0.4
@@ -579,8 +579,8 @@ packages:
     resolution: {integrity: sha512-y7/yvZ2TPAnR9+jnc00klvNNLkJiXFFrQA/hlLCcxA9a2A4zQIOimyFQ9XfwYKiGD1fb5GY8vbKIIgO8d5Tb2A==}
     engines: {node: '>= 20.12.0'}
 
-  '@codedependant/semantic-release-docker@7.0.0':
-    resolution: {integrity: sha512-G7z4Z3mfhh9gifRlfn8XTY0MTQy7Vh2YvRislKln5bJ4AubIbV0G2twly+bshF+RRrOhKdIk4B2nTpscYPcWcw==}
+  '@codedependant/semantic-release-docker@8.0.0':
+    resolution: {integrity: sha512-3CKkpHZh+hX3qVRiSPoZ0c747Wy4OuZ/TCxxwCLwam9LRzNgkuwIHEb9LT11Knus7o8wwV0DtAQKDyMNaGubcA==}
     engines: {node: '>=20'}
 
   '@ctrl/tinycolor@4.2.0':
@@ -4127,11 +4127,6 @@ packages:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
     hasBin: true
 
-  semver@7.7.4:
-    resolution: {integrity: sha512-vFKC2IEtQnVhpT78h1Yp8wzwrf8CM+MzKMHGJZfBtzhZNycRFnXsHk6E5TxIkkMsgNS7mdX3AGB7x2QM2di4lA==}
-    engines: {node: '>=10'}
-    hasBin: true
-
   semver@7.8.0:
     resolution: {integrity: sha512-AcM7dV/5ul4EekoQ29Agm5vri8JNqRyj39o0qpX6vDF2GZrtutZl5RwgD1XnZjiTAfncsJhMI48QQH3sN87YNA==}
     engines: {node: '>=10'}
@@ -5381,7 +5376,7 @@ snapshots:
       fast-wrap-ansi: 0.2.2
       sisteransi: 1.0.5
 
-  '@codedependant/semantic-release-docker@7.0.0(supports-color@9.4.0)':
+  '@codedependant/semantic-release-docker@8.0.0(supports-color@9.4.0)':
     dependencies:
       '@actions/core': 3.0.0
       '@semantic-release/error': 4.0.0
@@ -5389,7 +5384,7 @@ snapshots:
       execa: 9.6.1
       handlebars: 4.7.9
       object-hash: 3.0.0
-      semver: 7.7.4
+      semver: 7.8.5
     transitivePeerDependencies:
       - supports-color
 
@@ -9897,8 +9892,6 @@ snapshots:
   scheduler@0.28.0: {}
 
   semver@6.3.1: {}
-
-  semver@7.7.4: {}
 
   semver@7.8.0: {}
 
