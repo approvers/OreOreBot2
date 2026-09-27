@@ -20,7 +20,7 @@ importers:
         version: 8.0.3(supports-color@9.4.0)
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^6.0.0
-        version: 6.0.2(prettier@3.9.7)(supports-color@9.4.0)
+        version: 6.0.2(prettier@3.9.9)(supports-color@9.4.0)
       '@types/node':
         specifier: ^26.0.0
         version: 26.6.2
@@ -59,7 +59,7 @@ importers:
         version: 17.5.1
       prettier:
         specifier: ^3.7.3
-        version: 3.9.7
+        version: 3.9.9
       typescript:
         specifier: 6.0.3
         version: 6.0.3
@@ -3885,13 +3885,8 @@ packages:
     resolution: {integrity: sha512-RiBETaaP9veVstE4vUwSIcdATj6dKmXljouXc/DDNwBSPTp8FRkLGDSGFClKsAFeeg+13SB0Z1JZvbD76bigJw==}
     engines: {node: ^14.15.0 || >=16.0.0}
 
-  prettier@3.9.7:
-    resolution: {integrity: sha512-T3mF5P7HFzZVLDQuCUNtJj6WK1pcpLMweMNUVwGb01bLNkH9AkKxtZvmInw8K6bnn2O3d6/5RHl6zSHiBAD0Og==}
-    engines: {node: '>=14'}
-    hasBin: true
-
-  prettier@3.9.8:
-    resolution: {integrity: sha512-WRFq3Wn3WId7LLROfMLdH7xaFr2jR62wU8nLO6rQUOLOxNZUviyJQs1M0iIhLexSFy+L+w0ch66wtoO2jRjG0A==}
+  prettier@3.9.9:
+    resolution: {integrity: sha512-Z/CJHIkdujO/OtN7nXUii0Rf3VT5SRuhjBA82Xvu2XhBUgX3nhP67T0LHceBdQLex7OOFGTox+Q5Yg8Jk2Qivg==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -6187,7 +6182,7 @@ snapshots:
 
   '@standard-schema/spec@1.1.0': {}
 
-  '@trivago/prettier-plugin-sort-imports@6.0.2(prettier@3.9.7)(supports-color@9.4.0)':
+  '@trivago/prettier-plugin-sort-imports@6.0.2(prettier@3.9.9)(supports-color@9.4.0)':
     dependencies:
       '@babel/generator': 7.28.5
       '@babel/parser': 7.28.5
@@ -6197,7 +6192,7 @@ snapshots:
       lodash-es: 4.17.22
       minimatch: 9.0.5
       parse-imports-exports: 0.2.4
-      prettier: 3.9.7
+      prettier: 3.9.9
     transitivePeerDependencies:
       - supports-color
 
@@ -9577,12 +9572,10 @@ snapshots:
   prettier-plugin-astro@0.14.1:
     dependencies:
       '@astrojs/compiler': 2.13.0
-      prettier: 3.9.8
+      prettier: 3.9.9
       sass-formatter: 0.7.9
 
-  prettier@3.9.7: {}
-
-  prettier@3.9.8: {}
+  prettier@3.9.9: {}
 
   pretty-ms@9.3.0:
     dependencies:
