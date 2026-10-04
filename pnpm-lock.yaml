@@ -147,7 +147,7 @@ importers:
         version: 6.0.6(@types/node@26.6.4)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(esbuild@0.28.2)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(supports-color@9.4.0)(tsx@4.23.15)(yaml@2.9.1)
       '@astrojs/starlight':
         specifier: ^0.42.0
-        version: 0.42.4(@astrojs/markdown-remark@7.3.1(supports-color@9.4.0))(astro@7.3.5(@astrojs/markdown-remark@7.3.1(supports-color@9.4.0))(@types/node@26.6.4)(tsx@4.23.15)(yaml@2.9.1))(supports-color@9.4.0)(typescript@6.0.3)
+        version: 0.42.5(@astrojs/markdown-remark@7.3.1(supports-color@9.4.0))(astro@7.3.5(@astrojs/markdown-remark@7.3.1(supports-color@9.4.0))(@types/node@26.6.4)(tsx@4.23.15)(yaml@2.9.1))(supports-color@9.4.0)(typescript@6.0.3)
       '@r4ai/remark-callout':
         specifier: ^0.6.2
         version: 0.6.2
@@ -381,8 +381,8 @@ packages:
   '@astrojs/sitemap@3.7.3':
     resolution: {integrity: sha512-f8euLVsyeAmAkSm/1M2Kb8sL8byQmfgbvBNaHFItCheTj/IpiJYSEWVcqDHZ/yEHxiS7+w87mQkzwZaPHmk5GA==}
 
-  '@astrojs/starlight@0.42.4':
-    resolution: {integrity: sha512-EsQsqGJ1uTBQcIMojvLqqg4Ku9idwi6PSNuppIOoYmvVP18xjoUkijMdKoDkhmmwKdhbB4ctLhGjPRJzxaq+Jw==}
+  '@astrojs/starlight@0.42.5':
+    resolution: {integrity: sha512-S6hjUexk9rrKtjJF3WR8T9dM1woNR7X2XU8e3wj4OpRT4X15AXk/mzPjWe/Qd5+P8whHj2+ves+k06qirBzimg==}
     peerDependencies:
       '@astrojs/markdown-remark': ^7.3.0
       astro: ^7.2.10
@@ -5136,7 +5136,7 @@ snapshots:
       stream-replace-string: 2.0.0
       zod: 4.5.4
 
-  '@astrojs/starlight@0.42.4(@astrojs/markdown-remark@7.3.1(supports-color@9.4.0))(astro@7.3.5(@astrojs/markdown-remark@7.3.1(supports-color@9.4.0))(@types/node@26.6.4)(tsx@4.23.15)(yaml@2.9.1))(supports-color@9.4.0)(typescript@6.0.3)':
+  '@astrojs/starlight@0.42.5(@astrojs/markdown-remark@7.3.1(supports-color@9.4.0))(astro@7.3.5(@astrojs/markdown-remark@7.3.1(supports-color@9.4.0))(@types/node@26.6.4)(tsx@4.23.15)(yaml@2.9.1))(supports-color@9.4.0)(typescript@6.0.3)':
     dependencies:
       '@astrojs/markdown-satteri': 0.4.2
       '@astrojs/mdx': 8.0.2(@astrojs/markdown-remark@7.3.1(supports-color@9.4.0))(@astrojs/markdown-satteri@0.4.2)(astro@7.3.5(@astrojs/markdown-remark@7.3.1(supports-color@9.4.0))(@types/node@26.6.4)(tsx@4.23.15)(yaml@2.9.1))
