@@ -20,7 +20,7 @@ importers:
         version: 8.0.3(supports-color@9.4.0)
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^6.0.0
-        version: 6.0.2(prettier@3.9.9)(supports-color@9.4.0)
+        version: 6.0.2(prettier@3.9.10)(supports-color@9.4.0)
       '@types/node':
         specifier: ^26.0.0
         version: 26.6.5
@@ -59,7 +59,7 @@ importers:
         version: 17.6.0
       prettier:
         specifier: ^3.7.3
-        version: 3.9.9
+        version: 3.9.10
       typescript:
         specifier: 6.0.3
         version: 6.0.3
@@ -190,7 +190,7 @@ importers:
         version: 7.37.5(eslint@10.12.0(supports-color@9.4.0))
       prettier-plugin-astro:
         specifier: ^1.0.0
-        version: 1.1.1(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(prettier@3.9.9)
+        version: 1.1.1(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(prettier@3.9.10)
 
 packages:
 
@@ -3875,8 +3875,8 @@ packages:
     peerDependencies:
       prettier: ^3.5.3
 
-  prettier@3.9.9:
-    resolution: {integrity: sha512-Z/CJHIkdujO/OtN7nXUii0Rf3VT5SRuhjBA82Xvu2XhBUgX3nhP67T0LHceBdQLex7OOFGTox+Q5Yg8Jk2Qivg==}
+  prettier@3.9.10:
+    resolution: {integrity: sha512-skGHTH1Yb9QvaTC4hWnRTzEYtCpApF0UMBPz+t/0ZPzP8ihefo/btKd+QA7pUE0fEwA1SbS/NmhyEcstdXOIdA==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -6101,7 +6101,7 @@ snapshots:
       - '@emnapi/core'
       - '@emnapi/runtime'
 
-  '@trivago/prettier-plugin-sort-imports@6.0.2(prettier@3.9.9)(supports-color@9.4.0)':
+  '@trivago/prettier-plugin-sort-imports@6.0.2(prettier@3.9.10)(supports-color@9.4.0)':
     dependencies:
       '@babel/generator': 7.28.5
       '@babel/parser': 7.28.5
@@ -6111,7 +6111,7 @@ snapshots:
       lodash-es: 4.17.22
       minimatch: 9.0.5
       parse-imports-exports: 0.2.4
-      prettier: 3.9.9
+      prettier: 3.9.10
     transitivePeerDependencies:
       - supports-color
 
@@ -9439,17 +9439,17 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-astro@1.1.1(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(prettier@3.9.9):
+  prettier-plugin-astro@1.1.1(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(prettier@3.9.10):
     dependencies:
       '@astrojs/compiler-rs': 0.4.1(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)
       '@prettier/parse-srcset': 3.1.0
-      prettier: 3.9.9
+      prettier: 3.9.10
       sass-formatter: 0.8.0
     transitivePeerDependencies:
       - '@emnapi/core'
       - '@emnapi/runtime'
 
-  prettier@3.9.9: {}
+  prettier@3.9.10: {}
 
   pretty-ms@9.3.0:
     dependencies:
